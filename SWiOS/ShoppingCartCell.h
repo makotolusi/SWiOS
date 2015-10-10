@@ -11,13 +11,22 @@
 #import "EmptyCell.h"
 #import "ShoppingCartController.h"
 #import "YCAsyncImageView.h"
+@protocol ShoppingCartCellDelegate <NSObject>
+
+- (void)totalPrice:(int)singlePrice;
+
+@end
+
 @interface ShoppingCartCell : EmptyCell
 {
     @private
-    UIView *editView;
-    UIView *infoView;
+        UIView *editView;
+        UIView *infoView;
 }
 @property (weak, nonatomic) IBOutlet YCAsyncImageView *imgView;
 @property (strong,nonatomic) ActivityProduct *activityProduct;
 @property (assign,nonatomic) BOOL isEdit;
+@property (assign,nonatomic) int count;
+// 委托代理人，代理一般需使用弱引用(weak)
+@property (weak, nonatomic) id<ShoppingCartCellDelegate> delegate;
 @end

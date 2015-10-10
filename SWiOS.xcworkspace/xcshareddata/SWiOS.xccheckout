@@ -12,7 +12,7 @@
 	<dict>
 		<key>70d42497-b590-8f49-b3d1-d4197853f585++5995</key>
 		<string>http://okeasy.eicp.net:88/svn/forshare/trunk/wdios/SWiOSNew</string>
-		<key>70d42497-b590-8f49-b3d1-d4197853f585++6958</key>
+		<key>CAE02A985FAADFC3A4EB2BC7FBC4B5DB2D0F2FE1</key>
 		<string>http://okeasy.eicp.net:88/svn/forshare/trunk/wdios/SWiOS</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
@@ -21,14 +21,14 @@
 	<dict>
 		<key>70d42497-b590-8f49-b3d1-d4197853f585++5995</key>
 		<string>..</string>
-		<key>70d42497-b590-8f49-b3d1-d4197853f585++6958</key>
+		<key>CAE02A985FAADFC3A4EB2BC7FBC4B5DB2D0F2FE1</key>
 		<string>../../SWiOS</string>
 	</dict>
 	<key>IDESourceControlProjectRepositoryRootDictionary</key>
 	<dict>
 		<key>70d42497-b590-8f49-b3d1-d4197853f585++5995</key>
 		<string>http://okeasy.eicp.net:88/svn/forshare</string>
-		<key>70d42497-b590-8f49-b3d1-d4197853f585++6958</key>
+		<key>CAE02A985FAADFC3A4EB2BC7FBC4B5DB2D0F2FE1</key>
 		<string>http://okeasy.eicp.net:88/svn/forshare</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -43,7 +43,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.subversion</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>70d42497-b590-8f49-b3d1-d4197853f585++6958</string>
+			<string>CAE02A985FAADFC3A4EB2BC7FBC4B5DB2D0F2FE1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>SWiOS</string>
 		</dict>

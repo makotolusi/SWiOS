@@ -8,6 +8,8 @@
 
 #import "ShoppingCartCell.h"
 #import "UIColor+Extension.h"
+
+static CGFloat kSWCellCountTag = 1;
 @implementation ShoppingCartCell
 
 
@@ -36,9 +38,8 @@
     [editView removeFromSuperview];
     [_imgView setUrl:_activityProduct.picUrl1];
     //info view
-    infoView=[[UIView alloc] initWithFrame:CGRectMake(_imgView.frame.size.width+20, _imgView.frame.origin.y
-                                                              , SCREEN_WIDTH/3*2, _imgView.frame.size.height)];
-//    infoView.backgroundColor=[UIColor lightGrayColor];
+    infoView=[[UIView alloc] initWithFrame:CGRectMake(_imgView.frame.size.width+20, _imgView.frame.origin.y, SCREEN_WIDTH/3*2, _imgView.frame.size.height)];
+    //    infoView.backgroundColor=[UIColor lightGrayColor];
     UILabel *title=[[UILabel alloc] init];
     title.lineBreakMode =NSLineBreakByWordWrapping;
     title.numberOfLines = 2;
@@ -54,18 +55,23 @@
     UILabel *count1=[[UILabel alloc] initWithFrame:CGRectMake(infoView.frame.size.width-40, infoView.frame.size.height-15, 50, 15)];
     [self labelStyle:count1 text:[NSString stringWithFormat:@"%@",_activityProduct.rushQuantity] size:13];
     [infoView addSubview:title];
-     [infoView addSubview:price];
-     [infoView addSubview:count1];
+    [infoView addSubview:price];
+    [infoView addSubview:count1];
     //edit view
     editView=[[UIView alloc] initWithFrame:infoView.frame];
     editView.backgroundColor=[UIColor whiteColor];
-   //-
+    //-
     UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(0, 30, 20, 20)];
     [self minusPlus:minus withSign:@"-"];
+    //+
     UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+150, minus.frame.origin.y, 20, 20)];
     [self minusPlus:plus withSign:@"+"];
+    //count
     UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(plus.frame.origin.x/2,minus.frame.origin.y, 30, 20)];
-    [self labelStyle:count text:@"X 3" size:13];
+    count.tag=kSWCellCountTag;
+    [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
+     [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self labelStyle:count text:@"X 1" size:13];
     [editView addSubview:count];
     //trash image
     UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash2"]];
@@ -74,7 +80,7 @@
     [trashButton addSubview:trash];
     [editView addSubview:trashButton];
     [self addSubview:editView];
-     [self addSubview:infoView];
+    [self addSubview:infoView];
     [self editOrComplete:self.isEdit];
 }
 -(void)labelStyle:(UILabel*)label text:(NSString *)text size:(int)size{
@@ -95,6 +101,22 @@
    [editView addSubview:button];
 }
 
+- (void)plusAction:(UIButton*)sender{
+    _count=_count+1;
+    UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
+    countLable.text=[@"X " stringByAppendingFormat:@"%d",_count];
+    if ([_delegate respondsToSelector:@selector(totalPrice:)]) { // 如果协议响应了sendValue:方法
+        [_delegate totalPrice:_activityProduct.rushPrice.intValue]; // 通知执行协议方法
+    }
+}
+- (void)minusAction:(UIButton*)sender{
+    if(_count!=0){
+    _count=_count-1;
+    UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
+    countLable.text=[@"X " stringByAppendingFormat:@"%d",_count];
+    }
+}
+
 - (void)editOrComplete:(BOOL)selected{
     if (selected) {
         editView.hidden=NO;
@@ -104,4 +126,6 @@
         infoView.hidden=NO;
     }
 }
+
+
 @end

@@ -8,11 +8,11 @@
 
 #import "ShoppingCartController.h"
 #import "ShoppingCartCell.h"
-@interface ShoppingCartController ()
+
+@interface ShoppingCartController () <ShoppingCartCellDelegate>
 
 @end
-
-@implementation ShoppingCartController
+@implementation ShoppingCartController 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,6 +26,7 @@
 }
 
 - (void)_loadTableView {
+    [self totalPrice];
     isEdit=NO;
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
@@ -45,11 +46,11 @@
     label2.font=[UIFont systemFontOfSize:10];
     [_tableView addSubview:label2];
     //total price
-    UILabel *totalPrice=[[UILabel alloc] initWithFrame:CGRectMake(label1.frame.origin.x+300, label1.frame.origin.y, 200, 20)];
-    totalPrice.text=@"¥ 4288";
+    totalPrice=[[UILabel alloc] initWithFrame:CGRectMake(label1.frame.origin.x+300, label1.frame.origin.y, 200, 20)];
+    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%d",sumPrice];
     totalPrice.textColor=UIColorFromRGB(0x1abc9c);
     totalPrice.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
-
+    totalPrice.tag=2;
     [_tableView addSubview:totalPrice];
     //创建编辑按钮
     UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 55, 40)];
@@ -84,14 +85,11 @@
     if(indexPath.row!=0){
     // 1 如果有没有重用，创建新单元格；如果有重用，用复用的单元格
     ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shoppingCartCell" forIndexPath:indexPath];
-    
-    // 2 懒加载设计模式
-    // cell.textLabel.text = @"hello world";
-    // cell.detailLabel.text = @"副标题";
-    // cell.imageView.image = [UIImage imageNamed:@""];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.isEdit=isEdit;
     cell.activityProduct = _arOfWatchesOfCart[indexPath.row-1];
-    
+        cell.count=1;
+        cell.delegate=self;
     // 3 将单元格添加在tableView上
     return cell;
     }else
@@ -108,4 +106,14 @@
     [_tableView reloadData];
 }
 
+-(void)totalPrice{
+    for (ActivityProduct *product in _arOfWatchesOfCart) {
+        sumPrice+=product.rushPrice.intValue;
+    }
+}
+
+- (void)totalPrice:(int)singlePrice{
+    sumPrice=sumPrice+singlePrice;
+    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%d",sumPrice];
+}
 @end
