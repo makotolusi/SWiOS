@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SWMoneyDetailController">
+            <connections>
+                <outlet property="moneyLable" destination="Ovh-YP-daN" id="dao-bt-XC6"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="150" misplaced="YES" text="有效期至：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ch-IB-fvY">
+                    <rect key="frame" x="40" y="190" width="80" height="65"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="dIa-f4-Uc1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="时间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ovh-YP-daN">
+                    <rect key="frame" x="120" y="190" width="230" height="65"/>
+                    <color key="backgroundColor" red="1" green="0.64983624119892358" blue="0.21434524157005774" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="230" id="bYU-Eh-viG"/>
+                        <constraint firstAttribute="height" constant="65" id="u2U-0k-Tdn"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Ovh-YP-daN" firstAttribute="baseline" secondItem="4ch-IB-fvY" secondAttribute="baseline" id="4vU-sU-zaD"/>
+                <constraint firstItem="Ovh-YP-daN" firstAttribute="firstBaseline" secondItem="4ch-IB-fvY" secondAttribute="firstBaseline" id="BqL-3U-b77"/>
+                <constraint firstItem="Ovh-YP-daN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="190" id="FLf-sU-Nky"/>
+                <constraint firstItem="Ovh-YP-daN" firstAttribute="leading" secondItem="4ch-IB-fvY" secondAttribute="trailing" id="Kyt-Xh-JLf"/>
+                <constraint firstItem="4ch-IB-fvY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="gXW-qP-pel"/>
+                <constraint firstItem="4ch-IB-fvY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="khg-q5-rzC"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SWMoneyNavigationController">
+            <connections>
+                <outlet property="moneyLabel" destination="0VT-WP-dvx" id="5b7-lS-GPq"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="money_128px.png" translatesAutoresizingMaskIntoConstraints="NO" id="92x-Pe-EkV">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="399"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="¥" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0VT-WP-dvx">
+                    <rect key="frame" x="213" y="407" width="168" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="我的优惠卷" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ues-U3-4D5">
+                    <rect key="frame" x="229" y="355" width="143" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNR-n1-GKe">
+                    <rect key="frame" x="8" y="503" width="584" height="35"/>
+                    <color key="backgroundColor" red="0.70780222039999996" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="优惠券明细">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="moneyList:" destination="-1" eventType="touchUpInside" id="JPV-ur-e2b"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="Ues-U3-4D5" secondAttribute="centerX" id="B9f-53-GJF"/>
+                <constraint firstItem="lNR-n1-GKe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="18" id="Bag-wR-4ro"/>
+                <constraint firstAttribute="centerX" secondItem="92x-Pe-EkV" secondAttribute="centerX" id="WQb-Db-iQE"/>
+                <constraint firstItem="Ues-U3-4D5" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="330" id="bb2-f7-aoi"/>
+                <constraint firstAttribute="trailing" secondItem="lNR-n1-GKe" secondAttribute="trailing" constant="18" id="c2Z-ea-NhJ"/>
+                <constraint firstAttribute="centerX" secondItem="lNR-n1-GKe" secondAttribute="centerX" id="i1a-K1-yqx"/>
+                <constraint firstAttribute="centerX" secondItem="0VT-WP-dvx" secondAttribute="centerX" id="mMY-bU-TwN"/>
+                <constraint firstItem="0VT-WP-dvx" firstAttribute="top" secondItem="92x-Pe-EkV" secondAttribute="bottom" constant="30" id="sVC-dz-DXa"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="money_128px.png" width="128" height="128"/>
+    </resources>
+</document>
