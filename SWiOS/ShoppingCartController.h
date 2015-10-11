@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SWBaseViewController.h"
+#import "ShoppingCartModel.h"
 @interface ShoppingCartController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
 @private
@@ -18,5 +19,5 @@
     UILabel *totalPrice;
 }
 @property (nonatomic,strong) NSMutableArray *arOfWatchesOfCart;
-
+@property (nonatomic,strong) ShoppingCartModel *cartModel;
 @end

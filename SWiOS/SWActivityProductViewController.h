@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "SWBaseViewController.h"
 #import "Activity.h"
+#import "ShoppingCartModel.h"
 @interface SWActivityProductViewController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
 @private
     UITableView    *_tableView;
     NSMutableArray *_data;
     UIImageView *bottomImageView;
+    UILabel *priceLabel;
+    UIButton *bottomLabel;
 }
-@property (nonatomic,strong) NSMutableArray *arOfWatchesOfCart;
+@property (nonatomic,strong) ShoppingCartModel *cartModel;
 @property (nonatomic,strong)  Activity *activity;
 @end

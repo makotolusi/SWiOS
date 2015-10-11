@@ -71,7 +71,7 @@
 //
 
     self.activityStatus.text=@"进行中";
-    self.activityStatus.textAlignment = UITextAlignmentCenter;
+    self.activityStatus.textAlignment = NSTextAlignmentCenter;
     self.activityStatus.textColor = [UIColor grayColor];
     self.activityStatus.font=[UIFont fontWithName:@"HelveticaNeue" size:11.0];
 //    _descLabel.text = cellVO.desc;

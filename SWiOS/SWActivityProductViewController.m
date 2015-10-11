@@ -13,6 +13,7 @@
 #import "SWBuyBuyBuyViewController.h"
 #import "JSBadgeView.h"
 #import "ShoppingCartController.h"
+#import "ShoppingCartModel.h"
 #define kCCell_Img			1
 #define kCCell_Button		4
 static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier";
@@ -24,14 +25,24 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 -(void)viewDidAppear:(BOOL)animated{
     
 }
+
 - (void)viewDidLoad {
-   
+    
     [super viewDidLoad];
+    [self initialize];
+    [self requestData];
+}
+
+-(void)initialize{
+       _cartModel=[ShoppingCartModel sharedInstance];
+}
+
+-(void)requestData{
     [HttpHelper sendGetRequest:[@"getActivityProcut/" stringByAppendingFormat:@"%@",_activity._id]
                     parameters: @{}
                        success:^(id response) {
                            NSData* data = [response dataUsingEncoding:NSUTF8StringEncoding];
-//                           NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                           //                           NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                            NSArray *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                            NSLog(@"获取到的数据为dict：%@", _data);
                            // 构造数组(MRC:以下情况会出问题，ARC)
@@ -57,13 +68,13 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 }
 
 - (void)_loadContentView {
-    self.arOfWatchesOfCart = [NSMutableArray array];
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
     _tableView.contentInset = UIEdgeInsetsMake(64.f, 0.f, 49.f, 0.f);
     _tableView.rowHeight = 134.f;
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [_tableView registerNib:[UINib nibWithNibName:@"ActivityProductCell" bundle:nil] forCellReuseIdentifier:activityProductCellIdentifier];
     [self.view addSubview:_tableView];
     //shopping cart
@@ -73,31 +84,31 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     //cart home image view
     bottomImageView=[[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 60, 60)];
     bottomImageView.image=[UIImage imageNamed:@"cart_home"];
-
+    
     [barView addSubview:bottomImageView];
     //price label
-    UILabel *priceLabel=[[UILabel alloc] initWithFrame:CGRectMake(bottomImageView.frame.size.width+20, 20, 200, 30)];
+    priceLabel=[[UILabel alloc] initWithFrame:CGRectMake(bottomImageView.frame.size.width+20, 20, 200, 30)];
     priceLabel.textColor=[UIColor whiteColor];
-    priceLabel.text=@"¥ 15000";
+    priceLabel.text=[@"¥ " stringByAppendingFormat:@"%ld",(long)_cartModel.totalSalePrice];
     priceLabel.font=[UIFont boldSystemFontOfSize:20];
     [barView addSubview:priceLabel];
     //buy label
-    UIButton *bottomLabel=[[UIButton alloc] initWithFrame:CGRectMake(barView.frame.size.width-80, 20, 65, 34)];
-//    bottomLabel.titleLabel.text=@"请选购";
-//    bottomLabel.titleLabel.textColor=[UIColor whiteColor];
-//    bottomLabel.titleLabel.textAlignment=NSTextAlignmentCenter;
-//    bottomLabel.titleLabel.font=[UIFont boldSystemFontOfSize:15];
+    bottomLabel=[[UIButton alloc] initWithFrame:CGRectMake(barView.frame.size.width-80, 20, 65, 34)];
     [bottomLabel setTitle:@"请选购" forState:UIControlStateNormal];
+    [bottomLabel setTitle:@"去结算" forState:UIControlStateSelected];
     bottomLabel.backgroundColor=UIColorFromRGB(0x1abc9c);
     bottomLabel.layer.masksToBounds=YES;
     bottomLabel.layer.cornerRadius=6;
     bottomLabel.layer.borderWidth=2;
     bottomLabel.layer.borderColor=[[UIColor whiteColor] CGColor];
-  [bottomLabel addTarget:self action:@selector(bottomLabelClick) forControlEvents:UIControlEventTouchUpInside];
+    [bottomLabel addTarget:self action:@selector(bottomLabelClick) forControlEvents:UIControlEventTouchUpInside];
     [barView addSubview:bottomLabel];
     [self.view addSubview:barView];
-    //    [self.view bringSubviewToFront:barView];
-    //    self.automaticallyAdjustsScrollViewInsets = NO;
+    if(_cartModel.totalCountBadge>0){
+        //badgeView
+        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
+        badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long) _cartModel.totalCountBadge];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -108,10 +119,9 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     ActivityProductCell *cell=[tableView dequeueReusableCellWithIdentifier:activityProductCellIdentifier forIndexPath:indexPath ];
     UIButton *btn = (UIButton*)[cell viewWithTag:kCCell_Button];
     [btn addTarget:self action:@selector(CartTapped:) forControlEvents:UIControlEventTouchUpInside];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.activityProduct=_data[indexPath.row];
-//    ActivityProduct *model = [_data objectAtIndex:indexPath.row];
-    btn.selected=[self.arOfWatchesOfCart containsObject:cell.activityProduct];
-    // set the index of row into disabled property of button - as a trick. so we can access row-number on button tap.
+    btn.selected=[[_cartModel.producCode_buyCount allKeys] containsObject:cell.activityProduct.productCode];
     [btn setTitle:[NSString stringWithFormat:@"%li",(long)indexPath.row] forState:UIControlStateDisabled];
     return cell;
 }
@@ -126,24 +136,36 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     ActivityProduct *model = _data[index];
     // create indexpath
     NSIndexPath *ip = [NSIndexPath indexPathForRow:index inSection:0];
-    
     // perform action
     if(sender.selected) {
         // remove selected array
-        [self.arOfWatchesOfCart removeObject:model];
+        [_cartModel.arOfWatchesOfCart removeObject:model];
+        _cartModel.totalSalePrice=_cartModel.totalSalePrice-model.rushPrice.integerValue;
+          model.buyCount=model.buyCount-1;
+        [_cartModel.producCode_buyCount removeObjectForKey:model.productCode];
         // update badge number
         [self reloadBadgeNumber];
     } else {
-        //badgeView
-            JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
-            badgeView.badgeText = [NSString stringWithFormat:@"%lu", (unsigned long)[_arOfWatchesOfCart count]+1];
         // add into selected array
-        [self.arOfWatchesOfCart addObject:model];
+        [_cartModel.arOfWatchesOfCart addObject:model];
+        _cartModel.totalSalePrice=_cartModel.totalSalePrice+model.rushPrice.integerValue;
+          model.buyCount=model.buyCount+1;
+        [_cartModel.producCode_buyCount setObject:[NSNumber numberWithInt:model.buyCount] forKey:model.productCode];
         // perform add to cart animation
         [self addToCartTapped:ip];
     }
+    _cartModel.totalCountBadge=[_cartModel.arOfWatchesOfCart count];
+    //badgeView
+    JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
+    badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long) _cartModel.totalCountBadge];
+    priceLabel.text=[@"¥ " stringByAppendingFormat:@"%ld",(long)_cartModel.totalSalePrice];
     // reload specific row with animation
     [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:ip] withRowAnimation:UITableViewRowAnimationMiddle];
+    if(_cartModel.totalCountBadge>0){
+        bottomLabel.selected=YES;
+    }else{
+        bottomLabel.selected=NO;
+    }
 }
 
 - (void)addToCartTapped:(NSIndexPath*)indexPath {
@@ -199,7 +221,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 // update the Badge number
 - (void)reloadBadgeNumber {
 
-    if(self.arOfWatchesOfCart.count) {
+    if(_cartModel.arOfWatchesOfCart.count) {
 //        self.tabItemCart.badgeValue=[NSString stringWithFormat:@"%lu",(unsigned long)self.arOfWatchesOfCart.count];
     } else {
 //        self.tabItemCart.badgeValue=nil;
@@ -209,7 +231,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 -(void)bottomLabelClick
 {
     ShoppingCartController *vc =[[ShoppingCartController alloc]init];
-    vc.arOfWatchesOfCart=self.arOfWatchesOfCart;
+    vc.arOfWatchesOfCart=_cartModel.arOfWatchesOfCart;
     vc.navigationItem.title=@"购物车";
     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                      initWithTitle:@""

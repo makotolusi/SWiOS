@@ -15,4 +15,5 @@
 @property(nonatomic,strong)NSNumber *rushPrice;
 @property(nonatomic,strong)NSNumber *rushQuantity;
 @property(nonatomic,copy)NSString *picUrl1;
+@property (assign,nonatomic) NSInteger buyCount;
 @end

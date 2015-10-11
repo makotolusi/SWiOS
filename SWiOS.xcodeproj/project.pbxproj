@@ -80,6 +80,7 @@
 		C50F01FC1BBE94FC0026D16C /* SWBuyBuyBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C50F01F81BBE94FC0026D16C /* SWBuyBuyBuyViewController.m */; };
 		C50F02001BBE96FA0026D16C /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C50F01FF1BBE96FA0026D16C /* HttpHelper.m */; };
 		C50F2C351BB63F5D00E4968A /* public_key.der in Resources */ = {isa = PBXBuildFile; fileRef = C50F2C341BB63F3300E4968A /* public_key.der */; };
+		C526F10C1BCA3D250036A7C2 /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */; };
 		C54BC0351BC8EDE6007D46BA /* trash1.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0331BC8EDE6007D46BA /* trash1.png */; };
 		C54BC0361BC8EDE6007D46BA /* trash2.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0341BC8EDE6007D46BA /* trash2.png */; };
 		C55896A31BC7FCCB00BE14E9 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C55896A21BC7FCCB00BE14E9 /* UIColor+Extension.m */; };
@@ -239,6 +240,8 @@
 		C50F01FE1BBE96FA0026D16C /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		C50F01FF1BBE96FA0026D16C /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		C50F2C341BB63F3300E4968A /* public_key.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = public_key.der; sourceTree = "<group>"; };
+		C526F10A1BCA3D250036A7C2 /* ShoppingCartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartModel.h; sourceTree = "<group>"; };
+		C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartModel.m; sourceTree = "<group>"; };
 		C54BC0331BC8EDE6007D46BA /* trash1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash1.png; sourceTree = "<group>"; };
 		C54BC0341BC8EDE6007D46BA /* trash2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash2.png; sourceTree = "<group>"; };
 		C55896A11BC7FCCB00BE14E9 /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
@@ -684,6 +687,8 @@
 				C55AE31E1BC78E1800C0795D /* ShoppingCartCell.h */,
 				C55AE31F1BC78E1800C0795D /* ShoppingCartCell.m */,
 				C55AE3201BC78E1800C0795D /* ShoppingCartCell.xib */,
+				C526F10A1BCA3D250036A7C2 /* ShoppingCartModel.h */,
+				C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */,
 			);
 			name = ShoppingCart;
 			sourceTree = "<group>";
@@ -935,6 +940,7 @@
 				249727231BB0E4D8007D9704 /* SWMoneyDetailController.m in Sources */,
 				893B7D7C1B5B4FD400A35281 /* SWMainViewController.m in Sources */,
 				C50F01FB1BBE94FC0026D16C /* Activity.m in Sources */,
+				C526F10C1BCA3D250036A7C2 /* ShoppingCartModel.m in Sources */,
 				24FA81F41B85B0620023F71D /* SWBaseNavigationController.m in Sources */,
 				8912A40B1B94034100DAF1EA /* SWCache.m in Sources */,
 				249727091BB0E1A4007D9704 /* SWMeTableViewController.m in Sources */,

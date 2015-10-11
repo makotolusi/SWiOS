@@ -11,7 +11,7 @@
 @implementation ActivityProductCell
 
 - (void)awakeFromNib {
-    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+   
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

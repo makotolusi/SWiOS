@@ -8,7 +8,7 @@
 
 #import "ShoppingCartController.h"
 #import "ShoppingCartCell.h"
-
+#import "ShoppingCartModel.h"
 @interface ShoppingCartController () <ShoppingCartCellDelegate>
 
 @end
@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initialize];
     [self _loadTableView];
     
 }
@@ -23,6 +24,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)initialize{
+    _cartModel=[ShoppingCartModel sharedInstance];
 }
 
 - (void)_loadTableView {
@@ -47,7 +52,7 @@
     [_tableView addSubview:label2];
     //total price
     totalPrice=[[UILabel alloc] initWithFrame:CGRectMake(label1.frame.origin.x+300, label1.frame.origin.y, 200, 20)];
-    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%d",sumPrice];
+    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%ld",(long)_cartModel.totalSalePrice];
     totalPrice.textColor=UIColorFromRGB(0x1abc9c);
     totalPrice.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
     totalPrice.tag=2;

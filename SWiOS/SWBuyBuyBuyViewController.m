@@ -70,6 +70,7 @@
     _tableView.rowHeight = SCREEN_HEIGHT-200.f;
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
     
     self.automaticallyAdjustsScrollViewInsets = NO;

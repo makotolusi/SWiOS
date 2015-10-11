@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ActivityProduct.h"
 #import "YCAsyncImageView.h"
-@interface ActivityProductCell : UITableViewCell
+#import "EmptyCell.h"
+@interface ActivityProductCell : EmptyCell
 @property (strong,nonatomic) ActivityProduct *activityProduct;
 @property (weak, nonatomic) IBOutlet YCAsyncImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *productName;
