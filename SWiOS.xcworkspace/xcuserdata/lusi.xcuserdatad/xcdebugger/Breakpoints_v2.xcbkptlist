@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/SWMainViewController.m"
-            timestampString = "466005167.620383"
+            timestampString = "466334468.567285"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "-tabClicked:atIndex:"
             landmarkType = "5">
          </BreakpointContent>

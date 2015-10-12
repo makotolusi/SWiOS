@@ -10,6 +10,7 @@
 #import "SWExploreEntranceViewController.h"
 #import "SWBuyBuyBuyViewController.h"
 #import "SWMeTableViewController.h"
+#import "ShoppingCartController.h"
 static CGFloat kSWTabBarViewHeight = 66;
 
 static CGFloat kSWCurrentShowingViewTag = 12333;
@@ -101,19 +102,23 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
 
     SWExploreEntranceViewController* ex = [[SWExploreEntranceViewController alloc] init];
     SWBuyBuyBuyViewController* buy = [[SWBuyBuyBuyViewController alloc] init];
+    ShoppingCartController *cart=[[ShoppingCartController alloc] init];
     SWMeTableViewController* me = [[SWMeTableViewController alloc] init];
 
     ex.title = @"探索";
     buy.title = @"抢抢抢";
+    cart.title=@"购物车";
     me.title = @"我";
 
     UINavigationController* nav1 = [[UINavigationController alloc] initWithRootViewController:ex];
 
     UINavigationController* nav2 = [[UINavigationController alloc] initWithRootViewController:buy];
 
-    UINavigationController* nav3 = [[UINavigationController alloc] initWithRootViewController:me];
+      UINavigationController* nav3 = [[UINavigationController alloc] initWithRootViewController:cart];
+    
+    UINavigationController* nav4 = [[UINavigationController alloc] initWithRootViewController:me];
 
-    NSArray* views = @[ nav1, nav2, nav3 ];
+    NSArray* views = @[ nav1, nav2, nav3, nav4 ];
     self.viewControlers = [views mutableCopy];
 }
 - (void)p_initUI

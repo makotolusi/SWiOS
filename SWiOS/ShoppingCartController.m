@@ -9,10 +9,13 @@
 #import "ShoppingCartController.h"
 #import "ShoppingCartCell.h"
 #import "ShoppingCartModel.h"
+#import "BalanceController.h"
+#import "SWMainViewController.h"
 @interface ShoppingCartController () <ShoppingCartCellDelegate>
 
 @end
 @implementation ShoppingCartController 
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -73,12 +76,22 @@
      [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
     //结算
 //    UIView  *barView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 66, SCREEN_WIDTH, 66)];
-  
-    UIButton *buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+  //根据不同入口修改button坐标
+    UIButton *buy;
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
+    bool a=mainController.tabBarView.hidden;
+    if(a){
+        buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+    }else
+    {
+        buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50-66, SCREEN_WIDTH, 50)];
+    }
     buy.backgroundColor = UIColorFromRGB(0x1abc9c);
     buy.alpha=0.7f;
     [buy setTitle:@"结算" forState:UIControlStateNormal];
     [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+     [buy addTarget:self action:@selector(goBalace) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buy];
 }
 #pragma mark - TableView Datasource
@@ -120,5 +133,10 @@
 - (void)totalPrice:(int)singlePrice{
     sumPrice=sumPrice+singlePrice;
     totalPrice.text=[@"¥ " stringByAppendingFormat:@"%d",sumPrice];
+}
+
+-(void)goBalace{
+    BalanceController *balance=[[BalanceController alloc] init];
+    [self.navigationController pushViewController:balance animated:YES];
 }
 @end

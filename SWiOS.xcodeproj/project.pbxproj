@@ -107,6 +107,10 @@
 		C58246321BB594B000031581 /* KeychainHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C582462F1BB594B000031581 /* KeychainHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C58246331BB594B000031581 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C58246311BB594B000031581 /* KeychainItemWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C58246361BB5963D00031581 /* Activate.m in Sources */ = {isa = PBXBuildFile; fileRef = C58246351BB5963D00031581 /* Activate.m */; };
+		C5A725B41BCB4A3100DF040D /* BalanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B31BCB4A3100DF040D /* BalanceController.m */; };
+		C5A725B71BCB549900DF040D /* BalanceFieldModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B61BCB549900DF040D /* BalanceFieldModel.m */; };
+		C5A725BB1BCB5ACF00DF040D /* OrderPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B91BCB5ACF00DF040D /* OrderPriceCell.m */; };
+		C5A725BC1BCB5ACF00DF040D /* OrderPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A725BA1BCB5ACF00DF040D /* OrderPriceCell.xib */; };
 		F6A2D68688C83B10187CE3F9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4040C2648120CA57712E1019 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -284,6 +288,13 @@
 		C58246311BB594B000031581 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		C58246341BB5963D00031581 /* Activate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activate.h; sourceTree = "<group>"; };
 		C58246351BB5963D00031581 /* Activate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activate.m; sourceTree = "<group>"; };
+		C5A725B21BCB4A3100DF040D /* BalanceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceController.h; sourceTree = "<group>"; };
+		C5A725B31BCB4A3100DF040D /* BalanceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalanceController.m; sourceTree = "<group>"; };
+		C5A725B51BCB549900DF040D /* BalanceFieldModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceFieldModel.h; sourceTree = "<group>"; };
+		C5A725B61BCB549900DF040D /* BalanceFieldModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalanceFieldModel.m; sourceTree = "<group>"; };
+		C5A725B81BCB5ACF00DF040D /* OrderPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPriceCell.h; sourceTree = "<group>"; };
+		C5A725B91BCB5ACF00DF040D /* OrderPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPriceCell.m; sourceTree = "<group>"; };
+		C5A725BA1BCB5ACF00DF040D /* OrderPriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderPriceCell.xib; sourceTree = "<group>"; };
 		F35D7AB1F7D5382B03477194 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -490,6 +501,7 @@
 		24FA81F51B85B5670023F71D /* BuyBuyBuy */ = {
 			isa = PBXGroup;
 			children = (
+				C5A725B11BCB49DD00DF040D /* balance */,
 				C55AE31A1BC7654900C0795D /* ShoppingCart */,
 				C56AB5021BC500320061750B /* JSBadgeView */,
 				C563626A1BC15C8500C7E492 /* BaseModel.h */,
@@ -740,6 +752,20 @@
 			name = KeychainHelper;
 			sourceTree = "<group>";
 		};
+		C5A725B11BCB49DD00DF040D /* balance */ = {
+			isa = PBXGroup;
+			children = (
+				C5A725B21BCB4A3100DF040D /* BalanceController.h */,
+				C5A725B31BCB4A3100DF040D /* BalanceController.m */,
+				C5A725B51BCB549900DF040D /* BalanceFieldModel.h */,
+				C5A725B61BCB549900DF040D /* BalanceFieldModel.m */,
+				C5A725B81BCB5ACF00DF040D /* OrderPriceCell.h */,
+				C5A725B91BCB5ACF00DF040D /* OrderPriceCell.m */,
+				C5A725BA1BCB5ACF00DF040D /* OrderPriceCell.xib */,
+			);
+			name = balance;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -848,6 +874,7 @@
 				249727401BB0E573007D9704 /* ping@3x.png in Resources */,
 				2452FF8C1B946000006C7E09 /* label_phone.png in Resources */,
 				C56362711BC15EB600C7E492 /* ActivityProductCell.xib in Resources */,
+				C5A725BC1BCB5ACF00DF040D /* OrderPriceCell.xib in Resources */,
 				2497273E1BB0E573007D9704 /* money@3x.png in Resources */,
 				2497273C1BB0E573007D9704 /* money.png in Resources */,
 				2452FF9C1B94603B006C7E09 /* bg_03.jpg in Resources */,
@@ -932,6 +959,7 @@
 				C58246231BB58FBE00031581 /* TokenBuilder.m in Sources */,
 				C58246321BB594B000031581 /* KeychainHelper.m in Sources */,
 				89CD42991B59F92E00997C18 /* AppDelegate.m in Sources */,
+				C5A725BB1BCB5ACF00DF040D /* OrderPriceCell.m in Sources */,
 				C50F02001BBE96FA0026D16C /* HttpHelper.m in Sources */,
 				C56AB5051BC5003D0061750B /* JSBadgeView.m in Sources */,
 				89CD42961B59F92E00997C18 /* main.m in Sources */,
@@ -946,6 +974,8 @@
 				249727091BB0E1A4007D9704 /* SWMeTableViewController.m in Sources */,
 				C56362691BC1571D00C7E492 /* ActivityProduct.m in Sources */,
 				C55AE3251BC7C3D000C0795D /* EmptyCell.m in Sources */,
+				C5A725B71BCB549900DF040D /* BalanceFieldModel.m in Sources */,
+				C5A725B41BCB4A3100DF040D /* BalanceController.m in Sources */,
 				C55AE31D1BC765B800C0795D /* ShoppingCartController.m in Sources */,
 				C582462A1BB590D400031581 /* NSString+Extension.m in Sources */,
 				890FA84A1B929AC300D74594 /* SWCommonAPI.m in Sources */,
