@@ -9,7 +9,9 @@
 #import "BalanceController.h"
 #import "BalanceFieldModel.h"
 #import "OrderPriceCell.h"
+#import "OrderListCell.h"
 static NSString *orderPriceCell = @"orderPriceCell";
+static NSString *orderListCell = @"orderListCell";
 @interface BalanceController ()
 
 @end
@@ -40,6 +42,7 @@ static NSString *orderPriceCell = @"orderPriceCell";
     _tableView.separatorColor=[UIColor clearColor];
     // 注册单元格（nib, code）
     [_tableView registerNib:[UINib nibWithNibName:@"OrderPriceCell" bundle:nil] forCellReuseIdentifier:orderPriceCell];
+     [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
 }
 - (void)didReceiveMemoryWarning {
@@ -64,6 +67,7 @@ static NSString *orderPriceCell = @"orderPriceCell";
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+//    UIView *view=[
     if(section==1)
     return [self titleLabel:@"收货人信息"];
     else if (section==2)
@@ -76,7 +80,7 @@ static NSString *orderPriceCell = @"orderPriceCell";
     if (indexPath.section==0) {
         return 40.f;
     }else if (indexPath.section==1){
-        return 80.f;
+        return 100.f;
     }else
     return 40.f;
 }
@@ -93,7 +97,10 @@ static NSString *orderPriceCell = @"orderPriceCell";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if(indexPath.section==1){
-        return [[EmptyCell alloc] init];
+        OrderListCell *cell = [tableView dequeueReusableCellWithIdentifier:orderListCell forIndexPath:indexPath];
+         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     }else if(indexPath.section==2){
        return [self editCell: @"添加收货人信息"];
     }else if(indexPath.section==3)
@@ -114,11 +121,13 @@ static NSString *orderPriceCell = @"orderPriceCell";
     return cell;
 
 }
--(UILabel*)titleLabel:(NSString*)text{
-    UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(6, 10, 200, 20)];
+-(UIView*)titleLabel:(NSString*)text{
+    UIView *view=[[UIView alloc] init];
+    UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(6, 30, 200, 20)];
     label.textColor=[UIColor darkGrayColor];
     label.text=text;
-    label.font=[UIFont systemFontOfSize:13];
-    return label;
+    label.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
+    [view addSubview:label];
+    return view;
 }
 @end

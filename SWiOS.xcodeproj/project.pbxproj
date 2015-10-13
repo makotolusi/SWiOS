@@ -83,6 +83,8 @@
 		C526F10C1BCA3D250036A7C2 /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */; };
 		C54BC0351BC8EDE6007D46BA /* trash1.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0331BC8EDE6007D46BA /* trash1.png */; };
 		C54BC0361BC8EDE6007D46BA /* trash2.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0341BC8EDE6007D46BA /* trash2.png */; };
+		C55552441BCCADB700CB755E /* OrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C55552421BCCADB700CB755E /* OrderListCell.m */; };
+		C55552451BCCADB700CB755E /* OrderListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55552431BCCADB700CB755E /* OrderListCell.xib */; };
 		C55896A31BC7FCCB00BE14E9 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C55896A21BC7FCCB00BE14E9 /* UIColor+Extension.m */; };
 		C55AE31D1BC765B800C0795D /* ShoppingCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55AE31C1BC765B800C0795D /* ShoppingCartController.m */; };
 		C55AE3211BC78E1800C0795D /* ShoppingCartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C55AE31F1BC78E1800C0795D /* ShoppingCartCell.m */; };
@@ -248,6 +250,9 @@
 		C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartModel.m; sourceTree = "<group>"; };
 		C54BC0331BC8EDE6007D46BA /* trash1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash1.png; sourceTree = "<group>"; };
 		C54BC0341BC8EDE6007D46BA /* trash2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash2.png; sourceTree = "<group>"; };
+		C55552411BCCADB700CB755E /* OrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListCell.h; sourceTree = "<group>"; };
+		C55552421BCCADB700CB755E /* OrderListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListCell.m; sourceTree = "<group>"; };
+		C55552431BCCADB700CB755E /* OrderListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderListCell.xib; sourceTree = "<group>"; };
 		C55896A11BC7FCCB00BE14E9 /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
 		C55896A21BC7FCCB00BE14E9 /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
 		C55AE31B1BC765B800C0795D /* ShoppingCartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartController.h; sourceTree = "<group>"; };
@@ -762,6 +767,9 @@
 				C5A725B81BCB5ACF00DF040D /* OrderPriceCell.h */,
 				C5A725B91BCB5ACF00DF040D /* OrderPriceCell.m */,
 				C5A725BA1BCB5ACF00DF040D /* OrderPriceCell.xib */,
+				C55552411BCCADB700CB755E /* OrderListCell.h */,
+				C55552421BCCADB700CB755E /* OrderListCell.m */,
+				C55552431BCCADB700CB755E /* OrderListCell.xib */,
 			);
 			name = balance;
 			sourceTree = "<group>";
@@ -853,6 +861,7 @@
 				2452FFA21B94603B006C7E09 /* title4@2x.png in Resources */,
 				249727291BB0E4F6007D9704 /* SWMoneyNavigationController.xib in Resources */,
 				2452FF9D1B94603B006C7E09 /* bg_04.jpg in Resources */,
+				C55552451BCCADB700CB755E /* OrderListCell.xib in Resources */,
 				2497273B1BB0E573007D9704 /* money_128px.png in Resources */,
 				2497273D1BB0E573007D9704 /* money@2x.png in Resources */,
 				C56AB4FC1BC4E6FA0061750B /* cart_remove.png in Resources */,
@@ -956,6 +965,7 @@
 				2497270D1BB0E26D007D9704 /* FileUploadHelper.m in Sources */,
 				8931945A1B9A7BCD00DC3E46 /* SWExploreNaviDelegate.m in Sources */,
 				249727141BB0E312007D9704 /* YALSunnyRefreshControl.m in Sources */,
+				C55552441BCCADB700CB755E /* OrderListCell.m in Sources */,
 				C58246231BB58FBE00031581 /* TokenBuilder.m in Sources */,
 				C58246321BB594B000031581 /* KeychainHelper.m in Sources */,
 				89CD42991B59F92E00997C18 /* AppDelegate.m in Sources */,
