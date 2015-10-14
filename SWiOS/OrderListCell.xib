@@ -14,9 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATm-yO-umL">
-                        <rect key="frame" x="0.0" y="0.0" width="276" height="99.5"/>
-                    </scrollView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="共5件" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anm-ma-DU5">
                         <rect key="frame" x="303" y="39" width="44" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
@@ -25,9 +22,6 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <connections>
-                <outlet property="imgScroll" destination="ATm-yO-umL" id="46Y-D5-gbg"/>
-            </connections>
             <point key="canvasLocation" x="361.5" y="331"/>
         </tableViewCell>
     </objects>

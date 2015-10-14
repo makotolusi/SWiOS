@@ -81,6 +81,13 @@
 		C50F02001BBE96FA0026D16C /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C50F01FF1BBE96FA0026D16C /* HttpHelper.m */; };
 		C50F2C351BB63F5D00E4968A /* public_key.der in Resources */ = {isa = PBXBuildFile; fileRef = C50F2C341BB63F3300E4968A /* public_key.der */; };
 		C526F10C1BCA3D250036A7C2 /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */; };
+		C5434A691BCDFE1100F5D103 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5434A681BCDFE1100F5D103 /* AddressViewController.m */; };
+		C5434A721BCE46AA00F5D103 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5434A6B1BCE46AA00F5D103 /* city.plist */; };
+		C5434A731BCE46AA00F5D103 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5434A6C1BCE46AA00F5D103 /* area.plist */; };
+		C5434A741BCE46AA00F5D103 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5434A6E1BCE46AA00F5D103 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C5434A751BCE46AA00F5D103 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5434A6F1BCE46AA00F5D103 /* HZAreaPickerView.xib */; };
+		C5434A761BCE46AA00F5D103 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = C5434A711BCE46AA00F5D103 /* HZLocation.m */; };
+		C5434A791BCE50FB00F5D103 /* AreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5434A781BCE50FB00F5D103 /* AreaPickerView.m */; };
 		C54BC0351BC8EDE6007D46BA /* trash1.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0331BC8EDE6007D46BA /* trash1.png */; };
 		C54BC0361BC8EDE6007D46BA /* trash2.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0341BC8EDE6007D46BA /* trash2.png */; };
 		C55552441BCCADB700CB755E /* OrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C55552421BCCADB700CB755E /* OrderListCell.m */; };
@@ -248,6 +255,17 @@
 		C50F2C341BB63F3300E4968A /* public_key.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = public_key.der; sourceTree = "<group>"; };
 		C526F10A1BCA3D250036A7C2 /* ShoppingCartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartModel.h; sourceTree = "<group>"; };
 		C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartModel.m; sourceTree = "<group>"; };
+		C5434A671BCDFE1100F5D103 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
+		C5434A681BCDFE1100F5D103 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
+		C5434A6B1BCE46AA00F5D103 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
+		C5434A6C1BCE46AA00F5D103 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
+		C5434A6D1BCE46AA00F5D103 /* HZAreaPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZAreaPickerView.h; sourceTree = "<group>"; };
+		C5434A6E1BCE46AA00F5D103 /* HZAreaPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZAreaPickerView.m; sourceTree = "<group>"; };
+		C5434A6F1BCE46AA00F5D103 /* HZAreaPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HZAreaPickerView.xib; sourceTree = "<group>"; };
+		C5434A701BCE46AA00F5D103 /* HZLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZLocation.h; sourceTree = "<group>"; };
+		C5434A711BCE46AA00F5D103 /* HZLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocation.m; sourceTree = "<group>"; };
+		C5434A771BCE50FB00F5D103 /* AreaPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaPickerView.h; sourceTree = "<group>"; };
+		C5434A781BCE50FB00F5D103 /* AreaPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaPickerView.m; sourceTree = "<group>"; };
 		C54BC0331BC8EDE6007D46BA /* trash1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash1.png; sourceTree = "<group>"; };
 		C54BC0341BC8EDE6007D46BA /* trash2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash2.png; sourceTree = "<group>"; };
 		C55552411BCCADB700CB755E /* OrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListCell.h; sourceTree = "<group>"; };
@@ -506,6 +524,8 @@
 		24FA81F51B85B5670023F71D /* BuyBuyBuy */ = {
 			isa = PBXGroup;
 			children = (
+				C5434A6A1BCE467D00F5D103 /* AreaPicker */,
+				C5434A661BCDFDC800F5D103 /* address */,
 				C5A725B11BCB49DD00DF040D /* balance */,
 				C55AE31A1BC7654900C0795D /* ShoppingCart */,
 				C56AB5021BC500320061750B /* JSBadgeView */,
@@ -696,6 +716,31 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C5434A661BCDFDC800F5D103 /* address */ = {
+			isa = PBXGroup;
+			children = (
+				C5434A671BCDFE1100F5D103 /* AddressViewController.h */,
+				C5434A681BCDFE1100F5D103 /* AddressViewController.m */,
+				C5434A771BCE50FB00F5D103 /* AreaPickerView.h */,
+				C5434A781BCE50FB00F5D103 /* AreaPickerView.m */,
+			);
+			name = address;
+			sourceTree = "<group>";
+		};
+		C5434A6A1BCE467D00F5D103 /* AreaPicker */ = {
+			isa = PBXGroup;
+			children = (
+				C5434A6B1BCE46AA00F5D103 /* city.plist */,
+				C5434A6C1BCE46AA00F5D103 /* area.plist */,
+				C5434A6D1BCE46AA00F5D103 /* HZAreaPickerView.h */,
+				C5434A6E1BCE46AA00F5D103 /* HZAreaPickerView.m */,
+				C5434A6F1BCE46AA00F5D103 /* HZAreaPickerView.xib */,
+				C5434A701BCE46AA00F5D103 /* HZLocation.h */,
+				C5434A711BCE46AA00F5D103 /* HZLocation.m */,
+			);
+			name = AreaPicker;
+			sourceTree = "<group>";
+		};
 		C55AE31A1BC7654900C0795D /* ShoppingCart */ = {
 			isa = PBXGroup;
 			children = (
@@ -861,9 +906,11 @@
 				2452FFA21B94603B006C7E09 /* title4@2x.png in Resources */,
 				249727291BB0E4F6007D9704 /* SWMoneyNavigationController.xib in Resources */,
 				2452FF9D1B94603B006C7E09 /* bg_04.jpg in Resources */,
+				C5434A721BCE46AA00F5D103 /* city.plist in Resources */,
 				C55552451BCCADB700CB755E /* OrderListCell.xib in Resources */,
 				2497273B1BB0E573007D9704 /* money_128px.png in Resources */,
 				2497273D1BB0E573007D9704 /* money@2x.png in Resources */,
+				C5434A751BCE46AA00F5D103 /* HZAreaPickerView.xib in Resources */,
 				C56AB4FC1BC4E6FA0061750B /* cart_remove.png in Resources */,
 				2452FF9B1B94603B006C7E09 /* bg_02.jpg in Resources */,
 				89CD429F1B59F92E00997C18 /* Main.storyboard in Resources */,
@@ -901,6 +948,7 @@
 				2452FFA01B94603B006C7E09 /* title2@2x.png in Resources */,
 				249727441BB0E573007D9704 /* shark.png in Resources */,
 				2452FF8E1B946000006C7E09 /* textfield_default_holo_light.9.png in Resources */,
+				C5434A731BCE46AA00F5D103 /* area.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,6 +1004,7 @@
 				893194531B98239600DC3E46 /* SWBaseDataProvider.m in Sources */,
 				C563626C1BC15C8500C7E492 /* BaseModel.m in Sources */,
 				890FA84D1B933CA300D74594 /* SWHttpRequestOperation.m in Sources */,
+				C5434A691BCDFE1100F5D103 /* AddressViewController.m in Sources */,
 				C50F01FC1BBE94FC0026D16C /* SWBuyBuyBuyViewController.m in Sources */,
 				89CD429C1B59F92E00997C18 /* ViewController.m in Sources */,
 				C58246221BB58FBE00031581 /* TokenEncrypt.m in Sources */,
@@ -963,6 +1012,7 @@
 				C50F01F91BBE94FC0026D16C /* ActivityCell.m in Sources */,
 				C582462B1BB590D400031581 /* GTMBase642.m in Sources */,
 				2497270D1BB0E26D007D9704 /* FileUploadHelper.m in Sources */,
+				C5434A741BCE46AA00F5D103 /* HZAreaPickerView.m in Sources */,
 				8931945A1B9A7BCD00DC3E46 /* SWExploreNaviDelegate.m in Sources */,
 				249727141BB0E312007D9704 /* YALSunnyRefreshControl.m in Sources */,
 				C55552441BCCADB700CB755E /* OrderListCell.m in Sources */,
@@ -978,11 +1028,13 @@
 				249727231BB0E4D8007D9704 /* SWMoneyDetailController.m in Sources */,
 				893B7D7C1B5B4FD400A35281 /* SWMainViewController.m in Sources */,
 				C50F01FB1BBE94FC0026D16C /* Activity.m in Sources */,
+				C5434A791BCE50FB00F5D103 /* AreaPickerView.m in Sources */,
 				C526F10C1BCA3D250036A7C2 /* ShoppingCartModel.m in Sources */,
 				24FA81F41B85B0620023F71D /* SWBaseNavigationController.m in Sources */,
 				8912A40B1B94034100DAF1EA /* SWCache.m in Sources */,
 				249727091BB0E1A4007D9704 /* SWMeTableViewController.m in Sources */,
 				C56362691BC1571D00C7E492 /* ActivityProduct.m in Sources */,
+				C5434A761BCE46AA00F5D103 /* HZLocation.m in Sources */,
 				C55AE3251BC7C3D000C0795D /* EmptyCell.m in Sources */,
 				C5A725B71BCB549900DF040D /* BalanceFieldModel.m in Sources */,
 				C5A725B41BCB4A3100DF040D /* BalanceController.m in Sources */,

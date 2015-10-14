@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#define orderListCellHeight 70
 @interface OrderListCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIScrollView *imgScroll;
+@property (strong, nonatomic) IBOutlet UIScrollView *imgScroll;
 @end

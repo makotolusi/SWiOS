@@ -10,6 +10,7 @@
 #import "BalanceFieldModel.h"
 #import "OrderPriceCell.h"
 #import "OrderListCell.h"
+#import "AddressViewController.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
 @interface BalanceController ()
@@ -80,7 +81,7 @@ static NSString *orderListCell = @"orderListCell";
     if (indexPath.section==0) {
         return 40.f;
     }else if (indexPath.section==1){
-        return 100.f;
+        return orderListCellHeight+5;
     }else
     return 40.f;
 }
@@ -129,5 +130,16 @@ static NSString *orderListCell = @"orderListCell";
     label.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
     [view addSubview:label];
     return view;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section==0){
+
+    }else if(indexPath.section==1){
+    }else if(indexPath.section==2){
+        AddressViewController *av=[[AddressViewController  alloc] init];
+        [self.navigationController pushViewController:av animated:YES];
+    }else if(indexPath.section==3)
+    {}
 }
 @end
