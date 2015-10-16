@@ -33,6 +33,8 @@ static CGFloat kSWCellCountTag = 1;
     CGContextStrokeRect(context, CGRectMake(10, rect.size.height, rect.size.width, 1));
 }
 -(void)layoutSubviews{
+    _cartModel=[ShoppingCartModel sharedInstance];
+    _activityProduct=_cartModel.arOfWatchesOfCart[_cellIndex];
     [super layoutSubviews];
     [infoView removeFromSuperview];
     [editView removeFromSuperview];
@@ -53,7 +55,7 @@ static CGFloat kSWCellCountTag = 1;
     [self labelStyle:price text:[@"¥ " stringByAppendingFormat:@"%@",_activityProduct.rushPrice] size:13];
     //count1
     UILabel *count1=[[UILabel alloc] initWithFrame:CGRectMake(infoView.frame.size.width-40, infoView.frame.size.height-15, 50, 15)];
-    [self labelStyle:count1 text:[NSString stringWithFormat:@"%@",_activityProduct.rushQuantity] size:13];
+    [self labelStyle:count1 text:[NSString stringWithFormat:@"%ld",_activityProduct.buyCount] size:13];
     [infoView addSubview:title];
     [infoView addSubview:price];
     [infoView addSubview:count1];
@@ -71,7 +73,7 @@ static CGFloat kSWCellCountTag = 1;
     count.tag=kSWCellCountTag;
     [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
      [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self labelStyle:count text:@"X 1" size:13];
+    [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:13];
     [editView addSubview:count];
     //trash image
     UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash2"]];
@@ -102,18 +104,20 @@ static CGFloat kSWCellCountTag = 1;
 }
 
 - (void)plusAction:(UIButton*)sender{
-    _count=_count+1;
+     _activityProduct.buyCount+=1;
+    [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_cellIndex withObject:_activityProduct ];
     UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
-    countLable.text=[@"X " stringByAppendingFormat:@"%d",_count];
+    countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
     if ([_delegate respondsToSelector:@selector(totalPrice:)]) { // 如果协议响应了sendValue:方法
-        [_delegate totalPrice:_activityProduct.rushPrice.intValue]; // 通知执行协议方法
+        [_delegate totalPrice: _activityProduct]; // 通知执行协议方法
     }
 }
 - (void)minusAction:(UIButton*)sender{
-    if(_count!=0){
-    _count=_count-1;
-    UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
-    countLable.text=[@"X " stringByAppendingFormat:@"%d",_count];
+    if( _activityProduct.buyCount!=0){
+         _activityProduct.buyCount-=1;
+        [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_cellIndex withObject:_activityProduct ];
+        UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
+        countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
     }
 }
 

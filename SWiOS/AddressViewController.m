@@ -8,7 +8,7 @@
 
 #import "AddressViewController.h"
 #import "EmptyCell.h"
-#import "AreaPickerView.h"
+#import "DatabaseManager.h"
 @interface AddressViewController ()
 @property (retain, nonatomic) UITextField *areaText;
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
@@ -21,11 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self _loadTableView];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    _databaseManager=[DatabaseManager sharedDatabaseManager];
 }
 
 - (void)_loadTableView {
@@ -36,19 +32,21 @@
     _tableView.contentInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, 0.f);
     _tableView.separatorColor=[UIColor clearColor];
     _tableView.rowHeight=40.f;
+    //创建编辑按钮
+    UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 55, 40)];
+    editButton.backgroundColor = [UIColor clearColor];
+    [editButton setTitle:@"保存" forState:UIControlStateNormal];
+    [editButton setTitleColor:UIColorFromRGB(0x1abc9c) forState:UIControlStateNormal];
+    [editButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
+    //创建edit按钮
+    UIBarButtonItem *homeButtonItem = [[UIBarButtonItem alloc]initWithCustomView:editButton];
+     self.navigationItem.rightBarButtonItem=homeButtonItem;
     // 注册单元格（nib, code）
 //    [_tableView registerNib:[UINib nibWithNibName:@"OrderPriceCell" bundle:nil] forCellReuseIdentifier:orderPriceCell];
 //    [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (indexPath.row==3) {
-//        return 60.f;
-//    }else{
-//        return _tableView.rowHeight;
-//    }
-//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -68,13 +66,13 @@
     }
     switch (indexPath.row) {
         case 0:
-            [cell addSubview:[self input:@"收货人姓名"]];
+            [cell addSubview:[self input:@"收货人姓名" tag:11]];
             break;
         case 1:
-            [cell addSubview:[self input:@"手机号码"]];
+            [cell addSubview:[self input:@"手机号码" tag:12]];
             break;
         case 2:
-            [cell addSubview:[self input:@"邮政编码"]];
+            [cell addSubview:[self input:@"邮政编码" tag:13]];
             break;
         case 3:
             _areaText=[[UITextField alloc] initWithFrame:CGRectMake(5,0,cell.frame.size.width,cell.frame.size.height)];
@@ -104,9 +102,10 @@
     [textView addSubview:_placeholderLabel];
     return textView;
 }
--(UITextField*)input:(NSString*)text{
+-(UITextField*)input:(NSString*)text tag:(NSInteger) tag{
     UITextField* input=[[UITextField alloc] initWithFrame:CGRectMake(5, 0, 200, _tableView.rowHeight)];
     input.placeholder=text;
+    input.tag=tag;
     [input setValue:[UIFont boldSystemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
     return input;
 }
@@ -175,5 +174,13 @@
     }
 }
 
+- (void)save:(UIButton*)sender {
+    UITextField *nameTf=[self.view viewWithTag:11];
+    NSString *name=nameTf.text;
+    AddressModel *add=[[AddressModel alloc] init];
+    [add setValue:name forKey:@"name"];
+    [_databaseManager insertAddress:add];
+//    [_tableView reloadData];
+}
 
 @end

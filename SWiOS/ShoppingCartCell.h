@@ -13,7 +13,7 @@
 #import "YCAsyncImageView.h"
 @protocol ShoppingCartCellDelegate <NSObject>
 
-- (void)totalPrice:(int)singlePrice;
+- (void)totalPrice:(ActivityProduct*)activityProduct;
 
 @end
 
@@ -24,9 +24,11 @@
         UIView *infoView;
 }
 @property (weak, nonatomic) IBOutlet YCAsyncImageView *imgView;
-@property (strong,nonatomic) ActivityProduct *activityProduct;
+@property (nonatomic,strong) ShoppingCartModel *cartModel;
+@property (nonatomic,assign) NSInteger cellIndex;
+@property (nonatomic,strong) ActivityProduct* activityProduct;
 @property (assign,nonatomic) BOOL isEdit;
-@property (assign,nonatomic) int count;
+//@property (assign,nonatomic) int count;
 // 委托代理人，代理一般需使用弱引用(weak)
 @property (weak, nonatomic) id<ShoppingCartCellDelegate> delegate;
 @end

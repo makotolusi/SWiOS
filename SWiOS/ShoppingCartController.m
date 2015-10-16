@@ -34,7 +34,7 @@
 }
 
 - (void)_loadTableView {
-    [self totalPrice];
+//    [self totalPrice];
     isEdit=NO;
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
@@ -96,7 +96,7 @@
 }
 #pragma mark - TableView Datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_arOfWatchesOfCart count]+1;
+    return [_cartModel.arOfWatchesOfCart count]+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -105,8 +105,8 @@
     ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shoppingCartCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.isEdit=isEdit;
-    cell.activityProduct = _arOfWatchesOfCart[indexPath.row-1];
-        cell.count=1;
+        cell.cellIndex=indexPath.row-1;
+//        cell.activityProduct.buyCount=1;
         cell.delegate=self;
     // 3 将单元格添加在tableView上
     return cell;
@@ -124,15 +124,15 @@
     [_tableView reloadData];
 }
 
--(void)totalPrice{
-    for (ActivityProduct *product in _arOfWatchesOfCart) {
-        sumPrice+=product.rushPrice.intValue;
-    }
-}
+//-(void)totalPrice{
+//    for (ActivityProduct *product in _cartModel.arOfWatchesOfCart) {
+//        _cartModel.totalSalePrice+=product.rushPrice.intValue;
+//    }
+//}
 
-- (void)totalPrice:(int)singlePrice{
-    sumPrice=sumPrice+singlePrice;
-    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%d",sumPrice];
+- (void)totalPrice:(ActivityProduct*)activityProduct{
+    _cartModel.totalSalePrice+=activityProduct.rushPrice.integerValue;
+    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%ld", (long)_cartModel.totalSalePrice];
 }
 
 -(void)goBalace{

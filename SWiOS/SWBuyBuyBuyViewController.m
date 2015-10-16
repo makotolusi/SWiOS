@@ -12,6 +12,7 @@
 #import "ActivityCell.h"
 #import "SWActivityProductViewController.h"
 #import "SWMainViewController.h"
+#import "FMDB.h"
 @interface SWBuyBuyBuyViewController ()
 
 @end
@@ -112,6 +113,10 @@
     SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
     mainController.tabBarView.hidden=YES;
     [self.navigationController pushViewController:thumbViewController animated:YES];
+}
+
+-(void)createDB{
+    FMDatabase *db = [FMDatabase databaseWithPath:@"/tmp/tmp.db"];
 }
 
 @end

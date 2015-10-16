@@ -52,7 +52,7 @@
     return NSSelectorFromString(setter);
 }
 
-- (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues
+- (id)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues
 {
     // 1 将凡是ID，类名+ID，比如，newsModel =》 NewsModelID (建立映射关系)
     // Model == JSON
@@ -77,6 +77,7 @@
             [self performSelector:sel withObject:jsonValue];
         }
     }
+    return self;
 }
 
 @end

@@ -7,6 +7,6 @@
 
 @interface BaseModel : NSObject
 
-- (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
+- (id)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 
 @end

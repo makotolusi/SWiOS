@@ -7,7 +7,7 @@
 //
 
 #import "OrderPriceCell.h"
-
+#import "ShoppingCartModel.h"
 @implementation OrderPriceCell
 
 - (void)awakeFromNib {
@@ -20,7 +20,9 @@
     // Configure the view for the selected state
 }
 -(void)layoutSubviews{
+    _cartModel=[ShoppingCartModel sharedInstance];
     _priceLabel.textColor=UIColorFromRGB(labelTextColor);
+    _priceLabel.text=[NSString stringWithFormat:@"¥  %ld",_cartModel.totalSalePrice];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "BalanceFieldModel.h"
 #import "OrderPriceCell.h"
 #import "OrderListCell.h"
+//#import "ShoppingCartModel.h"
 #import "AddressViewController.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
@@ -30,6 +31,8 @@ static NSString *orderListCell = @"orderListCell";
     [groups addObject:[[BalanceFieldModel alloc] init]];
      [groups addObject:[[BalanceFieldModel alloc] init]];
      [groups addObject:[[BalanceFieldModel alloc] init]];
+      paymentArray=[NSArray arrayWithObjects:@"EMS",@"中通", @"顺丰",nil];
+//     _cartModel=[ShoppingCartModel sharedInstance];
 }
 
 - (void)_loadTableView {
@@ -37,14 +40,17 @@ static NSString *orderListCell = @"orderListCell";
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-//    _tableView.rowHeight = 110;
-//    _tableView.contentInset = UIEdgeInsetsMake(-50, 0.f, 0.f, 0.f);
     _tableView.separatorStyle=UITableViewStyleGrouped;
     _tableView.separatorColor=[UIColor clearColor];
     // 注册单元格（nib, code）
     [_tableView registerNib:[UINib nibWithNibName:@"OrderPriceCell" bundle:nil] forCellReuseIdentifier:orderPriceCell];
      [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
+    //快递公司
+    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-200, SCREEN_WIDTH, 100)];
+    _paymentPicker.dataSource=self;
+    _paymentPicker.delegate=self;
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -103,20 +109,21 @@ static NSString *orderListCell = @"orderListCell";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if(indexPath.section==2){
-       return [self editCell: @"添加收货人信息"];
+        return [self editCell: @"添加收货人信息" tag:10];
     }else if(indexPath.section==3)
     {
-        return [self editCell:@"快递公司"];
+        return [self editCell:@"快递公司" tag:11];
     }else
         return [[EmptyCell alloc] init];
 }
--(UITableViewCell*)editCell:(NSString*)text{
+-(UITableViewCell*)editCell:(NSString*)text tag:(NSInteger*)tag{
     EmptyCell* cell = [[EmptyCell alloc] init];
     UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(6, 10, 200, 20)];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
     label.textColor=[UIColor lightGrayColor];
     label.text=text;
+    label.tag=tag;
     label.font=[UIFont systemFontOfSize:13];
     [cell addSubview:label];
     return cell;
@@ -137,9 +144,48 @@ static NSString *orderListCell = @"orderListCell";
 
     }else if(indexPath.section==1){
     }else if(indexPath.section==2){
+        self.navigationItem.title=@"收货人信息";
+        //back button style
+        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                         initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                         target:self
+                                         action:nil];
+        self.navigationItem.backBarButtonItem = cancelButton;
         AddressViewController *av=[[AddressViewController  alloc] init];
         [self.navigationController pushViewController:av animated:YES];
     }else if(indexPath.section==3)
-    {}
+    {
+        [self.view addSubview:_paymentPicker];
+    }
+}
+
+//picker
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return paymentArray.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [paymentArray objectAtIndex:row];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+//    [self cancelLocatePicker];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    UITextField* tf=[self.view viewWithTag:11];
+    tf.font=[UIFont systemFontOfSize:15];
+    tf.textColor=[UIColor blackColor];
+    tf.text=[paymentArray objectAtIndex:row];
 }
 @end

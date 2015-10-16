@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SWBaseViewController.h"
 #import "HZAreaPickerView.h"
-@interface AddressViewController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,HZAreaPickerDelegate>
+#import "DatabaseManager.h"
+@interface AddressViewController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,HZAreaPickerDelegate,UIPickerViewDelegate, UIPickerViewDataSource>
 {
     @private
         UITableView    *_tableView;
         UILabel *_placeholderLabel;
+        NSArray *paymentArray;
 }
+@property(nonatomic,strong)DatabaseManager *databaseManager;
 @end

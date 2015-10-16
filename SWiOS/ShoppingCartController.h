@@ -15,9 +15,9 @@
     UITableView    *_tableView;
     BOOL isEdit;
     NSMutableArray *_data;
-    int sumPrice;
+//    int sumPrice;
     UILabel *totalPrice;
 }
-@property (nonatomic,strong) NSMutableArray *arOfWatchesOfCart;
+//@property (nonatomic,strong) NSMutableArray *arOfWatchesOfCart;
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
 @end

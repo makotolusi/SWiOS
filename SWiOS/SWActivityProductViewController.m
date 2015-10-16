@@ -231,7 +231,6 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 -(void)bottomLabelClick
 {
     ShoppingCartController *vc =[[ShoppingCartController alloc]init];
-    vc.arOfWatchesOfCart=_cartModel.arOfWatchesOfCart;
     vc.navigationItem.title=@"购物车";
     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                      initWithTitle:@""

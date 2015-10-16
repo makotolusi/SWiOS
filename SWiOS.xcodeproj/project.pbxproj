@@ -87,7 +87,6 @@
 		C5434A741BCE46AA00F5D103 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5434A6E1BCE46AA00F5D103 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C5434A751BCE46AA00F5D103 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5434A6F1BCE46AA00F5D103 /* HZAreaPickerView.xib */; };
 		C5434A761BCE46AA00F5D103 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = C5434A711BCE46AA00F5D103 /* HZLocation.m */; };
-		C5434A791BCE50FB00F5D103 /* AreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5434A781BCE50FB00F5D103 /* AreaPickerView.m */; };
 		C54BC0351BC8EDE6007D46BA /* trash1.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0331BC8EDE6007D46BA /* trash1.png */; };
 		C54BC0361BC8EDE6007D46BA /* trash2.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0341BC8EDE6007D46BA /* trash2.png */; };
 		C55552441BCCADB700CB755E /* OrderListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C55552421BCCADB700CB755E /* OrderListCell.m */; };
@@ -97,6 +96,15 @@
 		C55AE3211BC78E1800C0795D /* ShoppingCartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C55AE31F1BC78E1800C0795D /* ShoppingCartCell.m */; };
 		C55AE3221BC78E1800C0795D /* ShoppingCartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55AE3201BC78E1800C0795D /* ShoppingCartCell.xib */; };
 		C55AE3251BC7C3D000C0795D /* EmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C55AE3241BC7C3D000C0795D /* EmptyCell.m */; };
+		C55D5FE51BD0E249004970C4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C55D5FE31BD0E249004970C4 /* libsqlite3.0.dylib */; };
+		C55D5FE61BD0E249004970C4 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C55D5FE41BD0E249004970C4 /* libsqlite3.dylib */; };
+		C55D5FF31BD0E6AD004970C4 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D5FEA1BD0E6AD004970C4 /* FMDatabase.m */; };
+		C55D5FF41BD0E6AD004970C4 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D5FEC1BD0E6AD004970C4 /* FMResultSet.m */; };
+		C55D5FF51BD0E6AD004970C4 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D5FEE1BD0E6AD004970C4 /* FMDatabaseQueue.m */; };
+		C55D5FF61BD0E6AD004970C4 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D5FF01BD0E6AD004970C4 /* FMDatabaseAdditions.m */; };
+		C55D5FF71BD0E6AD004970C4 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D5FF21BD0E6AD004970C4 /* FMDatabasePool.m */; };
+		C55D5FFB1BD0F162004970C4 /* DatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D5FFA1BD0F162004970C4 /* DatabaseManager.m */; };
+		C55D5FFE1BD0F30E004970C4 /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D5FFD1BD0F30E004970C4 /* AddressModel.m */; };
 		C56362661BC1543C00C7E492 /* SWActivityProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C56362651BC1543C00C7E492 /* SWActivityProductViewController.m */; };
 		C56362691BC1571D00C7E492 /* ActivityProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = C56362681BC1571D00C7E492 /* ActivityProduct.m */; };
 		C563626C1BC15C8500C7E492 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C563626B1BC15C8500C7E492 /* BaseModel.m */; };
@@ -264,8 +272,6 @@
 		C5434A6F1BCE46AA00F5D103 /* HZAreaPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HZAreaPickerView.xib; sourceTree = "<group>"; };
 		C5434A701BCE46AA00F5D103 /* HZLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZLocation.h; sourceTree = "<group>"; };
 		C5434A711BCE46AA00F5D103 /* HZLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocation.m; sourceTree = "<group>"; };
-		C5434A771BCE50FB00F5D103 /* AreaPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaPickerView.h; sourceTree = "<group>"; };
-		C5434A781BCE50FB00F5D103 /* AreaPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaPickerView.m; sourceTree = "<group>"; };
 		C54BC0331BC8EDE6007D46BA /* trash1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash1.png; sourceTree = "<group>"; };
 		C54BC0341BC8EDE6007D46BA /* trash2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash2.png; sourceTree = "<group>"; };
 		C55552411BCCADB700CB755E /* OrderListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListCell.h; sourceTree = "<group>"; };
@@ -280,6 +286,23 @@
 		C55AE3201BC78E1800C0795D /* ShoppingCartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoppingCartCell.xib; sourceTree = "<group>"; };
 		C55AE3231BC7C3D000C0795D /* EmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyCell.h; sourceTree = "<group>"; };
 		C55AE3241BC7C3D000C0795D /* EmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyCell.m; sourceTree = "<group>"; };
+		C55D5FE31BD0E249004970C4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		C55D5FE41BD0E249004970C4 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		C55D5FE81BD0E6AD004970C4 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		C55D5FE91BD0E6AD004970C4 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		C55D5FEA1BD0E6AD004970C4 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		C55D5FEB1BD0E6AD004970C4 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		C55D5FEC1BD0E6AD004970C4 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		C55D5FED1BD0E6AD004970C4 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		C55D5FEE1BD0E6AD004970C4 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		C55D5FEF1BD0E6AD004970C4 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		C55D5FF01BD0E6AD004970C4 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		C55D5FF11BD0E6AD004970C4 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		C55D5FF21BD0E6AD004970C4 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		C55D5FF91BD0F162004970C4 /* DatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseManager.h; sourceTree = "<group>"; };
+		C55D5FFA1BD0F162004970C4 /* DatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseManager.m; sourceTree = "<group>"; };
+		C55D5FFC1BD0F30E004970C4 /* AddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressModel.h; sourceTree = "<group>"; };
+		C55D5FFD1BD0F30E004970C4 /* AddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressModel.m; sourceTree = "<group>"; };
 		C56362641BC1543C00C7E492 /* SWActivityProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWActivityProductViewController.h; sourceTree = "<group>"; };
 		C56362651BC1543C00C7E492 /* SWActivityProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWActivityProductViewController.m; sourceTree = "<group>"; };
 		C56362671BC1571D00C7E492 /* ActivityProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityProduct.h; sourceTree = "<group>"; };
@@ -326,6 +349,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C55D5FE51BD0E249004970C4 /* libsqlite3.0.dylib in Frameworks */,
+				C55D5FE61BD0E249004970C4 /* libsqlite3.dylib in Frameworks */,
 				F6A2D68688C83B10187CE3F9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,6 +419,7 @@
 		248578BF1B5A036700379927 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C55D5FE71BD0E693004970C4 /* FMDB */,
 				C582461D1BB58FA900031581 /* Token */,
 				249727191BB0E41E007D9704 /* Image */,
 				2497270A1BB0E246007D9704 /* File */,
@@ -564,6 +590,8 @@
 		6ADE9F5F5E3C4BE4C42C0A00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C55D5FE31BD0E249004970C4 /* libsqlite3.0.dylib */,
+				C55D5FE41BD0E249004970C4 /* libsqlite3.dylib */,
 				4040C2648120CA57712E1019 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -721,8 +749,8 @@
 			children = (
 				C5434A671BCDFE1100F5D103 /* AddressViewController.h */,
 				C5434A681BCDFE1100F5D103 /* AddressViewController.m */,
-				C5434A771BCE50FB00F5D103 /* AreaPickerView.h */,
-				C5434A781BCE50FB00F5D103 /* AreaPickerView.m */,
+				C55D5FFC1BD0F30E004970C4 /* AddressModel.h */,
+				C55D5FFD1BD0F30E004970C4 /* AddressModel.m */,
 			);
 			name = address;
 			sourceTree = "<group>";
@@ -753,6 +781,26 @@
 				C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */,
 			);
 			name = ShoppingCart;
+			sourceTree = "<group>";
+		};
+		C55D5FE71BD0E693004970C4 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				C55D5FF91BD0F162004970C4 /* DatabaseManager.h */,
+				C55D5FFA1BD0F162004970C4 /* DatabaseManager.m */,
+				C55D5FE81BD0E6AD004970C4 /* FMDB.h */,
+				C55D5FE91BD0E6AD004970C4 /* FMDatabase.h */,
+				C55D5FEA1BD0E6AD004970C4 /* FMDatabase.m */,
+				C55D5FEB1BD0E6AD004970C4 /* FMResultSet.h */,
+				C55D5FEC1BD0E6AD004970C4 /* FMResultSet.m */,
+				C55D5FED1BD0E6AD004970C4 /* FMDatabaseQueue.h */,
+				C55D5FEE1BD0E6AD004970C4 /* FMDatabaseQueue.m */,
+				C55D5FEF1BD0E6AD004970C4 /* FMDatabaseAdditions.h */,
+				C55D5FF01BD0E6AD004970C4 /* FMDatabaseAdditions.m */,
+				C55D5FF11BD0E6AD004970C4 /* FMDatabasePool.h */,
+				C55D5FF21BD0E6AD004970C4 /* FMDatabasePool.m */,
+			);
+			name = FMDB;
 			sourceTree = "<group>";
 		};
 		C56AB4F71BC4E6DF0061750B /* BuyBuyBuy */ = {
@@ -1009,18 +1057,23 @@
 				89CD429C1B59F92E00997C18 /* ViewController.m in Sources */,
 				C58246221BB58FBE00031581 /* TokenEncrypt.m in Sources */,
 				2497271F1BB0E474007D9704 /* ImageHelper.m in Sources */,
+				C55D5FF61BD0E6AD004970C4 /* FMDatabaseAdditions.m in Sources */,
 				C50F01F91BBE94FC0026D16C /* ActivityCell.m in Sources */,
 				C582462B1BB590D400031581 /* GTMBase642.m in Sources */,
 				2497270D1BB0E26D007D9704 /* FileUploadHelper.m in Sources */,
 				C5434A741BCE46AA00F5D103 /* HZAreaPickerView.m in Sources */,
 				8931945A1B9A7BCD00DC3E46 /* SWExploreNaviDelegate.m in Sources */,
+				C55D5FF31BD0E6AD004970C4 /* FMDatabase.m in Sources */,
 				249727141BB0E312007D9704 /* YALSunnyRefreshControl.m in Sources */,
 				C55552441BCCADB700CB755E /* OrderListCell.m in Sources */,
 				C58246231BB58FBE00031581 /* TokenBuilder.m in Sources */,
+				C55D5FFE1BD0F30E004970C4 /* AddressModel.m in Sources */,
+				C55D5FF41BD0E6AD004970C4 /* FMResultSet.m in Sources */,
 				C58246321BB594B000031581 /* KeychainHelper.m in Sources */,
 				89CD42991B59F92E00997C18 /* AppDelegate.m in Sources */,
 				C5A725BB1BCB5ACF00DF040D /* OrderPriceCell.m in Sources */,
 				C50F02001BBE96FA0026D16C /* HttpHelper.m in Sources */,
+				C55D5FFB1BD0F162004970C4 /* DatabaseManager.m in Sources */,
 				C56AB5051BC5003D0061750B /* JSBadgeView.m in Sources */,
 				89CD42961B59F92E00997C18 /* main.m in Sources */,
 				249727281BB0E4F6007D9704 /* SWMoneyNavigationController.m in Sources */,
@@ -1028,8 +1081,8 @@
 				249727231BB0E4D8007D9704 /* SWMoneyDetailController.m in Sources */,
 				893B7D7C1B5B4FD400A35281 /* SWMainViewController.m in Sources */,
 				C50F01FB1BBE94FC0026D16C /* Activity.m in Sources */,
-				C5434A791BCE50FB00F5D103 /* AreaPickerView.m in Sources */,
 				C526F10C1BCA3D250036A7C2 /* ShoppingCartModel.m in Sources */,
+				C55D5FF71BD0E6AD004970C4 /* FMDatabasePool.m in Sources */,
 				24FA81F41B85B0620023F71D /* SWBaseNavigationController.m in Sources */,
 				8912A40B1B94034100DAF1EA /* SWCache.m in Sources */,
 				249727091BB0E1A4007D9704 /* SWMeTableViewController.m in Sources */,
@@ -1039,6 +1092,7 @@
 				C5A725B71BCB549900DF040D /* BalanceFieldModel.m in Sources */,
 				C5A725B41BCB4A3100DF040D /* BalanceController.m in Sources */,
 				C55AE31D1BC765B800C0795D /* ShoppingCartController.m in Sources */,
+				C55D5FF51BD0E6AD004970C4 /* FMDatabaseQueue.m in Sources */,
 				C582462A1BB590D400031581 /* NSString+Extension.m in Sources */,
 				890FA84A1B929AC300D74594 /* SWCommonAPI.m in Sources */,
 				C55AE3211BC78E1800C0795D /* ShoppingCartCell.m in Sources */,

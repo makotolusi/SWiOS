@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "EmptyCell.h"
+#import "ShoppingCartModel.h"
 @interface OrderPriceCell : EmptyCell
 @property (weak, nonatomic) IBOutlet UILabel *label1;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (nonatomic,strong) ShoppingCartModel *cartModel;
 @end
