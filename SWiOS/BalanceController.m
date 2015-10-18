@@ -10,6 +10,7 @@
 #import "BalanceFieldModel.h"
 #import "OrderPriceCell.h"
 #import "OrderListCell.h"
+#import "AddressListViewController.h"
 //#import "ShoppingCartModel.h"
 #import "AddressViewController.h"
 static NSString *orderPriceCell = @"orderPriceCell";
@@ -144,7 +145,17 @@ static NSString *orderListCell = @"orderListCell";
 
     }else if(indexPath.section==1){
     }else if(indexPath.section==2){
-        self.navigationItem.title=@"收货人信息";
+//        self.navigationItem.title=@"收货人信息";
+//        //back button style
+//        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+//                                         initWithTitle:@""
+//                                         style:UIBarButtonItemStylePlain
+//                                         target:self
+//                                         action:nil];
+//        self.navigationItem.backBarButtonItem = cancelButton;
+//        AddressViewController *av=[[AddressViewController  alloc] init];
+//        [self.navigationController pushViewController:av animated:YES];
+        self.navigationItem.title=@"选择收货地址";
         //back button style
         UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                          initWithTitle:@""
@@ -152,7 +163,7 @@ static NSString *orderListCell = @"orderListCell";
                                          target:self
                                          action:nil];
         self.navigationItem.backBarButtonItem = cancelButton;
-        AddressViewController *av=[[AddressViewController  alloc] init];
+        AddressListViewController *av=[[AddressListViewController  alloc] init];
         [self.navigationController pushViewController:av animated:YES];
     }else if(indexPath.section==3)
     {

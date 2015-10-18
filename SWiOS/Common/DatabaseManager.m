@@ -162,7 +162,7 @@
     //向数据库中插入一条数据
 //    else
 //    {
-        isExecuteSuccess = [_db executeUpdate:@"INSERT INTO address (name,phone,code,city,address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", address.name, address.phone, address.code,address.city,address.address,[NSString stringWithFormat:@"%f",address.mts]];
+        isExecuteSuccess = [_db executeUpdate:@"INSERT INTO address (name,phone,code,city,address,mts) VALUES (?,?,?,?,?,?)", address.name, address.phone, address.code,address.city,address.address,[NSString stringWithFormat:@"%f",address.mts]];
 //    }
     
     [self closeDatabase];

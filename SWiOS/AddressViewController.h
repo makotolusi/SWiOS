@@ -18,4 +18,6 @@
         NSArray *paymentArray;
 }
 @property(nonatomic,strong)DatabaseManager *databaseManager;
+@property(nonatomic,strong)UIAlertView *alert;
+
 @end

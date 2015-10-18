@@ -9,6 +9,7 @@
 #import "AddressViewController.h"
 #import "EmptyCell.h"
 #import "DatabaseManager.h"
+#import "NSString+Extension.h"
 @interface AddressViewController ()
 @property (retain, nonatomic) UITextField *areaText;
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
@@ -78,6 +79,7 @@
             _areaText=[[UITextField alloc] initWithFrame:CGRectMake(5,0,cell.frame.size.width,cell.frame.size.height)];
             _areaText.delegate=self;
             _areaText.placeholder=@"省，市，区";
+            _areaText.tag=14;
             [_areaText setValue:[UIFont boldSystemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
             [cell addSubview:_areaText];
             break;
@@ -96,6 +98,7 @@
     UITextView* textView=[[UITextView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
     _placeholderLabel=[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 200, 20)];
     _placeholderLabel.text=@"详细地址";
+    textView.tag=15;
     _placeholderLabel.textColor=[UIColor lightGrayColor];
     _placeholderLabel.font=[UIFont systemFontOfSize:13];
     textView.delegate=self;
@@ -175,12 +178,61 @@
 }
 
 - (void)save:(UIButton*)sender {
+    
+    AddressModel *add=[[AddressModel alloc] init];
     UITextField *nameTf=[self.view viewWithTag:11];
     NSString *name=nameTf.text;
-    AddressModel *add=[[AddressModel alloc] init];
+    if(StringIsNullOrEmpty(name)){
+        [self showMessage:@"请输入收货人姓名"];
+        return;
+    }
     [add setValue:name forKey:@"name"];
+    
+    UITextField *phoneTf=[self.view viewWithTag:12];
+    NSString *phone=phoneTf.text;
+    if (StringIsNullOrEmpty(phone)) {
+        [self showMessage:@"请输入电话号码"];
+    }
+    [add setValue:phone forKey:@"phone"];
+    
+    UITextField *codeTf=[self.view viewWithTag:13];
+    NSString *code=codeTf.text;
+    if (StringIsNullOrEmpty(code)) {
+        [self showMessage:@"请输入邮政编码"];
+    }
+    [add setValue:code forKey:@"code"];
+    
+    UITextField *cityTf=[self.view viewWithTag:14];
+    NSString *city=cityTf.text;
+    if (StringIsNullOrEmpty(city)) {
+        [self showMessage:@"请选择区域信息"];
+    }
+    [add setValue:city forKey:@"city"];
+    
+    UITextView *addressTf=[self.view viewWithTag:15];
+    NSString *address=addressTf.text;
+    if (StringIsNullOrEmpty(address)) {
+        [self showMessage:@"请输入地址详细信息"];
+    }
+    [add setValue:address  forKey:@"address"];
+    add.mts=[[NSDate date] timeIntervalSince1970];
     [_databaseManager insertAddress:add];
 //    [_tableView reloadData];
+}
+
+-(void)showMessage:(NSString *)message{
+                        
+    _alert=[[UIAlertView alloc] initWithTitle:message message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    _alert.alpha=0.5;
+    _alert.backgroundColor=[UIColor blackColor];
+    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(performDismiss:) userInfo:nil repeats:NO];
+    [_alert show];
+}
+                    
+-(void) performDismiss:(NSTimer *)timer
+{
+    [_alert dismissWithClickedButtonIndex:0 animated:YES];
+    
 }
 
 @end
