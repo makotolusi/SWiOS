@@ -116,7 +116,7 @@
     //判断数据库中是否已经存在这个表，如果不存在则创建该表
     if(![_db tableExists:@"address"])
     {
-        BOOL creatSuccess = [_db executeUpdate:@"CREATE TABLE address (name TEXT,phone TEXT,code TEXT,city TEXT,address TEXT,mts TIMESTAMP)"];
+        BOOL creatSuccess = [_db executeUpdate:@"CREATE TABLE address (id INTEGER PRIMARY KEY,name TEXT,phone TEXT,code TEXT,city TEXT,address TEXT,mts TIMESTAMP)"];
         
         if(!creatSuccess)
         {

@@ -84,13 +84,13 @@ NSMutableArray *_testArray;
         //        [leftUtilityButtons addUtilityButtonWithColor:
         //         [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
         //                                                 icon:[UIImage imageNamed:@"list.png"]];
-        
+        //image
+        UIImage *img=[UIImage imageNamed:@"trash2"];
+    
         [rightUtilityButtons addUtilityButtonWithColor:
-         [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
-                                                 title:@"More"];
+         [UIColor whiteColor] icon:[UIImage imageNamed:@"edit"]];
         [rightUtilityButtons addUtilityButtonWithColor:
-         [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
-                                                 title:@"Delete"];
+         [UIColor whiteColor] icon:img];
         
         cell = [[AddressListCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:cellIdentifier
@@ -140,10 +140,16 @@ NSMutableArray *_testArray;
         case 0:
         {
             NSLog(@"More button was pressed");
-            UIAlertView *alertTest = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"More more more" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles: nil];
-            [alertTest show];
-            
-            [cell hideUtilityButtonsAnimated:YES];
+            self.navigationItem.title=@"收货人信息";
+            //back button style
+            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:nil];
+            self.navigationItem.backBarButtonItem = cancelButton;
+            AddressViewController *av=[[AddressViewController  alloc] init];
+            [self.navigationController pushViewController:av animated:YES];
             break;
         }
         case 1:

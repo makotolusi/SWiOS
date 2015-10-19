@@ -13,8 +13,8 @@
 @interface AddressViewController ()
 @property (retain, nonatomic) UITextField *areaText;
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
-@property (strong, nonatomic) NSString *areaValue;
-
+@property (copy, nonatomic) NSString *areaValue;
+@property (strong, nonatomic) AddressModel *addressModel;
 @end
 
 @implementation AddressViewController
@@ -23,6 +23,7 @@
     [super viewDidLoad];
     [self _loadTableView];
     _databaseManager=[DatabaseManager sharedDatabaseManager];
+//    [_databaseManager ]
 }
 
 - (void)_loadTableView {
@@ -217,6 +218,7 @@
     [add setValue:address  forKey:@"address"];
     add.mts=[[NSDate date] timeIntervalSince1970];
     [_databaseManager insertAddress:add];
+    [self.navigationController popViewControllerAnimated:YES];
 //    [_tableView reloadData];
 }
 
