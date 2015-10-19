@@ -145,25 +145,29 @@ static NSString *orderListCell = @"orderListCell";
 
     }else if(indexPath.section==1){
     }else if(indexPath.section==2){
-//        self.navigationItem.title=@"收货人信息";
-//        //back button style
-//        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-//                                         initWithTitle:@""
-//                                         style:UIBarButtonItemStylePlain
-//                                         target:self
-//                                         action:nil];
-//        self.navigationItem.backBarButtonItem = cancelButton;
-//        AddressViewController *av=[[AddressViewController  alloc] init];
-//        [self.navigationController pushViewController:av animated:YES];
-                //back button style
+        DatabaseManager *db=[DatabaseManager sharedDatabaseManager];
+       NSArray *array=db.getAllAddress;
+        if (array.count>0) {
+            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:nil];
+            self.navigationItem.backBarButtonItem = cancelButton;
+            AddressListViewController *av=[[AddressListViewController  alloc] init];
+            [self.navigationController pushViewController:av animated:YES];
+        }else{
+        self.navigationItem.title=@"收货人信息";
+        //back button style
         UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                          initWithTitle:@""
                                          style:UIBarButtonItemStylePlain
                                          target:self
                                          action:nil];
         self.navigationItem.backBarButtonItem = cancelButton;
-        AddressListViewController *av=[[AddressListViewController  alloc] init];
+        AddressViewController *av=[[AddressViewController  alloc] init];
         [self.navigationController pushViewController:av animated:YES];
+        }
     }else if(indexPath.section==3)
     {
         [self.view addSubview:_paymentPicker];

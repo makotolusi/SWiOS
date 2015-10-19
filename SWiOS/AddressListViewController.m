@@ -10,6 +10,7 @@
 #import "AddressListCell.h"
 #import "DatabaseManager.h"
 #import "AddressModel.h"
+#import "AddressViewController.h"
 @interface AddressListViewController ()
 {
 NSMutableArray *_testArray;
@@ -39,7 +40,7 @@ NSMutableArray *_testArray;
     [editButton setTitle:@"新增地址" forState:UIControlStateNormal];
     [editButton setTitleColor:UIColorFromRGB(0x1abc9c) forState:UIControlStateNormal];
     editButton.titleLabel.font=[UIFont systemFontOfSize:13.f];
-//    [editButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
+    [editButton addTarget:self action:@selector(newAddress:) forControlEvents:UIControlEventTouchUpInside];
     //创建edit按钮
     UIBarButtonItem *homeButtonItem = [[UIBarButtonItem alloc]initWithCustomView:editButton];
     self.navigationItem.rightBarButtonItem=homeButtonItem;
@@ -163,5 +164,17 @@ NSMutableArray *_testArray;
     return YES;
 }
 
+- (void)newAddress:(UIButton*)sender {
+    self.navigationItem.title=@"收货人信息";
+            //back button style
+            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:nil];
+            self.navigationItem.backBarButtonItem = cancelButton;
+            AddressViewController *av=[[AddressViewController  alloc] init];
+            [self.navigationController pushViewController:av animated:YES];
+}
 
 @end
