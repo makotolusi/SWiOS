@@ -1,17 +1,18 @@
 //
-//  AddressListCell.m
-//  SWiOS
+//  SWTableViewCell.m
+//  SWTableViewCell
 //
-//  Created by 陆思 on 15/10/19.
-//  Copyright (c) 2015年 com.itangxueqiu. All rights reserved.
+//  Created by Chris Wendel on 9/10/13.
+//  Copyright (c) 2013 Chris Wendel. All rights reserved.
 //
 
-#import "AddressListCell.h"
+#import "SWTableViewCell.h"
 
 #define kUtilityButtonsWidthMax 260
 #define kUtilityButtonWidthDefault 90
 
 static NSString * const kTableViewCellContentView = @"UITableViewCellContentView";
+
 
 #pragma mark - SWUtilityButtonView
 
@@ -19,12 +20,12 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
 
 @property (nonatomic, strong) NSArray *utilityButtons;
 @property (nonatomic) CGFloat utilityButtonWidth;
-@property (nonatomic, weak) AddressListCell *parentCell;
+@property (nonatomic, weak) SWTableViewCell *parentCell;
 @property (nonatomic) SEL utilityButtonSelector;
 
-- (id)initWithUtilityButtons:(NSArray *)utilityButtons parentCell:(AddressListCell *)parentCell utilityButtonSelector:(SEL)utilityButtonSelector;
+- (id)initWithUtilityButtons:(NSArray *)utilityButtons parentCell:(SWTableViewCell *)parentCell utilityButtonSelector:(SEL)utilityButtonSelector;
 
-- (id)initWithFrame:(CGRect)frame utilityButtons:(NSArray *)utilityButtons parentCell:(AddressListCell *)parentCell utilityButtonSelector:(SEL)utilityButtonSelector;
+- (id)initWithFrame:(CGRect)frame utilityButtons:(NSArray *)utilityButtons parentCell:(SWTableViewCell *)parentCell utilityButtonSelector:(SEL)utilityButtonSelector;
 
 @end
 
@@ -32,7 +33,7 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
 
 #pragma mark - SWUtilityButonView initializers
 
-- (id)initWithUtilityButtons:(NSArray *)utilityButtons parentCell:(AddressListCell *)parentCell utilityButtonSelector:(SEL)utilityButtonSelector {
+- (id)initWithUtilityButtons:(NSArray *)utilityButtons parentCell:(SWTableViewCell *)parentCell utilityButtonSelector:(SEL)utilityButtonSelector {
     self = [super init];
     
     if (self) {
@@ -45,7 +46,7 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame utilityButtons:(NSArray *)utilityButtons parentCell:(AddressListCell *)parentCell utilityButtonSelector:(SEL)utilityButtonSelector {
+- (id)initWithFrame:(CGRect)frame utilityButtons:(NSArray *)utilityButtons parentCell:(SWTableViewCell *)parentCell utilityButtonSelector:(SEL)utilityButtonSelector {
     self = [super initWithFrame:frame];
     
     if (self) {
@@ -88,7 +89,7 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
 
 @end
 
-@interface AddressListCell () <UIScrollViewDelegate> {
+@interface SWTableViewCell () <UIScrollViewDelegate> {
     SWCellState _cellState; // The state of the cell within the scroll view, can be left, right or middle
 }
 
@@ -108,7 +109,7 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
 
 @end
 
-@implementation AddressListCell
+@implementation SWTableViewCell
 
 #pragma mark Initializers
 
@@ -314,7 +315,7 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
 - (void)scrollToCenter:(inout CGPoint *)targetContentOffset {
     targetContentOffset->x = [self leftUtilityButtonsWidth];
     _cellState = kCellStateCenter;
-    
+
     if ([_delegate respondsToSelector:@selector(swippableTableViewCell:scrollingToState:)]) {
         [_delegate swippableTableViewCell:self scrollingToState:kCellStateCenter];
     }
@@ -414,5 +415,5 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
     [self addObject:button];
 }
 
-
 @end
+

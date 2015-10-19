@@ -74,28 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/BalanceController.m"
-            timestampString = "466829499.405325"
+            timestampString = "466942662.961274"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "-touchesBegan:withEvent:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SWiOS/Common/DatabaseManager.m"
-            timestampString = "466827552.370157"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "-databaseFilePath"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

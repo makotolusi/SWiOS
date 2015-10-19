@@ -76,7 +76,7 @@ static CGFloat kSWCellCountTag = 1;
     [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:13];
     [editView addSubview:count];
     //trash image
-    UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash2"]];
+    UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash3"]];
     trash.frame=CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25);
     UIButton *trashButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [trashButton addSubview:trash];

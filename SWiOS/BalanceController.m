@@ -155,8 +155,7 @@ static NSString *orderListCell = @"orderListCell";
 //        self.navigationItem.backBarButtonItem = cancelButton;
 //        AddressViewController *av=[[AddressViewController  alloc] init];
 //        [self.navigationController pushViewController:av animated:YES];
-        self.navigationItem.title=@"选择收货地址";
-        //back button style
+                //back button style
         UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                          initWithTitle:@""
                                          style:UIBarButtonItemStylePlain

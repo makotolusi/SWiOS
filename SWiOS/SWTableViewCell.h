@@ -1,14 +1,15 @@
 //
-//  AddressListCell.h
-//  SWiOS
+//  SWTableViewCell.h
+//  SWTableViewCell
 //
-//  Created by 陆思 on 15/10/19.
-//  Copyright (c) 2015年 com.itangxueqiu. All rights reserved.
+//  Created by Chris Wendel on 9/10/13.
+//  Copyright (c) 2013 Chris Wendel. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "EmptyCell.h"
-@class AddressListCell;
+#import <UIKit/UIGestureRecognizerSubclass.h>
+
+@class SWTableViewCell;
 
 typedef enum {
     kCellStateCenter,
@@ -16,21 +17,20 @@ typedef enum {
     kCellStateRight
 } SWCellState;
 
-@protocol AddressListCellDelegate <NSObject>
+@protocol SWTableViewCellDelegate <NSObject>
 
 @optional
-- (void)swippableTableViewCell:(AddressListCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index;
-- (void)swippableTableViewCell:(AddressListCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index;
-- (void)swippableTableViewCell:(AddressListCell *)cell scrollingToState:(SWCellState)state;
+- (void)swippableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index;
+- (void)swippableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index;
+- (void)swippableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state;
 
 @end
 
-
-@interface AddressListCell : EmptyCell
+@interface SWTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) NSArray *leftUtilityButtons;
 @property (nonatomic, strong) NSArray *rightUtilityButtons;
-@property (nonatomic) id <AddressListCellDelegate> delegate;
+@property (nonatomic) id <SWTableViewCellDelegate> delegate;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier containingTableView:(UITableView *)containingTableView leftUtilityButtons:(NSArray *)leftUtilityButtons rightUtilityButtons:(NSArray *)rightUtilityButtons;
 
@@ -43,4 +43,5 @@ typedef enum {
 
 - (void)addUtilityButtonWithColor:(UIColor *)color title:(NSString *)title;
 - (void)addUtilityButtonWithColor:(UIColor *)color icon:(UIImage *)icon;
+
 @end

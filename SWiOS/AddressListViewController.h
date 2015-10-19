@@ -1,17 +1,14 @@
 //
-//  AddressListViewController.h
+//  AddresListViewController.h
 //  SWiOS
 //
-//  Created by 陆思 on 15/10/18.
+//  Created by 陆思 on 15/10/19.
 //  Copyright (c) 2015年 com.itangxueqiu. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "SWBaseViewController.h"
-@interface AddressListViewController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
-{
-@private
-    UITableView    *_tableView;
-    NSMutableArray *_data;
-}
+#import "AddressListCell.h"
+@interface AddressListViewController : SWBaseViewController <UITableViewDelegate, UITableViewDataSource, AddressListCellDelegate>
+
 @end
