@@ -11,7 +11,7 @@
 #import "OrderPriceCell.h"
 #import "OrderListCell.h"
 #import "AddressListViewController.h"
-//#import "ShoppingCartModel.h"
+#import "AddressView.h"
 #import "AddressViewController.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
@@ -89,8 +89,16 @@ static NSString *orderListCell = @"orderListCell";
         return 40.f;
     }else if (indexPath.section==1){
         return orderListCellHeight+5;
-    }else
-    return 40.f;
+    }else if(indexPath.section==2){
+        if (_addressModel!=nil)
+         {
+             return orderListCellHeight+20;
+        }else {
+            return 40.f;
+         }
+    } else{
+        return 40.f;
+    }
 }
 
 #pragma mark - TableView Datasource
@@ -110,7 +118,15 @@ static NSString *orderListCell = @"orderListCell";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if(indexPath.section==2){
-        return [self editCell: @"添加收货人信息" tag:10];
+        if (_addressModel==nil) {
+            return [self editCell: @"添加收货人信息" tag:10];
+        }else{
+            EmptyCell *cell=[[EmptyCell alloc] init];
+            AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(0, 0, 10, 10) data:_addressModel];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell addSubview:addressView];
+            return cell;
+        }
     }else if(indexPath.section==3)
     {
         return [self editCell:@"快递公司" tag:11];
@@ -202,4 +218,9 @@ static NSString *orderListCell = @"orderListCell";
     tf.textColor=[UIColor blackColor];
     tf.text=[paymentArray objectAtIndex:row];
 }
+
+-(void)reloadTableView{
+    [_tableView reloadData];
+}
+
 @end

@@ -117,7 +117,7 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
     if (self) {
         self.rightUtilityButtons = rightUtilityButtons;
         self.leftUtilityButtons = leftUtilityButtons;
-        self.height = containingTableView.rowHeight;
+        self.height = containingTableView.rowHeight-3;
         self.containingTableView = containingTableView;
         self.highlighted = NO;
         [self initializer];

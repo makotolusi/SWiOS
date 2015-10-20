@@ -17,6 +17,7 @@
         UILabel *_placeholderLabel;
         NSArray *paymentArray;
 }
+@property(nonatomic,assign)NSInteger addressId;
 @property(nonatomic,strong)DatabaseManager *databaseManager;
 @property(nonatomic,strong)UIAlertView *alert;
 

@@ -11,20 +11,26 @@
 #import "DatabaseManager.h"
 #import "AddressModel.h"
 #import "AddressViewController.h"
+#import "UILabel+Extension.h"
+#import "BalanceController.h"
+#import "AddressView.h"
 @interface AddressListViewController ()
 {
 NSMutableArray *_testArray;
 }
-@property (nonatomic, strong) UITableView *tableView;
+
 
 @end
 
 @implementation AddressListViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(void)initializeData{
     DatabaseManager *db=[DatabaseManager sharedDatabaseManager];
     _testArray=[db.getAllAddress mutableCopy];
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self initializeData];
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
      _tableView.separatorColor=[UIColor clearColor];
     self.tableView.delegate = self;
@@ -32,18 +38,27 @@ NSMutableArray *_testArray;
     self.tableView.rowHeight = 90;
     self.tableView.allowsSelection = NO; // We essentially implement our own selection
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0); // Makes the horizontal row seperator stretch the entire length of the table view
-    self.navigationItem.title=@"选择收货地址";
-    
+    UILabel *navTitle=[[UILabel alloc] init];
+    self.navigationItem.titleView=[navTitle changeNavTitleByFontSize:@"选择收货地址"];
+
     //创建编辑按钮
-    UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 0, 100, 40)];
+    UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(100, 0, 100, 40)];
     editButton.backgroundColor = [UIColor clearColor];
     [editButton setTitle:@"新增地址" forState:UIControlStateNormal];
+    [ editButton.titleLabel smallLabel];
     [editButton setTitleColor:UIColorFromRGB(0x1abc9c) forState:UIControlStateNormal];
-    editButton.titleLabel.font=[UIFont systemFontOfSize:13.f];
+    editButton.titleLabel.textAlignment=NSTextAlignmentRight;
     [editButton addTarget:self action:@selector(newAddress:) forControlEvents:UIControlEventTouchUpInside];
     //创建edit按钮
     UIBarButtonItem *homeButtonItem = [[UIBarButtonItem alloc]initWithCustomView:editButton];
-    self.navigationItem.rightBarButtonItem=homeButtonItem;
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -30;
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, homeButtonItem, nil];
+
+//    self.navigationItem.rightBarButtonItem=homeButtonItem;
+   
     [self.view addSubview:_tableView];
 }
 
@@ -61,6 +76,11 @@ NSMutableArray *_testArray;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"cell selected at index path %ld", (long)indexPath.row);
+     AddressModel *dateObject = _testArray[indexPath.row];
+    BalanceController *alv=self.navigationController.viewControllers[1];
+    alv.addressModel=dateObject;
+    [self.navigationController popViewControllerAnimated:YES];
+    [alv reloadTableView];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,9 +121,8 @@ NSMutableArray *_testArray;
     }
     
     AddressModel *dateObject = _testArray[indexPath.row];
-    cell.textLabel.text = dateObject.name;
-    cell.detailTextLabel.text = dateObject.city;
-    
+    AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(0, 0, 10, 10) data:dateObject];
+    [cell addSubview:addressView];
     return cell;
 }
 
@@ -136,6 +155,7 @@ NSMutableArray *_testArray;
 }
 
 - (void)swippableTableViewCell:(AddressListCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
     switch (index) {
         case 0:
         {
@@ -149,16 +169,20 @@ NSMutableArray *_testArray;
                                              action:nil];
             self.navigationItem.backBarButtonItem = cancelButton;
             AddressViewController *av=[[AddressViewController  alloc] init];
+            AddressModel *add=_testArray[cellIndexPath.row];
+            av.addressId=add.AddressModelID;
             [self.navigationController pushViewController:av animated:YES];
             break;
         }
         case 1:
         {
             // Delete button was pressed
-            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-            
-            [_testArray removeObjectAtIndex:cellIndexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            AddressModel *add=_testArray[cellIndexPath.row];
+            DatabaseManager *db=[DatabaseManager sharedDatabaseManager];
+            if ([db deleteAddressByID:add.AddressModelID]) {
+                [_testArray removeObjectAtIndex:cellIndexPath.row];
+                [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            }
             break;
         }
         default:
@@ -181,6 +205,11 @@ NSMutableArray *_testArray;
             self.navigationItem.backBarButtonItem = cancelButton;
             AddressViewController *av=[[AddressViewController  alloc] init];
             [self.navigationController pushViewController:av animated:YES];
+}
+
+-(void)reloadTableView{
+    [self initializeData];
+    [self.tableView reloadData];
 }
 
 @end

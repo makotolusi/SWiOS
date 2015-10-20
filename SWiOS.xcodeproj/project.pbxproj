@@ -81,6 +81,8 @@
 		C50F02001BBE96FA0026D16C /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C50F01FF1BBE96FA0026D16C /* HttpHelper.m */; };
 		C50F2C351BB63F5D00E4968A /* public_key.der in Resources */ = {isa = PBXBuildFile; fileRef = C50F2C341BB63F3300E4968A /* public_key.der */; };
 		C526F10C1BCA3D250036A7C2 /* ShoppingCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */; };
+		C5429B0E1BD6354400DC2F30 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C5429B0D1BD6354400DC2F30 /* UILabel+Extension.m */; };
+		C5429B111BD63FAC00DC2F30 /* AddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5429B101BD63FAC00DC2F30 /* AddressView.m */; };
 		C5434A691BCDFE1100F5D103 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5434A681BCDFE1100F5D103 /* AddressViewController.m */; };
 		C5434A721BCE46AA00F5D103 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5434A6B1BCE46AA00F5D103 /* city.plist */; };
 		C5434A731BCE46AA00F5D103 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5434A6C1BCE46AA00F5D103 /* area.plist */; };
@@ -266,6 +268,10 @@
 		C50F2C341BB63F3300E4968A /* public_key.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = public_key.der; sourceTree = "<group>"; };
 		C526F10A1BCA3D250036A7C2 /* ShoppingCartModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartModel.h; sourceTree = "<group>"; };
 		C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartModel.m; sourceTree = "<group>"; };
+		C5429B0C1BD6354400DC2F30 /* UILabel+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extension.h"; sourceTree = "<group>"; };
+		C5429B0D1BD6354400DC2F30 /* UILabel+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extension.m"; sourceTree = "<group>"; };
+		C5429B0F1BD63FAC00DC2F30 /* AddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressView.h; sourceTree = "<group>"; };
+		C5429B101BD63FAC00DC2F30 /* AddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
 		C5434A671BCDFE1100F5D103 /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		C5434A681BCDFE1100F5D103 /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
 		C5434A6B1BCE46AA00F5D103 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
@@ -533,6 +539,8 @@
 		24FA81F01B85AE930023F71D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				C5429B0C1BD6354400DC2F30 /* UILabel+Extension.h */,
+				C5429B0D1BD6354400DC2F30 /* UILabel+Extension.m */,
 				C55896A11BC7FCCB00BE14E9 /* UIColor+Extension.h */,
 				C55896A21BC7FCCB00BE14E9 /* UIColor+Extension.m */,
 				C582462D1BB5949700031581 /* KeychainHelper */,
@@ -763,6 +771,8 @@
 				C543D1FF1BD4EF5A00E03AE8 /* AddressListViewController.m */,
 				C543D2011BD4F0D500E03AE8 /* AddressListCell.h */,
 				C543D2021BD4F0D500E03AE8 /* AddressListCell.m */,
+				C5429B0F1BD63FAC00DC2F30 /* AddressView.h */,
+				C5429B101BD63FAC00DC2F30 /* AddressView.m */,
 			);
 			name = address;
 			sourceTree = "<group>";
@@ -1094,6 +1104,7 @@
 				89CD42961B59F92E00997C18 /* main.m in Sources */,
 				249727281BB0E4F6007D9704 /* SWMoneyNavigationController.m in Sources */,
 				895FAF361B9E7E92009CFA6D /* ZYCExplodeStyleLoadView.m in Sources */,
+				C5429B111BD63FAC00DC2F30 /* AddressView.m in Sources */,
 				249727231BB0E4D8007D9704 /* SWMoneyDetailController.m in Sources */,
 				893B7D7C1B5B4FD400A35281 /* SWMainViewController.m in Sources */,
 				C50F01FB1BBE94FC0026D16C /* Activity.m in Sources */,
@@ -1118,6 +1129,7 @@
 				C55896A31BC7FCCB00BE14E9 /* UIColor+Extension.m in Sources */,
 				2452FFB11B94617B006C7E09 /* RegisterViewController.m in Sources */,
 				89DE33FA1B63B22100212D56 /* SWExploreEntranceDataProvider.m in Sources */,
+				C5429B0E1BD6354400DC2F30 /* UILabel+Extension.m in Sources */,
 				89DE34001B64E46C00212D56 /* YCAsyncImageView.m in Sources */,
 				C56362701BC15EB600C7E492 /* ActivityProductCell.m in Sources */,
 				24FA81FB1B85BA550023F71D /* MainViewController.m in Sources */,

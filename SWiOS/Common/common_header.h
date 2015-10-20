@@ -21,4 +21,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 
+#define FONT_SMALL_SIZE 12
+
+#define FONT_MID_SIZE 15
 #endif

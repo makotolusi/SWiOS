@@ -10,5 +10,6 @@
 #import "SWBaseViewController.h"
 #import "AddressListCell.h"
 @interface AddressListViewController : SWBaseViewController <UITableViewDelegate, UITableViewDataSource, AddressListCellDelegate>
-
+@property (nonatomic, strong) UITableView *tableView;
+-(void)reloadTableView;
 @end

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BaseModel.h"
 @interface AddressModel : BaseModel
+@property(nonatomic,assign)NSInteger AddressModelID;
 @property(nonatomic,copy)NSString *name;
 @property(nonatomic,copy)NSString *phone;
 @property(nonatomic,copy)NSString *city;

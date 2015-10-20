@@ -148,22 +148,13 @@
             return NO;
     }
     
-//    //先在表中查询有没有相同的元素，如果有，做修改操作
-//    FMResultSet *rs = [_db executeQuery:@"select * from address where id = ?", [NSString stringWithFormat:@"%i",strategy.ID]];
-    
     BOOL isExecuteSuccess = NO;
     
-    //(id INTEGER PRIMARY KEY, name TEXT, gamecode INTEGER, isRecommend BOOLEAN, actualSub INTEGER, externalSub INTEGER, sort TEXT, type INTEGER, alias TEXT, liveUrl TEXT, menuStyle TEXT, bgIconUrl TEXT, iconUrl TEXT, channel TEXT, introduce TEXT, mts TIMESTAMP)
-    
-//    if([rs next])
-//    {
-//        isExecuteSuccess = [self updateStrategyInfo:strategy];
-//    }
-    //向数据库中插入一条数据
-//    else
-//    {
+    if(address.AddressModelID==nil){
         isExecuteSuccess = [_db executeUpdate:@"INSERT INTO address (name,phone,code,city,address,mts) VALUES (?,?,?,?,?,?)", address.name, address.phone, address.code,address.city,address.address,[NSString stringWithFormat:@"%f",address.mts]];
-//    }
+    }else{
+          isExecuteSuccess = [_db executeUpdate:@"update address set name=?,phone=?,code=?,city=?,address=?,mts=? where id = ?",address.name, address.phone, address.code,address.city,address.address,[NSString stringWithFormat:@"%f",address.mts],address.AddressModelID];
+    }
     
     [self closeDatabase];
     
@@ -207,5 +198,47 @@
 }
 
 
+- (AddressModel *)getAddressByID:(NSInteger)AddressModelID
+{
+    //打开数据库，如果没有打开，直接返回
+    if(![self openDatabase])
+        return nil;
+    
+    if(![_db tableExists:@"address"] || ![_db tableExists:@"address"])
+    {
+        return nil;
+    }
+    
+    AddressModel *address=[[AddressModel alloc] init];
+    //定义一个结果集，存放查询的数据
+    FMResultSet *rs = [_db executeQuery:@"SELECT * from address where id = ? ORDER BY mts DESC",AddressModelID];
+    
+    
+    //判断结果集中是否有数据，如果有则取出数据
+    while ([rs next])
+    {
+         address = [[AddressModel alloc] setValuesForKeysWithDictionary:[rs resultDictionary]];
+        
+    }
+    
+    [self closeDatabase];
+    
+    return address;
+}
+
+- (BOOL)deleteAddressByID:(NSInteger)AddressModelID
+{
+    //打开数据库，如果没有打开，直接返回
+    if(![self openDatabase])
+        return false;
+    
+    if(![_db tableExists:@"address"] || ![_db tableExists:@"address"])
+    {
+        return false;
+    }
+
+    return [_db executeUpdate:@"delete from address where id = ? ",AddressModelID];
+    
+}
 
 @end

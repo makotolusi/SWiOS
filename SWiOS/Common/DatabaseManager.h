@@ -19,4 +19,6 @@
 + (DatabaseManager *)sharedDatabaseManager;
 - (BOOL)insertAddress:(AddressModel *)address;
 - (NSArray *)getAllAddress;
+- (AddressModel *)getAddressByID:(NSInteger)AddressModelID;
+- (BOOL)deleteAddressByID:(NSInteger)AddressModelID;
 @end

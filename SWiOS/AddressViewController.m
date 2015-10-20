@@ -7,6 +7,7 @@
 //
 
 #import "AddressViewController.h"
+#import "AddressListViewController.h"
 #import "EmptyCell.h"
 #import "DatabaseManager.h"
 #import "NSString+Extension.h"
@@ -23,7 +24,7 @@
     [super viewDidLoad];
     [self _loadTableView];
     _databaseManager=[DatabaseManager sharedDatabaseManager];
-//    [_databaseManager ]
+    _addressModel=[_databaseManager getAddressByID:_addressId ];
 }
 
 - (void)_loadTableView {
@@ -68,24 +69,26 @@
     }
     switch (indexPath.row) {
         case 0:
-            [cell addSubview:[self input:@"收货人姓名" tag:11]];
+           
+            [cell addSubview:[self input:@"收货人姓名" tag:11 text: _addressModel.name]];
             break;
         case 1:
-            [cell addSubview:[self input:@"手机号码" tag:12]];
+            [cell addSubview:[self input:@"手机号码" tag:12 text: _addressModel.phone]];
             break;
         case 2:
-            [cell addSubview:[self input:@"邮政编码" tag:13]];
+            [cell addSubview:[self input:@"邮政编码" tag:13 text: _addressModel.code]];
             break;
         case 3:
             _areaText=[[UITextField alloc] initWithFrame:CGRectMake(5,0,cell.frame.size.width,cell.frame.size.height)];
             _areaText.delegate=self;
             _areaText.placeholder=@"省，市，区";
             _areaText.tag=14;
+            _areaText.text= _addressModel.city;
             [_areaText setValue:[UIFont boldSystemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
             [cell addSubview:_areaText];
             break;
         case 4:
-            [cell addSubview:[self textView]];
+            [cell addSubview:[self textView:_addressModel.address]];
             break;
         default:
             break;
@@ -95,21 +98,26 @@
     return cell;
 }
 
--(UITextView*)textView{
+-(UITextView*)textView:(NSString*)text{
     UITextView* textView=[[UITextView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
-    _placeholderLabel=[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 200, 20)];
-    _placeholderLabel.text=@"详细地址";
+    if (StringIsNullOrEmpty(text)) {
+        _placeholderLabel=[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 200, 20)];
+        _placeholderLabel.textColor=[UIColor lightGrayColor];
+        _placeholderLabel.font=[UIFont systemFontOfSize:13];
+        _placeholderLabel.text=@"详细地址";
+        
+        [textView addSubview:_placeholderLabel];
+    }
     textView.tag=15;
-    _placeholderLabel.textColor=[UIColor lightGrayColor];
-    _placeholderLabel.font=[UIFont systemFontOfSize:13];
+    textView.text=text;
     textView.delegate=self;
-    [textView addSubview:_placeholderLabel];
     return textView;
 }
--(UITextField*)input:(NSString*)text tag:(NSInteger) tag{
+-(UITextField*)input:(NSString*)placeholderText tag:(NSInteger) tag text:(NSString*)text {
     UITextField* input=[[UITextField alloc] initWithFrame:CGRectMake(5, 0, 200, _tableView.rowHeight)];
-    input.placeholder=text;
+    input.placeholder=placeholderText;
     input.tag=tag;
+    input.text=text;
     [input setValue:[UIFont boldSystemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
     return input;
 }
@@ -181,6 +189,7 @@
 - (void)save:(UIButton*)sender {
     
     AddressModel *add=[[AddressModel alloc] init];
+    add.AddressModelID=_addressModel.AddressModelID;
     UITextField *nameTf=[self.view viewWithTag:11];
     NSString *name=nameTf.text;
     if(StringIsNullOrEmpty(name)){
@@ -218,8 +227,11 @@
     [add setValue:address  forKey:@"address"];
     add.mts=[[NSDate date] timeIntervalSince1970];
     [_databaseManager insertAddress:add];
-    [self.navigationController popViewControllerAnimated:YES];
-//    [_tableView reloadData];
+   
+    AddressListViewController *alv=self.navigationController.viewControllers[2];
+     [self.navigationController popViewControllerAnimated:YES];
+//    UIViewController *pview=[self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -2)] animated:YES];
+    [alv reloadTableView];
 }
 
 -(void)showMessage:(NSString *)message{
