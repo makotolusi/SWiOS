@@ -13,6 +13,10 @@
 #import "AddressListViewController.h"
 #import "AddressView.h"
 #import "AddressViewController.h"
+#import "UILabel+Extension.h"
+#import "OrderViewController.h"
+#import "OrderRequest.h"
+#import "OrderModel.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
 @interface BalanceController ()
@@ -52,6 +56,18 @@ static NSString *orderListCell = @"orderListCell";
     _paymentPicker.dataSource=self;
     _paymentPicker.delegate=self;
     
+    //submit
+    UIButton *submit = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT-200, 100, 30)];
+    submit.backgroundColor = UIColorFromRGB(0x1abc9c);
+    submit.alpha=0.7f;
+    [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [submit setTitle:@"提交" forState:UIControlStateNormal];
+    submit.titleLabel.textAlignment=NSTextAlignmentCenter;
+    [submit.layer setCornerRadius:7.0]; //设置矩形四个圆角半径
+    [submit.titleLabel smallLabel];
+//    [submit.layer setBorderWidth:1.0];
+    [submit addTarget:self action:@selector(checkOrder:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:submit];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -77,9 +93,9 @@ static NSString *orderListCell = @"orderListCell";
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
 //    UIView *view=[
     if(section==1)
-    return [self titleLabel:@"收货人信息"];
+        return [[[UILabel alloc] init] tableSectionLabel:@"收货人信息"];
     else if (section==2)
-        return [self titleLabel:@"快递公司"];
+        return [[[UILabel alloc] init] tableSectionLabel:@"快递公司"];
     else
         return nil;
 }
@@ -145,15 +161,6 @@ static NSString *orderListCell = @"orderListCell";
     [cell addSubview:label];
     return cell;
 
-}
--(UIView*)titleLabel:(NSString*)text{
-    UIView *view=[[UIView alloc] init];
-    UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(6, 30, 200, 20)];
-    label.textColor=[UIColor darkGrayColor];
-    label.text=text;
-    label.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
-    [view addSubview:label];
-    return view;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -223,4 +230,19 @@ static NSString *orderListCell = @"orderListCell";
     [_tableView reloadData];
 }
 
+- (void)checkOrder:(UIButton*)sender {
+    OrderModel *om=[OrderModel new];
+    [OrderRequest orderCheck:om];
+    OrderViewController *vc =[[OrderViewController alloc]init];
+    vc.addressModel=_addressModel;
+    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                     initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                     target:self
+                                     action:nil];
+    self.navigationItem.backBarButtonItem = cancelButton;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+}
 @end

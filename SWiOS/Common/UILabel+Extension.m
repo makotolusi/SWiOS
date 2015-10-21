@@ -13,6 +13,7 @@
 
 -(void)midLabel{
     self.textColor=[UIColor darkGrayColor];
+//    self.textAlignment=NSTextAlignmentCenter;
     self.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_MID_SIZE ];
 }
 
@@ -29,6 +30,16 @@
     self.textAlignment = NSTextAlignmentCenter;
     self.text = strTitle;
     return self;
+}
+
+-(UIView*)tableSectionLabel:(NSString*)text{
+    UIView *view=[[UIView alloc] init];
+    UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(5, 20, 200, 20)];
+    label.textColor=[UIColor darkGrayColor];
+    label.text=text;
+    label.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
+    [view addSubview:label];
+    return view;
 }
 
 @end

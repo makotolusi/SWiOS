@@ -12,11 +12,11 @@
 
 bool const isDev=NO;
 
-bool const isLocal=NO;
+bool const isLocal=YES;
 
 NSString * const kBaseURL = @"http://okeasy.eicp.net:9889/mgserver/ApCommonServices/";
 
-NSString * const kLocalURL = @"http://localhost:8080/mgserver/ApCommonServices/";
+NSString * const kLocalURL = @"http://10.6.104.78:8080/mgserver/ApCommonServices/";
 
 +(AFHTTPRequestOperationManager *)init:(NSString **)urlApi
 {

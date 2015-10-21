@@ -77,10 +77,16 @@ NSMutableArray *_testArray;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"cell selected at index path %ld", (long)indexPath.row);
      AddressModel *dateObject = _testArray[indexPath.row];
-    BalanceController *alv=self.navigationController.viewControllers[1];
-    alv.addressModel=dateObject;
-    [self.navigationController popViewControllerAnimated:YES];
-    [alv reloadTableView];
+    NSArray *views=self.navigationController.viewControllers;
+    for (UIViewController *view in views) {
+        if ([view isKindOfClass:[BalanceController class]]) {
+            BalanceController *alv=view;
+            alv.addressModel=dateObject;
+            [self.navigationController popViewControllerAnimated:YES];
+            [alv reloadTableView];
+        }
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

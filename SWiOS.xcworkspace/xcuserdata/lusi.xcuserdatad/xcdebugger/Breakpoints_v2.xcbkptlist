@@ -73,13 +73,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWiOS/BalanceController.m"
-            timestampString = "467028668.545299"
+            filePath = "SWiOS/OrderRequest.m"
+            timestampString = "467127428.045031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
-            landmarkName = "-touchesBegan:withEvent:"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "+orderCheck:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
