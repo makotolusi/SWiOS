@@ -24,6 +24,7 @@
     [super layoutSubviews];
     [_imgView setUrl:_activityProduct.picUrl1];
     _productName.text=_activityProduct.productName;
+    NSLog(@"float %@",_activityProduct.rushPrice);
     _price.text=[NSString stringWithFormat:@"￥ %@", _activityProduct.rushPrice];
    
 }

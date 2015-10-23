@@ -54,8 +54,8 @@
     label2.font=[UIFont systemFontOfSize:10];
     [_tableView addSubview:label2];
     //total price
-    totalPrice=[[UILabel alloc] initWithFrame:CGRectMake(label1.frame.origin.x+300, label1.frame.origin.y, 200, 20)];
-    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%ld",(long)_cartModel.totalSalePrice];
+    totalPrice=[[UILabel alloc] initWithFrame:CGRectMake(label1.frame.origin.x+280, label1.frame.origin.y, 200, 20)];
+    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
     totalPrice.textColor=UIColorFromRGB(0x1abc9c);
     totalPrice.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
     totalPrice.tag=2;
@@ -130,9 +130,19 @@
 //    }
 //}
 
-- (void)totalPrice:(ActivityProduct*)activityProduct{
-    _cartModel.totalSalePrice+=activityProduct.rushPrice.integerValue;
-    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%ld", (long)_cartModel.totalSalePrice];
+- (void)totalPrice:(ActivityProduct*)activityProduct type:(int)type{
+    NSDecimalNumber *sum;
+    if (type==0) {
+        NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
+        NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:activityProduct.rushPrice.stringValue];
+        sum=[t1 decimalNumberByAdding: t2];
+    }else{
+        NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
+        NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:activityProduct.rushPrice.stringValue];
+        sum=[t1 decimalNumberBySubtracting: t2];
+    }
+    _cartModel.orderModel.totalPrice=sum;
+    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@", _cartModel.orderModel.totalPrice];
 }
 
 -(void)goBalace{

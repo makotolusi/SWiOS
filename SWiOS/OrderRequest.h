@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-@class OrderModel;
+#import "ShoppingCartModel.h"
 @interface OrderRequest : NSObject
 
-+(OrderModel*)orderCheck:(OrderModel*)orderModel;
+@property(nonatomic,strong)ShoppingCartModel *shoppingCart;
+-(ShoppingCartModel*)orderCheck:(void (^)())next;
 @end

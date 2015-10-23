@@ -16,7 +16,8 @@
 #import "UILabel+Extension.h"
 #import "OrderViewController.h"
 #import "OrderRequest.h"
-#import "OrderModel.h"
+#import "ShoppingCartModel.h"
+#import "LoadingView.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
 @interface BalanceController ()
@@ -231,18 +232,37 @@ static NSString *orderListCell = @"orderListCell";
 }
 
 - (void)checkOrder:(UIButton*)sender {
-    OrderModel *om=[OrderModel new];
-    [OrderRequest orderCheck:om];
-    OrderViewController *vc =[[OrderViewController alloc]init];
-    vc.addressModel=_addressModel;
-    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-                                     initWithTitle:@""
-                                     style:UIBarButtonItemStylePlain
-                                     target:self
-                                     action:nil];
-    self.navigationItem.backBarButtonItem = cancelButton;
-    [self.navigationController pushViewController:vc animated:YES];
+    [LoadingView initWithFrame:CGRectMake(0, 0, 100, 80) parentView:self.view];
+    OrderRequest *or=[[OrderRequest alloc] init];
+    [or orderCheck:^(){
+        [LoadingView stopAnimating:self.view];
+        OrderViewController *vc =[[OrderViewController alloc]init];
+        vc.addressModel=_addressModel;
+        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                         initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                         target:self
+                                         action:nil];
+        self.navigationItem.backBarButtonItem = cancelButton;
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    
     
     
 }
+
+-(void)getOrderModel{
+
+    
+   
+//    orderModel.totalPrice=[NSNumber numberWithInteger:15677];
+//    orderModel.totalCount=[NSNumber numberWithInteger:50];
+//    OrderDetailModel *od=[[OrderDetailModel alloc] init];
+//    od.activityId=[NSNumber numberWithInteger:22];
+//    od.productCode=@"232342";
+//    od.count=[NSNumber numberWithInteger:1];
+//    od.price=[NSNumber numberWithInteger:1000];
+   
+}
+
 @end

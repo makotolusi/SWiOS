@@ -22,7 +22,7 @@
 -(void)layoutSubviews{
     _cartModel=[ShoppingCartModel sharedInstance];
     _priceLabel.textColor=UIColorFromRGB(labelTextColor);
-    _priceLabel.text=[NSString stringWithFormat:@"¥  %ld",_cartModel.totalSalePrice];
+    _priceLabel.text=[NSString stringWithFormat:@"¥  %@",_cartModel.orderModel.totalPrice];
 }
 
 @end

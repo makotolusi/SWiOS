@@ -13,7 +13,7 @@
 #import "YCAsyncImageView.h"
 @protocol ShoppingCartCellDelegate <NSObject>
 
-- (void)totalPrice:(ActivityProduct*)activityProduct;
+- (void)totalPrice:(ActivityProduct*)activityProduct type:(int)type;
 
 @end
 

@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface ShoppingCartModel : NSObject
+#import "JSONModel.h"
+#import "OrderModel.h"
+@interface ShoppingCartModel : JSONModel
 @property (nonatomic,strong) NSMutableArray *arOfWatchesOfCart;
-@property (nonatomic,strong) NSMutableDictionary *producCode_buyCount;
-@property (assign,nonatomic) NSInteger totalCountBadge;
-@property (assign,nonatomic) NSInteger totalSalePrice;
+@property (nonatomic,strong) NSMutableDictionary *productCode_buyCount;
+//@property (assign,nonatomic) NSInteger totalCountBadge;
+@property (strong,nonatomic) OrderModel *orderModel;
 
 +(ShoppingCartModel *)sharedInstance;
 @end

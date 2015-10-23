@@ -108,8 +108,8 @@ static CGFloat kSWCellCountTag = 1;
     [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_cellIndex withObject:_activityProduct ];
     UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
     countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
-    if ([_delegate respondsToSelector:@selector(totalPrice:)]) { // 如果协议响应了sendValue:方法
-        [_delegate totalPrice: _activityProduct]; // 通知执行协议方法
+    if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
+        [_delegate totalPrice: _activityProduct type:0]; // 通知执行协议方法
     }
 }
 - (void)minusAction:(UIButton*)sender{
@@ -118,6 +118,9 @@ static CGFloat kSWCellCountTag = 1;
         [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_cellIndex withObject:_activityProduct ];
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
         countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
+        if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
+            [_delegate totalPrice: _activityProduct type:1]; // 通知执行协议方法
+        }
     }
 }
 

@@ -89,7 +89,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     //price label
     priceLabel=[[UILabel alloc] initWithFrame:CGRectMake(bottomImageView.frame.size.width+20, 20, 200, 30)];
     priceLabel.textColor=[UIColor whiteColor];
-    priceLabel.text=[@"¥ " stringByAppendingFormat:@"%ld",(long)_cartModel.totalSalePrice];
+    priceLabel.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
     priceLabel.font=[UIFont boldSystemFontOfSize:20];
     [barView addSubview:priceLabel];
     //buy label
@@ -104,10 +104,10 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     [bottomLabel addTarget:self action:@selector(bottomLabelClick) forControlEvents:UIControlEventTouchUpInside];
     [barView addSubview:bottomLabel];
     [self.view addSubview:barView];
-    if(_cartModel.totalCountBadge>0){
+    if(_cartModel.orderModel.totalCount>0){
         //badgeView
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
-        badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long) _cartModel.totalCountBadge];
+        badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long) _cartModel.orderModel.totalCount];
     }
 }
 
@@ -121,7 +121,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     [btn addTarget:self action:@selector(CartTapped:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.activityProduct=_data[indexPath.row];
-    btn.selected=[[_cartModel.producCode_buyCount allKeys] containsObject:cell.activityProduct.productCode];
+    btn.selected=[[_cartModel.productCode_buyCount allKeys] containsObject:cell.activityProduct.productCode];
     [btn setTitle:[NSString stringWithFormat:@"%li",(long)indexPath.row] forState:UIControlStateDisabled];
     return cell;
 }
@@ -140,28 +140,37 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     if(sender.selected) {
         // remove selected array
         [_cartModel.arOfWatchesOfCart removeObject:model];
-        _cartModel.totalSalePrice=_cartModel.totalSalePrice-model.rushPrice.integerValue;
-          model.buyCount=model.buyCount-1;
-        [_cartModel.producCode_buyCount removeObjectForKey:model.productCode];
+//        _cartModel.totalPrice=[_cartModel.totalPrice decimalNumberBySubtracting:model.rushPrice];
+        model.buyCount=model.buyCount-1;
+        [_cartModel.productCode_buyCount removeObjectForKey:model.productCode];
         // update badge number
         [self reloadBadgeNumber];
     } else {
         // add into selected array
         [_cartModel.arOfWatchesOfCart addObject:model];
-        _cartModel.totalSalePrice=_cartModel.totalSalePrice+model.rushPrice.integerValue;
+        NSDecimalNumberHandler *round = [NSDecimalNumberHandler
+                                         decimalNumberHandlerWithRoundingMode:NSRoundPlain
+                                         scale:2
+                                         raiseOnExactness:NO
+                                         raiseOnOverflow:NO
+                                         raiseOnUnderflow:NO
+                                         raiseOnDivideByZero:YES];
+         NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
+         NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:model.rushPrice.stringValue];
+       _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: t2 withBehavior:round];
           model.buyCount=model.buyCount+1;
-        [_cartModel.producCode_buyCount setObject:[NSNumber numberWithInt:model.buyCount] forKey:model.productCode];
+        [_cartModel.productCode_buyCount setObject:[NSNumber numberWithInteger:model.buyCount] forKey:model.productCode];
         // perform add to cart animation
         [self addToCartTapped:ip];
     }
-    _cartModel.totalCountBadge=[_cartModel.arOfWatchesOfCart count];
+    _cartModel.orderModel.totalCount=[_cartModel.arOfWatchesOfCart count];
     //badgeView
     JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
-    badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long) _cartModel.totalCountBadge];
-    priceLabel.text=[@"¥ " stringByAppendingFormat:@"%ld",(long)_cartModel.totalSalePrice];
+    badgeView.badgeText = [NSString stringWithFormat:@"%ld",(long)_cartModel.orderModel.totalCount];
+    priceLabel.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
     // reload specific row with animation
     [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:ip] withRowAnimation:UITableViewRowAnimationMiddle];
-    if(_cartModel.totalCountBadge>0){
+    if(_cartModel.orderModel.totalCount>0){
         bottomLabel.selected=YES;
     }else{
         bottomLabel.selected=NO;
