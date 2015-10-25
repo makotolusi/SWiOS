@@ -32,9 +32,11 @@
     return self;
 }
 
--(UIView*)tableSectionLabel:(NSString*)text{
+-(UIView*)tableSectionLabel:(NSString*)text y:(NSInteger)y{
     UIView *view=[[UIView alloc] init];
-    UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(5, 20, 200, 20)];
+//    view.backgroundColor=[UIColor redColor];
+    UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(5, y, 200, 20)];
+//    label.backgroundColor=[UIColor blackColor];
     label.textColor=[UIColor darkGrayColor];
     label.text=text;
     label.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];

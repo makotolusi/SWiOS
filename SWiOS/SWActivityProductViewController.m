@@ -22,8 +22,15 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 @end
 
 @implementation SWActivityProductViewController
--(void)viewDidAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+   
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
     
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidLoad {
@@ -62,15 +69,10 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     [_tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)_loadContentView {
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
-    _tableView.contentInset = UIEdgeInsetsMake(64.f, 0.f, 49.f, 0.f);
+    _tableView.contentInset = UIEdgeInsetsMake(65.f, 0.f, 50.f, 0.f);
     _tableView.rowHeight = 134.f;
     _tableView.dataSource = self;
     _tableView.delegate = self;
@@ -102,6 +104,11 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     bottomLabel.layer.borderWidth=2;
     bottomLabel.layer.borderColor=[[UIColor whiteColor] CGColor];
     [bottomLabel addTarget:self action:@selector(bottomLabelClick) forControlEvents:UIControlEventTouchUpInside];
+    if(_cartModel.arOfWatchesOfCart.count>0){
+        bottomLabel.selected=YES;
+    }else{
+        bottomLabel.selected=NO;
+    }
     [barView addSubview:bottomLabel];
     [self.view addSubview:barView];
     if(_cartModel.orderModel.totalCount>0){
@@ -248,6 +255,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
                                      action:nil];
     self.navigationItem.backBarButtonItem = cancelButton;
     [self.navigationController pushViewController:vc animated:YES];
+    _tableView.contentInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, 0.f);
 }
 
 

@@ -11,6 +11,7 @@
 #import "EmptyCell.h"
 #import "DatabaseManager.h"
 #import "NSString+Extension.h"
+#import "UIAlertView+Extension.h"
 @interface AddressViewController ()
 @property (retain, nonatomic) UITextField *areaText;
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
@@ -187,13 +188,13 @@
 }
 
 - (void)save:(UIButton*)sender {
-    
+    UIAlertView *alert=[[UIAlertView alloc] init];
     AddressModel *add=[[AddressModel alloc] init];
     add.AddressModelID=_addressModel.AddressModelID;
     UITextField *nameTf=[self.view viewWithTag:11];
     NSString *name=nameTf.text;
     if(StringIsNullOrEmpty(name)){
-        [self showMessage:@"请输入收货人姓名"];
+        [alert showMessage:@"请输入收货人姓名"];
         return;
     }
     [add setValue:name forKey:@"name"];
@@ -201,28 +202,28 @@
     UITextField *phoneTf=[self.view viewWithTag:12];
     NSString *phone=phoneTf.text;
     if (StringIsNullOrEmpty(phone)) {
-        [self showMessage:@"请输入电话号码"];
+        [alert showMessage:@"请输入电话号码"];
     }
     [add setValue:phone forKey:@"phone"];
     
     UITextField *codeTf=[self.view viewWithTag:13];
     NSString *code=codeTf.text;
     if (StringIsNullOrEmpty(code)) {
-        [self showMessage:@"请输入邮政编码"];
+        [alert showMessage:@"请输入邮政编码"];
     }
     [add setValue:code forKey:@"code"];
     
     UITextField *cityTf=[self.view viewWithTag:14];
     NSString *city=cityTf.text;
     if (StringIsNullOrEmpty(city)) {
-        [self showMessage:@"请选择区域信息"];
+        [alert showMessage:@"请选择区域信息"];
     }
     [add setValue:city forKey:@"city"];
     
     UITextView *addressTf=[self.view viewWithTag:15];
     NSString *address=addressTf.text;
     if (StringIsNullOrEmpty(address)) {
-        [self showMessage:@"请输入地址详细信息"];
+        [alert showMessage:@"请输入地址详细信息"];
     }
     [add setValue:address  forKey:@"address"];
     add.mts=[[NSDate date] timeIntervalSince1970];
@@ -234,19 +235,7 @@
     [alv reloadTableView];
 }
 
--(void)showMessage:(NSString *)message{
-                        
-    _alert=[[UIAlertView alloc] initWithTitle:message message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-    _alert.alpha=0.5;
-    _alert.backgroundColor=[UIColor blackColor];
-    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(performDismiss:) userInfo:nil repeats:NO];
-    [_alert show];
-}
+
                     
--(void) performDismiss:(NSTimer *)timer
-{
-    [_alert dismissWithClickedButtonIndex:0 animated:YES];
-    
-}
 
 @end

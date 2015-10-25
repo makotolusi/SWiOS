@@ -18,6 +18,7 @@
 #import "OrderRequest.h"
 #import "ShoppingCartModel.h"
 #import "LoadingView.h"
+#import "UIAlertView+Extension.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
 @interface BalanceController ()
@@ -26,11 +27,23 @@ static NSString *orderListCell = @"orderListCell";
 
 @implementation BalanceController
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+//    NSLog(@"edge : %@", NSStringFromUIEdgeInsets(_tableView.contentInset));
+   
+//    NSLog(@"edge : %@", NSStringFromUIEdgeInsets(_tableView.contentInset));
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initialize];
-    [self _loadTableView];
-    // Do any additional setup after loading the view.
+     [self _loadTableView];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+    // Dispose of any resources that can be recreated.
 }
 -(void)initialize{
     groups=[[NSMutableArray alloc] init];
@@ -53,7 +66,7 @@ static NSString *orderListCell = @"orderListCell";
      [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
     //快递公司
-    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-200, SCREEN_WIDTH, 100)];
+    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-150, SCREEN_WIDTH, 100)];
     _paymentPicker.dataSource=self;
     _paymentPicker.delegate=self;
     
@@ -69,10 +82,6 @@ static NSString *orderListCell = @"orderListCell";
 //    [submit.layer setBorderWidth:1.0];
     [submit addTarget:self action:@selector(checkOrder:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:submit];
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -94,9 +103,9 @@ static NSString *orderListCell = @"orderListCell";
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
 //    UIView *view=[
     if(section==1)
-        return [[[UILabel alloc] init] tableSectionLabel:@"收货人信息"];
+        return [[[UILabel alloc] init] tableSectionLabel:@"收货人信息" y:30];
     else if (section==2)
-        return [[[UILabel alloc] init] tableSectionLabel:@"快递公司"];
+        return [[[UILabel alloc] init] tableSectionLabel:@"快递公司" y:30];
     else
         return nil;
 }
@@ -105,7 +114,7 @@ static NSString *orderListCell = @"orderListCell";
     if (indexPath.section==0) {
         return 40.f;
     }else if (indexPath.section==1){
-        return orderListCellHeight+5;
+        return orderListCellHeight+10;
     }else if(indexPath.section==2){
         if (_addressModel!=nil)
          {
@@ -221,7 +230,7 @@ static NSString *orderListCell = @"orderListCell";
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    UITextField* tf=[self.view viewWithTag:11];
+    UILabel* tf=[self.view viewWithTag:11];
     tf.font=[UIFont systemFontOfSize:15];
     tf.textColor=[UIColor blackColor];
     tf.text=[paymentArray objectAtIndex:row];
@@ -232,10 +241,18 @@ static NSString *orderListCell = @"orderListCell";
 }
 
 - (void)checkOrder:(UIButton*)sender {
-    [LoadingView initWithFrame:CGRectMake(0, 0, 100, 80) parentView:self.view];
-    OrderRequest *or=[[OrderRequest alloc] init];
-    [or orderCheck:^(){
-        [LoadingView stopAnimating:self.view];
+    UILabel* tf=[self.view viewWithTag:11];
+    UIAlertView *alert=[[UIAlertView alloc] init];
+    if (_addressModel==nil)//alert
+    {
+        [alert showMessage:@"收货人信息是必须填写的哦！"];
+    }else if([tf.text isEqualToString:@"快递公司"]){
+        [alert showMessage:@"快递公司是必须填写的哦！"];
+    }else{
+        //    [LoadingView initWithFrame:CGRectMake(0, 0, 100, 80) parentView:self.view];
+        //    OrderRequest *or=[[OrderRequest alloc] init];
+        //    [or orderCheck:^(){
+        //        [LoadingView stopAnimating:self.view];
         OrderViewController *vc =[[OrderViewController alloc]init];
         vc.addressModel=_addressModel;
         UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
@@ -245,7 +262,9 @@ static NSString *orderListCell = @"orderListCell";
                                          action:nil];
         self.navigationItem.backBarButtonItem = cancelButton;
         [self.navigationController pushViewController:vc animated:YES];
-    }];
+        //    }];
+    }
+
     
     
     

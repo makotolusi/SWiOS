@@ -27,7 +27,7 @@
     NSMutableArray *orders=cartModel.arOfWatchesOfCart;
     int with=orderListCellHeight;
     int startX=5;
-    _imgScroll=[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, with*4+startX*4, with)];
+    _imgScroll=[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, with*4+startX*4, with+5)];
     
     int totalWith = 0;
     int i=0;

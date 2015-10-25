@@ -34,7 +34,7 @@ static CGFloat kSWCellCountTag = 1;
 }
 -(void)layoutSubviews{
     _cartModel=[ShoppingCartModel sharedInstance];
-    _activityProduct=_cartModel.arOfWatchesOfCart[_cellIndex];
+    _activityProduct=_cartModel.arOfWatchesOfCart[_indexPath.row-1];
     [super layoutSubviews];
     [infoView removeFromSuperview];
     [editView removeFromSuperview];
@@ -55,7 +55,7 @@ static CGFloat kSWCellCountTag = 1;
     [self labelStyle:price text:[@"¥ " stringByAppendingFormat:@"%@",_activityProduct.rushPrice] size:13];
     //count1
     UILabel *count1=[[UILabel alloc] initWithFrame:CGRectMake(infoView.frame.size.width-40, infoView.frame.size.height-15, 50, 15)];
-    [self labelStyle:count1 text:[NSString stringWithFormat:@"%ld",_activityProduct.buyCount] size:13];
+    [self labelStyle:count1 text:[NSString stringWithFormat:@"X%ld",_activityProduct.buyCount] size:13];
     [infoView addSubview:title];
     [infoView addSubview:price];
     [infoView addSubview:count1];
@@ -76,13 +76,17 @@ static CGFloat kSWCellCountTag = 1;
     [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:13];
     [editView addSubview:count];
     //trash image
-    UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash3"]];
-    trash.frame=CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25);
-    UIButton *trashButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [trashButton addSubview:trash];
+//    UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash2"]];
+//    trash.frame=CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25);
+    UIButton *trashButton = [[UIButton alloc] initWithFrame:CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25)];
+    trashButton.backgroundColor=[UIColor blackColor];
+    [trashButton setTitle:@"xxxxx" forState:UIControlStateNormal];
+      [trashButton addTarget:self action:@selector(removeCart:) forControlEvents:UIControlEventTouchUpInside];
     [editView addSubview:trashButton];
+//    [trashButton addSubview:trash];
     [self addSubview:editView];
     [self addSubview:infoView];
+    
     [self editOrComplete:self.isEdit];
 }
 -(void)labelStyle:(UILabel*)label text:(NSString *)text size:(int)size{
@@ -105,7 +109,7 @@ static CGFloat kSWCellCountTag = 1;
 
 - (void)plusAction:(UIButton*)sender{
      _activityProduct.buyCount+=1;
-    [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_cellIndex withObject:_activityProduct ];
+    [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
     UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
     countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
     if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
@@ -115,7 +119,7 @@ static CGFloat kSWCellCountTag = 1;
 - (void)minusAction:(UIButton*)sender{
     if( _activityProduct.buyCount!=0){
          _activityProduct.buyCount-=1;
-        [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_cellIndex withObject:_activityProduct ];
+        [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
         countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
         if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
@@ -134,5 +138,10 @@ static CGFloat kSWCellCountTag = 1;
     }
 }
 
+- (void)removeCart:(UIButton*)sender{
+    NSLog(@"%d",_indexPath.row);
+    [self.tableView deleteRowsAtIndexPaths:@[_indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+
+}
 
 @end

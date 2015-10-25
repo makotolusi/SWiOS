@@ -12,6 +12,6 @@
 -(void)midLabel;
 -(void)smallLabel;
 -(UIView *) changeNavTitleByFontSize:(NSString *)strTitle;
--(UIView*)tableSectionLabel:(NSString*)text;
+-(UIView*)tableSectionLabel:(NSString*)text y:(NSInteger)y;
 @end
 

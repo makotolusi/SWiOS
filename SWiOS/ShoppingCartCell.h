@@ -25,10 +25,10 @@
 }
 @property (weak, nonatomic) IBOutlet YCAsyncImageView *imgView;
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
-@property (nonatomic,assign) NSInteger cellIndex;
 @property (nonatomic,strong) ActivityProduct* activityProduct;
 @property (assign,nonatomic) BOOL isEdit;
-//@property (assign,nonatomic) int count;
+@property (strong,nonatomic) UITableView *tableView;
+@property (nonatomic,strong) NSIndexPath *indexPath;
 // 委托代理人，代理一般需使用弱引用(weak)
 @property (weak, nonatomic) id<ShoppingCartCellDelegate> delegate;
 @end
