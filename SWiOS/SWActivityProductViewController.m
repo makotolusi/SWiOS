@@ -14,6 +14,7 @@
 #import "JSBadgeView.h"
 #import "ShoppingCartController.h"
 #import "ShoppingCartModel.h"
+#import "UILabel+Extension.h"
 #define kCCell_Img			1
 #define kCCell_Button		4
 static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier";
@@ -24,7 +25,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 @implementation SWActivityProductViewController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-   
+   [self requestData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,7 +38,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     
     [super viewDidLoad];
     [self initialize];
-    [self requestData];
+    
 }
 
 -(void)initialize{
@@ -65,14 +66,15 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
                        } fail:^{
                            NSLog(@"网络异常，取数据异常");
                        }];
-    // 如果数据从网络中来，那么就需要刷新表视图
-    [_tableView reloadData];
+//    // 如果数据从网络中来，那么就需要刷新表视图
+//    [_tableView reloadData];
 }
 
 - (void)_loadContentView {
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
     _tableView.contentInset = UIEdgeInsetsMake(65.f, 0.f, 50.f, 0.f);
+    NSLog(@"%f",_tableView.frame.origin.y);
     _tableView.rowHeight = 134.f;
     _tableView.dataSource = self;
     _tableView.delegate = self;
@@ -137,17 +139,25 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 }
 
 - (void)CartTapped:(UIButton*)sender {
-    // access the row number using the used trick
-    NSUInteger index = [[sender titleForState:UIControlStateDisabled] integerValue];
-    // obtain the object to be removed/added into cart array
+     NSUInteger index = [[sender titleForState:UIControlStateDisabled] integerValue];
     ActivityProduct *model = _data[index];
+    NSDecimalNumberHandler *round = [NSDecimalNumberHandler
+                                     decimalNumberHandlerWithRoundingMode:NSRoundPlain
+                                     scale:2
+                                     raiseOnExactness:NO
+                                     raiseOnOverflow:NO
+                                     raiseOnUnderflow:NO
+                                     raiseOnDivideByZero:YES];
+    NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
+    NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:model.rushPrice.stringValue];
+
     // create indexpath
     NSIndexPath *ip = [NSIndexPath indexPathForRow:index inSection:0];
     // perform action
     if(sender.selected) {
         // remove selected array
         [_cartModel.arOfWatchesOfCart removeObject:model];
-//        _cartModel.totalPrice=[_cartModel.totalPrice decimalNumberBySubtracting:model.rushPrice];
+        _cartModel.orderModel.totalPrice=[t1 decimalNumberBySubtracting: t2 withBehavior:round];
         model.buyCount=model.buyCount-1;
         [_cartModel.productCode_buyCount removeObjectForKey:model.productCode];
         // update badge number
@@ -155,15 +165,6 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     } else {
         // add into selected array
         [_cartModel.arOfWatchesOfCart addObject:model];
-        NSDecimalNumberHandler *round = [NSDecimalNumberHandler
-                                         decimalNumberHandlerWithRoundingMode:NSRoundPlain
-                                         scale:2
-                                         raiseOnExactness:NO
-                                         raiseOnOverflow:NO
-                                         raiseOnUnderflow:NO
-                                         raiseOnDivideByZero:YES];
-         NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
-         NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:model.rushPrice.stringValue];
        _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: t2 withBehavior:round];
           model.buyCount=model.buyCount+1;
         [_cartModel.productCode_buyCount setObject:[NSNumber numberWithInteger:model.buyCount] forKey:model.productCode];
@@ -247,7 +248,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 -(void)bottomLabelClick
 {
     ShoppingCartController *vc =[[ShoppingCartController alloc]init];
-    vc.navigationItem.title=@"购物车";
+    vc.navigationItem.titleView = [UILabel navTitleLabel:@"购物车"];
     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                      initWithTitle:@""
                                      style:UIBarButtonItemStylePlain
@@ -255,8 +256,9 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
                                      action:nil];
     self.navigationItem.backBarButtonItem = cancelButton;
     [self.navigationController pushViewController:vc animated:YES];
-    _tableView.contentInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, 0.f);
+//    [_tableView reloadData];
 }
+
 
 
 @end

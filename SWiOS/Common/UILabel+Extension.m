@@ -21,17 +21,6 @@
     self.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_SMALL_SIZE ];
 }
 
--(UIView *) changeNavTitleByFontSize:(NSString *)strTitle
-{
-    //自定义标题
-    self.frame=CGRectMake(0, 0 , 100, 44);
-    self.backgroundColor = [UIColor clearColor];
-    [self midLabel];
-    self.textAlignment = NSTextAlignmentCenter;
-    self.text = strTitle;
-    return self;
-}
-
 -(UIView*)tableSectionLabel:(NSString*)text y:(NSInteger)y{
     UIView *view=[[UIView alloc] init];
 //    view.backgroundColor=[UIColor redColor];
@@ -42,6 +31,17 @@
     label.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
     [view addSubview:label];
     return view;
+}
+
++(UILabel*)navTitleLabel:(NSString*)title{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200,44)];
+//    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"STHeitiK-Light" size:15];
+//    label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.8];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    label.text=title;
+    return label;
 }
 
 @end

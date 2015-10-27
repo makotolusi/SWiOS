@@ -10,6 +10,8 @@
 #import "TokenEncrypt.h"
 @implementation HttpHelper
 
+
+
 bool const isDev=NO;
 
 bool const isLocal=NO;
@@ -17,6 +19,10 @@ bool const isLocal=NO;
 NSString * const kBaseURL = @"http://okeasy.eicp.net:9889/mgserver/ApCommonServices/";
 
 NSString * const kLocalURL = @"http://10.6.104.78:8080/mgserver/ApCommonServices/";
+
++(NSString*)getUrl{
+    return (isLocal==YES?kLocalURL:kBaseURL);
+}
 
 +(AFHTTPRequestOperationManager *)init:(NSString **)urlApi
 {
@@ -32,7 +38,7 @@ NSString * const kLocalURL = @"http://10.6.104.78:8080/mgserver/ApCommonServices
         [manager.requestSerializer setValue:key forHTTPHeaderField:@"c"];
     }
     [HttpHelper netWorkStatus];
-    NSString *url=(isLocal==YES?kLocalURL:kBaseURL);
+    NSString *url=[self getUrl];
     *urlApi = [url stringByAppendingString:*urlApi];
     return manager;
 }

@@ -13,6 +13,7 @@
 
 #pragma  mark - sending requests
 
++(NSString*)getUrl;
 + (void)sendAsyncRequest:(NSString *)urlBase success:(void (^)(id responseObject))success fail:(void (^)())fail;
 + (void)sendPostRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail;
 + (void)sendGetRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail;

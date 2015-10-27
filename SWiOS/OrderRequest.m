@@ -48,6 +48,7 @@
                             if(success){
                                 NSDictionary* data=[result[@"data"] jsonString2Dictionary];
                                 NSString* orderCode=data[@"orderCode"];
+                                [_shoppingCart.orderModel setValue:orderCode forKey:@"orderCode"];
                                 NSString* orderInfo=[NSString stringWithFormat:jsonString,orderCode ];
                                 [self orderCofirm:orderInfo next:^{
                                      next();

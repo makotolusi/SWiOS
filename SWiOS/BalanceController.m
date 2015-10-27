@@ -159,6 +159,8 @@ static NSString *orderListCell = @"orderListCell";
     }else
         return [[EmptyCell alloc] init];
 }
+
+
 -(UITableViewCell*)editCell:(NSString*)text tag:(NSInteger*)tag{
     EmptyCell* cell = [[EmptyCell alloc] init];
     UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(6, 10, 200, 20)];
@@ -242,32 +244,28 @@ static NSString *orderListCell = @"orderListCell";
 
 - (void)checkOrder:(UIButton*)sender {
     UILabel* tf=[self.view viewWithTag:11];
-    UIAlertView *alert=[[UIAlertView alloc] init];
-    if (_addressModel==nil)//alert
-    {
-        [alert showMessage:@"收货人信息是必须填写的哦！"];
-    }else if([tf.text isEqualToString:@"快递公司"]){
-        [alert showMessage:@"快递公司是必须填写的哦！"];
-    }else{
-        //    [LoadingView initWithFrame:CGRectMake(0, 0, 100, 80) parentView:self.view];
-        //    OrderRequest *or=[[OrderRequest alloc] init];
-        //    [or orderCheck:^(){
-        //        [LoadingView stopAnimating:self.view];
-        OrderViewController *vc =[[OrderViewController alloc]init];
-        vc.addressModel=_addressModel;
-        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-                                         initWithTitle:@""
-                                         style:UIBarButtonItemStylePlain
-                                         target:self
-                                         action:nil];
-        self.navigationItem.backBarButtonItem = cancelButton;
-        [self.navigationController pushViewController:vc animated:YES];
-        //    }];
-    }
-
-    
-    
-    
+//    UIAlertView *alert=[[UIAlertView alloc] init];
+//    if (_addressModel==nil)//alert
+//    {
+//        [alert showMessage:@"收货人信息是必须填写的哦！"];
+//    }else if([tf.text isEqualToString:@"快递公司"]){
+//        [alert showMessage:@"快递公司是必须填写的哦！"];
+//    }else{
+//        [LoadingView initWithFrame:CGRectMake(0, 0, 100, 80) parentView:self.view];
+//        OrderRequest *or=[[OrderRequest alloc] init];
+//        [or orderCheck:^(){
+            [LoadingView stopAnimating:self.view];
+            OrderViewController *vc =[[OrderViewController alloc]init];
+            vc.addressModel=_addressModel;
+            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:nil];
+            self.navigationItem.backBarButtonItem = cancelButton;
+            [self.navigationController pushViewController:vc animated:YES];
+//        }];
+//    }
 }
 
 -(void)getOrderModel{

@@ -13,6 +13,7 @@
 #import "SWActivityProductViewController.h"
 #import "SWMainViewController.h"
 #import "FMDB.h"
+#import "UILabel+Extension.h"
 @interface SWBuyBuyBuyViewController ()
 
 @end
@@ -26,7 +27,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationItem.titleView = [UILabel navTitleLabel:@"抢抢抢"];
     [HttpHelper sendGetRequest:@"getActivity"
                     parameters: @{}
                        success:^(id response) {
@@ -64,7 +65,6 @@
 }
 
 - (void)_loadContentView {
-    
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
     _tableView.contentInset = UIEdgeInsetsMake(64.f, 0.f, 49.f, 0.f);
@@ -100,7 +100,7 @@
     //vo
     Activity *vo=_data[indexPath.row];
     thumbViewController.activity=vo;
-    thumbViewController.navigationItem.title = vo.name;
+    thumbViewController.navigationItem.titleView = [UILabel navTitleLabel:vo.name];
     //back button style
     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                      initWithTitle:@""
@@ -116,7 +116,7 @@
 }
 
 -(void)createDB{
-    FMDatabase *db = [FMDatabase databaseWithPath:@"/tmp/tmp.db"];
+//    FMDatabase *db = [FMDatabase databaseWithPath:@"/tmp/tmp.db"];
 }
 
 @end

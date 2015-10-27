@@ -11,7 +11,8 @@
 @interface UILabel (Extension)
 -(void)midLabel;
 -(void)smallLabel;
--(UIView *) changeNavTitleByFontSize:(NSString *)strTitle;
 -(UIView*)tableSectionLabel:(NSString*)text y:(NSInteger)y;
+
++(UILabel*)navTitleLabel:(NSString*)title;
 @end
 

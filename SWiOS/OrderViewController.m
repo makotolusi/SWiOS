@@ -16,6 +16,7 @@
 #import "AddressView.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "LUAliPay.h"
+#import "TradeFinishViewController.h"
 #define kOffsetHeight 60.f
 @interface OrderViewController ()
 
@@ -29,8 +30,6 @@
 }
 
 - (void)_loadTableView {
-    UILabel *navTitle=[[UILabel alloc] init];
-    self.navigationItem.titleView=[navTitle changeNavTitleByFontSize:@"选择收货地址"];
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
     _tableView.dataSource = self;
@@ -153,7 +152,18 @@
 }
 
 -(void)alipay{
-    [LUAliPay alipay];
+    TradeFinishViewController *vc =[[TradeFinishViewController alloc]init];
+//    vc.addressModel=_addressModel;
+     vc.navigationItem.titleView = [UILabel navTitleLabel:@"订单详情"];
+    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                     initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                     target:self
+                                     action:nil];
+    self.navigationItem.backBarButtonItem = cancelButton;
+    [self.navigationController pushViewController:vc animated:YES];
+
+//    [LUAliPay alipay];
 }
 
 @end

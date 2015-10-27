@@ -12,7 +12,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "OrderModel.h"
 #import "ShoppingCartModel.h"
-
+#import "HttpHelper.h"
  static NSString* const RSA_PRIVATE_KEY= @"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANbVm5W3Z6VbR2RrB/UIs3m2MudrHrOMUvs8l1P7+nHtK0MlFnAZK+06IG9LU9Nh/M29JC57UWetGYbJNXEwU6qKrKAoTV1xBERB3dy1oIlSOuftMPBQftLIR1iX63R1sbxRU/H6prMbkh+LBjL3IUm2p243YMBXh1DBpxeF1nJdAgMBAAECgYAQKgRJ0IHg5CxL9u2jVyNB3h6YYOvvcHhx5M4yCHyAg+rEY477ojk24S+9j/pfpjjCNh/5y1eFqHWKOatmt88jm3X5u2FwOpys1yYG02yzjk9T2SVZbgaWcQavDosw6+n/kjdoj21ziavdyqWZq39RQZNdHoxs+I/R4Lb92xdIVQJBAPVTAA0M80u4Y3kB7BlsarZLxrifkajm3eewNNQO4o/xLGQQRkEujH+UmFx/LeWGcijrytyf2JKBaEKB4O6tx0sCQQDgLvCpi7a4Rt7fcx81LIpwYdtaZ5laSgF2DSQ4c/xsr+x7kYFROHN9wQV3wtzuqm4DV+wlWuobRGSMmTeFStv3AkEA6UJ0J/SKWRMHsgU74qiNhqviVaWTsA9kK2oFsSQ+FDNyy+oVguCpwp0dicV7dGQzo+kfSEvMdvEIm0Q3BXrCpQJAQ4uhE1R3LzqbODQVeQ38gDPbxXdlayDVI959xUydB5pR5EFI91HM6lzX6ueZbYeIMhWxnuevlZubuAkKA200rQJBAJTUjrZQhIaa+GcdzriooabON2wL4MzrK5puVtnvY4HL1pz71pQpFU6nNRML6ixV9PNBSpeZi8y1n1qPuXhppmE=";
 
 //public static final String RSA_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDW1ZuVt2elW0dkawf1CLN5tjLn"
@@ -61,12 +61,11 @@
     Order *order = [[Order alloc] init];
     order.partner = partner;
     order.seller = seller;
-    order.tradeNO = [LUAliPay generateTradeNO]; //订单ID（由商家自行制定）
-    order.productName = @"lusi"; //商品标题
-    order.productDescription = @"shuai"; //商品描述
+    order.tradeNO =orderModel.orderCode;//[self generateTradeNO];//orderModel.orderCode; //订单ID（由商家自行制定）
+    order.productName = @"陆思测试一分钱支付"; //商品标题
+    order.productDescription = @"一分钱支付"; //商品描述
     order.amount =@"0.01";//[NSString stringWithFormat:@"%.2f",orderModel.totalPrice.floatValue]; //商品价格
-    order.notifyURL =  @"http://www.xxx.com"; //回调URL
-    
+    order.notifyURL = [[HttpHelper getUrl] stringByAppendingString:[NSString stringWithFormat:@"/addAlipayInfo"]]; //回调URL
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";
     order.inputCharset = @"utf-8";
@@ -98,7 +97,7 @@
 }
 
 + (NSString *)generateTradeNO{
-    static int kNumber = 15;
+    static int kNumber = 16;
     
     NSString *sourceStr = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     NSMutableString *resultStr = [[NSMutableString alloc] init];

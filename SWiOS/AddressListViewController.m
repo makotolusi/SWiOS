@@ -39,7 +39,7 @@ NSMutableArray *_testArray;
     self.tableView.allowsSelection = NO; // We essentially implement our own selection
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0); // Makes the horizontal row seperator stretch the entire length of the table view
     UILabel *navTitle=[[UILabel alloc] init];
-    self.navigationItem.titleView=[navTitle changeNavTitleByFontSize:@"选择收货地址"];
+    self.navigationItem.titleView=self.navigationItem.titleView=[UILabel  navTitleLabel:@"选择收货地址"];
 
     //创建编辑按钮
     UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(100, 0, 100, 40)];

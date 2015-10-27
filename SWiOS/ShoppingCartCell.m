@@ -33,8 +33,7 @@ static CGFloat kSWCellCountTag = 1;
     CGContextStrokeRect(context, CGRectMake(10, rect.size.height, rect.size.width, 1));
 }
 -(void)layoutSubviews{
-    _cartModel=[ShoppingCartModel sharedInstance];
-    _activityProduct=_cartModel.arOfWatchesOfCart[_indexPath.row-1];
+    
     [super layoutSubviews];
     [infoView removeFromSuperview];
     [editView removeFromSuperview];
@@ -63,18 +62,19 @@ static CGFloat kSWCellCountTag = 1;
     editView=[[UIView alloc] initWithFrame:infoView.frame];
     editView.backgroundColor=[UIColor whiteColor];
     //-
-    UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(0, 30, 20, 20)];
-    [self minusPlus:minus withSign:@"-"];
+    UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(0, 40, 15, 15)];
+    [self minusPlus:minus withSign:@"jianhao"];
     //+
-    UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+150, minus.frame.origin.y, 20, 20)];
-    [self minusPlus:plus withSign:@"+"];
+    UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+150, minus.frame.origin.y, 15, 15)];
+    [self minusPlus:plus withSign:@"jiahao"];
+    
     //count
     UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(plus.frame.origin.x/2,minus.frame.origin.y, 30, 20)];
     count.tag=kSWCellCountTag;
     [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
      [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:13];
-    [editView addSubview:count];
+    [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:12];
+    [infoView addSubview:count];
     //trash image
 //    UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash2"]];
 //    trash.frame=CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25);
@@ -84,7 +84,7 @@ static CGFloat kSWCellCountTag = 1;
       [trashButton addTarget:self action:@selector(removeCart:) forControlEvents:UIControlEventTouchUpInside];
     [editView addSubview:trashButton];
 //    [trashButton addSubview:trash];
-    [self addSubview:editView];
+//    [self addSubview:editView];
     [self addSubview:infoView];
     
     [self editOrComplete:self.isEdit];
@@ -96,15 +96,18 @@ static CGFloat kSWCellCountTag = 1;
     label.font=[UIFont fontWithName:@"STHeitiK-Light" size:size ];
 }
 -(void)minusPlus:(UIButton*)button withSign:(NSString *) sign{
+    [button setImage:[UIImage imageNamed:sign] forState:UIControlStateNormal];
+    button.imageEdgeInsets=UIEdgeInsetsMake(3, 3, 3, 3);
     button.layer.masksToBounds=YES;
-    button.layer.cornerRadius=10.0f;
+    button.layer.cornerRadius=7.0f;
     button.alpha=0.7f;
-    [button setTitle:sign forState:UIControlStateNormal];
+//    [button setTitle:sign forState:UIControlStateNormal];
     //    minus.titleLabel.font=[UIFont systemFontOfSize:15];
     button.titleLabel.font=[UIFont fontWithName:@"STHeitiK-Light" size:15 ];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.layer.backgroundColor=UIColorFromRGB(0x1abc9c).CGColor;
-   [editView addSubview:button];
+    
+   [infoView addSubview:button];
 }
 
 - (void)plusAction:(UIButton*)sender{
