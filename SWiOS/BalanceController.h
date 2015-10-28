@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SWBaseViewController.h"
 #import "AddressModel.h"
+#import "ShoppingCartModel.h"
 @interface BalanceController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
     @private
@@ -19,5 +20,7 @@
 
 @property (strong, nonatomic) UIPickerView *paymentPicker;
 @property (nonatomic,strong) AddressModel *addressModel;
+
+@property (nonatomic,strong) ShoppingCartModel *cartModel;
 -(void)reloadTableView;
 @end

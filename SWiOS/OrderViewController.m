@@ -119,7 +119,7 @@
     if(indexPath.section==0){
         cell =[[EmptyCell alloc] init];
         AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(50, 0, 20, 20) data:self.addressModel];
-        UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ship"]];
+        UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dizhi64"]];
                           img.frame=CGRectMake(10, 20, 30, 30);
         img.alpha=0.7f;
         [cell addSubview:img];
@@ -131,10 +131,10 @@
         NSString *imgName;
         NSString *labelText;
         if(indexPath.row==0){
-            imgName=@"zhifubao";
+            imgName=@"zhifubao64";
             labelText=@"支付宝";
         }else if(indexPath.row==1){
-            imgName=@"weixin";
+            imgName=@"weixin64";
             labelText=@"微信支付(推荐)";
         }
         UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];

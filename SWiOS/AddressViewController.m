@@ -228,11 +228,18 @@
     [add setValue:address  forKey:@"address"];
     add.mts=[[NSDate date] timeIntervalSince1970];
     [_databaseManager insertAddress:add];
-   
-    AddressListViewController *alv=self.navigationController.viewControllers[2];
+
+    ShoppingCartModel *cartModel=[ShoppingCartModel sharedInstance];
+    cartModel.addressModel=add;
+    NSArray *views=self.navigationController.viewControllers;
+    for (UIViewController *view in views) {
+        if ([view isKindOfClass:[AddressListViewController class]]) {
+            AddressListViewController *alv=view;
+            [self.navigationController popViewControllerAnimated:YES];
+            [alv reloadTableView];
+        }
+    }
      [self.navigationController popViewControllerAnimated:YES];
-//    UIViewController *pview=[self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -2)] animated:YES];
-    [alv reloadTableView];
 }
 
 

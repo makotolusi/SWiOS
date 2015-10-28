@@ -99,7 +99,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     //buy label
     bottomLabel=[[UIButton alloc] initWithFrame:CGRectMake(barView.frame.size.width-80, 20, 65, 34)];
     [bottomLabel setTitle:@"请选购" forState:UIControlStateNormal];
-    [bottomLabel setTitle:@"去结算" forState:UIControlStateSelected];
+//    [bottomLabel setTitle:@"去结算" forState:UIControlStateSelected];
     bottomLabel.backgroundColor=UIColorFromRGB(0x1abc9c);
     bottomLabel.layer.masksToBounds=YES;
     bottomLabel.layer.cornerRadius=6;
@@ -107,9 +107,9 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     bottomLabel.layer.borderColor=[[UIColor whiteColor] CGColor];
     [bottomLabel addTarget:self action:@selector(bottomLabelClick) forControlEvents:UIControlEventTouchUpInside];
     if(_cartModel.arOfWatchesOfCart.count>0){
-        bottomLabel.selected=YES;
+        [bottomLabel setTitle:@"去结算" forState:UIControlStateNormal];
     }else{
-        bottomLabel.selected=NO;
+         [bottomLabel setTitle:@"请选购" forState:UIControlStateNormal];
     }
     [barView addSubview:bottomLabel];
     [self.view addSubview:barView];
@@ -132,6 +132,12 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     cell.activityProduct=_data[indexPath.row];
     btn.selected=[[_cartModel.productCode_buyCount allKeys] containsObject:cell.activityProduct.productCode];
     [btn setTitle:[NSString stringWithFormat:@"%li",(long)indexPath.row] forState:UIControlStateDisabled];
+    NSString *key=[NSString stringWithFormat:@"%@_%@",cell.activityProduct.activityId,cell.activityProduct.productCode];
+    if (_cartModel.activity_product_index[key]) {
+        btn.selected=YES;
+    }else {
+        btn.selected=NO;
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -150,13 +156,15 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
                                      raiseOnDivideByZero:YES];
     NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
     NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:model.rushPrice.stringValue];
-
+    NSString *key=[NSString stringWithFormat:@"%@_%@",model.activityId,model.productCode];
     // create indexpath
     NSIndexPath *ip = [NSIndexPath indexPathForRow:index inSection:0];
     // perform action
     if(sender.selected) {
         // remove selected array
-        [_cartModel.arOfWatchesOfCart removeObject:model];
+       NSNumber *index= _cartModel.activity_product_index[key];
+        [_cartModel.arOfWatchesOfCart removeObjectAtIndex:index.integerValue];
+        [_cartModel.activity_product_index removeObjectForKey:key];
         _cartModel.orderModel.totalPrice=[t1 decimalNumberBySubtracting: t2 withBehavior:round];
         model.buyCount=model.buyCount-1;
         [_cartModel.productCode_buyCount removeObjectForKey:model.productCode];
@@ -168,10 +176,13 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
        _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: t2 withBehavior:round];
           model.buyCount=model.buyCount+1;
         [_cartModel.productCode_buyCount setObject:[NSNumber numberWithInteger:model.buyCount] forKey:model.productCode];
+        NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
+        [ _cartModel.activity_product_index setValue:value forKey:key];
         // perform add to cart animation
         [self addToCartTapped:ip];
     }
     _cartModel.orderModel.totalCount=[_cartModel.arOfWatchesOfCart count];
+    NSLog(@"total count %ld",[_cartModel.arOfWatchesOfCart count]);
     //badgeView
     JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
     badgeView.badgeText = [NSString stringWithFormat:@"%ld",(long)_cartModel.orderModel.totalCount];
@@ -179,9 +190,9 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     // reload specific row with animation
     [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:ip] withRowAnimation:UITableViewRowAnimationMiddle];
     if(_cartModel.orderModel.totalCount>0){
-        bottomLabel.selected=YES;
+         [bottomLabel setTitle:@"去结算" forState:UIControlStateNormal];
     }else{
-        bottomLabel.selected=NO;
+         [bottomLabel setTitle:@"请选购" forState:UIControlStateNormal];
     }
 }
 

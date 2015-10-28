@@ -27,6 +27,7 @@ NSMutableArray *_testArray;
 -(void)initializeData{
     DatabaseManager *db=[DatabaseManager sharedDatabaseManager];
     _testArray=[db.getAllAddress mutableCopy];
+    _cartModel=[ShoppingCartModel sharedInstance];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -76,12 +77,14 @@ NSMutableArray *_testArray;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"cell selected at index path %ld", (long)indexPath.row);
-     AddressModel *dateObject = _testArray[indexPath.row];
+     AddressModel *dataObject = _testArray[indexPath.row];
+    _cartModel.addressModel=dataObject;
     NSArray *views=self.navigationController.viewControllers;
     for (UIViewController *view in views) {
         if ([view isKindOfClass:[BalanceController class]]) {
             BalanceController *alv=view;
-            alv.addressModel=dateObject;
+            alv.addressModel=dataObject;
+            
             [self.navigationController popViewControllerAnimated:YES];
             [alv reloadTableView];
         }

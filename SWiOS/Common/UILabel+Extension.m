@@ -18,6 +18,7 @@
 }
 
 -(void)smallLabel{
+    self.textColor=[UIColor darkGrayColor];
     self.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_SMALL_SIZE ];
 }
 

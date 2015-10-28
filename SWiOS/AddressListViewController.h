@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SWBaseViewController.h"
 #import "AddressListCell.h"
+#import "ShoppingCartModel.h"
 @interface AddressListViewController : SWBaseViewController <UITableViewDelegate, UITableViewDataSource, AddressListCellDelegate>
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) ShoppingCartModel *cartModel;
 -(void)reloadTableView;
 @end

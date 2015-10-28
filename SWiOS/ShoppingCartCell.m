@@ -57,37 +57,39 @@ static CGFloat kSWCellCountTag = 1;
     [self labelStyle:count1 text:[NSString stringWithFormat:@"X%ld",_activityProduct.buyCount] size:13];
     [infoView addSubview:title];
     [infoView addSubview:price];
-    [infoView addSubview:count1];
-    //edit view
-    editView=[[UIView alloc] initWithFrame:infoView.frame];
-    editView.backgroundColor=[UIColor whiteColor];
-    //-
-    UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(0, 40, 15, 15)];
-    [self minusPlus:minus withSign:@"jianhao"];
-    //+
-    UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+150, minus.frame.origin.y, 15, 15)];
-    [self minusPlus:plus withSign:@"jiahao"];
-    
-    //count
-    UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(plus.frame.origin.x/2,minus.frame.origin.y, 30, 20)];
-    count.tag=kSWCellCountTag;
-    [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
-     [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:12];
-    [infoView addSubview:count];
+    if ([self isEdit]) {
+        //edit view
+        editView=[[UIView alloc] initWithFrame:infoView.frame];
+        editView.backgroundColor=[UIColor whiteColor];
+        //-
+        UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(0, 40, 15, 15)];
+        [self minusPlus:minus withSign:@"jianhao"];
+        //+
+        UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+150, minus.frame.origin.y, 15, 15)];
+        [self minusPlus:plus withSign:@"jiahao"];
+        
+        //count
+        UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(plus.frame.origin.x/2,minus.frame.origin.y, 30, 20)];
+        count.tag=kSWCellCountTag;
+        [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
+        [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:12];
+        [infoView addSubview:count];
+    }
+   
     //trash image
 //    UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash2"]];
 //    trash.frame=CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25);
-    UIButton *trashButton = [[UIButton alloc] initWithFrame:CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25)];
-    trashButton.backgroundColor=[UIColor blackColor];
-    [trashButton setTitle:@"xxxxx" forState:UIControlStateNormal];
-      [trashButton addTarget:self action:@selector(removeCart:) forControlEvents:UIControlEventTouchUpInside];
-    [editView addSubview:trashButton];
+//    UIButton *trashButton = [[UIButton alloc] initWithFrame:CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25)];
+//    trashButton.backgroundColor=[UIColor blackColor];
+//    [trashButton setTitle:@"xxxxx" forState:UIControlStateNormal];
+//      [trashButton addTarget:self action:@selector(removeCart:) forControlEvents:UIControlEventTouchUpInside];
+//    [editView addSubview:trashButton];
 //    [trashButton addSubview:trash];
 //    [self addSubview:editView];
     [self addSubview:infoView];
     
-    [self editOrComplete:self.isEdit];
+//    [self editOrComplete:self.isEdit];
 }
 -(void)labelStyle:(UILabel*)label text:(NSString *)text size:(int)size{
     label.textColor=UIColorFromRGB(0x1abc9c);
@@ -131,18 +133,17 @@ static CGFloat kSWCellCountTag = 1;
     }
 }
 
-- (void)editOrComplete:(BOOL)selected{
-    if (selected) {
-        editView.hidden=NO;
-        infoView.hidden=YES;
-    }else{
-        editView.hidden=YES;
-        infoView.hidden=NO;
-    }
-}
+//- (void)editOrComplete:(BOOL)selected{
+//    if (selected) {
+//        editView.hidden=NO;
+//        infoView.hidden=YES;
+//    }else{
+//        editView.hidden=YES;
+//        infoView.hidden=NO;
+//    }
+//}
 
 - (void)removeCart:(UIButton*)sender{
-    NSLog(@"%d",_indexPath.row);
     [self.tableView deleteRowsAtIndexPaths:@[_indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 
 }

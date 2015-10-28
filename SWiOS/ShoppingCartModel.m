@@ -17,11 +17,13 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedManager = [[ShoppingCartModel alloc] init];
+        sharedManager.addressModel=[[AddressModel alloc] init];
         sharedManager.arOfWatchesOfCart = [NSMutableArray array];
         sharedManager.productCode_buyCount = [[NSMutableDictionary alloc] init];
         sharedManager.orderModel=[[OrderModel alloc] init];
         sharedManager.orderModel.orderDetails = [NSMutableArray array];
         sharedManager.orderModel.totalPrice=[NSNumber numberWithFloat:0.00f];
+        sharedManager.activity_product_index=[[NSMutableDictionary alloc] init];
         //test code user info
         sharedManager.orderModel.submitPerson=[NSNumber numberWithInteger:222];
         sharedManager.orderModel.receiverId=[NSNumber numberWithInteger:222];

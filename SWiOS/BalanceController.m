@@ -19,6 +19,7 @@
 #import "ShoppingCartModel.h"
 #import "LoadingView.h"
 #import "UIAlertView+Extension.h"
+#import "OrderItemViewController.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
 @interface BalanceController ()
@@ -51,7 +52,7 @@ static NSString *orderListCell = @"orderListCell";
      [groups addObject:[[BalanceFieldModel alloc] init]];
      [groups addObject:[[BalanceFieldModel alloc] init]];
       paymentArray=[NSArray arrayWithObjects:@"EMS",@"中通", @"顺丰",nil];
-//     _cartModel=[ShoppingCartModel sharedInstance];
+     _cartModel=[ShoppingCartModel sharedInstance];
 }
 
 - (void)_loadTableView {
@@ -116,7 +117,7 @@ static NSString *orderListCell = @"orderListCell";
     }else if (indexPath.section==1){
         return orderListCellHeight+10;
     }else if(indexPath.section==2){
-        if (_addressModel!=nil)
+        if (_cartModel.addressModel.name!=nil)
          {
              return orderListCellHeight+20;
         }else {
@@ -141,14 +142,15 @@ static NSString *orderListCell = @"orderListCell";
     }else if(indexPath.section==1){
         OrderListCell *cell = [tableView dequeueReusableCellWithIdentifier:orderListCell forIndexPath:indexPath];
          cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;   
         return cell;
     }else if(indexPath.section==2){
-        if (_addressModel==nil) {
+       
+        if (_cartModel.addressModel.name==nil) {
             return [self editCell: @"添加收货人信息" tag:10];
         }else{
             EmptyCell *cell=[[EmptyCell alloc] init];
-            AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(0, 0, 10, 10) data:_addressModel];
+            AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(0, 0, 10, 10) data:_cartModel.addressModel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addSubview:addressView];
             return cell;
@@ -179,6 +181,15 @@ static NSString *orderListCell = @"orderListCell";
     if(indexPath.section==0){
 
     }else if(indexPath.section==1){
+        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                         initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                         target:self
+                                         action:nil];
+        self.navigationItem.backBarButtonItem = cancelButton;
+        OrderItemViewController *av=[[OrderItemViewController  alloc] init];
+        [self.navigationController pushViewController:av animated:YES];
+
     }else if(indexPath.section==2){
         DatabaseManager *db=[DatabaseManager sharedDatabaseManager];
        NSArray *array=db.getAllAddress;

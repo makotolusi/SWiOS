@@ -26,7 +26,7 @@
     _productName.text=_activityProduct.productName;
     NSLog(@"float %@",_activityProduct.rushPrice);
     _price.text=[NSString stringWithFormat:@"￥ %@", _activityProduct.rushPrice];
-   
+    NSString *key=[NSString stringWithFormat:@"%@_%@",_activityProduct.activityId,_activityProduct.productCode];
 }
 
 
