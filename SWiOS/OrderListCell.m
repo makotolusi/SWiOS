@@ -10,6 +10,7 @@
 #import "ShoppingCartModel.h"
 #import "YCAsyncImageView.h"
 #import "ActivityProduct.h"
+#import "UILabel+Extension.h"
 @implementation OrderListCell
 
 - (void)awakeFromNib {
@@ -47,5 +48,7 @@
     //按页滚动，总是一次一个宽度，或一个高度单位的滚动
     _imgScroll.pagingEnabled = YES;
     [self addSubview:_imgScroll];
+    [ _countLabel smallLabel];
+    _countLabel.text=[NSString stringWithFormat:@"共%ld件",cartModel.orderModel.totalCount];
 }
 @end

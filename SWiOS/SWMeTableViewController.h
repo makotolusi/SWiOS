@@ -20,4 +20,7 @@
 @property (strong,nonatomic) UITableViewCell * tableViewCell;
 
 
+@property (copy,nonatomic) NSString* username;
+
+
 @end

@@ -13,9 +13,9 @@
 //order info
 @property (copy, nonatomic) NSString *orderCode;
 @property (copy, nonatomic) NSNumber *submitPerson;
-@property (copy, nonatomic) NSString *receiverName;
+@property (copy, nonatomic) NSString *reviewerName;
 @property (copy, nonatomic) NSString *receiverInfo;
-@property (strong, nonatomic) NSNumber *receiverId;
+@property (assign, nonatomic) int receiverId;
 @property (copy, nonatomic) NSString *receiverPhone;
 @property (copy, nonatomic) NSString *payType;
 @property (copy, nonatomic) NSString *payCode;

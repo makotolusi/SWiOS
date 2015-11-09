@@ -10,5 +10,5 @@
 
 @interface LUAliPay : NSObject
 + (NSString *)generateTradeNO;
-+(void)alipay;
++(void)alipay :(void (^)())next;
 @end

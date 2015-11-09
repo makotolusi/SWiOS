@@ -7,7 +7,7 @@
 //
 
 #import "ActivityProductCell.h"
-
+#import "UILabel+Extension.h"
 @implementation ActivityProductCell
 
 - (void)awakeFromNib {
@@ -24,9 +24,10 @@
     [super layoutSubviews];
     [_imgView setUrl:_activityProduct.picUrl1];
     _productName.text=_activityProduct.productName;
+    [_productName midLabel];
     NSLog(@"float %@",_activityProduct.rushPrice);
     _price.text=[NSString stringWithFormat:@"￥ %@", _activityProduct.rushPrice];
-    NSString *key=[NSString stringWithFormat:@"%@_%@",_activityProduct.activityId,_activityProduct.productCode];
+
 }
 
 

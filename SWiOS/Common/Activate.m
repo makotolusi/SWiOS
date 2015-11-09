@@ -15,6 +15,7 @@
 
 - (BOOL)Notactivated
 {
+    NSLog(@"app token is %@",[TokenBuilder currentUid]);
     // 如果已经激活过了，直接调用成功的方法
     if (StringNotNullAndEmpty([TokenBuilder currentUid])) {
         return NO;
@@ -23,7 +24,7 @@
 }
 
 
-- (void)sendActiveRequest
+- (void)sendActiveRequest:(void (^)())next
 {
     //设备信息
     NSString *deviceName =[UIDevice currentDevice].model;
@@ -38,8 +39,8 @@
     [HttpHelper sendPostRequest:@"doActivate"
                 parameters: dict1
                 success:^(id response) {
-                    NSData* data = [response dataUsingEncoding:NSUTF8StringEncoding];
-                    NSLog(@"获取到的数据为dict：%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+//                    NSData* data = [response dataUsingEncoding:NSUTF8StringEncoding];
+                    next();
                 } fail:^{ }];
 }
 

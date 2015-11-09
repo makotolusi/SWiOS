@@ -20,9 +20,14 @@
 #import "LoadingView.h"
 #import "UIAlertView+Extension.h"
 #import "OrderItemViewController.h"
+#import "SWMainViewController.h"
+#import "NSString+Extension.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
 @interface BalanceController ()
+
+@property(nonatomic,assign)NSInteger defautPath;
+
 
 @end
 
@@ -53,6 +58,7 @@ static NSString *orderListCell = @"orderListCell";
      [groups addObject:[[BalanceFieldModel alloc] init]];
       paymentArray=[NSArray arrayWithObjects:@"EMS",@"中通", @"顺丰",nil];
      _cartModel=[ShoppingCartModel sharedInstance];
+    _cartModel.route=@"BalanceController";
 }
 
 - (void)_loadTableView {
@@ -67,18 +73,27 @@ static NSString *orderListCell = @"orderListCell";
      [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
     //快递公司
-    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-150, SCREEN_WIDTH, 100)];
+    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250, SCREEN_WIDTH, 100)];
     _paymentPicker.dataSource=self;
     _paymentPicker.delegate=self;
     
     //submit
-    UIButton *submit = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT-200, 100, 30)];
+    UIButton *submit;
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
+    bool a=mainController.tabBarView.hidden;
+    if(a){
+        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+    }else
+    {
+        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50-66, SCREEN_WIDTH, 50)];
+    }
     submit.backgroundColor = UIColorFromRGB(0x1abc9c);
     submit.alpha=0.7f;
     [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit setTitle:@"提交" forState:UIControlStateNormal];
     submit.titleLabel.textAlignment=NSTextAlignmentCenter;
-    [submit.layer setCornerRadius:7.0]; //设置矩形四个圆角半径
+//    [submit.layer setCornerRadius:7.0]; //设置矩形四个圆角半径
     [submit.titleLabel smallLabel];
 //    [submit.layer setBorderWidth:1.0];
     [submit addTarget:self action:@selector(checkOrder:) forControlEvents:UIControlEventTouchUpInside];
@@ -201,6 +216,14 @@ static NSString *orderListCell = @"orderListCell";
                                              action:nil];
             self.navigationItem.backBarButtonItem = cancelButton;
             AddressListViewController *av=[[AddressListViewController  alloc] init];
+            int row=0;
+            if (!StringIsNullOrEmpty(_cartModel.registerModel.addr)) {
+                
+                NSArray *aTest = [_cartModel.registerModel.addr componentsSeparatedByString:@";"];
+                row=[aTest[5] intValue];
+            }
+            NSIndexPath* index=[NSIndexPath indexPathForRow:row inSection:0];
+            av.lastPath=index;
             [self.navigationController pushViewController:av animated:YES];
         }else{
         self.navigationItem.title=@"收货人信息";
@@ -255,42 +278,48 @@ static NSString *orderListCell = @"orderListCell";
 
 - (void)checkOrder:(UIButton*)sender {
     UILabel* tf=[self.view viewWithTag:11];
-//    UIAlertView *alert=[[UIAlertView alloc] init];
-//    if (_addressModel==nil)//alert
-//    {
-//        [alert showMessage:@"收货人信息是必须填写的哦！"];
-//    }else if([tf.text isEqualToString:@"快递公司"]){
-//        [alert showMessage:@"快递公司是必须填写的哦！"];
-//    }else{
-//        [LoadingView initWithFrame:CGRectMake(0, 0, 100, 80) parentView:self.view];
-//        OrderRequest *or=[[OrderRequest alloc] init];
-//        [or orderCheck:^(){
+    UIAlertView *alert=[[UIAlertView alloc] init];
+    if (_addressModel==nil)//alert
+    {
+        [UIAlertView showMessage:@"收货人信息是必须填写的哦！"];
+    }else if([tf.text isEqualToString:@"快递公司"]){
+        [UIAlertView showMessage:@"快递公司是必须填写的哦！"];
+    }else{
+        [LoadingView initWithFrame:CGRectMake(0, 0, 100, 80) parentView:self.view];
+        OrderRequest *or=[[OrderRequest alloc] init];
+        [or orderCheck:^(){
             [LoadingView stopAnimating:self.view];
             OrderViewController *vc =[[OrderViewController alloc]init];
             vc.addressModel=_addressModel;
-            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-                                             initWithTitle:@""
-                                             style:UIBarButtonItemStylePlain
-                                             target:self
-                                             action:nil];
-            self.navigationItem.backBarButtonItem = cancelButton;
+//            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+//                                             initWithTitle:@"lui"
+//                                             style:UIBarButtonItemStylePlain
+//                                             target:self
+//                                             action:@selector(getOrderModel)];
+//            self.navigationItem.backBarButtonItem = cancelButton;
             [self.navigationController pushViewController:vc animated:YES];
-//        }];
-//    }
+        }];
+    }
 }
 
--(void)getOrderModel{
-
-    
-   
-//    orderModel.totalPrice=[NSNumber numberWithInteger:15677];
-//    orderModel.totalCount=[NSNumber numberWithInteger:50];
-//    OrderDetailModel *od=[[OrderDetailModel alloc] init];
-//    od.activityId=[NSNumber numberWithInteger:22];
-//    od.productCode=@"232342";
-//    od.count=[NSNumber numberWithInteger:1];
-//    od.price=[NSNumber numberWithInteger:1000];
-   
-}
+//-(void)cancel:(id)sender{
+//
+//    UIAlertView *button=[[UIAlertView alloc] initWithTitle:@"确认取消订单？" message:@"xxxxxx" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"取消订单", nil];
+//    [button show];
+//}
+//
+//-(void)getOrderModel{
+//    NSLog(@"");
+//    
+//   
+////    orderModel.totalPrice=[NSNumber numberWithInteger:15677];
+////    orderModel.totalCount=[NSNumber numberWithInteger:50];
+////    OrderDetailModel *od=[[OrderDetailModel alloc] init];
+////    od.activityId=[NSNumber numberWithInteger:22];
+////    od.productCode=@"232342";
+////    od.count=[NSNumber numberWithInteger:1];
+////    od.price=[NSNumber numberWithInteger:1000];
+//   
+//}
 
 @end

@@ -17,6 +17,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "LUAliPay.h"
 #import "TradeFinishViewController.h"
+#import "SWMainViewController.h"
 #define kOffsetHeight 60.f
 @interface OrderViewController ()
 
@@ -26,7 +27,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"取消订单" style:UIBarButtonItemStyleDone target:self action:@selector(cancel:)]];
+    self.navigationItem.hidesBackButton = YES;
     [self _loadTableView];
+}
+-(void)cancel:(id)sender{
+
+    UIAlertView *button=[[UIAlertView alloc] initWithTitle:@"确认取消订单？" message:@"" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"取消订单", nil];
+    [button show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+         [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)_loadTableView {
@@ -42,13 +57,21 @@
 //    [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
     //submit
-    UIButton *submit = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT-100, 100, 30)];
+    UIButton *submit;
+     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
+    bool a=mainController.tabBarView.hidden;
+    if(a){
+        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+    }else
+    {
+        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50-66, SCREEN_WIDTH, 50)];
+    }
     submit.backgroundColor = UIColorFromRGB(0x1abc9c);
     submit.alpha=0.7f;
     [submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submit setTitle:@"付款" forState:UIControlStateNormal];
     submit.titleLabel.textAlignment=NSTextAlignmentCenter;
-    [submit.layer setCornerRadius:7.0]; //设置矩形四个圆角半径
     [submit.titleLabel smallLabel];
     //    [submit.layer setBorderWidth:1.0];
     [submit addTarget:self action:@selector(alipay) forControlEvents:UIControlEventTouchUpInside];
@@ -91,7 +114,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
-        return 80;
+        return 90;
     }else {
         return 40.f;
     }
@@ -154,16 +177,18 @@
 -(void)alipay{
     TradeFinishViewController *vc =[[TradeFinishViewController alloc]init];
 //    vc.addressModel=_addressModel;
-     vc.navigationItem.titleView = [UILabel navTitleLabel:@"订单详情"];
-    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-                                     initWithTitle:@""
-                                     style:UIBarButtonItemStylePlain
-                                     target:self
-                                     action:nil];
-    self.navigationItem.backBarButtonItem = cancelButton;
-    [self.navigationController pushViewController:vc animated:YES];
 
-//    [LUAliPay alipay];
+//
+//    [LUAliPay alipay:^(){
+        vc.navigationItem.titleView = [UILabel navTitleLabel:@"订单详情"];
+        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                         initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                         target:self
+                                         action:nil];
+        self.navigationItem.backBarButtonItem = cancelButton;
+        [self.navigationController pushViewController:vc animated:YES];
+//    }];
 }
 
 @end

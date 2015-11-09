@@ -116,6 +116,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.isEdit=YES;
         cell.indexPath=indexPath;
+        cell.delegate=self;
      cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row-1];
         cell.tableView=_tableView;
     // 3 将单元格添加在tableView上
@@ -187,14 +188,12 @@
 //    NSIndexPath *ip=[[NSIndexPath alloc] initWithIndex:indexPath.row-1];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         ActivityProduct *product= _cartModel.arOfWatchesOfCart[indexPath.row-1];
-        NSString *key=[NSString stringWithFormat:@"%@_%@",product.activityId,product.productCode];
         NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
         NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:product.rushPrice.stringValue];
         NSDecimalNumber *sum=[t1 decimalNumberBySubtracting: t2];
         _cartModel.orderModel.totalPrice=sum;
         _cartModel.orderModel.totalCount=_cartModel.orderModel.totalCount-1;
         [_cartModel.arOfWatchesOfCart removeObjectAtIndex:indexPath.row-1];
-        [_cartModel.activity_product_index removeObjectForKey:key];
         // Delete the row from the data source.
         [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];

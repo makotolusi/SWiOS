@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SWBaseViewController.h"
 #import "AddressModel.h"
-@interface OrderViewController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate>
+@interface OrderViewController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
 @private
     UITableView    *_tableView;

@@ -8,7 +8,7 @@
 
 #import "FileUploadHelper.h"
 #import "AFNetworking.h"
-
+#import "NSString+Extension.h"
 
 
 @implementation FileUploadHelper
@@ -27,7 +27,7 @@
 {
 
     NSString* fileName = [NSString
-        stringWithFormat:@"sculpture/%@_%@.jpg", [self getDateTimeString],
+        stringWithFormat:@"test/%@_%@.jpg", [self getDateTimeString],
         [self randomStringWithLength:8]];
 
     QNUploadManager* upManager = [[QNUploadManager alloc] init];
@@ -42,6 +42,17 @@
             NSLog(@" ---------------------");
             NSLog(@" --->> Response: %@,  ", resp);
 
+            NSString* url=resp[@"key"];
+            [HttpHelper sendGetRequest:@"CommerceUserServices/updateHeadUrl"
+                                   parameters: @{@"url":url}
+                                      success:^(id response) {
+                                          NSDictionary* result=[response jsonString2Dictionary];
+                                          BOOL success=[result valueForKey:@"success"];
+                                          if(success){
+                                          }
+                                      }fail:^{
+                                          NSLog(@"网络异常，取数据异常");
+                                      }];
             if (info.error) {
 
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
@@ -88,28 +99,33 @@
 {
 
     NSString* token = nil;
-    NSString* tokenApi = @"getUpToken";
-    [HttpHelper sendAsyncRequest:tokenApi
-        success:^(id token) {
-            NSLog(@"JSON: %@", token);
-
-
-            _token = [token stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-
+    NSString* tokenApi = @"getUpTokenX";
+    [HttpHelper sendGetRequest:tokenApi parameters:nil success:^(id response) {
+        NSDictionary* result=[response jsonString2Dictionary];
+        BOOL success=[result valueForKey:@"success"];
+        if(success){
+            NSString *token=result[@"data"];
+            NSLog(@"token %@",token);
+            
+            _token =token;
+            
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-
+                
                 if (self.delegate != nil && [self.delegate respondsToSelector:@selector(sucessed)]) {
                     [self.delegate sucessed];
                 }
             });
-
         }
-        fail:^{
-
-            NSLog(@"fail: ");
-
-        }];
+        
+        
+        
+    }
+                          fail:^{
+                              
+                              NSLog(@"fail: ");
+                              
+                          }];
 
     return token;
 }

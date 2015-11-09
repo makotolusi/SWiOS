@@ -22,7 +22,7 @@
 @implementation LUAliPay
 
 
-+(void)alipay{
++(void)alipay :(void (^)())next{
     ShoppingCartModel *scm=[ShoppingCartModel sharedInstance];
     OrderModel *orderModel=scm.orderModel;
     /*
@@ -91,6 +91,7 @@
         
         [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             NSLog(@"reslut = %@",resultDic);
+            next();
         }];
         
     }

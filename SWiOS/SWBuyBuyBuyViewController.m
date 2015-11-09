@@ -14,6 +14,9 @@
 #import "SWMainViewController.h"
 #import "FMDB.h"
 #import "UILabel+Extension.h"
+#import "RegisterModel.h"
+#import "UIWindow+Extension.h"
+#import "LoadingView.h"
 @interface SWBuyBuyBuyViewController ()
 
 @end
@@ -27,7 +30,20 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.titleView = [UILabel navTitleLabel:@"抢抢抢"];
+    UIView *titleView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 20)];
+    UIImageView *imgView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qiangzi64"]];
+    imgView.frame=CGRectMake(SCREEN_WIDTH/2-70, -10, 30, 30);
+    UIImageView *imgView1=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qiangzi64"]];
+    imgView1.frame=CGRectMake(SCREEN_WIDTH/2-50, -10, 30, 30);
+    UIImageView *imgView2=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qiangzi64"]];
+    imgView2.frame=CGRectMake(SCREEN_WIDTH/2-30, -10, 30, 30);
+//    UILabel *title=[UILabel navTitleLabel:@"抢抢抢"];
+//    title.frame=CGRectMake(SCREEN_WIDTH/2-130, 0, 200, 20);
+    [titleView addSubview:imgView];
+     [titleView addSubview:imgView1];
+     [titleView addSubview:imgView2];
+//    [titleView addSubview:title];
+    self.navigationItem.titleView = titleView;
     [HttpHelper sendGetRequest:@"getActivity"
                     parameters: @{}
                        success:^(id response) {
@@ -49,9 +65,10 @@
                                [_data addObject:model];
                            }
                                [self _loadContentView];
+                           
                        } fail:^{
                               NSLog(@"网络异常，取数据异常");
-                       }];
+                       } parentView:self.view];
     // 如果数据从网络中来，那么就需要刷新表视图
     [_tableView reloadData];
     
@@ -68,7 +85,7 @@
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
     _tableView.contentInset = UIEdgeInsetsMake(64.f, 0.f, 49.f, 0.f);
-    _tableView.rowHeight = SCREEN_HEIGHT-200.f;
+    _tableView.rowHeight = SCREEN_WIDTH/16*9+60;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
@@ -85,8 +102,9 @@
     ActivityCell *cell=[tableView dequeueReusableCellWithIdentifier:activityCellIdentifier ];
 //        cell.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200);
     if(!cell){
-        cell=[[ActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:activityCellIdentifier];
+        cell=[[ActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:activityCellIdentifier indexPath:indexPath];
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
+         cell.indexPath=indexPath;
     }
     
     Activity *vo=_data[indexPath.row];
@@ -108,10 +126,7 @@
                                      target:self
                                      action:nil];
     self.navigationItem.backBarButtonItem = cancelButton;
-    //root tab view
-      UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
-    mainController.tabBarView.hidden=YES;
+    [UIWindow showTabBar:NO];
     [self.navigationController pushViewController:thumbViewController animated:YES];
 }
 

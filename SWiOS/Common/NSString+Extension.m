@@ -454,7 +454,7 @@
     }
 }
 
--(NSDictionary*)jsonString2Dictionary{
+-(instancetype)jsonString2Dictionary{
     NSData* data = [self dataUsingEncoding:NSUTF8StringEncoding];
     return  [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
 }

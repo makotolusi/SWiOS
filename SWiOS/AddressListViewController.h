@@ -13,5 +13,7 @@
 @interface AddressListViewController : SWBaseViewController <UITableViewDelegate, UITableViewDataSource, AddressListCellDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ShoppingCartModel *cartModel;
+
+@property(strong,nonatomic) NSIndexPath* lastPath;
 -(void)reloadTableView;
 @end

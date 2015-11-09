@@ -35,46 +35,50 @@ static CGFloat kSWCellCountTag = 1;
 -(void)layoutSubviews{
     
     [super layoutSubviews];
-    [infoView removeFromSuperview];
+    [_infoView removeFromSuperview];
     [editView removeFromSuperview];
-    [_imgView setUrl:_activityProduct.picUrl1];
+    _imgView=[[YCAsyncImageView alloc] initWithFrame:CGRectMake(10, self.frame.size.height-100, 90, 90) url:_activityProduct.picUrl1];
+//    [_imgView setUrl:_activityProduct.picUrl1];
+//    _imgView.frame=CGRectMake(10, self.frame.size.height-100, 90, 90);
+    [self addSubview:_imgView];
+    NSLog(@" y %f cell height %f",_imgView.frame.origin.y,self.frame.size.height);
     //info view
-    infoView=[[UIView alloc] initWithFrame:CGRectMake(_imgView.frame.size.width+20, _imgView.frame.origin.y, SCREEN_WIDTH/3*2, _imgView.frame.size.height)];
-    //    infoView.backgroundColor=[UIColor lightGrayColor];
+    _infoView=[[UIView alloc] initWithFrame:CGRectMake(_imgView.frame.size.width+20,self.frame.size.height-95, SCREEN_WIDTH/3*2, _imgView.frame.size.height)];
+    //    _infoView.backgroundColor=[UIColor lightGrayColor];
     UILabel *title=[[UILabel alloc] init];
     title.lineBreakMode =NSLineBreakByWordWrapping;
     title.numberOfLines = 2;
     title.textAlignment=NSTextAlignmentLeft;
     title.text=_activityProduct.productName;
     title.font=[UIFont systemFontOfSize:13];
-    CGSize size = [title sizeThatFits:CGSizeMake(infoView.frame.size.width, MAXFLOAT)];
-    title.frame=CGRectMake(0, 0, infoView.frame.size.width, size.height);
+    CGSize size = [title sizeThatFits:CGSizeMake(_infoView.frame.size.width, MAXFLOAT)];
+    title.frame=CGRectMake(0, 0, _infoView.frame.size.width-10, size.height);
     //price
-    UILabel *price=[[UILabel alloc] initWithFrame:CGRectMake(0, infoView.frame.size.height-15, 100, 15)];
+    UILabel *price=[[UILabel alloc] initWithFrame:CGRectMake(0, _infoView.frame.size.height-20, 70, 15)];
     [self labelStyle:price text:[@"¥ " stringByAppendingFormat:@"%@",_activityProduct.rushPrice] size:13];
     //count1
-    UILabel *count1=[[UILabel alloc] initWithFrame:CGRectMake(infoView.frame.size.width-40, infoView.frame.size.height-15, 50, 15)];
+    UILabel *count1=[[UILabel alloc] initWithFrame:CGRectMake(_infoView.frame.size.width-40, _infoView.frame.size.height-15, 50, 15)];
     [self labelStyle:count1 text:[NSString stringWithFormat:@"X%ld",_activityProduct.buyCount] size:13];
-    [infoView addSubview:title];
-    [infoView addSubview:price];
+    [_infoView addSubview:title];
+    [_infoView addSubview:price];
     if ([self isEdit]) {
         //edit view
-        editView=[[UIView alloc] initWithFrame:infoView.frame];
+        editView=[[UIView alloc] initWithFrame:_infoView.frame];
         editView.backgroundColor=[UIColor whiteColor];
         //-
-        UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(0, 40, 15, 15)];
+        UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(price.frame.size.width+30, price.frame.origin.y, 15, 15)];
         [self minusPlus:minus withSign:@"jianhao"];
         //+
-        UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+150, minus.frame.origin.y, 15, 15)];
+        UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+100, minus.frame.origin.y, 15, 15)];
         [self minusPlus:plus withSign:@"jiahao"];
         
         //count
-        UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(plus.frame.origin.x/2,minus.frame.origin.y, 30, 20)];
+        UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(minus.frame.origin.x+(plus.frame.origin.x-minus.frame.origin.x)/2,minus.frame.origin.y, 30, 20)];
         count.tag=kSWCellCountTag;
         [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
         [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
         [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:12];
-        [infoView addSubview:count];
+        [_infoView addSubview:count];
     }
    
     //trash image
@@ -87,7 +91,7 @@ static CGFloat kSWCellCountTag = 1;
 //    [editView addSubview:trashButton];
 //    [trashButton addSubview:trash];
 //    [self addSubview:editView];
-    [self addSubview:infoView];
+    [self addSubview:_infoView];
     
 //    [self editOrComplete:self.isEdit];
 }
@@ -109,7 +113,7 @@ static CGFloat kSWCellCountTag = 1;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.layer.backgroundColor=UIColorFromRGB(0x1abc9c).CGColor;
     
-   [infoView addSubview:button];
+   [_infoView addSubview:button];
 }
 
 - (void)plusAction:(UIButton*)sender{
@@ -122,7 +126,7 @@ static CGFloat kSWCellCountTag = 1;
     }
 }
 - (void)minusAction:(UIButton*)sender{
-    if( _activityProduct.buyCount!=0){
+    if( _activityProduct.buyCount>1){
          _activityProduct.buyCount-=1;
         [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
@@ -136,10 +140,10 @@ static CGFloat kSWCellCountTag = 1;
 //- (void)editOrComplete:(BOOL)selected{
 //    if (selected) {
 //        editView.hidden=NO;
-//        infoView.hidden=YES;
+//        _infoView.hidden=YES;
 //    }else{
 //        editView.hidden=YES;
-//        infoView.hidden=NO;
+//        _infoView.hidden=NO;
 //    }
 //}
 

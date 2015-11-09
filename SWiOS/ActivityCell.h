@@ -15,6 +15,7 @@
 @property (strong, nonatomic) YCAsyncImageView *imgView;
 @property (nonatomic, strong) UILabel *activityStatus;
 @property (strong, nonatomic) UILabel *activityNameLabel;
-
+@property (strong, nonatomic) NSIndexPath *indexPath;
 - (void)updateUIWithVO:(Activity *)cellVO;
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier indexPath:(NSIndexPath*)indexPath;
 @end

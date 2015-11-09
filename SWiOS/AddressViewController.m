@@ -11,12 +11,16 @@
 #import "EmptyCell.h"
 #import "DatabaseManager.h"
 #import "NSString+Extension.h"
+#import "BalanceController.h"
+#import "HttpHelper.h"
 #import "UIAlertView+Extension.h"
+#import "SWMeTableViewController.h"
 @interface AddressViewController ()
 @property (retain, nonatomic) UITextField *areaText;
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
 @property (copy, nonatomic) NSString *areaValue;
 @property (strong, nonatomic) AddressModel *addressModel;
+
 @end
 
 @implementation AddressViewController
@@ -188,13 +192,12 @@
 }
 
 - (void)save:(UIButton*)sender {
-    UIAlertView *alert=[[UIAlertView alloc] init];
     AddressModel *add=[[AddressModel alloc] init];
     add.AddressModelID=_addressModel.AddressModelID;
     UITextField *nameTf=[self.view viewWithTag:11];
     NSString *name=nameTf.text;
     if(StringIsNullOrEmpty(name)){
-        [alert showMessage:@"请输入收货人姓名"];
+        [UIAlertView showMessage:@"请输入收货人姓名"];
         return;
     }
     [add setValue:name forKey:@"name"];
@@ -202,28 +205,32 @@
     UITextField *phoneTf=[self.view viewWithTag:12];
     NSString *phone=phoneTf.text;
     if (StringIsNullOrEmpty(phone)) {
-        [alert showMessage:@"请输入电话号码"];
+        [UIAlertView showMessage:@"请输入电话号码"];
+        return;
     }
     [add setValue:phone forKey:@"phone"];
     
     UITextField *codeTf=[self.view viewWithTag:13];
     NSString *code=codeTf.text;
     if (StringIsNullOrEmpty(code)) {
-        [alert showMessage:@"请输入邮政编码"];
+        [UIAlertView showMessage:@"请输入邮政编码"];
+        return;
     }
     [add setValue:code forKey:@"code"];
     
     UITextField *cityTf=[self.view viewWithTag:14];
     NSString *city=cityTf.text;
     if (StringIsNullOrEmpty(city)) {
-        [alert showMessage:@"请选择区域信息"];
+        [UIAlertView showMessage:@"请选择区域信息"];
+        return;
     }
     [add setValue:city forKey:@"city"];
     
     UITextView *addressTf=[self.view viewWithTag:15];
     NSString *address=addressTf.text;
     if (StringIsNullOrEmpty(address)) {
-        [alert showMessage:@"请输入地址详细信息"];
+        [UIAlertView showMessage:@"请输入地址详细信息"];
+        return;
     }
     [add setValue:address  forKey:@"address"];
     add.mts=[[NSDate date] timeIntervalSince1970];
@@ -231,15 +238,36 @@
 
     ShoppingCartModel *cartModel=[ShoppingCartModel sharedInstance];
     cartModel.addressModel=add;
-    NSArray *views=self.navigationController.viewControllers;
-    for (UIViewController *view in views) {
-        if ([view isKindOfClass:[AddressListViewController class]]) {
-            AddressListViewController *alv=view;
-            [self.navigationController popViewControllerAnimated:YES];
-            [alv reloadTableView];
-        }
-    }
-     [self.navigationController popViewControllerAnimated:YES];
+        NSString* addressInfo=[NSString stringWithFormat:@"%@;%@;%@;%@;%@;%ld",add.name,add.phone,add.code,add.city,add.address,0l];
+    [HttpHelper sendPostRequest:@"CommerceUserServices/updateAddress"
+                    parameters: @{@"address":addressInfo}
+                       success:^(id response) {
+                           NSDictionary* result=[response jsonString2Dictionary];
+                           BOOL success=[result valueForKey:@"success"];
+                           if(success){
+                             //next
+                               
+                               NSArray *views=self.navigationController.viewControllers;
+                               for (UIViewController *view in views) {
+                                   if ([cartModel.route isEqual:@"BalanceController"]) {
+                                       if ([view isKindOfClass:[BalanceController class]]) {
+                                           BalanceController *alv=view;
+                                           [self.navigationController popToViewController:alv animated:YES];
+                                           [alv reloadTableView];
+                                       }
+                                   }
+                                   if ([cartModel.route isEqual:@"SWMeTableViewController"]) {
+                                       if ([view isKindOfClass:[SWMeTableViewController class]]) {
+                                           SWMeTableViewController *alv=view;
+                                           [self.navigationController popToViewController:alv animated:YES];
+                                       }
+                                   }
+                               }
+                               
+                           }
+                       }fail:^{
+                           NSLog(@"网络异常，取数据异常");
+                       }];
 }
 
 

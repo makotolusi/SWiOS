@@ -14,6 +14,10 @@
 #import "UILabel+Extension.h"
 #import "BalanceController.h"
 #import "AddressView.h"
+#import "HttpHelper.h"
+#import "NSString+Extension.h"
+static NSString *cellIdentifier = @"Cell";
+
 @interface AddressListViewController ()
 {
 NSMutableArray *_testArray;
@@ -76,24 +80,46 @@ NSMutableArray *_testArray;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (_lastPath == indexPath) {
+        return;
+    }
+    //lastPath在cell for row中 加载时当前indexpath，本函数中indexaPath为选中的path
+    UITableViewCell *lastCell = [tableView cellForRowAtIndexPath:_lastPath];
+    lastCell.accessoryType = UITableViewCellAccessoryNone;
+    UITableViewCell *currentCell = [tableView cellForRowAtIndexPath:indexPath];
+    currentCell.accessoryType = UITableViewCellAccessoryCheckmark;
+    _lastPath = indexPath;
+    currentCell.selectionStyle = UITableViewCellSelectionStyleNone;//cell选中的背景风格
+    
     NSLog(@"cell selected at index path %ld", (long)indexPath.row);
      AddressModel *dataObject = _testArray[indexPath.row];
-    _cartModel.addressModel=dataObject;
-    NSArray *views=self.navigationController.viewControllers;
-    for (UIViewController *view in views) {
-        if ([view isKindOfClass:[BalanceController class]]) {
-            BalanceController *alv=view;
-            alv.addressModel=dataObject;
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            [alv reloadTableView];
-        }
-    }
+    NSString* addressInfo=[NSString stringWithFormat:@"%@;%@;%@;%@;%@;%ld",dataObject.name,dataObject.phone,dataObject.code,dataObject.city,dataObject.address,indexPath.row];
     
+    [HttpHelper sendPostRequest:@"CommerceUserServices/updateAddress" parameters:@{@"address":addressInfo} success:^(id response) {
+        NSDictionary* result=[response jsonString2Dictionary];
+        BOOL success=[result valueForKey:@"success"];
+        if(success){
+            //next
+            _cartModel.addressModel=dataObject;
+            NSArray *views=self.navigationController.viewControllers;
+            for (UIViewController *view in views) {
+                if ([view isKindOfClass:[BalanceController class]]) {
+                    BalanceController *alv=view;
+                    alv.addressModel=dataObject;
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                    [alv reloadTableView];
+                }
+            }
+            
+        }
+    } fail:^{
+        NSLog(@"网络异常，取数据异常");
+    }];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"Cell";
     
     AddressListCell *cell = (AddressListCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -127,6 +153,10 @@ NSMutableArray *_testArray;
                                    leftUtilityButtons:nil
                                   rightUtilityButtons:rightUtilityButtons];
         cell.delegate = self;
+
+        if (indexPath.row==_lastPath.row) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
     }
     
     AddressModel *dateObject = _testArray[indexPath.row];

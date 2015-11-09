@@ -11,4 +11,6 @@
 @interface OrderListCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIScrollView *imgScroll;
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+
 @end

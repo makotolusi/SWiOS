@@ -9,7 +9,7 @@
 #import "RegisterViewController.h"
 #import "SWRegisterView.h"
 #import "SWMainViewController.h"
-
+#import "AppDelegate.h"
 @interface RegisterViewController ()<SWRegisterViewDelegate>
 
 @property (nonatomic, strong) UIButton* registerButton;
@@ -57,7 +57,15 @@
     NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleShortVersionString"];
     [defaults setObject:currentVersion forKey:@"last_run_version_of_application"];
     
-    SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
+     SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    // 在delegate中初始化新的controller
+//    [delegate initTabbarController];
+    // 修改rootViewController
+//    [delegate.window addSubview:delegate.tabbarController.view];
+//    [self.view removeFromSuperview];
+    delegate.window.rootViewController = mainContorll;
+   
     
     [self presentViewController:mainContorll animated:YES completion:nil];
 }

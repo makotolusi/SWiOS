@@ -9,6 +9,9 @@
 #import "SWRegisterView.h"
 #import "NSString+Extension.h"
 #import "Activate.h"
+#import "RegisterModel.h"
+#import "HttpHelper.h"
+#import "SWMainViewController.h"
 #define   WIN_WIDTH  [[UIScreen mainScreen] bounds].size.width
 #define   WIN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
@@ -140,27 +143,39 @@
         [self showMessage:@"输入电话号码有误"];
         return;
     }
+//    RegisterModel *rm=[RegisterModel sharedInstance];
         if([@"2222" isEqualToString:passText.text]){
             //activate
             Activate *act= [[Activate alloc]init];
             if([act Notactivated]){
-                [act sendActiveRequest];
+                [act sendActiveRequest:^(){
+                    //register
+                    [HttpHelper sendGetRequest:@"CommerceUserServices/login"
+                                    parameters: @{@"phoneNum":phoneText.text}
+                                       success:^(id response) {
+                                           NSDictionary* result=[response jsonString2Dictionary];
+                                           BOOL success=[result valueForKey:@"success"];
+                                           if(success){
+                                               //close
+                                               [UIView animateWithDuration:0.3 animations:^{
+                                                   self.alpha = 0;
+                                               } completion:^(BOOL finished){
+                                                   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
+                                                   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                                       [self removeFromSuperview];
+                                                       if (self.delegate != nil && [self.delegate respondsToSelector:@selector(registerDidDismissView:)]) {
+                                                           [self.delegate registerDidDismissView:self];
+                                                       }
+                                                   });
+                                               }];
+                                           }
+                                       }fail:^{
+                                           NSLog(@"网络异常，取数据异常");
+                                       }];
+                }];
             }
-            //register
-            
-            //close
-            [UIView animateWithDuration:0.3 animations:^{
-                self.alpha = 0;
-            } completion:^(BOOL finished){
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [self removeFromSuperview];
-                    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(registerDidDismissView:)]) {
-                        [self.delegate registerDidDismissView:self];
-                    }
-                });
-            }];
-        }else{
+        
+                    }else{
              [self showMessage:@"验证码错误"];
         }
     

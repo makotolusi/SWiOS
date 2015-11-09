@@ -16,24 +16,26 @@
     self=[super initWithFrame:frame];
     ShoppingCartModel *cart=[ShoppingCartModel sharedInstance];
     if (self) {
-        _imgView=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
-        _imgView.image=[UIImage imageNamed:@"order"];
-        _orderPriceLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, 10, 100, 20)];
+        _imgView=[[UIImageView alloc] initWithFrame:CGRectMake(20, self.frame.size.height/2-15, 30, 30)];
+        _imgView.image=[UIImage imageNamed:@"order64"];
+        _orderPriceLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, 10, 200, 20)];
         [_orderPriceLabel midLabel];
-        _orderPriceLabel.text=@"订单金额:";
+        _orderPriceLabel.text=[NSString stringWithFormat:@"订单金额: ¥ %@",cart.orderModel.totalPrice];
         _orderPriceLabel.textColor=[UIColor whiteColor];
-         _priceLabel=[[UILabel alloc] initWithFrame:CGRectMake(_orderPriceLabel.frame.origin.x+70, 10, 100, 20)];
-        
-        _priceLabel.text=[NSString stringWithFormat:@"¥ %@",cart.orderModel.totalPrice];
-        [_priceLabel midLabel];
-        _priceLabel.textColor=UIColorFromRGB(0x1abc9c);
-        _orderCodeLabel=[[UILabel alloc] initWithFrame:CGRectMake(_orderPriceLabel.frame.origin.x-10, _orderPriceLabel.frame.origin.y+20, 300, 20)];
-        _orderCodeLabel.text=@"订单号:123141234235245";
-        [_orderCodeLabel smallLabel];
+//         _priceLabel=[[UILabel alloc] initWithFrame:CGRectMake(_orderPriceLabel.frame.origin.x+70, 15, 100, 20)];
+////        _priceLabel.text=[NSString stringWithFormat:@"¥ %@",cart.orderModel.totalPrice];
+//        [_priceLabel midLabel];
+//        _priceLabel.textColor=UIColorFromRGB(0x1abc9c);
+        _orderCodeLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-75, _orderPriceLabel.frame.origin.y+20, 150, 20)];
+        _orderCodeLabel.textAlignment=NSTextAlignmentCenter;
+        _orderCodeLabel.text=[NSString stringWithFormat:@"订单号:%@",cart.orderModel.orderCode];//@"";
+        _orderCodeLabel.textColor=[UIColor lightGrayColor];
+        _orderCodeLabel.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_SMALL_SIZE ];
+        [self addSubview:_orderCodeLabel];
         [self addSubview:_imgView];
         [self addSubview:_orderPriceLabel];
-        [self addSubview:_priceLabel];
-        [self addSubview:_orderCodeLabel];
+//        [self addSubview:_priceLabel];
+        
     }
     return self;
 }

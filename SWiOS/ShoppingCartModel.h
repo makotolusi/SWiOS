@@ -10,13 +10,14 @@
 #import "JSONModel.h"
 #import "OrderModel.h"
 #import "AddressModel.h"
+#import "RegisterModel.h"
 @interface ShoppingCartModel : JSONModel
 @property (nonatomic,strong) NSMutableArray *arOfWatchesOfCart;
 @property (nonatomic,strong) NSMutableDictionary *productCode_buyCount;
-@property (nonatomic,strong) NSMutableDictionary *activity_product_index;
 //@property (assign,nonatomic) NSInteger totalCountBadge;
 @property (strong,nonatomic) OrderModel *orderModel;
 @property (strong,nonatomic) AddressModel *addressModel;
-
+@property (strong,nonatomic) RegisterModel *registerModel;
+@property (copy,nonatomic) NSString *route;
 +(ShoppingCartModel *)sharedInstance;
 @end

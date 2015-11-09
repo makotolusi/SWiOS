@@ -7,31 +7,51 @@
 //
 
 #import "SWMeTableViewController.h"
-
-
+#import "UILabel+Extension.h"
+#import "HttpHelper.h"
+#import "MyOrderController.h"
+#import "NSString+Extension.h"
+#import "AddressViewController.h"
+#import "DatabaseManager.h"
+#import "AddressListViewController.h"
+#import "UILabel+Extension.h"
+#import "GenderViewController.h"
+#import "YCAsyncImageView.h"
 NSString * const killShark = @"柠檬鲨别捣乱";
-NSString * const kME = @"我";
+NSString * const kME = @"头像";
 NSString * const kMoney = @"钱包";
+NSString * const kName=@"名字";
+NSString * const kGender=@"性别";
+NSString * const kAddress=@"我的地址";
+NSString * const kOrder = @"我的订单";
 NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
-@interface SWMeTableViewController () {
+@interface SWMeTableViewController ()<GenderDelegate> {
     NSMutableArray* groups;
     UITableViewCell* hiddenCell;
-    UIImageView* meUIImageView;
+    YCAsyncImageView* meUIImageView;
     UILabel* meTextLabel;
+     UILabel* meGenderLabel;
+     UILabel* meAddressLabel;
     FileUploadHelper* fileUploadHelper;
     NSString* imageFilePath;
     NSString* rawImageFilePath;
+
 //    UINavigationController* navController;
 }
 @property (nonatomic, strong) YALSunnyRefreshControl* sunnyRefreshControl;
+@property (assign,nonatomic) int gender;
+@property (copy,nonatomic) NSString *headUrl;
+@property (copy,nonatomic) NSString *address;
+
+@property (nonatomic,strong) ShoppingCartModel *cartModel;
 @end
 
 @implementation SWMeTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self _init];
+    [self _initData];
     [self setupRefreshControl];
     [self.navigationItem.backBarButtonItem setTitle:@""];
 
@@ -70,17 +90,48 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     [self.sunnyRefreshControl endRefreshing];
 }
 
--(void)_init{
+-(void)_initData{
+//    [HttpHelper sendGetRequest:@"CommerceUserServices/getUserInfo"
+//                    parameters: @{}
+//                       success:^(id response) {
+//                           NSDictionary* result=[response jsonString2Dictionary];
+//                           BOOL success=[result valueForKey:@"success"];
+//                           if(success){
+//                               NSDictionary *dic=[result[@"data"] jsonString2Dictionary];
+    _cartModel=[ShoppingCartModel sharedInstance];
+                               _username=_cartModel.registerModel.username;
+                               _gender=_cartModel.registerModel.gender.intValue;
+                               _headUrl=_cartModel.registerModel.imgUrl;
+                               _address=_cartModel.registerModel.addr;
+                               [self _init];
+//                           }
+//                       }fail:^{
+//                           NSLog(@"网络异常，取数据异常");
+//                       } parentView:self.view];
 
+}
+-(void)_init{
+    ShoppingCartModel *_cartModel=[ShoppingCartModel sharedInstance];
+    _cartModel.route=@"SWMeTableViewController";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-
+//
+//    // present the cropper view controller
+//    VPImageCropperViewController *imgCropperVC = [[VPImageCropperViewController alloc] initWithImage:portraitImg cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width) limitScaleRatio:3.0];
+//    imgCropperVC.delegate = self;
+//    [self presentViewController:imgCropperVC animated:YES completion:^{
+//        // TO DO
+//    }];
+    
     //    [self.view addSubview:self.tableView];
 
-    SWMe* s1 = [[SWMe alloc] initWithDescribe:kME andImgUrl:@"me.png"];
-
-    NSArray* array = [NSArray arrayWithObjects:s1, nil];
+    SWMe* s1 = [[SWMe alloc] initWithDescribe:kME andImgUrl:@""];
+    SWMe* s12 = [[SWMe alloc] initWithDescribe:kName andImgUrl:@""];
+    SWMe* s13 = [[SWMe alloc] initWithDescribe:kGender andImgUrl:@""];
+    SWMe* s14 = [[SWMe alloc] initWithDescribe:kAddress andImgUrl:@""];
+       SWMe* s15 = [[SWMe alloc] initWithDescribe:@"我的订单" andImgUrl:@""];
+    NSArray* array = [NSArray arrayWithObjects:s1,s12,s13,s14,s15, nil];
 
     SWMe* s21 = [[SWMe alloc] initWithDescribe:kMoney andImgUrl:@"money.png"];
 
@@ -89,12 +140,11 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     SWMe* s31 = [[SWMe alloc] initWithDescribe:@"设定" andImgUrl:@"setting.png"];
     SWMe* s32 = [[SWMe alloc] initWithDescribe:killShark andImgUrl:@"shark.png"];
     NSArray* array3 = [NSArray arrayWithObjects:s31, s32, nil];
-
+    
     groups = [[NSMutableArray alloc] init];
     [groups addObject:array];
     [groups addObject:array2];
     [groups addObject:array3];
-
 //    _rootController = [[UINavigationController alloc]init];
 //    [self.view.window addSubview:_rootController.view];
 //    navController = [[UINavigationController alloc]initWithRootViewController:self];
@@ -141,24 +191,50 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     }
 
     //    cell.backgroundColor = [UIColor orangeColor];
-    cell.imageView.hidden = NO;
-    cell.imageView.image = [UIImage imageNamed:s.imgUrl];
-
+    meUIImageView.hidden = NO;
+//    meUIImageView.image = [UIImage imageNamed:_headUrl];
+    [meUIImageView setUrl:_headUrl];
     if ([s.describe isEqual:kME]) {
+            meUIImageView.hidden = YES;
+        meUIImageView=[[YCAsyncImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, 60, 60)];
+        [meUIImageView setUrl:_headUrl];
+        UILabel *headLabel=[[UILabel alloc] initWithFrame:CGRectMake(20, 40, 100, 10)];
+
+        [cell addSubview:headLabel];
         if ([self existsFileSelfPhoto:kSelfPhoto delFlg:NO]) {
-            cell.imageView.image = [UIImage imageNamed:rawImageFilePath];
-            [ImageHelper makeRoundCorners:cell.imageView];
+            meUIImageView.image = [UIImage imageNamed:rawImageFilePath];
+            [ImageHelper makeRoundCorners:meUIImageView];
         }
-        [cell.imageView setUserInteractionEnabled:YES];
+        [meUIImageView setUserInteractionEnabled:YES];
+        [cell addSubview:meUIImageView];
         [cell.textLabel setUserInteractionEnabled:YES];
-
+        
         UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onImageClicked:)];
-        [cell.imageView addGestureRecognizer:singleTap];
-        meUIImageView = cell.imageView;
+        [meUIImageView addGestureRecognizer:singleTap];
 
+
+//        UITapGestureRecognizer* singleTapTextLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTextLabelClicked:)];
+//        [cell.textLabel addGestureRecognizer:singleTapTextLabel];
+//        meTextLabel = cell.textLabel;
+        
+        
+    }
+    
+    if ([s.describe isEqual:kName]) {
+        meTextLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, cell.frame.origin.y+5, 60, 20)];
+        [meTextLabel midLabel];
+        [meTextLabel setUserInteractionEnabled:YES];
+        meTextLabel.text=_username==nil?@"柠檬鲨":_username;
         UITapGestureRecognizer* singleTapTextLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTextLabelClicked:)];
-        [cell.textLabel addGestureRecognizer:singleTapTextLabel];
-        meTextLabel = cell.textLabel;
+        [cell  addGestureRecognizer:singleTapTextLabel];
+        [cell addSubview:meTextLabel];
+    }
+    if ([s.describe isEqual:kGender]) {
+        meGenderLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, cell.frame.origin.y+5, 60, 20)];
+        [meGenderLabel midLabel];
+        [meGenderLabel setUserInteractionEnabled:YES];
+        meGenderLabel.text=_gender==1?@"男":@"女";
+        [cell addSubview:meGenderLabel];
     }
 
     if (!self.sunnyRefreshControl.forbidContentInsetChanges) {
@@ -178,6 +254,14 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     }
     return 40.f;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 5;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 5;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     SWMe* s = [groups[[indexPath section]] objectAtIndex:[indexPath row]];
@@ -203,8 +287,60 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         self.navigationItem.backBarButtonItem = cancelButton;
         [self.navigationController pushViewController:uiNavigationController animated:YES];
     }
-}
+    if ([s.describe isEqual:kOrder]) {
+        MyOrderController* uiNavigationController = [[MyOrderController alloc] init];
+        uiNavigationController.navigationItem.titleView = [UILabel navTitleLabel:kOrder];
+        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                         initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                         target:self
+                                         action:nil];
+        self.navigationItem.backBarButtonItem = cancelButton;
+        [self.navigationController pushViewController:uiNavigationController animated:YES];
+    }
+    
+    if ([s.describe isEqual:kAddress]) {
+        DatabaseManager *db=[DatabaseManager sharedDatabaseManager];
+        NSArray *array=db.getAllAddress;
+        if (array.count>0) {
+            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:nil];
+            self.navigationItem.backBarButtonItem = cancelButton;
+            AddressListViewController *av=[[AddressListViewController  alloc] init];
+            int row=0;
+            if (!StringIsNullOrEmpty(_cartModel.registerModel.addr)) {
+                
+                NSArray *aTest = [_cartModel.registerModel.addr componentsSeparatedByString:@";"];
+                row=[aTest[5] intValue];
+            }
+            NSIndexPath* index=[NSIndexPath indexPathForRow:row inSection:0];
+            av.lastPath=index;
 
+            [self.navigationController pushViewController:av animated:YES];
+        }else{
+            self.navigationItem.title=@"收货人信息";
+            //back button style
+            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:nil];
+            self.navigationItem.backBarButtonItem = cancelButton;
+            AddressViewController *av=[[AddressViewController  alloc] init];
+            [self.navigationController pushViewController:av animated:YES];
+        }
+    }
+    if ([s.describe isEqual:kGender]) {
+        self.navigationItem.title=@"修改性别";
+        GenderViewController *av=[[GenderViewController  alloc] init];
+        av.defautPath=_gender;
+        av.delegate=self;
+        [self.navigationController pushViewController:av animated:YES];
+    }
+}
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
@@ -223,10 +359,19 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
     [ImageHelper showImage:meUIImageView];
 }
--(void)onTextLabelClicked:(UITapGestureRecognizer *)gesture{
+-(void)onTextLabelClicked:(UITapGestureRecognizer *)gesture {
 
-    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"" message:@"柠檬鲨要你留下你的小名哦" preferredStyle:UIAlertControllerStyleAlert];
+    [self input:kName url:@"updateUserName"];
+}
 
+-(void)onGenderLabelClicked:(UITapGestureRecognizer *)gesture {
+    
+    [self input:kGender url:@""];
+}
+
+-(void)input:(NSString*)ktype url:(NSString*)url {
+    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"柠檬鲨要你留下你的%@哦" ,ktype] preferredStyle:UIAlertControllerStyleAlert];
+    
     UIAlertAction* action = [UIAlertAction actionWithTitle:@"取消"
                                                      style:UIAlertActionStyleCancel
                                                    handler:^(UIAlertAction* action) {
@@ -245,22 +390,33 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
             }
             
             NSLog(@"userName is: %@ ", userNameStr);
+            [HttpHelper sendGetRequest:[@"CommerceUserServices/" stringByAppendingString:url]
+                            parameters: @{@"username":userNameStr}
+                               success:^(id response) {
+                                   NSDictionary* result=[response jsonString2Dictionary];
+                                   BOOL success=[result valueForKey:@"success"];
+                                   if(success){
+                                       
+                                   }
+                               }fail:^{
+                                   NSLog(@"网络异常，取数据异常");
+                               }];
+            
         }];
         action;
     })];
-
+    
     if (alertController.preferredStyle == UIAlertControllerStyleAlert) {
         // 添加用户名输入框
         [alertController addTextFieldWithConfigurationHandler:^(UITextField* textField) {
             // 给输入框设置一些信息
-            textField.placeholder = @"请输入用户名";
+            textField.placeholder = [NSString stringWithFormat:@"请输入%@" ,ktype];
             textField.textAlignment = NSTextAlignmentCenter;
         }];
     }
-
+    
     [self presentViewController:alertController animated:YES completion:nil];
 }
-
 #pragma mark － Delegate
 -(void)failed:(QNResponseInfo *)info{
     
@@ -317,7 +473,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
     [self existsFileSelfPhoto:kSelfPhoto delFlg:YES];
     
-    UIImage *smallImage = [ImageHelper thumbnailWithImageWithoutScale:image size:CGSizeMake(93, 93)];
+    UIImage *smallImage = [ImageHelper thumbnailWithImageWithoutScale:image size:CGSizeMake(200, 200)];
     [UIImageJPEGRepresentation(smallImage, 1.0f) writeToFile:imageFilePath atomically:YES];
     [UIImageJPEGRepresentation(image, 1.0f) writeToFile:rawImageFilePath atomically:YES];
     
@@ -327,6 +483,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     fileUploadHelper.delegate = self;
     fileUploadHelper.imageFilePath = imageFilePath;
     [fileUploadHelper makeUpToken];
+    
 }
 
 
@@ -379,5 +536,8 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     }
 }
 
-
+- (void)updateGenderView:(NSString*)gender{
+    meGenderLabel.text=gender;
+    _gender=[gender isEqual:@"男"]?0:1;
+}
 @end

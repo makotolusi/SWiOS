@@ -8,22 +8,23 @@
 
 #import "ActivityCell.h"
 #import "YCAsyncImageView.h"
+#import "UILabel+Extension.h"
 @implementation ActivityCell
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier indexPath:(NSIndexPath*)indexPath{
     self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    _indexPath=indexPath;
     if(self){
-        self.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-200.f);
+        self.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH/16*9);
         [self _initialize];
     }
     return self;
 }
 - (void)_initialize
 {
-    
-//    CGFloat imageWidth = [self properImageHeight];
-    self.imgView =[[YCAsyncImageView alloc] initWithFrame:CGRectMake(self.frame.origin.x
-, self.frame.origin.y, SCREEN_WIDTH, SCREEN_WIDTH)];
+
+    self.imgView =[[YCAsyncImageView alloc] initWithFrame:CGRectMake(0
+                                                                     ,0, SCREEN_WIDTH, SCREEN_WIDTH/16*9)];
     self.activityNameLabel=[[UILabel alloc] init];
 //    self.activityNameLabel.text=self.activity.name;
 //    NSLog(@"%@", self.activityNameLabel.text);
@@ -32,15 +33,18 @@
 //            self.activityNameLabel.text=@"显示 iOS";
     self.activityNameLabel.textAlignment = NSTextAlignmentCenter;
     self.activityNameLabel.numberOfLines = 2;
-    
+    [self.activityNameLabel midLabel];
     self.activityStatus=[[UILabel alloc] initWithFrame:CGRectMake(0,self.imgView.bounds.size.height+35, SCREEN_WIDTH, 10)];
-    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-15, SCREEN_WIDTH, 15)];
+    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 10)];
     view.backgroundColor=[UIColor groupTableViewBackgroundColor];
     //
     [self addSubview:self.imgView];
     [self addSubview:self.activityStatus];
     [self addSubview:self.activityNameLabel];
-    [self addSubview:view];
+    if (_indexPath.row!=0) {
+        [self addSubview:view];
+    }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

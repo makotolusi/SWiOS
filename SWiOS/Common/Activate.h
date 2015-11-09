@@ -12,5 +12,5 @@
 @property (nonatomic, copy) NSString *currentActivateUID;
 
 - (BOOL)Notactivated;
-- (void)sendActiveRequest;
+- (void)sendActiveRequest:(void (^)())next;
 @end

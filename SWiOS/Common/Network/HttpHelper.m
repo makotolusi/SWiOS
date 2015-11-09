@@ -8,17 +8,19 @@
 
 #import "HttpHelper.h"
 #import "TokenEncrypt.h"
+#import "LoadingView.h"
+#import "UIAlertView+Extension.h"
 @implementation HttpHelper
 
 
 
 bool const isDev=NO;
 
-bool const isLocal=NO;
+bool const isLocal=YES;
 
 NSString * const kBaseURL = @"http://okeasy.eicp.net:9889/mgserver/ApCommonServices/";
 
-NSString * const kLocalURL = @"http://10.6.104.78:8080/mgserver/ApCommonServices/";
+NSString * const kLocalURL = @"http://10.6.110.4:8080/mgserver/ApCommonServices/";//192.168.1.109
 
 +(NSString*)getUrl{
     return (isLocal==YES?kLocalURL:kBaseURL);
@@ -78,7 +80,7 @@ NSString * const kLocalURL = @"http://10.6.104.78:8080/mgserver/ApCommonServices
     
     [HttpHelper netWorkStatus];
     
-    urlApi = [kBaseURL stringByAppendingString:urlApi];
+    urlApi = [[self getUrl] stringByAppendingString:urlApi];
     NSURL* url = [NSURL URLWithString:[urlApi stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
@@ -100,16 +102,29 @@ NSString * const kLocalURL = @"http://10.6.104.78:8080/mgserver/ApCommonServices
     [manager POST:urlApi parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(operation.responseString);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         [UIAlertView showMessage:@"不能连接到服务器！"];
            NSLog(@"发生错误！%@", error);
     }];
 }
 + (void)sendGetRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail
 {
     AFHTTPRequestOperationManager *manager= [self init:&urlApi];
-    [manager GET:urlApi parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:urlApi parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(operation.responseString);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [UIAlertView showMessage:@"系统很忙哦！"];
         NSLog(@"发生错误！%@", error);
+    }];
+}
+
++ (void)sendGetRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail parentView:(UIView*)parentView
+{
+    [LoadingView initWithFrame:CGRectMake(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 , 50, 50) parentView:parentView];
+    [HttpHelper sendGetRequest:urlApi parameters:parameters success:^(id response) {
+        success(response);
+        [LoadingView stopAnimating:parentView];
+    } fail:^(id response) {
+        [LoadingView stopAnimating:parentView];
     }];
 }
 @end

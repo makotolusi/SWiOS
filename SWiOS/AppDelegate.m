@@ -13,6 +13,10 @@
 #import "SWBuyBuyBuyViewController.h"
 #import "SWIntroductionViewController.h"
 #import "Activate.h"
+#import "RegisterModel.h"
+#import "HttpHelper.h"
+#import "NSString+Extension.h"
+#import "ShoppingCartModel.h"
 #define LAST_RUN_VERSION_KEY        @"last_run_version_of_application"
 
 @interface AppDelegate ()
@@ -27,24 +31,44 @@
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
     [self.window makeKeyAndVisible];
-    
-    
-    // clean key for only once login
-//    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:LAST_RUN_VERSION_KEY];
-    
-    if([self isFirstLoad]){
+    if([self isFirstLoad]){//[self isFirstLoad]
         
         SWIntroductionViewController *vc = [[SWIntroductionViewController alloc]init];
         self.window.rootViewController = vc;
         
     }else{
-        
-        [NSThread sleepForTimeInterval:3.0];
-
-        SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
-        self.window.rootViewController = mainContorll;
+        //load user info
+        ShoppingCartModel *cart=[ShoppingCartModel sharedInstance];
+        [HttpHelper sendPostRequest:@"getUserByToken"
+                         parameters: [[NSDictionary alloc]init]
+                            success:^(id response) {
+                                NSDictionary* result=[response jsonString2Dictionary];
+                                BOOL success=[result valueForKey:@"success"];
+                                if(success){
+                                    RegisterModel  *userinfo1 = [[RegisterModel alloc] initWithString:result[@"data"] error:nil];
+                                    cart.registerModel=userinfo1;
+                                    //                                [userinfo setValue:userinfo1.username forKey:@"username"];
+                                    //                                [userinfo setValue:userinfo1.phoneNum forKey:@"phoneNum"];
+                                    NSLog(@"获取到的数据为dict：%@", userinfo1);
+                                    
+                                    
+                                    [NSThread sleepForTimeInterval:3.0];
+                                    
+                                    SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
+                                    self.window.rootViewController = mainContorll;
+                                }
+                            } fail:^{
+                                //                            [UIAlertView showMessage:@"取得用户注册信息失败"];
+                                NSLog(@"请求失败");
+                            }];
     }
     
+    
+    
+    // clean key for only once login
+//    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:LAST_RUN_VERSION_KEY];
+    
+   
     return YES;
 }
 

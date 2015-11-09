@@ -37,5 +37,5 @@
 -(NSString*)base64Decode;
 +(BOOL)validateMobile:(NSString *)mobileNum;
 
--(NSDictionary*)jsonString2Dictionary;
+-(instancetype)jsonString2Dictionary;
 @end

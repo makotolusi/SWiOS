@@ -14,6 +14,8 @@
 #import "ShoppingCartModel.h"
 #import "ShoppingCartCell.h"
 #import "UILabel+Extension.h"
+#import "MyOrderController.h"
+#import "UIWindow+Extension.h"
 @interface TradeFinishViewController ()
 
 @end
@@ -22,6 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"我的订单" style:UIBarButtonItemStyleDone target:self action:@selector(myorder:)]];
+    self.navigationItem.hidesBackButton = YES;
+     [UIWindow showTabBar:YES];
     _cartModel=[ShoppingCartModel sharedInstance];
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) ];
     _tableView.dataSource = self;
@@ -33,6 +38,19 @@
     [self.view addSubview:_tableView];
     [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
     
+}
+
+-(void)myorder:(id)sender{
+    MyOrderController* uiNavigationController = [[MyOrderController alloc] init];
+    uiNavigationController.navigationItem.titleView = [UILabel navTitleLabel:@"我的订单"];
+//    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+//                                     initWithTitle:@""
+//                                     style:UIBarButtonItemStylePlain
+//                                     target:self
+//                                     action:nil];
+//    self.navigationItem.backBarButtonItem = cancelButton;
+    [UIWindow showTabBar:YES];
+    [self.navigationController pushViewController:uiNavigationController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

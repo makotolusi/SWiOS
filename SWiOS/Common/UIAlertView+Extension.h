@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface UIAlertView (Extension)
--(void)showMessage:(NSString *)message;
++(void)showMessage:(NSString *)message;
 @end

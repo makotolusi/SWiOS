@@ -10,5 +10,4 @@
 #define SWiOS_ui_define_h
 
 #define DEFAULT_BG_COLOR (UIColorFromRGB(0x324234))
-
 #endif

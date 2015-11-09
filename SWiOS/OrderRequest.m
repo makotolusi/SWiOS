@@ -12,6 +12,7 @@
 #import "ShoppingCartModel.h"
 #import "ActivityProduct.h"
 #import "NSString+Extension.h"
+#import "RegisterModel.h"
 @implementation OrderRequest
 
 -(instancetype)init{
@@ -34,7 +35,15 @@
         [orderDetails addObject:[orderDetail toDictionary]];
     }
     [_shoppingCart.orderModel setValue:orderDetails forKey:@"orderDetails"];
+
     [_shoppingCart.orderModel setValue:@"%@" forKey:@"orderCode"];
+    [_shoppingCart.orderModel setValue:[_shoppingCart.registerModel valueForKey:@"id"] forKey:@"receiverId"];
+    [_shoppingCart.orderModel setValue:_shoppingCart.addressModel.name forKey:@"reviewerName"];
+    [_shoppingCart.orderModel setValue:_shoppingCart.addressModel.phone forKey:@"receiverPhone"];
+    [_shoppingCart.orderModel setValue:_shoppingCart.addressModel.address forKey:@"receiverInfo"];
+    [_shoppingCart.orderModel setValue:@"ZHIFUBAO" forKey:@"payType"];
+//    [_shoppingCart.orderModel setValue:@"%@" forKey:@"orderCode"];
+//    [_shoppingCart.orderModel setValue:@"%@" forKey:@"orderCode"];
     NSDictionary* lu=[_shoppingCart.orderModel toDictionary];
 //    [lu setValue:@"%@" forKey:@"orderCode"];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:lu options:NSJSONWritingPrettyPrinted error:nil];

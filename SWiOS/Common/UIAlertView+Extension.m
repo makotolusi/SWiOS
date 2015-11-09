@@ -11,9 +11,9 @@
 
 @implementation UIAlertView(Extension)
 
--(void)showMessage:(NSString *)message{
++(void)showMessage:(NSString *)message{
     
-    UIAlertView *alert=[self initWithTitle:message message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:message message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
     alert.alpha=0.5;
     alert.backgroundColor=[UIColor blackColor];
     [NSTimer scheduledTimerWithTimeInterval:1.5f target:alert selector:@selector(performDismiss:) userInfo:nil repeats:NO];

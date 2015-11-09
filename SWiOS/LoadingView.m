@@ -44,6 +44,8 @@
 }
 
 +(void)stopAnimating:(UIView*)parentView{
-   [(UIActivityIndicatorView *)[parentView viewWithTag:LoadingViewTag] stopAnimating];
+    UIActivityIndicatorView* ind= (UIActivityIndicatorView *)[parentView viewWithTag:LoadingViewTag];
+   [ind stopAnimating];
+    [ind removeFromSuperview];
 }
 @end
