@@ -10,7 +10,7 @@
 #import "SWBaseViewController.h"
 #import "AddressModel.h"
 #import "ShoppingCartModel.h"
-@interface BalanceController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate>
+@interface BalanceController : SWBaseViewController<UITableViewDataSource,UITableViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UIGestureRecognizerDelegate>
 {
     @private
         NSMutableArray* groups;

@@ -58,6 +58,16 @@ static NSString *orderListCell = @"orderListCell";
      [groups addObject:[[BalanceFieldModel alloc] init]];
       paymentArray=[NSArray arrayWithObjects:@"EMS",@"中通", @"顺丰",nil];
      _cartModel=[ShoppingCartModel sharedInstance];
+    
+    if (!StringIsNullOrEmpty(_cartModel.registerModel.addr)) {
+        
+        NSArray *aTest = [_cartModel.registerModel.addr componentsSeparatedByString:@";"];
+        _cartModel.addressModel.name=aTest[0];
+        _cartModel.addressModel.phone=aTest[1];
+        _cartModel.addressModel.code=aTest[2];
+        _cartModel.addressModel.city=aTest[3];
+        _cartModel.addressModel.address=aTest[4];
+    }
     _cartModel.route=@"BalanceController";
 }
 
@@ -73,10 +83,10 @@ static NSString *orderListCell = @"orderListCell";
      [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
     //快递公司
-    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250, SCREEN_WIDTH, 100)];
+    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-200, SCREEN_WIDTH, 50)];
     _paymentPicker.dataSource=self;
     _paymentPicker.delegate=self;
-    
+
     //submit
     UIButton *submit;
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
@@ -98,6 +108,11 @@ static NSString *orderListCell = @"orderListCell";
 //    [submit.layer setBorderWidth:1.0];
     [submit addTarget:self action:@selector(checkOrder:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:submit];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesturedDetected:)]; // 手势类型随你喜欢。
+    tapGesture.delegate = self;
+    tapGesture.cancelsTouchesInView=NO;
+    [self.view addGestureRecognizer:tapGesture];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -194,7 +209,7 @@ static NSString *orderListCell = @"orderListCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section==0){
-
+         [_paymentPicker removeFromSuperview];
     }else if(indexPath.section==1){
         UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                          initWithTitle:@""
@@ -239,7 +254,7 @@ static NSString *orderListCell = @"orderListCell";
         }
     }else if(indexPath.section==3)
     {
-        [self.view addSubview:_paymentPicker];
+        [self.view  addSubview:_paymentPicker];
     }
 }
 
@@ -259,10 +274,14 @@ static NSString *orderListCell = @"orderListCell";
     return [paymentArray objectAtIndex:row];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
-//    [self cancelLocatePicker];
+
+- (void)tapGesturedDetected:(UITapGestureRecognizer *)recognizer
+{
+   [_paymentPicker removeFromSuperview];
+    
+    // do something
 }
+
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -279,7 +298,7 @@ static NSString *orderListCell = @"orderListCell";
 - (void)checkOrder:(UIButton*)sender {
     UILabel* tf=[self.view viewWithTag:11];
     UIAlertView *alert=[[UIAlertView alloc] init];
-    if (_addressModel==nil)//alert
+    if (_cartModel.addressModel==nil)//alert
     {
         [UIAlertView showMessage:@"收货人信息是必须填写的哦！"];
     }else if([tf.text isEqualToString:@"快递公司"]){

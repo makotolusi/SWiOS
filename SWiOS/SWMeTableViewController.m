@@ -26,10 +26,13 @@ NSString * const kAddress=@"我的地址";
 NSString * const kOrder = @"我的订单";
 NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
+#define HEAD_RES_BIG 500
+#define HEAD_RES_SMALL 60
 @interface SWMeTableViewController ()<GenderDelegate> {
     NSMutableArray* groups;
     UITableViewCell* hiddenCell;
     YCAsyncImageView* meUIImageView;
+    YCAsyncImageView* bigImageView;
     UILabel* meTextLabel;
      UILabel* meGenderLabel;
      UILabel* meAddressLabel;
@@ -42,6 +45,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 @property (nonatomic, strong) YALSunnyRefreshControl* sunnyRefreshControl;
 @property (assign,nonatomic) int gender;
 @property (copy,nonatomic) NSString *headUrl;
+@property (copy,nonatomic) NSString *smallHeadUrl;
 @property (copy,nonatomic) NSString *address;
 
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
@@ -102,6 +106,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
                                _username=_cartModel.registerModel.username;
                                _gender=_cartModel.registerModel.gender.intValue;
                                _headUrl=_cartModel.registerModel.imgUrl;
+                                _smallHeadUrl=_cartModel.registerModel.smallImgUrl;
                                _address=_cartModel.registerModel.addr;
                                [self _init];
 //                           }
@@ -116,7 +121,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-//
+//    self.tableView.separatorStyle=UITableViewCellSelectionStyleNone;
 //    // present the cropper view controller
 //    VPImageCropperViewController *imgCropperVC = [[VPImageCropperViewController alloc] initWithImage:portraitImg cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width) limitScaleRatio:3.0];
 //    imgCropperVC.delegate = self;
@@ -181,7 +186,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
             [[cell.contentView.subviews lastObject] removeFromSuperview];
         }
     }
-
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SWMe* s = [groups[[indexPath section]] objectAtIndex:[indexPath row]];
 
     //    cell.detailTextLabel.text = @"detail";
@@ -190,32 +195,27 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
-    //    cell.backgroundColor = [UIColor orangeColor];
-    meUIImageView.hidden = NO;
-//    meUIImageView.image = [UIImage imageNamed:_headUrl];
-    [meUIImageView setUrl:_headUrl];
     if ([s.describe isEqual:kME]) {
-            meUIImageView.hidden = YES;
-        meUIImageView=[[YCAsyncImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, 60, 60)];
-        [meUIImageView setUrl:_headUrl];
+        
+        meUIImageView=[[YCAsyncImageView alloc] init];
+        [meUIImageView setUrl:_smallHeadUrl];
+//        meUIImageView.hidden = YES;
+        meUIImageView.frame=CGRectMake(SCREEN_WIDTH-100, 10, HEAD_RES_SMALL, HEAD_RES_SMALL);
+        bigImageView=[[YCAsyncImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, HEAD_RES_BIG, HEAD_RES_BIG)];
+        [bigImageView setUrl:_headUrl];
         UILabel *headLabel=[[UILabel alloc] initWithFrame:CGRectMake(20, 40, 100, 10)];
 
         [cell addSubview:headLabel];
-        if ([self existsFileSelfPhoto:kSelfPhoto delFlg:NO]) {
-            meUIImageView.image = [UIImage imageNamed:rawImageFilePath];
+//        if ([self existsFileSelfPhoto:kSelfPhoto delFlg:NO]) {
+//            meUIImageView.image = [UIImage imageNamed:rawImageFilePath];
             [ImageHelper makeRoundCorners:meUIImageView];
-        }
+//        }
         [meUIImageView setUserInteractionEnabled:YES];
         [cell addSubview:meUIImageView];
         [cell.textLabel setUserInteractionEnabled:YES];
         
         UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onImageClicked:)];
         [meUIImageView addGestureRecognizer:singleTap];
-
-
-//        UITapGestureRecognizer* singleTapTextLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTextLabelClicked:)];
-//        [cell.textLabel addGestureRecognizer:singleTapTextLabel];
-//        meTextLabel = cell.textLabel;
         
         
     }
@@ -356,8 +356,10 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 }
 
 -(void)onImageClicked:(UITapGestureRecognizer *)gesture{
-
-    [ImageHelper showImage:meUIImageView];
+//    meUIImageView.frame=CGRectMake(0, 0, 200, 200)
+//    [self.view addSubview:meUIImageView];
+    
+    [ImageHelper showImage:bigImageView];
 }
 -(void)onTextLabelClicked:(UITapGestureRecognizer *)gesture {
 
@@ -429,6 +431,12 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     
 }
 
+-(void) imgReloadAfterUpload:(NSString*)bigImg smallImg:(NSString*)smallImg{
+    self.smallHeadUrl=smallImg;
+    self.headUrl=bigImg;
+    [self.tableView reloadData];
+}
+
 #pragma mark -
 #pragma UIImagePickerController Delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -467,13 +475,13 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
 
 - (void)saveImage:(UIImage *)image {
-    meUIImageView.image = image;
-    [ImageHelper makeRoundCorners:meUIImageView];
+//    meUIImageView.image = image;
+//    [ImageHelper makeRoundCorners:meUIImageView];
     
 
     [self existsFileSelfPhoto:kSelfPhoto delFlg:YES];
     
-    UIImage *smallImage = [ImageHelper thumbnailWithImageWithoutScale:image size:CGSizeMake(200, 200)];
+    UIImage *smallImage = [ImageHelper thumbnailWithImageWithoutScale:image size:CGSizeMake(HEAD_RES_BIG, HEAD_RES_BIG)];
     [UIImageJPEGRepresentation(smallImage, 1.0f) writeToFile:imageFilePath atomically:YES];
     [UIImageJPEGRepresentation(image, 1.0f) writeToFile:rawImageFilePath atomically:YES];
     

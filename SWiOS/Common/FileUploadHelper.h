@@ -25,7 +25,9 @@
 
 @protocol FileUploadHelperDelegate <NSObject>
 
+
 @optional
+-(void) imgReloadAfterUpload:(NSString*)bigImg smallImg:(NSString*)smallImg;
 -(void) sucessed;
 -(void) failed:(QNResponseInfo *)info;
 

@@ -49,6 +49,10 @@
                                           NSDictionary* result=[response jsonString2Dictionary];
                                           BOOL success=[result valueForKey:@"success"];
                                           if(success){
+                                               NSDictionary* data=result[@"data"];
+                                              if (self.delegate != nil && [self.delegate respondsToSelector:@selector(imgReloadAfterUpload:smallImg:)]) {
+                                                  [self.delegate imgReloadAfterUpload:data[@"imgUrl"] smallImg:data[@"smallImgUrl"]];
+                                              }
                                           }
                                       }fail:^{
                                           NSLog(@"网络异常，取数据异常");

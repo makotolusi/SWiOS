@@ -53,6 +53,11 @@
 //    [_tableView registerNib:[UINib nibWithNibName:@"OrderPriceCell" bundle:nil] forCellReuseIdentifier:orderPriceCell];
 //    [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesturedDetected:)]; // 手势类型随你喜欢。
+    tapGesture.delegate = self;
+    tapGesture.cancelsTouchesInView=NO;
+    [self.view addGestureRecognizer:tapGesture];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -143,6 +148,14 @@
     [super touchesBegan:touches withEvent:event];
     [self cancelLocatePicker];
 }
+
+- (void)tapGesturedDetected:(UITapGestureRecognizer *)recognizer
+{
+    [_locatePicker removeFromSuperview];
+    
+    // do something
+}
+
 -(void)setAreaValue:(NSString *)areaValue
 {
     if (![_areaValue isEqualToString:areaValue]) {

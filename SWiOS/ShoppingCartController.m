@@ -12,6 +12,7 @@
 #import "BalanceController.h"
 #import "SWMainViewController.h"
 #import "UILabel+Extension.h"
+#import "UIAlertView+Extension.h"
 @interface ShoppingCartController () <ShoppingCartCellDelegate>
 
 @end
@@ -39,10 +40,7 @@
 }
 
 - (void)_loadTableView {
-//    if (_cartModel.arOfWatchesOfCart.count==0) {
-//        
-//    }else{
-        //    [self totalPrice];
+
         isEdit=NO;
         // 创建表视图
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
@@ -102,7 +100,12 @@
         [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [buy addTarget:self action:@selector(goBalace) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:buy];
-//    }
+    if (_cartModel.arOfWatchesOfCart.count==0) {
+        UIImageView *kongImg=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"kong"]];
+        kongImg.frame=CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-100, 200, 200);
+        [self.view addSubview:kongImg];
+    }
+
 }
 #pragma mark - TableView Datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -169,6 +172,10 @@
 }
 
 -(void)goBalace{
+    if (_cartModel.arOfWatchesOfCart.count==0) {
+        [UIAlertView showMessage:@"空空如野，快选几件放进来！"];
+        return;
+    }
     BalanceController *balance=[[BalanceController alloc] init];
     balance.navigationItem.titleView=[UILabel  navTitleLabel:@"陆思的订单"];
     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]

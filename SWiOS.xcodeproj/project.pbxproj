@@ -162,6 +162,7 @@
 		C56AB4FC1BC4E6FA0061750B /* cart_remove.png in Resources */ = {isa = PBXBuildFile; fileRef = C56AB4F91BC4E6FA0061750B /* cart_remove.png */; };
 		C56AB4FD1BC4E6FA0061750B /* cart.png in Resources */ = {isa = PBXBuildFile; fileRef = C56AB4FA1BC4E6FA0061750B /* cart.png */; };
 		C56AB5051BC5003D0061750B /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = C56AB5041BC5003D0061750B /* JSBadgeView.m */; };
+		C56D3E161BF079B000A14C8B /* kong.png in Resources */ = {isa = PBXBuildFile; fileRef = C56D3E151BF079B000A14C8B /* kong.png */; };
 		C57685BE1BC69ADF00661A53 /* cart_home.png in Resources */ = {isa = PBXBuildFile; fileRef = C57685BD1BC69ADF00661A53 /* cart_home.png */; };
 		C57685C01BC69D8400661A53 /* cart_home2.png in Resources */ = {isa = PBXBuildFile; fileRef = C57685BF1BC69D8400661A53 /* cart_home2.png */; };
 		C58246221BB58FBE00031581 /* TokenEncrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = C582461F1BB58FBE00031581 /* TokenEncrypt.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -533,6 +534,7 @@
 		C56AB4FA1BC4E6FA0061750B /* cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cart.png; sourceTree = "<group>"; };
 		C56AB5031BC5003D0061750B /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBadgeView.h; sourceTree = "<group>"; };
 		C56AB5041BC5003D0061750B /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBadgeView.m; sourceTree = "<group>"; };
+		C56D3E151BF079B000A14C8B /* kong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kong.png; sourceTree = "<group>"; };
 		C57685BD1BC69ADF00661A53 /* cart_home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cart_home.png; sourceTree = "<group>"; };
 		C57685BF1BC69D8400661A53 /* cart_home2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cart_home2.png; sourceTree = "<group>"; };
 		C582461F1BB58FBE00031581 /* TokenEncrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenEncrypt.m; sourceTree = "<group>"; };
@@ -1255,6 +1257,7 @@
 			children = (
 				C568F46C1BE5E09700E75CFC /* yiqianggou.png */,
 				C53870C91BEB970F00790D04 /* dui.png */,
+				C56D3E151BF079B000A14C8B /* kong.png */,
 				C568F4741BE5E4E700E75CFC /* fish.png */,
 				C5680EDA1BDFB8750086A66D /* jiahao.png */,
 				C568F46E1BE5E15600E75CFC /* qianggou.png */,
@@ -1415,6 +1418,7 @@
 			files = (
 				249727151BB0E312007D9704 /* YALSunnyRefreshControl.xib in Resources */,
 				2452FFA21B94603B006C7E09 /* title4@2x.png in Resources */,
+				C56D3E161BF079B000A14C8B /* kong.png in Resources */,
 				249727291BB0E4F6007D9704 /* SWMoneyNavigationController.xib in Resources */,
 				2452FF9D1B94603B006C7E09 /* bg_04.jpg in Resources */,
 				C5434A721BCE46AA00F5D103 /* city.plist in Resources */,

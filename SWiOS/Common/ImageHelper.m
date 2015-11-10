@@ -16,6 +16,9 @@ static CGRect oldframe;
 
     UIImage* image = avatarImageView.image;
 
+    if (image==nil) {
+        return;
+    }
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
 
     UIView* backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0,
@@ -87,7 +90,7 @@ static CGRect oldframe;
     uiImage.layer.masksToBounds = YES;
     uiImage.layer.cornerRadius = 10.0f;
     uiImage.layer.borderWidth = 1.0f;
-    uiImage.layer.borderColor = [[UIColor grayColor] CGColor];
+    uiImage.layer.borderColor = [[UIColor lightGrayColor] CGColor];
 }
 
 // 保持原来的长宽比，生成一个缩略图
