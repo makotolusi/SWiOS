@@ -184,6 +184,8 @@
 		C59A20961BE0A8A400FB0D88 /* OrderItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59A20951BE0A8A400FB0D88 /* OrderItemViewController.m */; };
 		C59A209A1BE0BE8900FB0D88 /* gift.png in Resources */ = {isa = PBXBuildFile; fileRef = C59A20991BE0BE8900FB0D88 /* gift.png */; };
 		C5A4E43E1BF430A000C0E761 /* qingchuhuancun.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A4E43D1BF430A000C0E761 /* qingchuhuancun.png */; };
+		C5A4E4411BF57FD800C0E761 /* MPview.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4E4401BF57FD800C0E761 /* MPview.m */; };
+		C5A4E4431BF5CB6A00C0E761 /* cha.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A4E4421BF5CB6A00C0E761 /* cha.png */; };
 		C5A725B41BCB4A3100DF040D /* BalanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B31BCB4A3100DF040D /* BalanceController.m */; };
 		C5A725B71BCB549900DF040D /* BalanceFieldModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B61BCB549900DF040D /* BalanceFieldModel.m */; };
 		C5A725BB1BCB5ACF00DF040D /* OrderPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B91BCB5ACF00DF040D /* OrderPriceCell.m */; };
@@ -566,6 +568,9 @@
 		C59A20951BE0A8A400FB0D88 /* OrderItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemViewController.m; sourceTree = "<group>"; };
 		C59A20991BE0BE8900FB0D88 /* gift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gift.png; sourceTree = "<group>"; };
 		C5A4E43D1BF430A000C0E761 /* qingchuhuancun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qingchuhuancun.png; sourceTree = "<group>"; };
+		C5A4E43F1BF57FD800C0E761 /* MPview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPview.h; sourceTree = "<group>"; };
+		C5A4E4401BF57FD800C0E761 /* MPview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPview.m; sourceTree = "<group>"; };
+		C5A4E4421BF5CB6A00C0E761 /* cha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cha.png; sourceTree = "<group>"; };
 		C5A725B21BCB4A3100DF040D /* BalanceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceController.h; sourceTree = "<group>"; };
 		C5A725B31BCB4A3100DF040D /* BalanceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalanceController.m; sourceTree = "<group>"; };
 		C5A725B51BCB549900DF040D /* BalanceFieldModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceFieldModel.h; sourceTree = "<group>"; };
@@ -1214,6 +1219,8 @@
 				C55AE3201BC78E1800C0795D /* ShoppingCartCell.xib */,
 				C526F10A1BCA3D250036A7C2 /* ShoppingCartModel.h */,
 				C526F10B1BCA3D250036A7C2 /* ShoppingCartModel.m */,
+				C5A4E43F1BF57FD800C0E761 /* MPview.h */,
+				C5A4E4401BF57FD800C0E761 /* MPview.m */,
 			);
 			name = ShoppingCart;
 			sourceTree = "<group>";
@@ -1260,6 +1267,7 @@
 			isa = PBXGroup;
 			children = (
 				C568F46C1BE5E09700E75CFC /* yiqianggou.png */,
+				C5A4E4421BF5CB6A00C0E761 /* cha.png */,
 				C5A4E43D1BF430A000C0E761 /* qingchuhuancun.png */,
 				C56D3E181BF42B7700A14C8B /* qianbao.png */,
 				C53870C91BEB970F00790D04 /* dui.png */,
@@ -1476,6 +1484,7 @@
 				249727421BB0E573007D9704 /* setting@2x.png in Resources */,
 				2452FFA11B94603B006C7E09 /* title3@2x.png in Resources */,
 				2452FF9E1B94603B006C7E09 /* bg_05.jpg in Resources */,
+				C5A4E4431BF5CB6A00C0E761 /* cha.png in Resources */,
 				C537D4751BDB720300DB4D74 /* private_key_pkcs8.pem in Resources */,
 				C56AB4FD1BC4E6FA0061750B /* cart.png in Resources */,
 				2497273F1BB0E573007D9704 /* moneyDetial@3x.png in Resources */,
@@ -1551,6 +1560,7 @@
 				C5434A691BCDFE1100F5D103 /* AddressViewController.m in Sources */,
 				C50F01FC1BBE94FC0026D16C /* SWBuyBuyBuyViewController.m in Sources */,
 				C54D9B871BDA1455009BB7D0 /* MD5DataSigner.m in Sources */,
+				C5A4E4411BF57FD800C0E761 /* MPview.m in Sources */,
 				89CD429C1B59F92E00997C18 /* ViewController.m in Sources */,
 				C54D9B8B1BDA1455009BB7D0 /* RSADataVerifier.m in Sources */,
 				C58246221BB58FBE00031581 /* TokenEncrypt.m in Sources */,

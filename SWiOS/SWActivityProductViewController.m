@@ -61,6 +61,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
                            for (id content in result) {
                                ActivityProduct *model = [[ActivityProduct alloc] init];
                                [model setValuesForKeysWithDictionary:content];
+                               [model setValue:content[@"rushQuantity"] forKey:@"rushQuantity"];
                                [_data addObject:model];
                            }
                            [self _loadContentView];
@@ -145,7 +146,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     // 图片
     DetailPageController *thumbViewController = [[DetailPageController alloc] init];
     ActivityProduct *product=_data[indexPath.row];
-    thumbViewController.productCode=product.productCode;
+    thumbViewController.product=product;
     //back button style
     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                      initWithTitle:@""
@@ -187,7 +188,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
        _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: t2 withBehavior:round];
           model.buyCount=model.buyCount+1;
         [_cartModel.productCode_buyCount setObject:[NSNumber numberWithInteger:model.buyCount] forKey:model.productCode];
-        NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
+//        NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
         // perform add to cart animation
         [self addToCartTapped:ip];
     }

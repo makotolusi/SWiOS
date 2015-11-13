@@ -8,7 +8,7 @@
 
 #import "ShoppingCartCell.h"
 #import "UIColor+Extension.h"
-
+#import "UIAlertView+Extension.h"
 static CGFloat kSWCellCountTag = 1;
 @implementation ShoppingCartCell
 
@@ -117,13 +117,18 @@ static CGFloat kSWCellCountTag = 1;
 }
 
 - (void)plusAction:(UIButton*)sender{
-     _activityProduct.buyCount+=1;
-    [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
-    UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
-    countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
-    if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
-        [_delegate totalPrice: _activityProduct type:0]; // 通知执行协议方法
+    if (_activityProduct.buyCount<_activityProduct.rushQuantity) {
+        _activityProduct.buyCount+=1;
+        [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
+        UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
+        countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
+        if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
+            [_delegate totalPrice: _activityProduct type:0]; // 通知执行协议方法
+        }
+    }else{
+        [UIAlertView showMessage:@"库存不足"];
     }
+    
 }
 - (void)minusAction:(UIButton*)sender{
     if( _activityProduct.buyCount>1){

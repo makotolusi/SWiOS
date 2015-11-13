@@ -7,10 +7,12 @@
 //
 
 #import "SWBaseViewController.h"
-
+#import "ActivityProduct.h"
+#import "ShoppingCartModel.h"
 @interface DetailPageController : SWBaseViewController
 
 @property (strong, nonatomic)  UIWebView *webView;
-@property (nonatomic,copy) NSString *productCode;
+@property (nonatomic,strong)ActivityProduct *product;
+@property(strong,nonatomic)ShoppingCartModel *cartModel;
 @property (strong, nonatomic) UIActivityIndicatorView*  activityIndicator;
 @end

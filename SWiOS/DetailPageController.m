@@ -8,16 +8,25 @@
 
 #import "DetailPageController.h"
 #import "LoadingView.h"
-@interface DetailPageController ()<UIWebViewDelegate>
+#import "MPview.h"
+#import "UILabel+Extension.h"
+#import "YCAsyncImageView.h"
+#import "ShoppingCartController.h"
+#import "UIAlertView+Extension.h"
+@interface DetailPageController ()<UIWebViewDelegate,UIGestureRecognizerDelegate>
 
+@property (nonatomic,strong)UIView* infoView;
+@property (nonatomic,strong)UIView* modal;
+@property (nonatomic,strong)MPview* mp;
 @end
 
 @implementation DetailPageController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _cartModel=[ShoppingCartModel sharedInstance];
     _webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT-100)];
-    NSString *url=[@"http://okeasy.eicp.net:9888/index.html#/Product/" stringByAppendingString:_productCode];
+    NSString *url=[@"http://okeasy.eicp.net:9888/index.html#/Product/" stringByAppendingString:_product.productCode];
     _webView.delegate=self;
     NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString: url]];
     [self.webView loadRequest:request];
@@ -34,28 +43,80 @@
 }
 
 -(void)shoppingCart:(id)sender{
+    float w=300;
+    float h=200;
+     _modal=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _modal.backgroundColor=[UIColor lightGrayColor];
+    _modal.alpha=0.5;
+      [self.view addSubview:_modal];
+     _infoView=[[UIView alloc]init];
+    _infoView.backgroundColor=[UIColor whiteColor];
+    _infoView.layer.borderWidth=1;
+    _infoView.alpha=1.0;
+    _infoView.layer.borderColor=[UIColorFromRGB(0x1abc9c)CGColor];
+      [_infoView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     
-    UIView* infoView=[[UIView alloc]init];
-//    infoView.backgroundColor=[UIColor redColor];
-    infoView.layer.borderWidth=1;
-    infoView.layer.borderColor=[UIColorFromRGB(0x1abc9c)CGColor];
+     float bw=250,bh=30;
+    _mp=[[MPview alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-bw/2, _infoView.frame.size.height-200, bw, bh) gap:230 ];
+    _mp.product=_product;
+    [_infoView addSubview:_mp];
+    UIButton *cartBtn=[[UIButton alloc] initWithFrame:CGRectMake(_mp.frame.origin.x,_mp.frame.origin.y+50, bw, bh)];
+    [cartBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
+    [cartBtn addTarget:self action:@selector(cartAction:) forControlEvents:UIControlEventTouchUpInside];
+    [cartBtn.layer setCornerRadius:10.0]; //设置矩形四个圆角半径
+    [ cartBtn.titleLabel smallLabel];
+    cartBtn.backgroundColor=UIColorFromRGB(0x1abc9c);
+    [_infoView addSubview:cartBtn];
+    //image
+    float imgW=60.f;
+    YCAsyncImageView *image=[[YCAsyncImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-60/2, _infoView.frame.origin.x+100, imgW, imgW)];
+    [image setUrl:_product.picUrl1];
+    [_infoView addSubview:image];
+    //title
+    UILabel *title=[[UILabel alloc] init];
+    title.lineBreakMode =NSLineBreakByWordWrapping;
+    title.numberOfLines = 2;
+    title.textAlignment=NSTextAlignmentLeft;
+    title.text=_product.productName;
+    title.font=[UIFont systemFontOfSize:13];
+    CGSize size = [title sizeThatFits:CGSizeMake(200, MAXFLOAT)];
+    title.frame=CGRectMake(SCREEN_WIDTH/2-size.width/2, image.frame.origin.y+60, 200, size.height);
+    [_infoView addSubview:title];
+//     [_modal addSubview:_infoView ];
+    [self.view insertSubview:_infoView aboveSubview:_modal];
+    //animation
     [UIView animateWithDuration:0.0
                           delay:0.0
                         options:0
                      animations:^{
-                         [infoView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                         [self.view addSubview:infoView];
+    
+                        
+//                         [modal addSubview:_infoView];
+//                         //
+//                        
                      }
                      completion:^(BOOL finished) {
-                         [UIView animateWithDuration:0.7
+                         [UIView animateWithDuration:0.2
                                                delay:0.0
                                              options:UIViewAnimationOptionShowHideTransitionViews
                                           animations:^{
-                                              [infoView setFrame:CGRectMake(100, 100 ,SCREEN_WIDTH-100, 200)];
+                                              [_infoView setFrame:CGRectMake(SCREEN_WIDTH/2-w/2, SCREEN_HEIGHT-h-100 ,w, h)];
+                                              [image setFrame:CGRectMake(_infoView.frame.size.width/2-imgW/2, 15, imgW, imgW)];
+                                              [title setFrame:CGRectMake(_infoView.frame.size.width/2-size.width/2, image.frame.origin.y+imgW+5, size.width, size.height)];
+                                              [_mp setFrame:CGRectMake(_infoView.frame.size.width/2-bw/2, title.frame.origin.y+35, bw, bh)];
+                                              [cartBtn setFrame:CGRectMake(_infoView.frame.size.width/2-bw/2, _mp.frame.origin.y+40, bw, bh)];
+                                              UIImageView *cha=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cha"]];
+                                              [cha setFrame:CGRectMake(_infoView.frame.origin.x+_infoView.frame.size.width-60, 5, 15, 15)];
+                                              [_infoView addSubview:cha];
+                                              UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesturedDetected:)]; // 手势类型随你喜欢。
+                                              cha.userInteractionEnabled = YES;
+                                              tapGesture.delegate = self;
+                                              [cha addGestureRecognizer:tapGesture];
                                           }
                                           completion:^(BOOL finished) {
                                           }];
                      }];
+    
     
 //    UIViewController *c=[[UIViewController alloc] init];
 //    c.contentSizeForViewInPopover = CGSizeMake(200, 200);
@@ -66,6 +127,13 @@
 //    self.modalPresentationStyle=UIModalPresentationFormSheet;
 //    self.modalTransitionStyle=UIModalTransitionStylePartialCurl;
 //    [self presentViewController:c animated:YES completion:nil];
+}
+
+- (void)tapGesturedDetected:(UITapGestureRecognizer *)recognizer
+{
+    [_infoView removeFromSuperview];
+      [_modal removeFromSuperview];
+    // do something
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,6 +147,55 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
 //    [LoadingView stopAnimating:nil];
 }
+
+- (void)cartAction:(UIButton*)sender {
+    _product.buyCount=_product.buyCount+_mp.count;
+    NSDecimalNumberHandler *round = [NSDecimalNumberHandler
+                                     decimalNumberHandlerWithRoundingMode:NSRoundPlain
+                                     scale:2
+                                     raiseOnExactness:NO
+                                     raiseOnOverflow:NO
+                                     raiseOnUnderflow:NO
+                                     raiseOnDivideByZero:YES];
+    NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
+    NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:_product.rushPrice.stringValue];
+     NSDecimalNumber *oneTimeCount=[[NSDecimalNumber alloc] initWithUnsignedInt:_mp.count];
+     NSDecimalNumber *oneTimePrice=[t2 decimalNumberByMultiplyingBy:oneTimeCount];
+    
+    if ([_cartModel.arOfWatchesOfCart containsObject:_product]) {
+        NSInteger index= [_cartModel.arOfWatchesOfCart indexOfObject:_product];
+        _product=_cartModel.arOfWatchesOfCart[index];
+    }else {
+        [_cartModel.arOfWatchesOfCart addObject:_product];
+    }
+    
+
+   
+    _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: oneTimePrice withBehavior:round];
+//    _product.buyCount=_product.buyCount+_mp.count;
+    if (_product.buyCount>_product.rushQuantity) {
+        [UIAlertView showMessage:@"库存不足"];
+        return;
+    }else{
+    [_cartModel.productCode_buyCount setObject:[NSNumber numberWithInteger:_product.buyCount] forKey:_product.productCode];
+//    NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
+    
+    ShoppingCartController *vc =[[ShoppingCartController alloc]init];
+    vc.navigationItem.titleView = [UILabel navTitleLabel:@"购物车"];
+    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                     initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                     target:self
+                                     action:nil];
+    self.navigationItem.backBarButtonItem = cancelButton;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    [_infoView removeFromSuperview];
+    [_modal removeFromSuperview];
+    }
+}
+
+
 /*
 #pragma mark - Navigation
 
