@@ -14,4 +14,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame url:(NSString *)url;
 
++(void)removeCache;
+
 @end

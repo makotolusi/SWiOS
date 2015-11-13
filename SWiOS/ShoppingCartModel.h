@@ -19,5 +19,6 @@
 @property (strong,nonatomic) AddressModel *addressModel;
 @property (strong,nonatomic) RegisterModel *registerModel;
 @property (copy,nonatomic) NSString *route;
+@property (copy,nonatomic) NSString *orderInfoString;
 +(ShoppingCartModel *)sharedInstance;
 @end

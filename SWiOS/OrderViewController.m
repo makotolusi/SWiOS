@@ -18,6 +18,8 @@
 #import "LUAliPay.h"
 #import "TradeFinishViewController.h"
 #import "SWMainViewController.h"
+#import "HttpHelper.h"
+#import "OrderRequest.h"
 #define kOffsetHeight 60.f
 @interface OrderViewController ()
 
@@ -40,7 +42,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
-         [self.navigationController popViewControllerAnimated:YES];
+        [OrderRequest orderCancel:self.view next:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        
     }
 }
 

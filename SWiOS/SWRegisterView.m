@@ -12,12 +12,14 @@
 #import "RegisterModel.h"
 #import "HttpHelper.h"
 #import "SWMainViewController.h"
+#import "ShoppingCartModel.h"
 #define   WIN_WIDTH  [[UIScreen mainScreen] bounds].size.width
 #define   WIN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
 #define SET_PLACE(text) [text  setValue:[UIFont boldSystemFontOfSize:(13)] forKeyPath:@"_placeholderLabel.font"];
 #define COLOR_BLUE_LOGIN [UIColor colorWithRed:78/255.0 green:198/255.0 blue:56/255.0 alpha:1];
 #define   FONT(size)  ([UIFont systemFontOfSize:size])
+
 
 @interface SWRegisterView(){
     
@@ -150,35 +152,69 @@
             if([act Notactivated]){
                 [act sendActiveRequest:^(){
                     //register
-                    [HttpHelper sendGetRequest:@"CommerceUserServices/login"
-                                    parameters: @{@"phoneNum":phoneText.text}
-                                       success:^(id response) {
-                                           NSDictionary* result=[response jsonString2Dictionary];
-                                           BOOL success=[result valueForKey:@"success"];
-                                           if(success){
-                                               //close
-                                               [UIView animateWithDuration:0.3 animations:^{
-                                                   self.alpha = 0;
-                                               } completion:^(BOOL finished){
-                                                   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
-                                                   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                                       [self removeFromSuperview];
-                                                       if (self.delegate != nil && [self.delegate respondsToSelector:@selector(registerDidDismissView:)]) {
-                                                           [self.delegate registerDidDismissView:self];
-                                                       }
-                                                   });
-                                               }];
-                                           }
-                                       }fail:^{
-                                           NSLog(@"网络异常，取数据异常");
-                                       }];
+                    [self login];
                 }];
+            }else{
+                [self login];
             }
         
                     }else{
              [self showMessage:@"验证码错误"];
-        }
+                    }
     
+}
+
+-(void)login{
+    [HttpHelper sendGetRequest:@"CommerceUserServices/login"
+                    parameters: @{@"phoneNum":phoneText.text}
+                       success:^(id response) {
+                           NSDictionary* result=[response jsonString2Dictionary];
+                           BOOL success=[result valueForKey:@"success"];
+                           if(success){
+                               NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                               
+                               [defaults setObject:phoneText.text forKey:USER_LOGIN_PHONE_NUM];
+                               
+                               //load user info
+                               ShoppingCartModel *cart=[ShoppingCartModel sharedInstance];
+                               [HttpHelper sendPostRequest:@"getUserByToken"
+                                                parameters: [[NSDictionary alloc]init]
+                                                   success:^(id response) {
+                                                       NSDictionary* result=[response jsonString2Dictionary];
+                                                       BOOL success=[result valueForKey:@"success"];
+                                                       if(success){
+                                                               RegisterModel  *userinfo1 = [[RegisterModel alloc] initWithString:result[@"data"] error:nil];
+                                                               cart.registerModel=userinfo1;
+                                                               NSLog(@"获取到的数据为dict：%@", userinfo1);
+
+                                                               
+                                                               [NSThread sleepForTimeInterval:3.0];
+                                                               
+                                                           //close
+                                                           [UIView animateWithDuration:0.3 animations:^{
+                                                               self.alpha = 0;
+                                                           } completion:^(BOOL finished){
+                                                               dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
+                                                               dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                                                   [self removeFromSuperview];
+                                                                   if (self.delegate != nil && [self.delegate respondsToSelector:@selector(registerDidDismissView:)]) {
+                                                                       [self.delegate registerDidDismissView:self];
+                                                                   }
+                                                               });
+                                                           }];
+
+                                                       }
+                                                   } fail:^{
+                                                       //                            [UIAlertView showMessage:@"取得用户注册信息失败"];
+                                                       NSLog(@"请求失败");
+                                                   } parentView:self];
+                             
+                           }
+                       }fail:^{
+                           NSLog(@"网络异常，取数据异常");
+                       }];
+
+
 }
 - (void)timerFired
 {

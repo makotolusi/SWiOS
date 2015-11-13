@@ -15,14 +15,8 @@
 #import "RegisterModel.h"
 @implementation OrderRequest
 
--(instancetype)init{
-    self=[super init];
-    if (self) {
-        _shoppingCart=[ShoppingCartModel sharedInstance];
-    }
-    return self;
-}
--(ShoppingCartModel*)orderCheck:(void (^)())next{
++(ShoppingCartModel*)orderCheck:(void (^)())next{
+    ShoppingCartModel *_shoppingCart=[ShoppingCartModel sharedInstance];
     NSMutableArray *orderDetails=[NSMutableArray array];
     NSArray *activityProducts=_shoppingCart.arOfWatchesOfCart;
     for (int i=0; i<activityProducts.count; i++) {
@@ -70,9 +64,29 @@
     return nil;
 }
 
--(void)orderCofirm:(NSString*)orderInfo next:(void (^)())next{
++(void)orderCofirm:(NSString*)orderInfo next:(void (^)())next{
     NSDictionary *dict1 = @{@"content": orderInfo};
+     ShoppingCartModel *_shoppingCart=[ShoppingCartModel sharedInstance];
     [HttpHelper sendPostRequest:@"SnapUpServices/confirm"
+                     parameters: dict1
+                        success:^(id response) {
+                            NSDictionary* result=[response jsonString2Dictionary];
+                            BOOL success=[result valueForKey:@"success"];
+                            if(success){
+                                 _shoppingCart.orderInfoString=orderInfo;
+                                next();
+                            }
+                            NSLog(@"获取到的数据为dict：%@", result);
+                        } fail:^{
+                            NSLog(@"fail");
+                        }];
+
+}
+
++(void)orderCancel:(UIView*)view next:(void (^)())next{
+     ShoppingCartModel *_shoppingCart=[ShoppingCartModel sharedInstance];
+    NSDictionary *dict1 = @{@"content":  _shoppingCart.orderInfoString};
+    [HttpHelper sendPostRequest:@"SnapUpServices/cancel"
                      parameters: dict1
                         success:^(id response) {
                             NSDictionary* result=[response jsonString2Dictionary];
@@ -83,8 +97,8 @@
                             NSLog(@"获取到的数据为dict：%@", result);
                         } fail:^{
                             NSLog(@"fail");
-                        }];
-
+                        } parentView:view];
+    
 }
 
 @end

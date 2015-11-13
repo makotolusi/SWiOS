@@ -23,4 +23,5 @@
 
 - (void)registerDidDismissView:(SWRegisterView *)registerView;
 
+
 @end

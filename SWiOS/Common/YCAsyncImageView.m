@@ -118,4 +118,7 @@ static inline NSString *kCacheGetKeyFromURL(NSString *url)
     });
 }
 
++(void)removeCache{
+    [kMemCache removeAllObjects];
+}
 @end

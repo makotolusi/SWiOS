@@ -106,6 +106,19 @@ NSString * const kLocalURL = @"http://10.6.110.4:8080/mgserver/ApCommonServices/
            NSLog(@"发生错误！%@", error);
     }];
 }
+
++ (void)sendPostRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail parentView:(UIView*)parentView
+{
+
+    [LoadingView initWithFrame:CGRectMake(0,0 , SCREEN_WIDTH, SCREEN_HEIGHT) parentView:nil];
+    [HttpHelper sendPostRequest:urlApi parameters:parameters success:^(id response) {
+        success(response);
+        [LoadingView stopAnimating:nil];
+    } fail:^(id response) {
+        [LoadingView stopAnimating:nil];
+    }];
+}
+
 + (void)sendGetRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail
 {
     AFHTTPRequestOperationManager *manager= [self init:&urlApi];
@@ -119,12 +132,13 @@ NSString * const kLocalURL = @"http://10.6.110.4:8080/mgserver/ApCommonServices/
 
 + (void)sendGetRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail parentView:(UIView*)parentView
 {
-    [LoadingView initWithFrame:CGRectMake(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 , 50, 50) parentView:parentView];
+
+    [LoadingView initWithFrame:CGRectMake(0,0 , SCREEN_WIDTH, SCREEN_HEIGHT) parentView:nil];
     [HttpHelper sendGetRequest:urlApi parameters:parameters success:^(id response) {
         success(response);
-        [LoadingView stopAnimating:parentView];
+        [LoadingView stopAnimating:nil];
     } fail:^(id response) {
-        [LoadingView stopAnimating:parentView];
+        [LoadingView stopAnimating:nil];
     }];
 }
 @end

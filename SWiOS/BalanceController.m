@@ -305,8 +305,7 @@ static NSString *orderListCell = @"orderListCell";
         [UIAlertView showMessage:@"快递公司是必须填写的哦！"];
     }else{
         [LoadingView initWithFrame:CGRectMake(0, 0, 100, 80) parentView:self.view];
-        OrderRequest *or=[[OrderRequest alloc] init];
-        [or orderCheck:^(){
+        [OrderRequest orderCheck:^(){
             [LoadingView stopAnimating:self.view];
             OrderViewController *vc =[[OrderViewController alloc]init];
             vc.addressModel=_addressModel;

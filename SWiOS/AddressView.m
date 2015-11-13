@@ -8,12 +8,14 @@
 
 #import "AddressView.h"
 #import "UILabel+Extension.h"
+#import "ShoppingCartModel.h"
 @implementation AddressView
 
 
 -(instancetype)initWithFrame:(CGRect)frame data:(AddressModel*)data{
     self=[super initWithFrame:frame];
-    _dateObject=data;
+    ShoppingCartModel *cart=[ShoppingCartModel sharedInstance];
+    _dateObject=cart.addressModel;
     if(self){
         UILabel *nameLabel;
         UILabel *phoneLabel;

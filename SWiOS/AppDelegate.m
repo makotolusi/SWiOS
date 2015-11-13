@@ -17,6 +17,7 @@
 #import "HttpHelper.h"
 #import "NSString+Extension.h"
 #import "ShoppingCartModel.h"
+#import "RegisterViewController.h"
 #define LAST_RUN_VERSION_KEY        @"last_run_version_of_application"
 
 @interface AppDelegate ()
@@ -44,18 +45,24 @@
                             success:^(id response) {
                                 NSDictionary* result=[response jsonString2Dictionary];
                                 BOOL success=[result valueForKey:@"success"];
+                                NSDictionary* attr=[result valueForKey:@"attr"];
                                 if(success){
-                                    RegisterModel  *userinfo1 = [[RegisterModel alloc] initWithString:result[@"data"] error:nil];
-                                    cart.registerModel=userinfo1;
-                                    //                                [userinfo setValue:userinfo1.username forKey:@"username"];
-                                    //                                [userinfo setValue:userinfo1.phoneNum forKey:@"phoneNum"];
-                                    NSLog(@"获取到的数据为dict：%@", userinfo1);
-                                    
-                                    
-                                    [NSThread sleepForTimeInterval:3.0];
-                                    
-                                    SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
-                                    self.window.rootViewController = mainContorll;
+                                    if ([attr[@"code"] isEqualToString:@"001"]) {// login
+                                        RegisterViewController * mvc = [[RegisterViewController alloc]init];
+                                         self.window.rootViewController = mvc;
+                                    } else{ //entrance
+                                        RegisterModel  *userinfo1 = [[RegisterModel alloc] initWithString:result[@"data"] error:nil];
+                                        cart.registerModel=userinfo1;
+                                        //                                [userinfo setValue:userinfo1.username forKey:@"username"];
+                                        //                                [userinfo setValue:userinfo1.phoneNum forKey:@"phoneNum"];
+                                        NSLog(@"获取到的数据为dict：%@", userinfo1);
+                                        
+                                        
+                                        [NSThread sleepForTimeInterval:3.0];
+                                        
+                                        SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
+                                        self.window.rootViewController = mainContorll;
+                                    }
                                 }
                             } fail:^{
                                 //                            [UIAlertView showMessage:@"取得用户注册信息失败"];

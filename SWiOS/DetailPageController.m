@@ -34,7 +34,38 @@
 }
 
 -(void)shoppingCart:(id)sender{
-
+    
+    UIView* infoView=[[UIView alloc]init];
+//    infoView.backgroundColor=[UIColor redColor];
+    infoView.layer.borderWidth=1;
+    infoView.layer.borderColor=[UIColorFromRGB(0x1abc9c)CGColor];
+    [UIView animateWithDuration:0.0
+                          delay:0.0
+                        options:0
+                     animations:^{
+                         [infoView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+                         [self.view addSubview:infoView];
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.7
+                                               delay:0.0
+                                             options:UIViewAnimationOptionShowHideTransitionViews
+                                          animations:^{
+                                              [infoView setFrame:CGRectMake(100, 100 ,SCREEN_WIDTH-100, 200)];
+                                          }
+                                          completion:^(BOOL finished) {
+                                          }];
+                     }];
+    
+//    UIViewController *c=[[UIViewController alloc] init];
+//    c.contentSizeForViewInPopover = CGSizeMake(200, 200);
+//    UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+//    
+//    view.backgroundColor=[UIColor redColor];
+//    [c.view addSubview:view];
+//    self.modalPresentationStyle=UIModalPresentationFormSheet;
+//    self.modalTransitionStyle=UIModalTransitionStylePartialCurl;
+//    [self presentViewController:c animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,10 +74,10 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView{
-    [LoadingView initWithFrame:CGRectMake(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 , 50, 50) parentView:self.view];
+//    [LoadingView initWithFrame:CGRectMake(0,SCREEN_HEIGHT/2 , 50, 50) parentView:nil];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
-    [LoadingView stopAnimating:self.view];
+//    [LoadingView stopAnimating:nil];
 }
 /*
 #pragma mark - Navigation

@@ -17,13 +17,18 @@
 #import "UILabel+Extension.h"
 #import "GenderViewController.h"
 #import "YCAsyncImageView.h"
+#import "UIAlertView+Extension.h"
+#import "RegisterViewController.h"
+#import "LoadingView.h"
 NSString * const killShark = @"柠檬鲨别捣乱";
 NSString * const kME = @"头像";
 NSString * const kMoney = @"钱包";
 NSString * const kName=@"名字";
 NSString * const kGender=@"性别";
 NSString * const kAddress=@"我的地址";
+NSString * const kLogOut=@"退出";
 NSString * const kOrder = @"我的订单";
+NSString * const clearCache=@"清除缓存";
 NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
 #define HEAD_RES_BIG 500
@@ -138,18 +143,21 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
        SWMe* s15 = [[SWMe alloc] initWithDescribe:@"我的订单" andImgUrl:@""];
     NSArray* array = [NSArray arrayWithObjects:s1,s12,s13,s14,s15, nil];
 
-    SWMe* s21 = [[SWMe alloc] initWithDescribe:kMoney andImgUrl:@"money.png"];
+    SWMe* s21 = [[SWMe alloc] initWithDescribe:kMoney andImgUrl:@"qianbao"];
 
     NSArray* array2 = [NSArray arrayWithObjects:s21, nil];
 
-    SWMe* s31 = [[SWMe alloc] initWithDescribe:@"设定" andImgUrl:@"setting.png"];
+    SWMe* s31 = [[SWMe alloc] initWithDescribe:clearCache andImgUrl:@"qingchuhuancun"];
     SWMe* s32 = [[SWMe alloc] initWithDescribe:killShark andImgUrl:@"shark.png"];
-    NSArray* array3 = [NSArray arrayWithObjects:s31, s32, nil];
+    NSArray* array3 = [NSArray arrayWithObjects:s31, nil];
     
+    SWMe* s41 = [[SWMe alloc] initWithDescribe:kLogOut andImgUrl:@""];
+     NSArray* array4 = [NSArray arrayWithObjects:s41, s32,nil];
     groups = [[NSMutableArray alloc] init];
     [groups addObject:array];
     [groups addObject:array2];
     [groups addObject:array3];
+    [groups addObject:array4];
 //    _rootController = [[UINavigationController alloc]init];
 //    [self.view.window addSubview:_rootController.view];
 //    navController = [[UINavigationController alloc]initWithRootViewController:self];
@@ -191,7 +199,8 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
     //    cell.detailTextLabel.text = @"detail";
     cell.textLabel.text = s.describe;
-    if (![s.describe isEqual:killShark]) {
+    cell.imageView.image=[UIImage imageNamed:s.imgUrl];
+    if (![s.describe isEqual:killShark]&&![s.describe isEqual:kLogOut]) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
@@ -221,7 +230,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     }
     
     if ([s.describe isEqual:kName]) {
-        meTextLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, cell.frame.origin.y+5, 60, 20)];
+        meTextLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-110, cell.frame.origin.y+5, 100, 20)];
         [meTextLabel midLabel];
         [meTextLabel setUserInteractionEnabled:YES];
         meTextLabel.text=_username==nil?@"柠檬鲨":_username;
@@ -233,7 +242,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         meGenderLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, cell.frame.origin.y+5, 60, 20)];
         [meGenderLabel midLabel];
         [meGenderLabel setUserInteractionEnabled:YES];
-        meGenderLabel.text=_gender==1?@"男":@"女";
+        meGenderLabel.text=_gender==0?@"男":@"女";
         [cell addSubview:meGenderLabel];
     }
 
@@ -243,7 +252,15 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
             hiddenCell = cell;
         }
     }
-
+     if ([s.describe isEqual:kLogOut]) {
+         UILabel *logoutLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, cell.frame.size.height/2-10, 200, 20)];
+         logoutLabel.textAlignment=NSTextAlignmentCenter;
+//         [logoutLabel midLabel];
+//         logoutLabel.textColor=[UIColor blackColor];
+         logoutLabel.text=cell.textLabel.text;
+         cell.textLabel.text=@"";
+         [cell addSubview:logoutLabel];
+     }
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -340,7 +357,70 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         av.delegate=self;
         [self.navigationController pushViewController:av animated:YES];
     }
+    if ([s.describe isEqual:clearCache]) {
+        [LoadingView initWithFrame:CGRectMake(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 , 50, 50) parentView:self.view];
+        [YCAsyncImageView removeCache];
+        //彻底清除缓存第一种方法
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+        NSString *path = [paths lastObject];
+        
+        NSString *str = [NSString stringWithFormat:@"缓存已清除%.1fM", [self folderSizeAtPath:path]];
+        NSLog(@"%@",str);
+        NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:path];
+        for (NSString *p in files) {
+            NSError *error;
+//            NSLog(@"%@",p);
+            NSString *Path = [path stringByAppendingPathComponent:p];
+            NSRange queMarkIdx = [p rangeOfString:@"Preferences"];
+            if (queMarkIdx.location != NSNotFound) {
+                continue;
+            }
+            
+                if ([[NSFileManager defaultManager] fileExistsAtPath:Path]) {
+                    [[NSFileManager defaultManager] removeItemAtPath:Path error:&error];
+                }
+        }
+        [LoadingView stopAnimating:self.view];
+        [UIAlertView showMessage:str];
+    }
+    
+    if ([s.describe isEqual:kLogOut]) {
+    UIAlertView *button=[[UIAlertView alloc] initWithTitle:@"您确认要退出登录？" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
+    [button show];
+    }
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+
+        RegisterViewController * mvc = [[RegisterViewController alloc]init];
+        
+        [self presentViewController:mvc animated:YES completion:nil];
+    }
+}
+
+- (long long) fileSizeAtPath:(NSString*) filePath{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:filePath]){
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+    }
+    return 0;
+}
+    
+    //遍历文件夹获得文件夹大小，返回多少M
+    - (float )folderSizeAtPath:(NSString*)folderPath{
+        NSFileManager* manager = [NSFileManager defaultManager];
+        if (![manager fileExistsAtPath:folderPath]) return 0;
+        NSEnumerator *childFilesEnumerator = [[manager subpathsAtPath:folderPath] objectEnumerator];
+        NSString* fileName;
+        long long folderSize = 0;
+        while ((fileName = [childFilesEnumerator nextObject]) != nil){
+            NSString* fileAbsolutePath = [folderPath stringByAppendingPathComponent:fileName];
+            folderSize += [self fileSizeAtPath:fileAbsolutePath];
+        }
+        return folderSize/(1024.0*1024.0);
+    }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
@@ -383,7 +463,6 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     
     [alertController addAction:({
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            NSLog(@"确定");
             
             // 用户名
             NSString *userNameStr = [alertController.textFields[0] text];
@@ -433,8 +512,10 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
 -(void) imgReloadAfterUpload:(NSString*)bigImg smallImg:(NSString*)smallImg{
     self.smallHeadUrl=smallImg;
+    [meUIImageView setUrl:smallImg];
     self.headUrl=bigImg;
-    [self.tableView reloadData];
+    [bigImageView setUrl:bigImg];
+//    [self.tableView reloadData];
 }
 
 #pragma mark -

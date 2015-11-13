@@ -12,7 +12,13 @@
 
 + (UIActivityIndicatorView*)initWithFrame:(CGRect)frame parentView:(UIView*)parentView
 {
-    UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithFrame:frame];
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    if (parentView==nil) {
+         parentView=window;
+    }
+   
+    
+    UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0,0 , SCREEN_WIDTH, SCREEN_HEIGHT)];
     if (self) {
             
             view.tag = LoadingViewTag;
@@ -44,6 +50,11 @@
 }
 
 +(void)stopAnimating:(UIView*)parentView{
+    
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    if (parentView==nil) {
+        parentView=window;
+    }
     UIActivityIndicatorView* ind= (UIActivityIndicatorView *)[parentView viewWithTag:LoadingViewTag];
    [ind stopAnimating];
     [ind removeFromSuperview];

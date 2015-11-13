@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"结束购买" style:UIBarButtonItemStyleDone target:self action:@selector(backRoot:)]];
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"结束" style:UIBarButtonItemStyleDone target:self action:@selector(backRoot:)]];
     [HttpHelper sendGetRequest:@"OrderServices/getUserOrderByToken"
                     parameters: @{}
                        success:^(id response) {

@@ -15,12 +15,12 @@
 #import "ImageHelper.h"
 #import "SWMoneyNavigationController.h"
 
-@interface SWMeTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,FileUploadHelperDelegate>
+@interface SWMeTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,FileUploadHelperDelegate,UIAlertViewDelegate>
 
 @property (strong,nonatomic) UITableViewCell * tableViewCell;
 
 
 @property (copy,nonatomic) NSString* username;
-
+- (float )folderSizeAtPath:(NSString*)folderPath;
 
 @end

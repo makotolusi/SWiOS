@@ -10,4 +10,7 @@
 #define SWiOS_ui_define_h
 
 #define DEFAULT_BG_COLOR (UIColorFromRGB(0x324234))
+
+#define USER_LOGIN_PHONE_NUM        @"user_login_phone_num"
+
 #endif
