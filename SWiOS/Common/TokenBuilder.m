@@ -10,15 +10,19 @@
 
 #import "TokenBuilder.h"
 #import "KeychainHelper.h"
+#import "SSKeychain.h"
 @implementation TokenBuilder
 
 +(NSString*)generateUUID
 {
-    NSString *uuid = [[KeychainHelper shareKeychainHelper] objectForKey:[KeychainHelper secAttrForType:kSecTypeUUid]];
+//    NSString *uuid = [[[KeychainHelper shareKeychainHelper] objectForKey:[KeychainHelper secAttrForType:kSecTypeUUid]];
+    NSString *uuid =[SSKeychain passwordForService:kSSKeychainWhereKey account:kSSKeychainAccountKey];
+  
     if (StringIsNullOrEmpty(uuid)) {
         // 修改获取设备唯一标示方法，采取与BI数据统计相同的设备唯一标示
         uuid = [TokenBuilder getUUID];
-        [[KeychainHelper shareKeychainHelper] setObject:uuid forKey:[KeychainHelper secAttrForType:kSecTypeUUid]];
+//        [[KeychainHelper shareKeychainHelper] setObject:uuid forKey:[KeychainHelper secAttrForType:kSecTypeUUid]];
+        [SSKeychain setPassword:uuid forService:kSSKeychainWhereKey account:kSSKeychainAccountKey];
     }
     return uuid;
 }
@@ -36,6 +40,7 @@
 
 +(NSString*)currentUid
 {
-    return [[KeychainHelper shareKeychainHelper] objectForKey:[KeychainHelper secAttrForType:kSecTypeUUid]];
+//    return [[KeychainHelper shareKeychainHelper] objectForKey:[KeychainHelper secAttrForType:kSecTypeUUid]];
+    return [SSKeychain passwordForService:kSSKeychainWhereKey account:kSSKeychainAccountKey];
 }
 @end
