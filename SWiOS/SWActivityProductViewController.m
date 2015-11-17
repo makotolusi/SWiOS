@@ -16,6 +16,7 @@
 #import "ShoppingCartModel.h"
 #import "UILabel+Extension.h"
 #import "DetailPageController.h"
+#import "UIAlertView+Extension.h"
 #define kCCell_Img			1
 #define kCCell_Button		4
 static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier";
@@ -184,6 +185,10 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
         [self reloadBadgeNumber];
     } else {
         // add into selected array
+        if(model.rushQuantity==0){
+            [UIAlertView showMessage:@"库存不足"];
+            return;
+        }
         [_cartModel.arOfWatchesOfCart addObject:model];
        _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: t2 withBehavior:round];
           model.buyCount=model.buyCount+1;

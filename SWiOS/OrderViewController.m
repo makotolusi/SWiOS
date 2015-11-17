@@ -87,15 +87,17 @@
     view.alpha=0.7f;
     [_tableView addSubview:view];
     //bottom view
-    UIImageView *imgView=[[UIImageView alloc] initWithFrame:CGRectMake(10, SCREEN_HEIGHT-250, 30, 30)];
+    UIImageView *imgView=[[UIImageView alloc] initWithFrame:CGRectMake(10, SCREEN_HEIGHT-250, 40, 30)];
     imgView.image=[UIImage imageNamed:@"order"];
-    UILabel *label1 =[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-50,  SCREEN_HEIGHT-250, 200, 20)];
+    UILabel *label1 =[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100,  SCREEN_HEIGHT-250, 200, 20)];
     [label1 smallLabel];
+    label1.textAlignment=NSTextAlignmentCenter;
     NSString *label1Str=@"请在 30 分钟内完成支付";
     label1.text=label1Str;
     label1.textColor=[UIColor lightGrayColor];
-    UILabel *label2=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-40,  SCREEN_HEIGHT-230, 150, 20)];
+    UILabel *label2=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-75,  SCREEN_HEIGHT-230, 150, 20)];
     label2.text=@"逾期订单将自动取消";
+       label2.textAlignment=NSTextAlignmentCenter;
     [label2 smallLabel];
     label2.textColor=[UIColor lightGrayColor];
     [self.view addSubview:imgView];
@@ -111,7 +113,7 @@
 
 #pragma mark - Table view data source
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 40;
+    return 30;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -119,7 +121,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
-        return 90;
+        return 80;
     }else {
         return 40.f;
     }
@@ -135,9 +137,9 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     //    UIView *view=[
     if(section==0)
-        return [[[UILabel alloc] init] tableSectionLabel:@"收货人信息" y:20];
+        return [[[UILabel alloc] init] tableSectionLabel:@"收货人信息" y:10];
     else if (section==1)
-        return [[[UILabel alloc] init] tableSectionLabel:@"确认支付方式" y:20];
+        return [[[UILabel alloc] init] tableSectionLabel:@"确认支付方式" y:10];
     else
         return nil;
 }
@@ -146,7 +148,8 @@
     UITableViewCell *cell;
     if(indexPath.section==0){
         cell =[[EmptyCell alloc] init];
-        AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(50, 0, 20, 20) data:self.addressModel];
+        ShoppingCartModel *ca=[ShoppingCartModel sharedInstance];
+        AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(50, 0, 20, 20) data:ca.addressModel];
         UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dizhi64"]];
                           img.frame=CGRectMake(10, 20, 30, 30);
         img.alpha=0.7f;
@@ -176,6 +179,9 @@
     }else
         cell=[[EmptyCell alloc] init];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (indexPath.row==0) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
     return cell;
 }
 

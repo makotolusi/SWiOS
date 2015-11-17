@@ -10,10 +10,11 @@
 #import "OrderModel.h"
 @implementation ShoppingCartModel
 
+ static ShoppingCartModel *sharedManager;
+
 +(ShoppingCartModel *)sharedInstance
 {
-    static ShoppingCartModel *sharedManager;
-    
+   
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedManager = [[ShoppingCartModel alloc] init];
@@ -30,8 +31,19 @@
         sharedManager.orderModel.reviewerName=@"lusi king";
         sharedManager.orderModel.receiverPhone=@"18210324011";
         sharedManager.orderModel.payType=@"ZHIFUBAO";
+       sharedManager.orderStatus = @{@"PAID":@"已支付",@"WAITING_PAYMENT":@"待支付",@"CANCEL":@"取消支付"};
     });
     
     return sharedManager;
+}
+
++(void)clearCart
+{
+    sharedManager.arOfWatchesOfCart = [NSMutableArray array];
+//     sharedManager.orderModel.totalPrice=[NSNumber numberWithFloat:0.00f];
+      sharedManager.orderModel=[[OrderModel alloc] init];
+    sharedManager.orderModel=[[OrderModel alloc] init];
+    sharedManager.orderModel.orderDetails = [NSMutableArray array];
+    sharedManager.orderModel.totalPrice=[NSNumber numberWithFloat:0.00f];
 }
 @end

@@ -19,6 +19,7 @@
 @property (copy, nonatomic) NSString *receiverPhone;
 @property (copy, nonatomic) NSString *payType;
 @property (copy, nonatomic) NSString *payCode;
+@property (copy, nonatomic) NSString *status;
 @property (strong, nonatomic) NSNumber *totalPrice;
 @property (assign, nonatomic) NSInteger totalCount;
 @property (strong, nonatomic) NSMutableArray *orderDetails;

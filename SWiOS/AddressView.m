@@ -15,8 +15,8 @@
 
 -(instancetype)initWithFrame:(CGRect)frame data:(AddressModel*)data{
     self=[super initWithFrame:frame];
-    ShoppingCartModel *cart=[ShoppingCartModel sharedInstance];
-    _dateObject=cart.addressModel;
+//    ShoppingCartModel *cart=[ShoppingCartModel sharedInstance];
+    _dateObject=data;
     if(self){
         UILabel *nameLabel;
         UILabel *phoneLabel;

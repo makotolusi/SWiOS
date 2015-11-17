@@ -16,7 +16,7 @@
     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:message message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
     alert.alpha=0.5;
     alert.backgroundColor=[UIColor blackColor];
-    [NSTimer scheduledTimerWithTimeInterval:2.5f target:alert selector:@selector(performDismiss:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:2.0f target:alert selector:@selector(performDismiss:) userInfo:nil repeats:NO];
     [alert show];
 }
 -(void) performDismiss:(NSTimer *)timer

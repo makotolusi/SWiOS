@@ -18,8 +18,9 @@
     if (self) {
         _imgView=[[UIImageView alloc] initWithFrame:CGRectMake(20, self.frame.size.height/2-15, 30, 30)];
         _imgView.image=[UIImage imageNamed:@"order64"];
-        _orderPriceLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, 10, 200, 20)];
+        _orderPriceLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 10, 200, 20)];
         [_orderPriceLabel midLabel];
+        _orderPriceLabel.textAlignment=NSTextAlignmentCenter;
         _orderPriceLabel.text=[NSString stringWithFormat:@"订单金额: ¥ %@",cart.orderModel.totalPrice];
         _orderPriceLabel.textColor=[UIColor whiteColor];
 //         _priceLabel=[[UILabel alloc] initWithFrame:CGRectMake(_orderPriceLabel.frame.origin.x+70, 15, 100, 20)];

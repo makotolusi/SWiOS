@@ -96,6 +96,7 @@
             [sucView addSubview:label1];
             [sucView addSubview:imgView];
             [cell addSubview:sucView];
+             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return  cell;
         }else{
             cell =[[EmptyCell alloc] init];
@@ -105,6 +106,7 @@
             img.alpha=0.7f;
             [cell addSubview:img];
             [cell addSubview:addressView];
+             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
       
@@ -116,6 +118,7 @@
         cell.isEdit=NO;
         cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row];
         cell.tableView=_tableView;
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
         cell=[[EmptyCell alloc] init];
@@ -136,6 +139,7 @@
         [cell addSubview:label2];
         [cell addSubview:price2];
         [cell addSubview:price1];
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 }

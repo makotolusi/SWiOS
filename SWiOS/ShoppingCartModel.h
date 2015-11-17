@@ -20,5 +20,7 @@
 @property (strong,nonatomic) RegisterModel *registerModel;
 @property (copy,nonatomic) NSString *route;
 @property (copy,nonatomic) NSString *orderInfoString;
+@property (strong,nonatomic) NSDictionary *orderStatus;
 +(ShoppingCartModel *)sharedInstance;
++(void)clearCart;
 @end

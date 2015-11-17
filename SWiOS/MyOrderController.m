@@ -33,6 +33,7 @@
                                for (id content in data) {
                                    OrderModel *order=[[OrderModel alloc] init];
                                    order.orderCode=content[@"orderCode"];
+                                   order.status=content[@"status"];
                                    order.orderDetails=[NSMutableArray arrayWithArray:content[@"orderDetails"]];
 //                                   NSDictionary* orderDetails=content[@"orderDetails"];
 //                                   NSDictionary* activityProductData=orderDetails[@"activityProductData"];
@@ -55,8 +56,10 @@
 
 -(void)loadTable{
     _cartModel=[ShoppingCartModel sharedInstance];
+    float x=self.view.frame.origin.y;
+    NSLog(@"x is %f",x);
     // 创建表视图
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT-110)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-60)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight = 110;
@@ -64,11 +67,8 @@
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
     [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
+    [ShoppingCartModel clearCart];
 }
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    // Return the number of rows in the section.
-//    return _cartModel.arOfWatchesOfCart.count;
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -91,14 +91,14 @@
     cell.tableView=_tableView;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
     if (indexPath.row==0) {
+        OrderModel *order=_orders[indexPath.section];
         UILabel *status=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
         [status smallLabel];
-        status.text=@"订单已取消";
+        status.text=_cartModel.orderStatus[order.status];//@"订单已取消";
         status.textColor=[UIColor lightGrayColor];
         [cell addSubview:status];
         UILabel *orderNum=[[UILabel alloc] initWithFrame:CGRectMake(110, 10, 200, 20)];
         [orderNum smallLabel];
-        OrderModel *order=_orders[indexPath.section];
         orderNum.text=_S( @"订单号:%@", order.orderCode);
 //        orderNum.textColor=[UIColor lightGrayColor];
         [cell addSubview:orderNum];
