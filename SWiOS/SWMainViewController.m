@@ -11,6 +11,11 @@
 #import "SWBuyBuyBuyViewController.h"
 #import "SWMeTableViewController.h"
 #import "ShoppingCartController.h"
+#import "Activate.h"
+#import "RegisterModel.h"
+#import "HttpHelper.h"
+#import "NSString+Extension.h"
+#import "RegisterViewController.h"
 static CGFloat kSWTabBarViewHeight = 66;
 
 static CGFloat kSWCurrentShowingViewTag = 12333;
@@ -81,8 +86,41 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //is activate
+    Activate *act= [[Activate alloc]init];
+    [act sendActiveRequest:^(){
+        //load user info
+        ShoppingCartModel *cart=[ShoppingCartModel sharedInstance];
+        [HttpHelper sendPostRequest:@"getUserByToken"
+                         parameters: [[NSDictionary alloc]init]
+                            success:^(id response) {
+                                NSDictionary* result=[response jsonString2Dictionary];
+                                BOOL success=[result valueForKey:@"success"];
+                                NSDictionary* attr=[result valueForKey:@"attr"];
+                                if(success){
+                                    if ([attr[@"code"] isEqualToString:@"001"]) {// login
+                                        RegisterViewController * mvc = [[RegisterViewController alloc]init];
+                                        UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+                                        window.rootViewController = mvc;
+                                    } else{ //entrance
+                                        RegisterModel  *userinfo1 = [[RegisterModel alloc] initWithString:result[@"data"] error:nil];
+                                        cart.registerModel=userinfo1;
+                                        //                                [userinfo setValue:userinfo1.username forKey:@"username"];
+                                        //                                [userinfo setValue:userinfo1.phoneNum forKey:@"phoneNum"];
+                                        NSLog(@"获取到的数据为dict：%@", userinfo1);
+                                        
+                                        
+//                                        [NSThread sleepForTimeInterval:3.0];
+                                          [self p_initUI];
+                                    }
+                                }
+                            } fail:^{
+                                //                            [UIAlertView showMessage:@"取得用户注册信息失败"];
+                                NSLog(@"请求失败");
+                            }];
+    }];
+  
     [self p_initUI];
-    
 }
 
 - (void)didReceiveMemoryWarning {

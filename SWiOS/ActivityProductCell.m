@@ -27,8 +27,8 @@
     [_productName midLabel];
     NSLog(@"float %@",_activityProduct.rushPrice);
     _price.text=[NSString stringWithFormat:@"￥ %@", _activityProduct.rushPrice];
-    _totalCount.text=[NSString stringWithFormat:@"剩余 %ld 件",_activityProduct.rushQuantity];
-
+    _totalCount.text=[NSString stringWithFormat:@"剩余 %d 件",_activityProduct.rushQuantity];
+    
 }
 
 

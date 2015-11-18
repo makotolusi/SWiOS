@@ -471,7 +471,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
             }
             
             NSLog(@"userName is: %@ ", userNameStr);
-            [HttpHelper sendGetRequest:[@"CommerceUserServices/" stringByAppendingString:url]
+            [HttpHelper sendPostRequest:[@"CommerceUserServices/" stringByAppendingString:url]
                             parameters: @{@"username":userNameStr}
                                success:^(id response) {
                                    NSDictionary* result=[response jsonString2Dictionary];

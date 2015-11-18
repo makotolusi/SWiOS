@@ -95,7 +95,7 @@
     NSString *label1Str=@"请在 30 分钟内完成支付";
     label1.text=label1Str;
     label1.textColor=[UIColor lightGrayColor];
-    UILabel *label2=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-75,  SCREEN_HEIGHT-230, 150, 20)];
+    UILabel *label2=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-90,  SCREEN_HEIGHT-230, 180, 20)];
     label2.text=@"逾期订单将自动取消";
        label2.textAlignment=NSTextAlignmentCenter;
     [label2 smallLabel];
@@ -170,7 +170,7 @@
         }
         UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
         img.frame=CGRectMake(10, 10, 20, 20);
-        UILabel *lab=[[UILabel alloc] initWithFrame:CGRectMake(50, 10, 100, 20)];
+        UILabel *lab=[[UILabel alloc] initWithFrame:CGRectMake(50, 10, 200, 20)];
         lab.text=labelText;
         lab.textColor=[UIColor lightGrayColor];
         [lab smallLabel];
@@ -186,11 +186,10 @@
 }
 
 -(void)alipay{
-    TradeFinishViewController *vc =[[TradeFinishViewController alloc]init];
-//    vc.addressModel=_addressModel;
 
 //
-//    [LUAliPay alipay:^(){
+    [LUAliPay alipay:^(){
+        TradeFinishViewController *vc =[[TradeFinishViewController alloc]init];
         vc.navigationItem.titleView = [UILabel navTitleLabel:@"订单详情"];
         UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                          initWithTitle:@""
@@ -199,7 +198,7 @@
                                          action:nil];
         self.navigationItem.backBarButtonItem = cancelButton;
         [self.navigationController pushViewController:vc animated:YES];
-//    }];
+    }];
 }
 
 @end

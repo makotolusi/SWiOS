@@ -150,6 +150,10 @@
 
 - (void)cartAction:(UIButton*)sender {
     _product.buyCount=_product.buyCount+_mp.count;
+    if (_product.buyCount>_product.rushQuantity) {
+        [UIAlertView showMessage:@"库存不足"];
+        return;
+    }else{
     NSDecimalNumberHandler *round = [NSDecimalNumberHandler
                                      decimalNumberHandlerWithRoundingMode:NSRoundPlain
                                      scale:2
@@ -173,10 +177,7 @@
    
     _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: oneTimePrice withBehavior:round];
 //    _product.buyCount=_product.buyCount+_mp.count;
-    if (_product.buyCount>_product.rushQuantity) {
-        [UIAlertView showMessage:@"库存不足"];
-        return;
-    }else{
+  
     [_cartModel.productCode_buyCount setObject:[NSNumber numberWithInteger:_product.buyCount] forKey:_product.productCode];
 //    NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
     

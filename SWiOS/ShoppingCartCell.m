@@ -73,7 +73,7 @@ static CGFloat kSWCellCountTag = 1;
         [self minusPlus:plus withSign:@"jiahao"];
         
         //count
-        UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(minus.frame.origin.x+(plus.frame.origin.x-minus.frame.origin.x)/2,minus.frame.origin.y, 30, 20)];
+        UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(minus.frame.origin.x+(plus.frame.origin.x-minus.frame.origin.x)/2,minus.frame.origin.y-2, 30, 20)];
         count.tag=kSWCellCountTag;
         [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
         [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];

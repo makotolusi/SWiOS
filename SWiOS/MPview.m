@@ -22,10 +22,10 @@ static CGFloat kSWCellCountTag = 1;
         _cartModel=[ShoppingCartModel sharedInstance];
         self.backgroundColor=[UIColor whiteColor];
         //-
-        UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+        UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
         [self minusPlus:minus withSign:@"jianhao"];
         //+
-        UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+gap, minus.frame.origin.y, 15, 15)];
+        UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+gap, minus.frame.origin.y, 20, 20)];
         [self minusPlus:plus withSign:@"jiahao"];
         
         //count
@@ -44,7 +44,7 @@ static CGFloat kSWCellCountTag = 1;
     [button setImage:[UIImage imageNamed:sign] forState:UIControlStateNormal];
     button.imageEdgeInsets=UIEdgeInsetsMake(3, 3, 3, 3);
     button.layer.masksToBounds=YES;
-    button.layer.cornerRadius=7.0f;
+    button.layer.cornerRadius=9.0f;
     button.alpha=0.7f;
     //    [button setTitle:sign forState:UIControlStateNormal];
     //    minus.titleLabel.font=[UIFont systemFontOfSize:15];

@@ -176,7 +176,6 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     // perform action
     if(sender.selected) {
         // remove selected array
-
         [_cartModel.arOfWatchesOfCart removeObject:model];
         _cartModel.orderModel.totalPrice=[t1 decimalNumberBySubtracting: t2 withBehavior:round];
         model.buyCount=model.buyCount-1;

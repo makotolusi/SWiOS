@@ -27,7 +27,7 @@
 ////        _priceLabel.text=[NSString stringWithFormat:@"¥ %@",cart.orderModel.totalPrice];
 //        [_priceLabel midLabel];
 //        _priceLabel.textColor=UIColorFromRGB(0x1abc9c);
-        _orderCodeLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-75, _orderPriceLabel.frame.origin.y+20, 150, 20)];
+        _orderCodeLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-120, _orderPriceLabel.frame.origin.y+20,240, 20)];
         _orderCodeLabel.textAlignment=NSTextAlignmentCenter;
         _orderCodeLabel.text=[NSString stringWithFormat:@"订单号:%@",cart.orderModel.orderCode];//@"";
         _orderCodeLabel.textColor=[UIColor lightGrayColor];

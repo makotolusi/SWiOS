@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/SWMainViewController.m"
-            timestampString = "466334468.567285"
+            timestampString = "469439827.226738"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "-tabClicked:atIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -185,29 +185,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWiOS/AppDelegate.m"
-            timestampString = "468987577.450074"
+            filePath = "SWiOS/SWRegisterView.m"
+            timestampString = "469437244.603181"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-_initialze"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWiOS/AppDelegate.m"
-            timestampString = "468987581.946542"
+            filePath = "SWiOS/OrderViewController.m"
+            timestampString = "469442037.2857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
+            landmarkName = "-alipay"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

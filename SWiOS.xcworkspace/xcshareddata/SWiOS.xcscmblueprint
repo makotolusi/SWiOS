@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "70d42497-b590-8f49-b3d1-d4197853f585++5995",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "70d42497-b590-8f49-b3d1-d4197853f585++5995" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "70d42497-b590-8f49-b3d1-d4197853f585++5995" : 0,
+    "CAE02A985FAADFC3A4EB2BC7FBC4B5DB2D0F2FE1" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A18EA643-61E8-4B42-B89B-7BA590D44022",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "70d42497-b590-8f49-b3d1-d4197853f585++5995" : "SWiOSNew",
+    "CAE02A985FAADFC3A4EB2BC7FBC4B5DB2D0F2FE1" : "SWiOS"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SWiOS",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SWiOS.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/okeasy.eicp.net:88\/svn\/forshare",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "70d42497-b590-8f49-b3d1-d4197853f585++5995"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/okeasy.eicp.net:88\/svn\/forshare",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CAE02A985FAADFC3A4EB2BC7FBC4B5DB2D0F2FE1"
+    }
+  ]
+}
