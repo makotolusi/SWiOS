@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SWBaseDataProvider.h"
 #import "SWExploreEntranceViewController.h"
-
+#import "SWExplorePieceCell.h"
 @interface SWExploreFlatCellValueObject : NSObject
 
 @property (nonatomic, strong) NSString *pieceID;
@@ -27,28 +27,18 @@
 @end
 
 
-@interface SWExploreFlatCell2ValueObject : NSObject
-
-@property (nonatomic, strong) NSString *leftUpSideContryImagURL;
-@property (nonatomic, strong) NSString *bigImageURL;
-@property (nonatomic, strong) NSString *itemName;
-@property (nonatomic, strong) NSString *desc;
-
-// this should be make a override method on a super vo class
-- (instancetype)initWithDictionary:(NSDictionary *)dic;
-
-@end
 
 @protocol SWExploreEntranceDataProviderDelegate <NSObject>
 
 - (void)itemBigImageDidClicked:(NSDictionary *)itemInfo;
-
+-(void)nextView;
 @end
 
 @interface SWExploreEntranceDataProvider : SWBaseDataProvider
 
 @property (nonatomic, weak) SWExploreEntranceViewController *vc;
 
+@property (nonatomic, weak) id<SWExploreEntranceDataProviderDelegate> delegate;
 
 - (void)reloadDataWithPieceID:(NSString *)categoryID
                 pieceImageUrl:(NSString *)pieceImageURL

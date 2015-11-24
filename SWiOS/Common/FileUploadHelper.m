@@ -9,7 +9,7 @@
 #import "FileUploadHelper.h"
 #import "AFNetworking.h"
 #import "NSString+Extension.h"
-
+#import "ShoppingCartModel.h"
 
 @implementation FileUploadHelper
 
@@ -50,6 +50,8 @@
                                           BOOL success=[result valueForKey:@"success"];
                                           if(success){
                                                NSDictionary* data=result[@"data"];
+                                              ShoppingCartModel* cart=[ShoppingCartModel sharedInstance];
+                                              cart.registerModel.originalImgUrl=data[@"originalImgUrl"];
                                               if (self.delegate != nil && [self.delegate respondsToSelector:@selector(imgReloadAfterUpload:smallImg:)]) {
                                                   [self.delegate imgReloadAfterUpload:data[@"imgUrl"] smallImg:data[@"smallImgUrl"]];
                                               }

@@ -170,12 +170,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/SWRegisterView.m"
-            timestampString = "468926657.863081"
+            timestampString = "469981088.650364"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "-nextButtonClick"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "-_initialze"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -185,14 +185,46 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWiOS/SWRegisterView.m"
-            timestampString = "469437244.603181"
+            filePath = "SWiOS/Explore/SWExploreEntranceViewController.m"
+            timestampString = "469893497.719307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "-_initialze"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
+            landmarkName = "-scrollableToolbar:didSelecedAtIndex:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SWExploreEntranceViewController drawViews]"
+                  moduleName = "SWiOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/SWExploreEntranceViewController.m"
+                  timestampString = "469616951.907878"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "1093">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__44-[SWExploreEntranceViewController drawViews]_block_invoke"
+                  moduleName = "SWiOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/SWExploreEntranceViewController.m"
+                  timestampString = "469616951.908142"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "65">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -201,13 +233,27 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWiOS/OrderViewController.m"
-            timestampString = "469442037.2857"
+            filePath = "SWiOS/Explore/LSUIScrollView.h"
+            timestampString = "469774216.063096"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "-alipay"
+            startingLineNumber = "28"
+            endingLineNumber = "28">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWiOS/Explore/SWExploreEntranceDataProvider.m"
+            timestampString = "469954919.114498"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "-reloadDataWithPieceID:pieceImageUrl:pageNum:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

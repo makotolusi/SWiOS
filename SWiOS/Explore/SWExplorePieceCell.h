@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SWExploreEntranceDataProvider.h"
 #import "YCAsyncImageView.h"
-
+#import "SWExploreFlatCell2ValueObject.h"
 extern const CGFloat kSWPieceCellHeight;
 
 @interface SWExplorePieceCell : UITableViewCell
@@ -40,6 +40,11 @@ extern const CGFloat kSWPieceCellRbHeight;
 @property (nonatomic, strong) YCAsyncImageView *bigImageView;
 @property (nonatomic, strong) UILabel *itemNameLabel;
 @property (nonatomic, strong) UILabel *descLabel;
+
+@property (nonatomic, strong) UIImageView *zan;
+
+
+@property (nonatomic, weak) SWExploreEntranceViewController *vc;
 
 @property (nonatomic, copy) ExploreCellDidClicked cellClickedBlock;
 

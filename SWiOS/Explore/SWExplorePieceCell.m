@@ -7,7 +7,8 @@
 //
 
 #import "SWExplorePieceCell.h"
-
+#import "CommentViewController.h"
+#import "UILabel+Extension.h"
 const CGFloat kSWPieceCellHeight = 120;
 
 
@@ -22,6 +23,7 @@ const CGFloat kSWPieceCellHeight = 120;
 @property (nonatomic, strong) UILabel *descLabel;
 
 @property (nonatomic, strong) UILabel *priceLabel;
+
 
 @property (nonatomic, weak) SWExploreFlatCellValueObject *refVO;
 
@@ -281,6 +283,8 @@ const CGFloat kSWPieceCellRbHeight = 559;
     [bottomView addSubview:bottomToolbarView];
     
     [self.contentView addSubview:bottomView];
+    
+    
 }
 
 - (UIView *)genBottomToolbarWithY:(CGFloat)y height:(CGFloat)height
@@ -288,7 +292,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, y, SCREEN_WIDTH, height)];
     
     NSArray *buttonTitles = @[@"评论",
-                              @"赞",
+                              @"1000次赞",
                               @"收藏"];
     
     
@@ -296,6 +300,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
     int btnWidth = SCREEN_WIDTH / btnCount;
     
     [buttonTitles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+     
         UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
         b.frame = CGRectMake(idx * btnWidth, 0, btnWidth, height);
         [b setTitle:obj forState:UIControlStateNormal];
@@ -304,6 +309,16 @@ const CGFloat kSWPieceCellRbHeight = 559;
         [b addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         b.tag = idx;
         [view addSubview:b];
+        if (idx==0) {
+            UIImageView* pinglun32=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pinglun32"]];
+            pinglun32.frame=CGRectMake(b.titleLabel.frame.origin.x-35, b.titleLabel.frame.origin.y-7,15, 15);
+            [b addSubview:pinglun32];
+        }
+        if (idx==1) {
+            UIImageView* zan16red=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"zan16red"]];
+            zan16red.frame=CGRectMake(b.titleLabel.frame.origin.x-40, b.titleLabel.frame.origin.y-5,12, 12);
+            [b addSubview:zan16red];
+        }
     }];
     
     
@@ -332,6 +347,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
         case 0:
         {
             type = kSWExploreCellClickTypeCommnet;
+          
         }
             break;
         case 1:

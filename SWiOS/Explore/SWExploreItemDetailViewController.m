@@ -34,15 +34,15 @@
     
     [item setTintColor:[UIColor redColor]];
     
-    self.title = _itemInfo.itemName;
- 
-//    self.navigationItem.leftBarButtonItem = item;
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    [self.view addSubview:_contentView];
-    
-    _bigImageView = [[YCAsyncImageView alloc] initWithFrame:_bigImageFrame];
-    _bigImageView.url = _itemInfo.bigImageURL;
-    [_contentView addSubview:_bigImageView];
+//    self.title = _itemInfo.itemName;
+// 
+////    self.navigationItem.leftBarButtonItem = item;
+//    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//    [self.view addSubview:_contentView];
+//    
+//    _bigImageView = [[YCAsyncImageView alloc] initWithFrame:_bigImageFrame];
+//    _bigImageView.url = _itemInfo.bigImageURL;
+//    [_contentView addSubview:_bigImageView];
     
     
     

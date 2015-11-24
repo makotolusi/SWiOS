@@ -13,6 +13,7 @@
 #import "HttpHelper.h"
 #import "SWMainViewController.h"
 #import "ShoppingCartModel.h"
+#import "SMMessageXSend.h"
 #define   WIN_WIDTH  [[UIScreen mainScreen] bounds].size.width
 #define   WIN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
@@ -117,6 +118,15 @@
 }
 
 -(void)registerCodeButtonClick{
+//    SMMessageXSend * submail = [[SMMessageXSend alloc] init];
+//    
+//    [submail.aryTo addObject:@"18616761881"];
+//    submail.project = @"kZ9Ky3";
+//    [submail.dictVar setValue:@"198276" forKey:@"code"];
+//    
+//    [submail xSend:^(BOOL success, id responseObject) {
+//        // your code
+//    }];
     
     timecount = 60;
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];

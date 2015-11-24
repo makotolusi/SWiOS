@@ -7,7 +7,7 @@
 //
 
 #import "YCAsyncImageView.h"
-
+#import "UIImageView+WebCache.h"
 static NSCache *kMemCache;
 
 static dispatch_queue_t kYCRemoteLoadQueue;
@@ -61,29 +61,47 @@ static inline NSString *kCacheGetKeyFromURL(NSString *url)
     
 }
 
+- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
+    // 创建一个bitmap的context
+    // 并把它设置成为当前正在使用的context
+    UIGraphicsBeginImageContext(size);
+    // 绘制改变大小的图片
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    // 从当前context中创建一个改变大小后的图片
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    // 使当前的context出堆栈
+    UIGraphicsEndImageContext();
+    // 返回新的改变大小后的图片
+    return scaledImage;
+}
+
 - (void)p_loadImage
 {
-    NSData *cachedData = [kMemCache objectForKey:kCacheGetKeyFromURL(_url)];
-    
-    UIImage *image = nil;
-    if (cachedData) {
-        NSLog(@"cache hitted");
-        image = [UIImage imageWithData:cachedData];
-        UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 0);
-        
-        [image drawInRect:self.bounds];
-        
-        UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
-        
-        UIGraphicsEndImageContext();
-        self.image = finalImage;
-        return;
-    }
-    
-    self.image = nil;
-    
-    NSLog(@"cache hit failed");
-    [self p_loadImageFromRemote];
+    UIImage* img=[UIImage imageNamed:@"imageplaceholder-120"];
+//    img=[self scaleToSize:img size:CGSizeMake(60, 60)];
+    [self sd_setImageWithURL:[NSURL URLWithString:_url]
+            placeholderImage:img];
+//    NSData *cachedData = [kMemCache objectForKey:kCacheGetKeyFromURL(_url)];
+//    
+//    UIImage *image = nil;
+//    if (cachedData) {
+//        NSLog(@"cache hitted");
+//        image = [UIImage imageWithData:cachedData];
+//        UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 0);
+//        
+//        [image drawInRect:self.bounds];
+//        
+//        UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
+//        
+//        UIGraphicsEndImageContext();
+//        self.image = finalImage;
+//        return;
+//    }
+//    
+//    self.image = nil;
+//    
+//    NSLog(@"cache hit failed");
+//    [self p_loadImageFromRemote];
 }
 
 - (void)p_loadImageFromRemote

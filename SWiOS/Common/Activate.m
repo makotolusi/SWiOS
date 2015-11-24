@@ -26,16 +26,12 @@
 
 - (void)sendActiveRequest:(void (^)())next
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSString* phone= [defaults objectForKey:USER_LOGIN_PHONE_NUM];
-    
     //设备信息
     NSString *deviceName =[UIDevice currentDevice].model;
     NSString *os =[NSString stringWithFormat:@"iOS-%@", [UIDevice currentDevice].systemVersion];
     NSString *resolution =[NSString stringWithFormat:@"%.0f*%.0f", [UIScreen mainScreen].scale*[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].scale*[UIScreen mainScreen].bounds.size.height];
     //to json string
-    NSDictionary *dic = @{@"deviceName": deviceName,@"os":os,@"resolution":resolution,@"phone":phone};
+    NSDictionary *dic = @{@"deviceName": deviceName,@"os":os,@"resolution":resolution};
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     NSLog(@"%@", jsonString);

@@ -146,11 +146,11 @@
         
         SWExploreItemDetailViewController *detailVC = (SWExploreItemDetailViewController *)toVC;
         _panGuesture.enabled = YES;
-        [toVC.view addGestureRecognizer:_panGuesture];
+//        [toVC.view addGestureRecognizer:_panGuesture];
         
-        CGRect transitionToFrame = detailVC.bigImageFrame;
+//        CGRect transitionToFrame = detailVC.bigImageFrame;
         
-        transitionToFrame.origin.y += navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
+//        transitionToFrame.origin.y += navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
         
         UIView *toolbarSnapView = [[listVC scrollableToolbar] snapshotViewAfterScreenUpdates:NO];
         
@@ -164,7 +164,7 @@
     
         _dat.appearing = YES;
         _dat.transitionFromRect = transitionFrame;
-        _dat.transitionToRect = transitionToFrame;
+//        _dat.transitionToRect = transitionToFrame;
         _dat.transitionImage = listVC.transViewImage;
         _dat.toolbarSnapView = toolbarSnapView;
         return _dat;

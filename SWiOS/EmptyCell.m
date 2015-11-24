@@ -27,6 +27,6 @@
     CGContextFillRect(context, rect);
     
     CGContextSetStrokeColorWithColor(context, [UIColor colorWithHexString:@"DEDEDE"].CGColor);
-    CGContextStrokeRect(context, CGRectMake(0, rect.size.height, rect.size.width, 0.5f));
+    CGContextStrokeRect(context, CGRectMake(40, rect.size.height, rect.size.width, 0.5f));
 }
 @end

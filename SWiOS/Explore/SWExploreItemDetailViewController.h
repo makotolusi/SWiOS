@@ -9,7 +9,7 @@
 #import "SWBaseViewController.h"
 #import "YCAsyncImageView.h"
 #import "SWExplorePieceCell.h"
-
+#import "SWExploreFlatCell2ValueObject.h"
 
 @interface SWExploreItemDetailViewController : SWBaseViewController
 

@@ -10,7 +10,10 @@
 #import "SWExplorePieceCell.h"
 #import "SWCommonAPI.h"
 #import "SWExploreItemDetailViewController.h"
-
+#import "CommentViewController.h"
+#import "UILabel+Extension.h"
+#import "SWExploreFlatCell2ValueObject.h"
+#import "UIWindow+Extension.h"
 @implementation SWExploreFlatCellValueObject
 
 
@@ -29,42 +32,6 @@
 
 @end
 
-@implementation SWExploreFlatCell2ValueObject
-
-
-//addr = "\U94f6\U5ea7";
-//currency = "\U65e5\U5143";
-//description = "\U771f\U597d ";
-//entertime = "2015-06-14 20:18:43";
-//experience = "\U723d";
-//id = 1;
-//name = "\U9762\U819c ";
-//picUrl1 = "http://cache.k.sohu.com/img8/wb/smccloud/2015/02/16/142410224028093694.JPEG";
-//picUrl2 = "http://cache.k.sohu.com/img8/wb/smccloud/2015/02/16/142410223365920642.JPEG";
-//piece = 1;
-//pieceCategory = 1;
-//price = 1;
-//productCode = M000001;
-//quantity = 0;
-//systemName = M;
-//total = 0;
-//username = li;
-- (instancetype)initWithDictionary:(NSDictionary *)dic
-{
-    self = [super init];
-    
-    if (self) {
-        if ([dic isKindOfClass:[NSDictionary class]]) {
-            self.itemName = dic[@"name"];
-            self.desc = dic[@"description"];
-            self.bigImageURL = dic[@"picUrl1"];
-        }
-    }
-    
-    return self;
-}
-
-@end
 
 @interface SWExploreEntranceDataProvider ()
 
@@ -83,6 +50,7 @@
 
 - (instancetype)init
 {
+    
     self = [super init];
     if (self) {
         _redBookStyleEnabled = YES;
@@ -96,6 +64,7 @@
 #pragma mark Data Request
 - (void)reloadDataWithPieceID:(NSString *)categoryID pieceImageUrl:(NSString *)pieceImageURL pageNum:(NSUInteger)pageNum
 {
+    
      NSString *url = [NSString stringWithFormat:@"getRescueProcut/%@/0/%d", categoryID, pageNum];
     
     _currentPieceImageURL = pieceImageURL;
@@ -171,10 +140,15 @@
     if (_redBookStyleEnabled) {
         static NSString *cellPieceIdentifer = @"cellPieceIdentifer2";
         SWExplorePieceCell2 *cell = [tableView dequeueReusableCellWithIdentifier:cellPieceIdentifer];
-        
+        cell.vc=self.vc;
         if (!cell) {
             cell = [[SWExplorePieceCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellPieceIdentifer];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            SWExploreFlatCell2ValueObject *cellVO = [self.items objectAtIndex:indexPath.row];
+            if ([cellVO isKindOfClass:[SWExploreFlatCell2ValueObject class]]) {
+                [cell updateUIWithVO:cellVO];
+            }
+            
             cell.cellClickedBlock = ^(kSWExploreCellClickType type, SWExplorePieceCell2 *cell){
                 
                 if (type == kSWExploreCellClickTypeBigImage) {
@@ -183,21 +157,33 @@
                     
                 }
                 
+                if (type == kSWExploreCellClickTypeCommnet) {
+                    CommentViewController *thumbViewController = [[CommentViewController alloc] init];
+                    thumbViewController.productCode=cellVO.productCode;
+                    //vo
+                    thumbViewController.navigationItem.titleView = [UILabel navTitleLabel:@"评论"];
+                    //back button style
+                    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                                     initWithTitle:@""
+                                                     style:UIBarButtonItemStylePlain
+                                                     target:self
+                                                     action:nil];
+                    self.vc.navigationItem.backBarButtonItem = cancelButton;
+                    [UIWindow showTabBar:NO];
+                    [self.vc.navigationController pushViewController:thumbViewController animated:YES];
+                    
+                }
+                
             };
             
         }
-        SWExploreFlatCell2ValueObject *cellVO = [self.items objectAtIndex:indexPath.row];
-        if ([cellVO isKindOfClass:[SWExploreFlatCell2ValueObject class]]) {
-            [cell updateUIWithVO:cellVO];
-        }
+      
         
         return cell;
     }
     
     static NSString *cellPieceIdentifer = @"cellPieceIdentifer";
     SWExplorePieceCell *cell = [tableView dequeueReusableCellWithIdentifier:cellPieceIdentifer];
-    
-    
     if (!cell) {
         cell = [[SWExplorePieceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellPieceIdentifer];
     
@@ -262,5 +248,7 @@
     
     
 }
+
+
 
 @end

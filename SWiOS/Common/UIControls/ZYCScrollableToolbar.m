@@ -63,28 +63,28 @@
     _titlePadding = 5;
     _titleFont = [UIFont systemFontOfSize:12.0f];
 //    
-//    __block CGFloat offsetX = 0;
-//    
-//    [_titles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(offsetX, 0, 60, self.frame.size.height)];
-//        
-//        l.textColor = _titleColor;
-//        l.text = obj;
-//        l.font = _titleFont;
-//        l.tag = ZYCTitleTagFromIdx(idx);
-//        l.userInteractionEnabled = YES;
-//        
-//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(p_titleDidTapped:)];
-//        
-//        [l addGestureRecognizer:tap];
-//        
-//        [l swFixSize];
-//        
-//        [m_scrollview addSubview:l];
-//        offsetX += l.frame.size.width + _titlePadding;
-//    }];
+    __block CGFloat offsetX = 0;
     
-//    m_scrollview.contentSize = CGSizeMake(MAX(SCREEN_WIDTH, offsetX), self.bounds.size.height);
+    [_titles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(offsetX, 0, 60, self.frame.size.height)];
+        
+        l.textColor = _titleColor;
+        l.text = obj;
+        l.font = _titleFont;
+        l.tag = ZYCTitleTagFromIdx(idx);
+        l.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(p_titleDidTapped:)];
+        
+        [l addGestureRecognizer:tap];
+        
+        [l swFixSize];
+        
+        [m_scrollview addSubview:l];
+        offsetX += l.frame.size.width + _titlePadding;
+    }];
+    
+    m_scrollview.contentSize = CGSizeMake(MAX(SCREEN_WIDTH, offsetX), self.bounds.size.height);
     
     [self updateWithTitles:_titles];
     

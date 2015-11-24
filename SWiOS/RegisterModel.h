@@ -18,6 +18,7 @@
 @property (copy, nonatomic) NSString *gender;
 @property (copy, nonatomic) NSString *imgUrl;
 @property (copy, nonatomic) NSString *smallImgUrl;
+@property (copy, nonatomic) NSString *originalImgUrl;
 //@property (copy, nonatomic) NSString *qq;
 //@property (copy, nonatomic) NSString *weixin;
 @property (copy, nonatomic) NSString *addr;

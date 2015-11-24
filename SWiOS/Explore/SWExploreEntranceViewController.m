@@ -13,11 +13,16 @@
 #import "SWCommonAPI.h"
 
 #import "SWExploreNaviDelegate.h"
-
-
+#import "UILabel+Extension.h"
+#import "SWExploreItemDetailViewController.h"
+#import "HttpHelper.h"
+#import "LSUIScrollView.h"
+#import "NSString+Extension.h"
+#import "UIWindow+Extension.h"
+#import "CommentViewController.h"
 NSInteger kWDTransitionViewTag = 33331;
 
-@interface SWExploreEntranceViewController () <ZYCScrollableToolbarDelegate>
+@interface SWExploreEntranceViewController () <LSUIScrollViewDelegate,SWExploreEntranceDataProviderDelegate>
 
 @property (nonatomic, strong) SWExploreNaviDelegate *naviDelegate;
 
@@ -29,9 +34,12 @@ NSInteger kWDTransitionViewTag = 33331;
 
 @property (nonatomic, strong) NSMutableArray *titleList;
 
+@property (nonatomic,strong) UIImageView *zan;
+
 @end
 
 @implementation SWExploreEntranceViewController
+
 
 - (void)dealloc
 {
@@ -59,7 +67,7 @@ NSInteger kWDTransitionViewTag = 33331;
     self.naviDelegate = [SWExploreNaviDelegate new];
     
     // fake some mock data
-    [self p_mockData];
+//    [self p_mockData];
     
     [self p_loadPiecesTitles];
     
@@ -69,7 +77,10 @@ NSInteger kWDTransitionViewTag = 33331;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationController.delegate = _naviDelegate;
+    
+ 
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -86,6 +97,7 @@ NSInteger kWDTransitionViewTag = 33331;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [UIWindow showTabBar:YES];
 }
 
 /*
@@ -120,6 +132,14 @@ NSInteger kWDTransitionViewTag = 33331;
             strongRefList = nil;
         });
 
+        NSDictionary *pieceInfo = [_titleList objectAtIndex:0];
+        NSString *pieceID = pieceInfo[@"id"];
+        
+        NSString *pieceImageURL = pieceInfo[@"sortUrl"];
+        
+        [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0];
+    
+        
     } failure:^(SWHttpRequestOperation *operation, NSError *error) {
         
     }];
@@ -127,24 +147,23 @@ NSInteger kWDTransitionViewTag = 33331;
 
 - (void)p_mockData
 {
-    [_titleList addObjectsFromArray:@[@"   香港",@"美国",@"韩国",@"日本",@"法国",@"台湾",@"泰国",@"新加坡",@"德国",@"登录",@"美国",@"韩国",@"日本",@"美国",@"韩国",@"日本",@"美国",@"韩国",@"日本",]];
+    [_titleList addObjectsFromArray:@[@"香港",@"美国",@"韩国",@"日本",@"法国",@"台湾",@"泰国",@"新加坡",@"德国",@"登录",@"美国",@"韩国",@"日本",@"美国",@"韩国",@"日本",@"美国",@"韩国",@"日本",]];
 }
 
 - (void)drawViews
 {
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    const CGFloat toolbarHeight = 50;
+    const CGFloat toolbarHeight = 40;
     
-    self.scrollableToolbar = [[ZYCScrollableToolbar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, toolbarHeight) titles:_titleList];
+//    self.scrollableToolbar = [[ZYCScrollableToolbar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, toolbarHeight) titles:_titleList];
+//    
     
-    _scrollableToolbar.toolbarDelegate = self;
-    _scrollableToolbar.backgroundColor = [UIColor whiteColor];
-//    _scrollableToolbar.backgroundColor = [UIColor greenColor];
+//    _scrollableToolbar.backgroundColor = [UIColor whiteColor];
 //    _scrollableToolbar.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
     
-//    [self.view addSubview:_scrollableToolbar];
-    
+    [self.view addSubview:_scrollableToolbar];
+  
     self.contentView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                      toolbarHeight,
                                                                      SCREEN_WIDTH,
@@ -155,11 +174,30 @@ NSInteger kWDTransitionViewTag = 33331;
     _contentView.delegate = [self dataProvider];
     _contentView.dataSource = _dataProvider;
     _contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _contentView.backgroundColor=[UIColor darkGrayColor];
+
     
-    [self.view addSubview:_contentView];
+    NSMutableArray* tl=[[NSMutableArray alloc] init];
+    [HttpHelper sendGetRequest:@"getPiece/1" parameters:nil success:^(id response){
+        NSArray* result=[response jsonString2Dictionary];
+        for (NSDictionary* obj in result) {
+            NSString* title=obj[@"sortTitle"];
+            [tl addObject:title];
+        }
+        
+        LSUIScrollView* toolbar=[[LSUIScrollView alloc] initWithFrame:CGRectMake(0, -5, SCREEN_WIDTH, 50) titleList:tl];
+        toolbar.toolbarDelegate = self;
+        [self.view addSubview:toolbar];
+        [self.view addSubview:_contentView];
+    } fail:^{
+        
+    }];
     
-    [self.view addSubview:_scrollableToolbar];
+
+
 }
+
+
 
 - (SWExploreEntranceDataProvider *)dataProvider
 {
@@ -167,9 +205,11 @@ NSInteger kWDTransitionViewTag = 33331;
         _dataProvider = [SWExploreEntranceDataProvider new];
         _dataProvider.targetTable = self.contentView;
         _dataProvider.vc = self;
+        _dataProvider.delegate=self;
     }
     return _dataProvider;
 }
+
 
 
 #pragma mark ZYCScrollableToolbarDelegate

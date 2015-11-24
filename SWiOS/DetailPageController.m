@@ -89,11 +89,7 @@
                           delay:0.0
                         options:0
                      animations:^{
-    
                         
-//                         [modal addSubview:_infoView];
-//                         //
-//                        
                      }
                      completion:^(BOOL finished) {
                          [UIView animateWithDuration:0.2
@@ -116,17 +112,7 @@
                                           completion:^(BOOL finished) {
                                           }];
                      }];
-    
-    
-//    UIViewController *c=[[UIViewController alloc] init];
-//    c.contentSizeForViewInPopover = CGSizeMake(200, 200);
-//    UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-//    
-//    view.backgroundColor=[UIColor redColor];
-//    [c.view addSubview:view];
-//    self.modalPresentationStyle=UIModalPresentationFormSheet;
-//    self.modalTransitionStyle=UIModalTransitionStylePartialCurl;
-//    [self presentViewController:c animated:YES completion:nil];
+
 }
 
 - (void)tapGesturedDetected:(UITapGestureRecognizer *)recognizer

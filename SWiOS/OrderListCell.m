@@ -49,6 +49,7 @@
     _imgScroll.pagingEnabled = YES;
     [self addSubview:_imgScroll];
     [ _countLabel smallLabel];
+    _countLabel.textAlignment=NSTextAlignmentCenter;
     _countLabel.text=[NSString stringWithFormat:@"共%ld件",cartModel.orderModel.totalCount];
 }
 @end
