@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSString *itemName;
 @property (nonatomic, strong) NSString *desc;
 @property (nonatomic, strong) NSString *productCode;
+@property(nonatomic,assign)int rushQuantity;
 // this should be make a override method on a super vo class
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 

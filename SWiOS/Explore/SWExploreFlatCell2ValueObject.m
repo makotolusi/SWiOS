@@ -39,6 +39,7 @@
             self.desc = dic[@"description"];
             self.bigImageURL = dic[@"picUrl1"];
             self.productCode = dic[@"productCode"];
+            self.rushQuantity=dic[@"rushQuantity"];
         }
     }
     

@@ -15,8 +15,8 @@
 #define SUBMAIL_MAIL_APPID @"your_mail_appid"
 #define SUBMAIL_MAIL_APPKEY @"your_mail_appkey"
 #define SUBMAIL_MAIL_SIGNTYPE @"normal" // optional: normal/md5/sha1
-#define SUBMAIL_MESSAGE_APPID @"your_message_appid"
-#define SUBMAIL_MESSAGE_APPKEY @"your_message_appkey"
+#define SUBMAIL_MESSAGE_APPID @"10695"
+#define SUBMAIL_MESSAGE_APPKEY @"fade38ea0fc076b16b0f6daf757922df"
 #define SUBMAIL_MESSAGE_SIGNTYPE @"normal" // optional: normal/md5/sha1
 
 #endif

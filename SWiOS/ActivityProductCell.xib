@@ -14,13 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="133.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hko-GI-V3D" customClass="YCAsyncImageView">
-                        <rect key="frame" x="8" y="6" width="120" height="120"/>
-                        <animations/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="121" id="cx4-vM-6jV"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Apple Iphone6 16GB 金..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Yr-9e-Idi">
                         <rect key="frame" x="150" y="8" width="225" height="24"/>
                         <animations/>
@@ -56,7 +49,6 @@
             <animations/>
             <connections>
                 <outlet property="cartButton" destination="hoO-l7-JnL" id="Fm5-FQ-S44"/>
-                <outlet property="imgView" destination="Hko-GI-V3D" id="9oe-86-Dfn"/>
                 <outlet property="price" destination="9Y8-co-bP1" id="jMA-Mm-NAq"/>
                 <outlet property="productName" destination="3Yr-9e-Idi" id="ihN-Av-aMW"/>
                 <outlet property="totalCount" destination="UYp-Rn-B0k" id="c87-cZ-JJ5"/>

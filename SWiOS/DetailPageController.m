@@ -13,6 +13,7 @@
 #import "YCAsyncImageView.h"
 #import "ShoppingCartController.h"
 #import "UIAlertView+Extension.h"
+#import "UIWindow+Extension.h"
 @interface DetailPageController ()<UIWebViewDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong)UIView* infoView;
@@ -24,6 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    [UIWindow showTabBar:NO];
     _cartModel=[ShoppingCartModel sharedInstance];
     _webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT-100)];
     NSString *url=[@"http://okeasy.eicp.net:9888/index.html#/Product/" stringByAppendingString:_product.productCode];

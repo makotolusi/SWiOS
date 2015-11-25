@@ -14,6 +14,8 @@
 #import "UILabel+Extension.h"
 #import "SWExploreFlatCell2ValueObject.h"
 #import "UIWindow+Extension.h"
+#import "DetailPageController.h"
+#import "ActivityProduct.h"
 @implementation SWExploreFlatCellValueObject
 
 
@@ -153,8 +155,22 @@
                 
                 if (type == kSWExploreCellClickTypeBigImage) {
                     
-                    [self showDetailVCWithCell:cell];
+//                    [self showDetailVCWithCell:cell];
+                    // 图片
+                    DetailPageController *thumbViewController = [[DetailPageController alloc] init];
                     
+                    ActivityProduct *product=[[ActivityProduct alloc] init];
+                    product.productCode=cellVO.productCode;
+                    product.picUrl1=cellVO.bigImageURL;
+                    thumbViewController.product=product;
+                    //back button style
+                    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                                     initWithTitle:@""
+                                                     style:UIBarButtonItemStylePlain
+                                                     target:self
+                                                     action:nil];
+                    self.vc.navigationItem.backBarButtonItem = cancelButton;
+                    [self.vc.navigationController pushViewController:thumbViewController animated:YES];
                 }
                 
                 if (type == kSWExploreCellClickTypeCommnet) {
