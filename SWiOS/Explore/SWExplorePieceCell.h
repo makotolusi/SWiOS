@@ -48,9 +48,10 @@ extern const CGFloat kSWPieceCellRbHeight;
 
 @property (nonatomic, copy) ExploreCellDidClicked cellClickedBlock;
 
+@property (nonatomic, strong) SWExploreFlatCell2ValueObject *cellVo;
 
 - (void)updateUIWithVO:(SWExploreFlatCell2ValueObject *)cellVO;
 
-
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier cellVO:(SWExploreFlatCell2ValueObject*) cellVO;
 
 @end

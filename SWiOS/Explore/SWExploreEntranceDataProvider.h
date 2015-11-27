@@ -20,7 +20,6 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *desc;
 @property (nonatomic, strong) NSString *pieceCategory;
-
 // this should be make a override method on a super vo class
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 

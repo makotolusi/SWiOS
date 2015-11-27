@@ -16,6 +16,8 @@
 #import "UIWindow+Extension.h"
 #import "DetailPageController.h"
 #import "ActivityProduct.h"
+#import "HttpHelper.h"
+#import "NSString+Extension.h"
 @implementation SWExploreFlatCellValueObject
 
 
@@ -67,40 +69,44 @@
 - (void)reloadDataWithPieceID:(NSString *)categoryID pieceImageUrl:(NSString *)pieceImageURL pageNum:(NSUInteger)pageNum
 {
     
-     NSString *url = [NSString stringWithFormat:@"getRescueProcut/%@/0/%d", categoryID, pageNum];
+     NSString *url = [NSString stringWithFormat:@"getRescueProcut/%@/0/%ld", categoryID, pageNum];
     
     _currentPieceImageURL = pieceImageURL;
     _currentPieceID = categoryID;
     
     
-    [[SWCommonAPI sharedInstance] post:url params:nil withSuccess:^(SWHttpRequestOperation *operation, id response) {
-        
-        
-        NSArray *res = response;
-        if (![res isKindOfClass:[NSArray class]]) {
-            return ;
-        }
-        if (pageNum == 0) {
-            [self.items removeAllObjects];
-        }
-        [res enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            SWExploreFlatCell2ValueObject *v1 = [[SWExploreFlatCell2ValueObject alloc] initWithDictionary:obj];
-            v1.leftUpSideContryImagURL = pieceImageURL;
-            [self.items addObject:v1];
-        }];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.targetTable reloadData];
-            if (pageNum == 0) {
-                self.targetTable.contentOffset = CGPointMake(0, 0);
+//    [[SWCommonAPI sharedInstance] post:url params:nil withSuccess:^(SWHttpRequestOperation *operation, id response) {
+        [HttpHelper sendPostRequest:url parameters:nil success:^(id response){
+            NSArray *res =[response jsonString2Dictionary];
+            if (![res isKindOfClass:[NSArray class]]) {
+                return ;
             }
-            self.isLoading = NO;
-        });
+            if (pageNum == 0) {
+                [self.items removeAllObjects];
+            }
+            [res enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                SWExploreFlatCell2ValueObject *v1 = [[SWExploreFlatCell2ValueObject alloc] initWithDictionary:obj];
+                v1.leftUpSideContryImagURL = pieceImageURL;
+                [self.items addObject:v1];
+            }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.targetTable reloadData];
+                if (pageNum == 0) {
+                    self.targetTable.contentOffset = CGPointMake(0, 0);
+                }
+                self.isLoading = NO;
+            });
+
+        } fail:^(){
+          self.isLoading = NO;
+        } parentView:nil];
         
+    
         
-    } failure:^(SWHttpRequestOperation *operation, NSError *error) {
-        self.isLoading = NO;
-    }];
+//    } failure:^(SWHttpRequestOperation *operation, NSError *error) {
+//        self.isLoading = NO;
+//    }];
 }
 
 - (void)loadNextPage
@@ -138,15 +144,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+     SWExploreFlatCell2ValueObject *cellVO = [self.items objectAtIndex:indexPath.row];
     if (_redBookStyleEnabled) {
         static NSString *cellPieceIdentifer = @"cellPieceIdentifer2";
         SWExplorePieceCell2 *cell = [tableView dequeueReusableCellWithIdentifier:cellPieceIdentifer];
         cell.vc=self.vc;
         if (!cell) {
-            cell = [[SWExplorePieceCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellPieceIdentifer];
+            cell = [[SWExplorePieceCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellPieceIdentifer cellVO:cellVO];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            SWExploreFlatCell2ValueObject *cellVO = [self.items objectAtIndex:indexPath.row];
             if ([cellVO isKindOfClass:[SWExploreFlatCell2ValueObject class]]) {
                 [cell updateUIWithVO:cellVO];
             }
@@ -158,7 +163,6 @@
 //                    [self showDetailVCWithCell:cell];
                     // 图片
                     DetailPageController *thumbViewController = [[DetailPageController alloc] init];
-                    
                     ActivityProduct *product=[[ActivityProduct alloc] init];
                     product.productCode=cellVO.productCode;
                     product.picUrl1=cellVO.bigImageURL;
@@ -192,6 +196,8 @@
                 
             };
             
+        }else{
+            cell.cellVo=cellVO;
         }
       
         

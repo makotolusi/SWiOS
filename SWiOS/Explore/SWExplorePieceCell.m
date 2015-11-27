@@ -9,6 +9,9 @@
 #import "SWExplorePieceCell.h"
 #import "CommentViewController.h"
 #import "UILabel+Extension.h"
+#import "ZanRequest.h"
+#import "ShoppingCartModel.h"
+#import "SWExploreFlatCell2ValueObject.h"
 const CGFloat kSWPieceCellHeight = 120;
 
 
@@ -196,11 +199,12 @@ const CGFloat kSWPieceCellRbHeight = 559;
 @implementation SWExplorePieceCell2
 
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier cellVO:(SWExploreFlatCell2ValueObject*) cellVO
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
+        self.cellVo=cellVO;
         self.frame = CGRectMake(0, 0, SCREEN_WIDTH, kSWPieceCellRbHeight);
         [self _initialize];
     }
@@ -292,7 +296,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, y, SCREEN_WIDTH, height)];
     
     NSArray *buttonTitles = @[@"评论",
-                              @"1000次赞",
+                              @"次赞",
                               @"收藏"];
     
     
@@ -311,12 +315,21 @@ const CGFloat kSWPieceCellRbHeight = 559;
         [view addSubview:b];
         if (idx==0) {
             UIImageView* pinglun32=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pinglun32"]];
-            pinglun32.frame=CGRectMake(b.titleLabel.frame.origin.x-35, b.titleLabel.frame.origin.y-7,15, 15);
+            pinglun32.frame=CGRectMake(b.titleLabel.frame.origin.x-40, b.titleLabel.frame.origin.y-10,20, 20);
             [b addSubview:pinglun32];
         }
         if (idx==1) {
-            UIImageView* zan16red=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"zan16red"]];
-            zan16red.frame=CGRectMake(b.titleLabel.frame.origin.x-40, b.titleLabel.frame.origin.y-5,12, 12);
+            NSString* imgName;
+            if (self.cellVo.isZan) {
+                imgName=@"zan64red";
+            }else
+            {
+                 imgName=@"zan-kong";
+            }
+            UIImageView* zan16red=[[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
+            zan16red.tag=1001;
+            zan16red.frame=CGRectMake(b.titleLabel.frame.origin.x-50, b.titleLabel.frame.origin.y-10,20, 20);
+            [b setTitle:[NSString stringWithFormat:@"%ld次赞", _cellVo.zans] forState:UIControlStateNormal];
             [b addSubview:zan16red];
         }
     }];
@@ -328,6 +341,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
 
 - (void)updateUIWithVO:(SWExploreFlatCell2ValueObject *)cellVO
 {
+    
     [_bigImageView setUrl:cellVO.bigImageURL];
     [_leftUpSideContryImageView setUrl:cellVO.leftUpSideContryImagURL];
     _itemNameLabel.text = cellVO.itemName;
@@ -353,6 +367,15 @@ const CGFloat kSWPieceCellRbHeight = 559;
         case 1:
         {
             type = kSWExploreCellClickTypeLike;
+            ShoppingCartModel* cart=[ShoppingCartModel sharedInstance];
+            [ZanRequest addZan:self.cellVo.productCode userId:[NSString stringWithFormat:@"%d",cart.registerModel.id] next:^(){
+                UIImageView* zan16red=[self viewWithTag:1001];
+                zan16red.image=[UIImage imageNamed:@"zan64red"];
+                UIButton *b=[self viewWithTag:btn.tag];
+                _cellVo.zans++;
+                NSString* newTitle=[NSString stringWithFormat:@"%ld次赞",_cellVo.zans] ;
+                [b setTitle:newTitle forState:UIControlStateNormal];
+            }];
         }
             break;
         case 2:

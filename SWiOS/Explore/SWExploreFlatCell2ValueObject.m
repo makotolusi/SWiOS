@@ -40,6 +40,9 @@
             self.bigImageURL = dic[@"picUrl1"];
             self.productCode = dic[@"productCode"];
             self.rushQuantity=dic[@"rushQuantity"];
+            NSNumber* number=dic[@"zanCount"];
+             self.zans=number.longValue;
+            self.isZan=dic[@"isZan"];
         }
     }
     

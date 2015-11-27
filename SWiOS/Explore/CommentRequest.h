@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "CommentModel.h"
 @interface CommentRequest : NSObject
-
-+(void)listComment:(NSString*)productCode next:(void (^)())next;
++(void)listComment:(NSString*)productCode page:(int)page next:(void (^)(NSDictionary*))next;
 +(void)addComment:(CommentModel*)comment next:(void (^)())next;
 @end

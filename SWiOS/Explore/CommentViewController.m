@@ -13,34 +13,80 @@
 #import "NSString+Extension.h"
 #import "ShoppingCartModel.h"
 #import "CommentRequest.h"
-@interface CommentViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+int kMaxCellCount=2;
+@interface CommentViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,PWLoadMoreTableFooterDelegate>
 
 @end
 static int inputViewHeight=40;
 static int sendWidth=50;
 static int gap=5;
 @implementation CommentViewController
+{
+    int cellCount;
+    int page;
+}
+-(void)viewDidAppear:(BOOL)animated{
+   
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [CommentRequest listComment:self.productCode next:^(NSMutableArray* items){
-        _data=[[NSMutableArray alloc] initWithArray:items];
+    _data=[[NSMutableArray alloc] init];
+    page=1;
+    [self getData:^(){
         [self _loadView];
     }];
+}
 
+-(void)getData:(void (^)())handle{
+    [CommentRequest listComment:self.productCode page:page next:^(NSDictionary* items){
+        
+        NSMutableArray *arr=items[@"data"];
+        NSString* totalCount=items[@"totalCount"];
+        NSString* pageCount=items[@"pageCount"];
+        kMaxCellCount=totalCount.intValue;
+        for (NSDictionary* dic in arr) {
+            CommentModel *comment=[[CommentModel alloc] init];
+            [comment initWithDictionary:dic error:nil];
+            [_data addObject:comment];
+        }
+        cellCount=cellCount+[arr count];
+        handle();
+    }];
 }
 
 -(void)_loadView{
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
     _tableView.contentInset = UIEdgeInsetsMake(64.f, 0.f, 49.f, 0.f);
+    //config the load more view
+    if (_loadMoreFooterView == nil) {
+        
+        PWLoadMoreTableFooterView *view = [[PWLoadMoreTableFooterView alloc] init];
+        view.delegate = self;
+        _loadMoreFooterView = view;
+        
+    }
+    _tableView.tableFooterView = _loadMoreFooterView;
+    
+    //*****IMPORTANT*****
+    //you need to do this when you first load your data
+    //need to check whether the data has all loaded
+    //Get the data first time
+    [self check];
+    //tell the load more view: I have load the data.
+    [self doneLoadingTableViewData];
+    //*****IMPORTANT*****
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+    
     //    _tableView.rowHeight = 100;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [_tableView registerNib:[UINib nibWithNibName:@"CommentViewCell" bundle:nil] forCellReuseIdentifier:@"commentCellIdentifier"];
+//    [_tableView registerNib:[UINib nibWithNibName:@"CommentViewCell" bundle:nil] forCellReuseIdentifier:@"commentCellIdentifier"];
     
     //text field
     
@@ -86,15 +132,21 @@ static int gap=5;
 
     [CommentRequest addComment:comment2 next:^(void){
     _textView.text=@"";
-        
-        [CommentRequest listComment:self.productCode next:^(NSMutableArray* items){
-            _data=[[NSMutableArray alloc] initWithArray:items];
+        [self refreshTable];
+        [self getData:^(){
+             [self check];
             [_tableView reloadData];
         }];
-       
     }];
 }
 
+-(void)refreshTable{
+    kMaxCellCount=0;
+    page=1;
+    cellCount=0;
+    [_data removeAllObjects];
+  
+}
 -(void)keyboardHide:(UITapGestureRecognizer*)tap{
     [_textView resignFirstResponder];
   
@@ -167,12 +219,16 @@ static int gap=5;
     
     CGSize _commentLabelSize = [str.comments boundingRectWithSize:CGSizeMake(207, 999) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
     NSLog(@"%f",_commentLabelSize.height);
-    return _commentLabelSize.height+35;
+    return _commentLabelSize.height+45;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];//以indexPath来唯一确定cell
+    CommentViewCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[CommentViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+    }
     
-    CommentViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"commentCellIdentifier" forIndexPath:indexPath ];
     cell.commentM=_data[indexPath.row];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
@@ -183,6 +239,78 @@ static int gap=5;
     
 //        cell.commentLabelSize.frame=CGRectMake(cell.comment.frame.origin.x, cell.comment.frame.origin.y, cell.commentLabelSize.width, cell.commentLabelSize.height);
 //    cell.textLabel.text= @"abc";
+}
+
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)check {
+    //data source should call this when it can load more
+    //when all items loaded, set this to YES;
+    if (cellCount >= kMaxCellCount) {               // kMaxCellCount is only demo purpose
+        _allLoaded = YES;
+    } else
+        _allLoaded = NO;
+}
+
+- (void)doneLoadingTableViewData {
+    //  model should call this when its done loading
+    [_loadMoreFooterView pwLoadMoreTableDataSourceDidFinishedLoading];
+    [_tableView reloadData];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+}
+
+- (void)demoOnly {
+    _datasourceIsLoading = NO;
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+}
+
+- (void)refresh {
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    _datasourceIsLoading = YES;
+//    cellCount = 1;
+//    [_tableView reloadData];
+    [self refreshTable];
+    [self getData:^(){
+        [self check];
+        [_tableView reloadData];
+        [self performSelector:@selector(demoOnly) withObject:nil afterDelay:0.0];
+    }];
+    [_loadMoreFooterView resetLoadMore];
+    
+//    //demo Only, fake it's still loading
+//    [self performSelector:@selector(demoOnly) withObject:nil afterDelay:5.0];
+}
+
+#pragma mark -
+#pragma mark PWLoadMoreTableFooterDelegate Methods
+
+- (void)pwLoadMore {
+    //just make sure when loading more, DO NOT try to refresh your data
+    //Especially when you do your work asynchronously
+    //Unless you are pretty sure what you are doing
+    //When you are refreshing your data, you will not be able to load more if you have pwLoadMoreTableDataSourceIsLoading and config it right
+    //disable the navigationItem is only demo purpose
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    _datasourceIsLoading = YES;
+//    ++cellCount;
+    ++page;
+    [self getData:^(){
+                [self check];
+                [_tableView reloadData];
+        _datasourceIsLoading = NO;
+        [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1.0];
+            }];
+    
+}
+
+
+- (BOOL)pwLoadMoreTableDataSourceIsLoading {
+    return _datasourceIsLoading;
+}
+- (BOOL)pwLoadMoreTableDataSourceAllLoaded {
+    return _allLoaded;
 }
 
 @end

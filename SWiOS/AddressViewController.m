@@ -39,7 +39,7 @@
     _tableView.delegate = self;
     _tableView.contentInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, 0.f);
     _tableView.separatorColor=[UIColor clearColor];
-    _tableView.rowHeight=40.f;
+    _tableView.rowHeight=60.f;
     //创建编辑按钮
     UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 55, 40)];
     editButton.backgroundColor = [UIColor clearColor];
@@ -94,7 +94,7 @@
             _areaText.placeholder=@"省，市，区";
             _areaText.tag=14;
             _areaText.text= _addressModel.city;
-            [_areaText setValue:[UIFont boldSystemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+            [_areaText setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
             [cell addSubview:_areaText];
             break;
         case 4:
@@ -113,13 +113,14 @@
     if (StringIsNullOrEmpty(text)) {
         _placeholderLabel=[[UILabel alloc] initWithFrame:CGRectMake(5, 0, 200, 20)];
         _placeholderLabel.textColor=[UIColor lightGrayColor];
-        _placeholderLabel.font=[UIFont systemFontOfSize:13];
+        _placeholderLabel.font=[UIFont systemFontOfSize:15];
         _placeholderLabel.text=@"详细地址";
         
         [textView addSubview:_placeholderLabel];
     }
     textView.tag=15;
     textView.text=text;
+    textView.font=[UIFont systemFontOfSize:15];
     textView.delegate=self;
     return textView;
 }
@@ -128,7 +129,7 @@
     input.placeholder=placeholderText;
     input.tag=tag;
     input.text=text;
-    [input setValue:[UIFont boldSystemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    [input setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     return input;
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -174,11 +175,11 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     if ([textField isEqual:self.areaText]) {
+        
+        [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
         [self cancelLocatePicker];
         self.locatePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
-        //        _locatePicker.frame=CGRectMake(0, SCREEN_HEIGHT-300, SCREEN_WIDTH, 100);
         [self.locatePicker showInView:self.view];
-        //        [self.view addSubview:_locatePicker];
     } else {
         [self cancelLocatePicker];
         self.locatePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCity delegate:self];

@@ -7,15 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PWLoadMoreTableFooterView.h"
 @interface CommentViewController : UIViewController
 
 {
+    PWLoadMoreTableFooterView *_loadMoreFooterView;
+    BOOL _datasourceIsLoading;
+    bool _allLoaded;
 @private
     UITableView    *_tableView;
+    NSDictionary* pagingData;
     NSMutableArray *_data;
+    
 }
 @property(strong,nonatomic) UITextView *textView;
 @property(strong,nonatomic) UIView* inputView;
 @property(copy,nonatomic) NSString* productCode;
+
 @end

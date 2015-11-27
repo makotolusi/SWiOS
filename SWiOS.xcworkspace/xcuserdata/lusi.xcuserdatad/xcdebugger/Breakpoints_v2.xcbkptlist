@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/Common/Network/HttpHelper.m"
-            timestampString = "469005937.748545"
+            timestampString = "470237080.423254"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "+sendGetRequest:parameters:success:fail:parentView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -182,54 +182,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SWiOS/Explore/SWExploreEntranceViewController.m"
-            timestampString = "469893497.719307"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "-scrollableToolbar:didSelecedAtIndex:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SWExploreEntranceViewController drawViews]"
-                  moduleName = "SWiOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/SWExploreEntranceViewController.m"
-                  timestampString = "469616951.907878"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164"
-                  offsetFromSymbolStart = "1093">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__44-[SWExploreEntranceViewController drawViews]_block_invoke"
-                  moduleName = "SWiOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/SWExploreEntranceViewController.m"
-                  timestampString = "469616951.908142"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164"
-                  offsetFromSymbolStart = "65">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -242,18 +194,92 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWiOS/Explore/SWExploreEntranceDataProvider.m"
-            timestampString = "470048194.27133"
+            filePath = "SWiOS/Explore/CommentViewController.m"
+            timestampString = "470240530.110117"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "-reloadDataWithPieceID:pieceImageUrl:pageNum:"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "-tableView:numberOfRowsInSection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWiOS/Explore/CommentViewController.m"
+            timestampString = "470240682.975056"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
+            landmarkName = "-pwLoadMore"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CommentViewController pwLoadMore]"
+                  moduleName = "SWiOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/CommentViewController.m"
+                  timestampString = "470226722.496227"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "281"
+                  endingLineNumber = "281"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__35-[CommentViewController pwLoadMore]_block_invoke"
+                  moduleName = "SWiOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/CommentViewController.m"
+                  timestampString = "470226722.497663"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "281"
+                  endingLineNumber = "281"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWiOS/Explore/SWExplorePieceCell.m"
+            timestampString = "470308568.645553"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "-genBottomToolbarWithY:height:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

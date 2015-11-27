@@ -12,19 +12,17 @@
 #import "NSString+Extension.h"
 @implementation CommentRequest
 
-+(void)listComment:(NSString*)productCode next:(void (^)(NSMutableArray*))next{
-    [HttpHelper sendPostRequest:[@"getComments/" stringByAppendingString:productCode]
++(void)listComment:(NSString*)productCode page:(int)page next:(void (^)(NSDictionary*))next{
+    NSString* url=[NSString stringWithFormat:@"getCommentsByPaging/%@/%d", productCode,page];
+    [HttpHelper sendPostRequest:url
                      parameters: nil
                         success:^(id response) {
-                            
-                            NSMutableArray* items=[[NSMutableArray alloc] init];
-                            NSArray* result=[response jsonString2Dictionary];
-                            for (NSDictionary* dic in result) {
-                                CommentModel *comment=[[CommentModel alloc] init];
-                                [comment initWithDictionary:dic error:nil];
-                                [items addObject:comment];
+                            NSDictionary* result=[response jsonString2Dictionary];
+                            BOOL success=[result valueForKey:@"success"];
+                            if(success){
+                                NSDictionary* data=[result valueForKey:@"data"];
+                                next(data);
                             }
-                                next(items);
                             NSLog(@"获取到的数据为dict：%@", result);
                         } fail:^{
                             NSLog(@"fail");

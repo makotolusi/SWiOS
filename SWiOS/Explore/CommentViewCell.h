@@ -13,9 +13,10 @@
 @interface CommentViewCell : EmptyCell
 
 
-@property (weak, nonatomic) IBOutlet UILabel *username;
+@property (strong, nonatomic)  UILabel *username;
+@property (strong, nonatomic)  UILabel *dateLabel;
 
-
+@property (strong, nonatomic) YCAsyncImageView* img;
 
 @property (strong, nonatomic) UILabel *commentLabel;
 @property(assign,nonatomic) CGSize commentLabelSize;

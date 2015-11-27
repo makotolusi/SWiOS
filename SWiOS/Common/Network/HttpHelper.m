@@ -16,7 +16,7 @@
 
 bool const isDev=NO;
 
-bool const isLocal=NO;
+bool const isLocal=YES;
 
 NSString * const kBaseURL = @"http://okeasy.eicp.net:9889/mgserver/ApCommonServices/";
 
@@ -98,19 +98,23 @@ NSString * const kLocalURL = @"http://10.6.110.4:8080/mgserver/ApCommonServices/
 
 + (void)sendPostRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail
 {
+    
+//    [LoadingView initWithFrame:CGRectMake(0,0 , SCREEN_WIDTH, SCREEN_HEIGHT) parentView:nil];
     AFHTTPRequestOperationManager *manager= [self init:&urlApi];
     [manager POST:urlApi parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(operation.responseString);
+//         [LoadingView stopAnimating:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          [UIAlertView showMessage:@"不能连接到服务器！"];
+//         [LoadingView stopAnimating:nil];
            NSLog(@"发生错误！%@", error);
     }];
 }
 
 + (void)sendPostRequest:(NSString *)urlApi parameters:(NSDictionary *)parameters success:(void (^)(id response))success fail:(void (^)())fail parentView:(UIView*)parentView
 {
-
-    [LoadingView initWithFrame:CGRectMake(0,0 , SCREEN_WIDTH, SCREEN_HEIGHT) parentView:nil];
+    
+    [LoadingView initWithFrame:CGRectMake(0,0 , SCREEN_WIDTH, SCREEN_HEIGHT) parentView:parentView];
     [HttpHelper sendPostRequest:urlApi parameters:parameters success:^(id response) {
         success(response);
         [LoadingView stopAnimating:nil];
