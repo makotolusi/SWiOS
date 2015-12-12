@@ -20,6 +20,7 @@
 #import "UIAlertView+Extension.h"
 #import "RegisterViewController.h"
 #import "LoadingView.h"
+#import "FavorViewController.h"
 NSString * const killShark = @"柠檬鲨别捣乱";
 NSString * const kME = @"头像";
 NSString * const kMoney = @"钱包";
@@ -28,6 +29,7 @@ NSString * const kGender=@"性别";
 NSString * const kAddress=@"我的地址";
 NSString * const kLogOut=@"退出";
 NSString * const kOrder = @"我的订单";
+NSString * const kFavor = @"我的收藏";
 NSString * const clearCache=@"清除缓存";
 NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
@@ -141,22 +143,26 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     SWMe* s13 = [[SWMe alloc] initWithDescribe:kGender andImgUrl:@""];
     SWMe* s14 = [[SWMe alloc] initWithDescribe:kAddress andImgUrl:@""];
        SWMe* s15 = [[SWMe alloc] initWithDescribe:@"我的订单" andImgUrl:@""];
-    NSArray* array = [NSArray arrayWithObjects:s1,s12,s13,s14,s15, nil];
-
+    SWMe* s16 = [[SWMe alloc] initWithDescribe:kFavor andImgUrl:@""];
+    
+    
     SWMe* s21 = [[SWMe alloc] initWithDescribe:kMoney andImgUrl:@"qianbao"];
-
-    NSArray* array2 = [NSArray arrayWithObjects:s21, nil];
 
     SWMe* s31 = [[SWMe alloc] initWithDescribe:clearCache andImgUrl:@"qingchuhuancun"];
     SWMe* s32 = [[SWMe alloc] initWithDescribe:killShark andImgUrl:@"shark.png"];
-    NSArray* array3 = [NSArray arrayWithObjects:s31, nil];
+    NSArray* array = [NSArray arrayWithObjects:s1,s12,s13,s14,s15,s16,s21,s31,s32, nil];
+
+//    NSArray* array2 = [NSArray arrayWithObjects:s21, nil];
+
+
+//    NSArray* array3 = [NSArray arrayWithObjects:s31, nil];
     
     SWMe* s41 = [[SWMe alloc] initWithDescribe:kLogOut andImgUrl:@""];
-     NSArray* array4 = [NSArray arrayWithObjects:s41, s32,nil];
+     NSArray* array4 = [NSArray arrayWithObjects:s41,nil];
     groups = [[NSMutableArray alloc] init];
     [groups addObject:array];
-    [groups addObject:array2];
-    [groups addObject:array3];
+//    [groups addObject:array2];
+//    [groups addObject:array3];
     [groups addObject:array4];
 //    _rootController = [[UINavigationController alloc]init];
 //    [self.view.window addSubview:_rootController.view];
@@ -316,10 +322,21 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         [self.navigationController pushViewController:uiNavigationController animated:YES];
     }
     
+    if ([s.describe isEqual:kFavor]) {
+        FavorViewController* uiNavigationController = [[FavorViewController alloc] init];
+        uiNavigationController.navigationItem.titleView = [UILabel navTitleLabel:kFavor];
+        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                         initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                         target:self
+                                         action:nil];
+        self.navigationItem.backBarButtonItem = cancelButton;
+        [self.navigationController pushViewController:uiNavigationController animated:YES];
+    }
     if ([s.describe isEqual:kAddress]) {
         DatabaseManager *db=[DatabaseManager sharedDatabaseManager];
         NSArray *array=db.getAllAddress;
-        if (array.count>0) {
+        if (array.count>0&&_cartModel.addressModel.name!=nil) {
             UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                              initWithTitle:@""
                                              style:UIBarButtonItemStylePlain
@@ -328,10 +345,8 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
             self.navigationItem.backBarButtonItem = cancelButton;
             AddressListViewController *av=[[AddressListViewController  alloc] init];
             int row=0;
-            if (!StringIsNullOrEmpty(_cartModel.registerModel.addr)) {
-                
-                NSArray *aTest = [_cartModel.registerModel.addr componentsSeparatedByString:@";"];
-                row=[aTest[5] intValue];
+            if (_cartModel.addressModel) {
+                row=_cartModel.addressModel.index;
             }
             NSIndexPath* index=[NSIndexPath indexPathForRow:row inSection:0];
             av.lastPath=index;
@@ -395,8 +410,10 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     if (buttonIndex==1) {
 
         RegisterViewController * mvc = [[RegisterViewController alloc]init];
-        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults removeObjectForKey:USER_LOGIN_PHONE_NUM];
         [self presentViewController:mvc animated:YES completion:nil];
+        
     }
 }
 

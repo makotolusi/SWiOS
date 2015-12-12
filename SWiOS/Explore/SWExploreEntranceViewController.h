@@ -15,13 +15,14 @@ extern NSInteger kWDTransitionViewTag;
 @interface SWExploreEntranceViewController : SWBaseViewController
 
 
-@property (nonatomic, readonly) ZYCScrollableToolbar *scrollableToolbar;
+//@property (nonatomic, readonly) ZYCScrollableToolbar *scrollableToolbar;
 
 @property (nonatomic, assign) CGPoint transViewOriCenter;
 
 @property (nonatomic, assign) CGRect transViewOriFrame;
 
 @property (nonatomic, strong) UIImage *transViewImage;
+
 
 - (void)itemBigImageDidClicked:(NSDictionary *)itemInfo;
 

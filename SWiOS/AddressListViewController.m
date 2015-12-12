@@ -16,6 +16,7 @@
 #import "AddressView.h"
 #import "HttpHelper.h"
 #import "NSString+Extension.h"
+#import "SWMeTableViewController.h"
 static NSString *cellIdentifier = @"Cell";
 
 @interface AddressListViewController ()
@@ -91,10 +92,10 @@ NSMutableArray *_testArray;
     currentCell.accessoryType = UITableViewCellAccessoryCheckmark;
     _lastPath = indexPath;
     currentCell.selectionStyle = UITableViewCellSelectionStyleNone;//cell选中的背景风格
-    
-    NSLog(@"cell selected at index path %ld", (long)indexPath.row);
+       NSLog(@"cell selected at index path %ld", (long)indexPath.row);
      AddressModel *dataObject = _testArray[indexPath.row];
-    NSString* addressInfo=[NSString stringWithFormat:@"%@;%@;%@;%@;%@;%ld",dataObject.name,dataObject.phone,dataObject.code,dataObject.city,dataObject.address,indexPath.row];
+    dataObject.index=indexPath.row;
+    NSString* addressInfo=[NSString stringWithFormat:@"%@;%@;%@;%@;%@;%ld",dataObject.name,dataObject.phone,dataObject.code,dataObject.city,dataObject.address,dataObject.index];
     
     [HttpHelper sendPostRequest:@"CommerceUserServices/updateAddress" parameters:@{@"address":addressInfo} success:^(id response) {
         NSDictionary* result=[response jsonString2Dictionary];
@@ -110,6 +111,8 @@ NSMutableArray *_testArray;
                     
                     [self.navigationController popViewControllerAnimated:YES];
                     [alv reloadTableView];
+                }else if ([view isKindOfClass:[SWMeTableViewController class]]){
+                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }
             
@@ -127,18 +130,6 @@ NSMutableArray *_testArray;
         //        NSMutableArray *leftUtilityButtons = [NSMutableArray new];
         NSMutableArray *rightUtilityButtons = [NSMutableArray new];
         
-        //        [leftUtilityButtons addUtilityButtonWithColor:
-        //         [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
-        //                                                 icon:[UIImage imageNamed:@"check.png"]];
-        //        [leftUtilityButtons addUtilityButtonWithColor:
-        //         [UIColor colorWithRed:1.0f green:1.0f blue:0.35f alpha:1.0]
-        //                                                 icon:[UIImage imageNamed:@"clock.png"]];
-        //        [leftUtilityButtons addUtilityButtonWithColor:
-        //         [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0]
-        //                                                 icon:[UIImage imageNamed:@"cross.png"]];
-        //        [leftUtilityButtons addUtilityButtonWithColor:
-        //         [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
-        //                                                 icon:[UIImage imageNamed:@"list.png"]];
         //image
         UIImage *img=[UIImage imageNamed:@"trash2"];
     

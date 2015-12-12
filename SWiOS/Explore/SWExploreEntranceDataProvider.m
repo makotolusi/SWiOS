@@ -145,16 +145,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
      SWExploreFlatCell2ValueObject *cellVO = [self.items objectAtIndex:indexPath.row];
+    NSLog(@"%@ row %ld",cellVO.productCode,indexPath.row);
     if (_redBookStyleEnabled) {
-        static NSString *cellPieceIdentifer = @"cellPieceIdentifer2";
-        SWExplorePieceCell2 *cell = [tableView dequeueReusableCellWithIdentifier:cellPieceIdentifer];
+        static NSString *CellIdentifier = @"cellPieceIdentifer2";
+//         NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];//以indexPath来唯一确定cell
+        SWExplorePieceCell2 *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         cell.vc=self.vc;
         if (!cell) {
-            cell = [[SWExplorePieceCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellPieceIdentifer cellVO:cellVO];
+            cell = [[SWExplorePieceCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier cellVO:cellVO];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if ([cellVO isKindOfClass:[SWExploreFlatCell2ValueObject class]]) {
+//            if ([cellVO isKindOfClass:[SWExploreFlatCell2ValueObject class]]) {
                 [cell updateUIWithVO:cellVO];
-            }
+//            }
             
             cell.cellClickedBlock = ^(kSWExploreCellClickType type, SWExplorePieceCell2 *cell){
                 
@@ -178,26 +180,15 @@
                 }
                 
                 if (type == kSWExploreCellClickTypeCommnet) {
-                    CommentViewController *thumbViewController = [[CommentViewController alloc] init];
-                    thumbViewController.productCode=cellVO.productCode;
-                    //vo
-                    thumbViewController.navigationItem.titleView = [UILabel navTitleLabel:@"评论"];
-                    //back button style
-                    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-                                                     initWithTitle:@""
-                                                     style:UIBarButtonItemStylePlain
-                                                     target:self
-                                                     action:nil];
-                    self.vc.navigationItem.backBarButtonItem = cancelButton;
-                    [UIWindow showTabBar:NO];
-                    [self.vc.navigationController pushViewController:thumbViewController animated:YES];
+                   
                     
                 }
                 
             };
             
         }else{
-            cell.cellVo=cellVO;
+            [cell updateUIWithVO:cellVO];
+
         }
       
         

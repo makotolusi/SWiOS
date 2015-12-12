@@ -20,7 +20,7 @@
 #import "SWMainViewController.h"
 #import "HttpHelper.h"
 #import "OrderRequest.h"
-#define kOffsetHeight 60.f
+#define kOffsetHeight (SCREEN_HEIGHT*0.1)
 @interface OrderViewController ()
 
 @end
@@ -51,7 +51,7 @@
 
 - (void)_loadTableView {
     // 创建表视图
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kSWHeadBarViewHeight) style:UITableViewStyleGrouped];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.separatorStyle=UITableViewStyleGrouped;
@@ -66,11 +66,12 @@
      UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
     bool a=mainController.tabBarView.hidden;
+
     if(a){
-        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kSWButtonWidth, SCREEN_WIDTH, kSWButtonWidth)];
     }else
     {
-        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50-66, SCREEN_WIDTH, 50)];
+        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kSWButtonWidth-kSWTabBarViewHeight, SCREEN_WIDTH, kSWButtonWidth)];
     }
     submit.backgroundColor = UIColorFromRGB(0x1abc9c);
     submit.alpha=0.7f;
@@ -87,15 +88,15 @@
     view.alpha=0.7f;
     [_tableView addSubview:view];
     //bottom view
-    UIImageView *imgView=[[UIImageView alloc] initWithFrame:CGRectMake(10, SCREEN_HEIGHT-250, 40, 30)];
+    UIImageView *imgView=[[UIImageView alloc] init];
     imgView.image=[UIImage imageNamed:@"order"];
-    UILabel *label1 =[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100,  SCREEN_HEIGHT-250, 200, 20)];
+    UILabel *label1 =[[UILabel alloc] init];
     [label1 smallLabel];
     label1.textAlignment=NSTextAlignmentCenter;
     NSString *label1Str=@"请在 30 分钟内完成支付";
     label1.text=label1Str;
     label1.textColor=[UIColor lightGrayColor];
-    UILabel *label2=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-90,  SCREEN_HEIGHT-230, 180, 20)];
+    UILabel *label2=[[UILabel alloc] init];
     label2.text=@"逾期订单将自动取消";
        label2.textAlignment=NSTextAlignmentCenter;
     [label2 smallLabel];
@@ -103,8 +104,26 @@
     [self.view addSubview:imgView];
     [self.view addSubview:label1];
     [self.view addSubview:label2];
-
+    imgView.translatesAutoresizingMaskIntoConstraints=NO;
+    label1.translatesAutoresizingMaskIntoConstraints=NO;
+    label2.translatesAutoresizingMaskIntoConstraints=NO;
+    NSDictionary *views = NSDictionaryOfVariableBindings(imgView,label1,label2);
     
+    
+    NSDictionary *metrics = @{@"imgWidth":[[NSNumber alloc] initWithFloat:SCREEN_HEIGHT*0.07].stringValue,
+                              @"imgToBottom":[[NSNumber alloc] initWithFloat:SCREEN_HEIGHT*0.25].stringValue,
+                              @"padding":[[NSNumber alloc] initWithFloat:SCREEN_WIDTH*0.05].stringValue,
+                              @"img2Label":[[NSNumber alloc] initWithFloat:SCREEN_WIDTH*0.35].stringValue,
+                               @"label2Label":[[NSNumber alloc] initWithFloat:SCREEN_WIDTH*0.05].stringValue
+                              };//设置一些常量
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[imgView(imgWidth)]" options:NSLayoutFormatAlignAllTop metrics:metrics views:views]];
+    
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[label1(>=100)]-|" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[imgView(imgWidth)]-imgToBottom-|" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label1(20)]-[label2(20)]-imgToBottom-|" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -121,9 +140,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
-        return 80;
+        return SCREEN_HEIGHT*0.15;
     }else {
-        return 40.f;
+        return SCREEN_HEIGHT*0.06;
     }
 }
 

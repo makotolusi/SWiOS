@@ -11,6 +11,7 @@
 @interface OrderModel : JSONModel
 
 //order info
+@property (assign, nonatomic) NSNumber* id;
 @property (copy, nonatomic) NSString *orderCode;
 @property (copy, nonatomic) NSNumber *submitPerson;
 @property (copy, nonatomic) NSString *reviewerName;
@@ -23,5 +24,9 @@
 @property (strong, nonatomic) NSNumber *totalPrice;
 @property (assign, nonatomic) NSInteger totalCount;
 @property (strong, nonatomic) NSMutableArray *orderDetails;
+
+-(void)subtractTotalPriceWithSingleProductPrice:(NSDecimalNumber*)productPrice;
+
+-(void)addTotalPriceWithSingleProductPrice:(NSDecimalNumber*)productPrice;
 
 @end

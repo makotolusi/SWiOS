@@ -9,12 +9,93 @@
 #import "ShoppingCartCell.h"
 #import "UIColor+Extension.h"
 #import "UIAlertView+Extension.h"
+#import "ShoppingCartLocalDataManager.h"
+#import "UILabel+Extension.h"
+#import "MPview.h"
 static CGFloat kSWCellCountTag = 1;
 @implementation ShoppingCartCell
 
 
-- (void)awakeFromNib {
-//    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        _imgView=[[YCAsyncImageView alloc] init];
+        [self addSubview:_imgView];
+        
+        _title=[[UILabel alloc] init];
+        _title.lineBreakMode =NSLineBreakByWordWrapping;
+        _title.numberOfLines = 2;
+        _title.textAlignment=NSTextAlignmentLeft;
+        [_title smallLabel];
+        [self addSubview:_title];
+        
+        _price=[[UILabel alloc] init];
+        [self labelStyle:_price text:[@"¥ " stringByAppendingFormat:@"%@",_activityProduct.rushPrice] size:13];
+        [self addSubview:_price];
+        
+    }
+    return self;
+}
+- (void)initEdite{
+     if (_isEdit) {
+    //-
+    _minus=[[UIButton alloc] init];
+    [self minusPlus:_minus withSign:@"jianhao"];
+    //+
+     _plus=[[UIButton alloc] init];
+    [self minusPlus:_plus withSign:@"jiahao"];
+    //count
+    _count=[[UILabel alloc] init];
+    _count.tag=kSWCellCountTag;
+    [_plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self addSubview:_minus];
+    [self addSubview:_count];
+    [self addSubview:_plus];
+     }
+}
+
+- (void)settingData{
+    _imgView.url=_activityProduct.picUrl1;
+    _title.text=_activityProduct.productName;
+    _price.text=_activityProduct.rushPrice.stringValue;
+    [self labelStyle:_count text:[@"X " stringByAppendingFormat:@"%d",_activityProduct.buyCount.intValue] size:12];
+}
+
+- (void)settingFrame{
+    _imgView.translatesAutoresizingMaskIntoConstraints=NO;
+    _title.translatesAutoresizingMaskIntoConstraints=NO;
+    _price.translatesAutoresizingMaskIntoConstraints=NO;
+    _minus.translatesAutoresizingMaskIntoConstraints=NO;
+    _plus.translatesAutoresizingMaskIntoConstraints=NO;
+    _count.translatesAutoresizingMaskIntoConstraints=NO;
+    float w=SCREEN_HEIGHT/7;
+  
+    
+    NSDictionary *views = NSDictionaryOfVariableBindings(_imgView,_title,_price);
+    if (_isEdit) {
+        [views setValue:_plus forKey:@"_plus"];
+        [views setValue:_minus forKey:@"_minus"];
+        [views setValue:_count forKey:@"_count"];
+    }
+    
+    NSDictionary *metrics = @{@"imageEdge":[NSString stringWithFormat:@"%f",w-10.0],@"padding":@5.0,@"toImg":@10.0,@"titleWidth":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.7],@"titleHeight":@40,@"editViewWidth":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.3]};//设置一些常量
+    //    NSLog(@"%f",size.height);
+    //设置bgView与superview左右对齐
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[_imgView(imageEdge)]-toImg-[_title(titleWidth)]" options:NSLayoutFormatAlignAllTop metrics:metrics views:views]];
+     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imgView(imageEdge)]-toImg-[_price(40)]" options:0 metrics:metrics views:views]];
+    //-padding-[_count(40)]-padding-[_plus(20)
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_imgView(imageEdge)]-toImg-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_price(20)]-toImg-|" options:0 metrics:metrics views:views]];
+    
+    if (_isEdit) {
+  
+       [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_minus(15)]-50-[_count(40)]-20-[_plus(15)]-40-|" options:0 metrics:metrics views:views]];
+     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_minus(15)]-toImg-|" options:0 metrics:metrics views:views]];
+     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_plus(==_minus)]-toImg-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_count(20)]-toImg-|" options:0 metrics:metrics views:views]];
+          }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -22,84 +103,48 @@ static CGFloat kSWCellCountTag = 1;
 
     // Configure the view for the selected state
 }
-- (void)drawRect:(CGRect)rect
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
-    CGContextFillRect(context, rect);
-    
-    CGContextSetStrokeColorWithColor(context, [UIColor colorWithHexString:@"DEDEDE"].CGColor);
-    CGContextStrokeRect(context, CGRectMake(10, rect.size.height, rect.size.width, 1));
-}
+//- (void)drawRect:(CGRect)rect
+//{
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    
+//    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+//    CGContextFillRect(context, rect);
+//    
+//    CGContextSetStrokeColorWithColor(context, [UIColor colorWithHexString:@"DEDEDE"].CGColor);
+//    CGContextStrokeRect(context, CGRectMake(10, rect.size.height, rect.size.width, 1));
+//}
 -(void)layoutSubviews{
     
     [super layoutSubviews];
-    [_infoView removeFromSuperview];
-    [editView removeFromSuperview];
-    _imgView=[[YCAsyncImageView alloc] initWithFrame:CGRectMake(10, self.frame.size.height-100, 90, 90) url:_activityProduct.picUrl1];
-//    [_imgView setUrl:_activityProduct.picUrl1];
-//    _imgView.frame=CGRectMake(10, self.frame.size.height-100, 90, 90);
-    [self addSubview:_imgView];
+//    [_infoView removeFromSuperview];
+//    [editView removeFromSuperview];
+ 
+
+   
     NSLog(@" y %f cell height %f",_imgView.frame.origin.y,self.frame.size.height);
     //info view
-    _infoView=[[UIView alloc] initWithFrame:CGRectMake(_imgView.frame.size.width+20,self.frame.size.height-95, SCREEN_WIDTH/3*2, _imgView.frame.size.height)];
-    //    _infoView.backgroundColor=[UIColor lightGrayColor];
-    UILabel *title=[[UILabel alloc] init];
-    title.lineBreakMode =NSLineBreakByWordWrapping;
-    title.numberOfLines = 2;
-    title.textAlignment=NSTextAlignmentLeft;
-    title.text=_activityProduct.productName;
-    title.font=[UIFont systemFontOfSize:13];
-    CGSize size = [title sizeThatFits:CGSizeMake(_infoView.frame.size.width, MAXFLOAT)];
-    title.frame=CGRectMake(0, 0, _infoView.frame.size.width-10, size.height);
-    //price
-    UILabel *price=[[UILabel alloc] initWithFrame:CGRectMake(0, _infoView.frame.size.height-20, 70, 15)];
-    [self labelStyle:price text:[@"¥ " stringByAppendingFormat:@"%@",_activityProduct.rushPrice] size:13];
-    //count1
-    UILabel *count1=[[UILabel alloc] initWithFrame:CGRectMake(_infoView.frame.size.width-40, _infoView.frame.size.height-15, 50, 15)];
-    [self labelStyle:count1 text:[NSString stringWithFormat:@"X%ld",_activityProduct.buyCount] size:13];
-    [_infoView addSubview:title];
-    [_infoView addSubview:price];
-    if ([self isEdit]) {
-        //edit view
-        editView=[[UIView alloc] initWithFrame:_infoView.frame];
-        editView.backgroundColor=[UIColor whiteColor];
-        //-
-        UIButton *minus=[[UIButton alloc] initWithFrame:CGRectMake(price.frame.size.width+30, price.frame.origin.y, 15, 15)];
-        [self minusPlus:minus withSign:@"jianhao"];
-        //+
-        UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+100, minus.frame.origin.y, 15, 15)];
-        [self minusPlus:plus withSign:@"jiahao"];
-        
-        //count
-        UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(minus.frame.origin.x+(plus.frame.origin.x-minus.frame.origin.x)/2,minus.frame.origin.y-2, 30, 20)];
-        count.tag=kSWCellCountTag;
-        [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
-        [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%ld",_activityProduct.buyCount] size:12];
-        [_infoView addSubview:count];
-    }
    
-    //trash image
-//    UIImageView *trash=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trash2"]];
-//    trash.frame=CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25);
-//    UIButton *trashButton = [[UIButton alloc] initWithFrame:CGRectMake(plus.frame.origin.x+50, minus.frame.origin.y-5, 25, 25)];
-//    trashButton.backgroundColor=[UIColor blackColor];
-//    [trashButton setTitle:@"xxxxx" forState:UIControlStateNormal];
-//      [trashButton addTarget:self action:@selector(removeCart:) forControlEvents:UIControlEventTouchUpInside];
-//    [editView addSubview:trashButton];
-//    [trashButton addSubview:trash];
-//    [self addSubview:editView];
-    [self addSubview:_infoView];
+
+
+  
+
+   
+   
     
-//    [self editOrComplete:self.isEdit];
+//
+////    _infoView.backgroundColor=[UIColor lightGrayColor];
+//  
+//    
+//    //count1
+//    UILabel *count1=[[UILabel alloc] initWithFrame:CGRectMake(_infoView.frame.size.width-40, _infoView.frame.size.height-15, 50, 15)];
+//    [self labelStyle:count1 text:[NSString stringWithFormat:@"X%d",_activityProduct.buyCount.intValue] size:11];
+//
+    
 }
 -(void)labelStyle:(UILabel*)label text:(NSString *)text size:(int)size{
-    label.textColor=UIColorFromRGB(0x1abc9c);
+    label.textColor=UIColorFromRGB(labelTextColor);
     label.text=text;
-    label.font=[UIFont systemFontOfSize:13];
-    label.font=[UIFont fontWithName:@"STHeitiK-Light" size:size ];
+    label.font=[UIFont fontWithName:FONT_TYPE size:size ];
 }
 -(void)minusPlus:(UIButton*)button withSign:(NSString *) sign{
     [button setImage:[UIImage imageNamed:sign] forState:UIControlStateNormal];
@@ -113,15 +158,16 @@ static CGFloat kSWCellCountTag = 1;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.layer.backgroundColor=UIColorFromRGB(0x1abc9c).CGColor;
     
-   [_infoView addSubview:button];
+   [self addSubview:button];
 }
 
 - (void)plusAction:(UIButton*)sender{
-    if (_activityProduct.buyCount<_activityProduct.rushQuantity) {
-        _activityProduct.buyCount+=1;
+    if (_activityProduct.buyCount.intValue<_activityProduct.rushQuantity) {
+        _activityProduct.buyCount=[[NSNumber alloc] initWithInt:_activityProduct.buyCount.intValue+1];
+         [ShoppingCartLocalDataManager insertShoppingCart:_activityProduct];
         [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
-        countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
+        countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount.intValue];
         if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
             [_delegate totalPrice: _activityProduct type:0]; // 通知执行协议方法
         }
@@ -131,11 +177,12 @@ static CGFloat kSWCellCountTag = 1;
     
 }
 - (void)minusAction:(UIButton*)sender{
-    if( _activityProduct.buyCount>1){
-         _activityProduct.buyCount-=1;
+    if( _activityProduct.buyCount.intValue>1){
+         _activityProduct.buyCount=[[NSNumber alloc] initWithInt:_activityProduct.buyCount.intValue-1];
+        [ShoppingCartLocalDataManager insertShoppingCart:_activityProduct];
         [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
-        countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount];
+        countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount.intValue];
         if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
             [_delegate totalPrice: _activityProduct type:1]; // 通知执行协议方法
         }
@@ -153,8 +200,10 @@ static CGFloat kSWCellCountTag = 1;
 //}
 
 - (void)removeCart:(UIButton*)sender{
+    
     [self.tableView deleteRowsAtIndexPaths:@[_indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 
 }
+
 
 @end

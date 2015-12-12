@@ -4,8 +4,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface BaseModel : NSObject
+#import "JSONModel.h"
+@interface BaseModel : JSONModel
 
 - (id)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 

@@ -22,13 +22,13 @@
         UILabel *phoneLabel;
         UILabel *cityLabel;
         if ([self viewWithTag:101]==nil) {
-            nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 200, 20)];
+            nameLabel=[[UILabel alloc] init];
             nameLabel.text=_dateObject.name;
             nameLabel.tag=101;
             //         nameLabel.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_MID_SIZE ];
             [nameLabel midLabel];
             [self addSubview:nameLabel];
-            phoneLabel=[[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x,nameLabel.frame.origin.y+30, 200, 20)];
+            phoneLabel=[[UILabel alloc] init];
             phoneLabel.text=_dateObject.phone;
             phoneLabel.tag=102;
             //        phoneLabel.textColor=UIColorFromRGB(0x1abc9c);
@@ -36,13 +36,24 @@
             [phoneLabel midLabel];
             [self addSubview:phoneLabel];
             //    cell.textLabel.text = dateObject.name;
-            cityLabel=[[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x,phoneLabel.frame.origin.y+20, 300, 20)];
+            cityLabel=[[UILabel alloc] init];
             cityLabel.text=[NSString stringWithFormat:@"%@ %@",_dateObject.city,_dateObject.address];
             cityLabel.tag=103;
             cityLabel.textColor=[UIColor lightGrayColor];
             //        cityLabel.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_SMALL_SIZE ];
             [cityLabel smallLabel];
             [self addSubview:cityLabel];
+            
+            nameLabel.translatesAutoresizingMaskIntoConstraints=NO;
+             phoneLabel.translatesAutoresizingMaskIntoConstraints=NO;
+            cityLabel.translatesAutoresizingMaskIntoConstraints=NO;
+            NSDictionary *views = NSDictionaryOfVariableBindings(nameLabel,phoneLabel,cityLabel);
+         
+            
+            NSDictionary *metrics = @{@"nameLabelWidth":@100,@"padding":@5.0};//设置一些常量
+
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[nameLabel(nameLabelWidth)]" options:0 metrics:metrics views:views]];
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[nameLabel(20)]-[phoneLabel(20)]-[cityLabel(20)]" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
         }else{
             nameLabel=[self viewWithTag:101];
             nameLabel.text=_dateObject.name;

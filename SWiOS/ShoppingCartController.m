@@ -13,19 +13,30 @@
 #import "SWMainViewController.h"
 #import "UILabel+Extension.h"
 #import "UIAlertView+Extension.h"
+#import "ShoppingCartLocalDataManager.h"
 @interface ShoppingCartController () <ShoppingCartCellDelegate>
 
 @end
 @implementation ShoppingCartController 
 
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-   
+        [super viewDidAppear:animated];
+        if (_tableView) {
+            [_tableView reloadData];
+        }
+        if (totalPrice) {
+            totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
+        }
+        UIView* view= [self.view viewWithTag:111];
+        if (view) {
+            if (_cartModel.arOfWatchesOfCart.count!=0)
+                [view removeFromSuperview];
+        }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initialize];
+
     [self _loadTableView];
 }
 
@@ -35,38 +46,53 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)initialize{
-    _cartModel=[ShoppingCartModel sharedInstance];
-}
 
 - (void)_loadTableView {
+    self.view.backgroundColor=[UIColor whiteColor];
+    _cartModel=[ShoppingCartModel sharedInstance];
+    UILabel *label1=[[UILabel alloc] init];
+    label1.text=@"购物车小计";
+    label1.font=[UIFont systemFontOfSize:13];
+    [self.view addSubview:label1];
+    UILabel *label2=[[UILabel alloc] init];
+    label2.text=@"我们将在三个工作日内为您免费送货";
+    label2.textColor=[UIColor lightGrayColor];
+    label2.font=[UIFont systemFontOfSize:10];
+    [self.view addSubview:label2];
+    //total price
+    totalPrice=[[UILabel alloc] init];
+    totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
+    [totalPrice smallLabel];
+    totalPrice.textColor=UIColorFromRGB(0x1abc9c);
+    totalPrice.tag=2;
 
-        isEdit=NO;
+    label1.translatesAutoresizingMaskIntoConstraints=NO;
+    
+    label2.translatesAutoresizingMaskIntoConstraints=NO;
+    
+    totalPrice.translatesAutoresizingMaskIntoConstraints=NO;
+    
+    [self.view addSubview:totalPrice];
+    NSDictionary *views = NSDictionaryOfVariableBindings(label1,label2,totalPrice);
+    
+    NSDictionary *metrics = @{@"top":[NSString stringWithFormat:@"%f",kSWTopViewHeight+5],@"padding":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.01]};//设置一些常量
+    //设置bgView与superview左右对齐
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[label1(>=100)]-[totalPrice(>=60)]-5-|" options:NSLayoutFormatAlignAllTop metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-top-[label1(20)]-2-[label2(20)]" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
+    
+
+        isEdit=YES;
         // 创建表视图
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kSWTopViewHeight*1.7, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
 //    _tableView.backgroundColor=[UIColor blackColor];
-        _tableView.rowHeight = 110;
-//        _tableView.contentInset = UIEdgeInsetsMake(0, 0.f, 0.f, 0.f);
+        _tableView.rowHeight = SCREEN_HEIGHT/7;
+//        _tableView.contentInset = UIEdgeInsetsMake(50, 0.f, 0.f, 0.f);
         _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
         [self.view addSubview:_tableView];
-        UILabel *label1=[[UILabel alloc] initWithFrame:CGRectMake(20, 15, 100, 20)];
-        label1.text=@"购物车小计";
-        label1.font=[UIFont systemFontOfSize:13];
-        [_tableView addSubview:label1];
-        UILabel *label2=[[UILabel alloc] initWithFrame:CGRectMake(label1.frame.origin.x, label1.frame.origin.y+20, 200, 20)];
-        label2.text=@"我们将在三个工作日内为您免费送货";
-        label2.textColor=[UIColor lightGrayColor];
-        label2.font=[UIFont systemFontOfSize:10];
-        [_tableView addSubview:label2];
-        //total price
-        totalPrice=[[UILabel alloc] initWithFrame:CGRectMake(label1.frame.origin.x+280, label1.frame.origin.y, 200, 20)];
-        totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
-        totalPrice.textColor=UIColorFromRGB(0x1abc9c);
-        totalPrice.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
-        totalPrice.tag=2;
-        [_tableView addSubview:totalPrice];
+    
+    
         //创建编辑按钮
         UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 55, 40)];
         editButton.backgroundColor = [UIColor clearColor];
@@ -80,7 +106,7 @@
 //        UIBarButtonItem *homeButtonItem = [[UIBarButtonItem alloc]initWithCustomView:editButton];
 //        self.navigationItem.rightBarButtonItem=homeButtonItem;
         // 注册单元格（nib, code）
-        [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
+//        [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
         //结算
         //    UIView  *barView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 66, SCREEN_WIDTH, 66)];
         //根据不同入口修改button坐标
@@ -88,11 +114,12 @@
         UIWindow * window = [[UIApplication sharedApplication] keyWindow];
         SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
         bool a=mainController.tabBarView.hidden;
+    float payButtonHeight=SCREEN_HEIGHT/11;
         if(a){
-            buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+            buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - payButtonHeight, SCREEN_WIDTH, payButtonHeight)];
         }else
         {
-            buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50-66, SCREEN_WIDTH, 50)];
+            buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - payButtonHeight-kSWTabBarViewHeight, SCREEN_WIDTH, payButtonHeight)];
         }
         buy.backgroundColor = UIColorFromRGB(0x1abc9c);
         buy.alpha=0.7f;
@@ -103,39 +130,44 @@
     if (_cartModel.arOfWatchesOfCart.count==0) {
         UIImageView *kongImg=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"kong"]];
         kongImg.frame=CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-100, 200, 200);
+        kongImg.tag=111;
         [self.view addSubview:kongImg];
     }
 
 }
 #pragma mark - TableView Datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_cartModel.arOfWatchesOfCart count]+1;
+    return [_cartModel.arOfWatchesOfCart count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%ld", (long)indexPath.row);
-    if(indexPath.row!=0){
-    ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shoppingCartCell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.isEdit=YES;
+     static NSString *CellIdentifier = @"shoppingCartCell1";
+    ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell=[[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row];
+         cell.isEdit=YES;
+        [cell initEdite];
+        [cell settingFrame];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.indexPath=indexPath;
         cell.delegate=self;
-     cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row-1];
         cell.tableView=_tableView;
-    // 3 将单元格添加在tableView上
+
+    }else{
+       
+    }
+
+     [cell settingData];
     return cell;
-    }else{
-        EmptyCell *em=[[EmptyCell alloc] init] ;
-        return em;
-    }
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row==0) {
-        return 60.f;
-    }else{
-        return 110.f;
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (indexPath.row==0) {
+//        return 60.f;
+//    }else{
+//        return 110.f;
+//    }
+//}
 //- (void)edit:(UIButton*)sender {
 //    if (sender.selected) {
 //        isEdit=NO;
@@ -168,6 +200,7 @@
         sum=[t1 decimalNumberBySubtracting: t2];
     }
     _cartModel.orderModel.totalPrice=sum;
+    [ShoppingCartLocalDataManager insertOrderModel:_cartModel.orderModel];
     totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@", _cartModel.orderModel.totalPrice];
 }
 
@@ -192,23 +225,25 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSIndexPath *ip=[[NSIndexPath alloc] initWithIndex:indexPath.row-1];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        ActivityProduct *product= _cartModel.arOfWatchesOfCart[indexPath.row-1];
-        NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
-        NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:product.rushPrice.stringValue];
-        NSDecimalNumber *sum=[t1 decimalNumberBySubtracting: t2];
-        _cartModel.orderModel.totalPrice=sum;
-        _cartModel.orderModel.totalCount=_cartModel.orderModel.totalCount-1;
-        [_cartModel.arOfWatchesOfCart removeObjectAtIndex:indexPath.row-1];
-        // Delete the row from the data source.
-        [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
+        ActivityProduct *product= _cartModel.arOfWatchesOfCart[indexPath.row];
+        if ( [ShoppingCartLocalDataManager deleteShoppingCartById:product.id.intValue]) {
+            NSNumber *pPrice=[product calProductTotalPriceWithAddCount:product.buyCount.intValue];
+            [_cartModel.orderModel subtractTotalPriceWithSingleProductPrice:[[NSDecimalNumber alloc] initWithDecimal:pPrice.decimalValue]];
+            _cartModel.orderModel.totalCount=_cartModel.orderModel.totalCount-1;
+            [ShoppingCartLocalDataManager insertOrderModel:_cartModel.orderModel];
+            [_cartModel.arOfWatchesOfCart removeObjectAtIndex:indexPath.row];
+            // Delete the row from the data source.
+            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
+        }
 
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
 }
+
+
 
 @end

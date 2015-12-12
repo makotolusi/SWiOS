@@ -8,6 +8,7 @@
 
 #import "ShoppingCartModel.h"
 #import "OrderModel.h"
+#import "NSString+Extension.h"
 @implementation ShoppingCartModel
 
  static ShoppingCartModel *sharedManager;
@@ -35,6 +36,21 @@
     });
     
     return sharedManager;
+}
+
++(void)loadAddressModel{
+    if (!StringIsNullOrEmpty(sharedManager.registerModel.addr)) {
+        NSArray *aTest = [sharedManager.registerModel.addr componentsSeparatedByString:@";"];
+        if (aTest.count>=6) {
+            sharedManager.addressModel.name=aTest[0];
+            sharedManager.addressModel.phone=aTest[1];
+            sharedManager.addressModel.code=aTest[2];
+            sharedManager.addressModel.city=aTest[3];
+            sharedManager.addressModel.address=aTest[4];
+            sharedManager.addressModel.index=((NSString*)aTest[5]).intValue;
+        }
+  
+    }
 }
 
 +(void)clearCart

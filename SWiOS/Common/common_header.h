@@ -21,9 +21,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 
+#define kSWButtonWidth (SCREEN_HEIGHT*0.07)
+
+#define kSWTabBarViewHeight (SCREEN_WIDTH/7)
+#define kSWTopViewHeight (SCREEN_WIDTH/5)
+#define kSWHeadBarViewHeight (SCREEN_WIDTH/10)
 #define FONT_SMALL_SIZE 12
 
 #define FONT_MID_SIZE 15
+
+#define FONT_TYPE @"Helvetica"
+
 #endif
 
 #import <Availability.h>

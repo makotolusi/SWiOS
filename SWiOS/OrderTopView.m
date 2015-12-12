@@ -30,8 +30,9 @@
         _orderCodeLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-120, _orderPriceLabel.frame.origin.y+20,240, 20)];
         _orderCodeLabel.textAlignment=NSTextAlignmentCenter;
         _orderCodeLabel.text=[NSString stringWithFormat:@"订单号:%@",cart.orderModel.orderCode];//@"";
+        [_orderCodeLabel smallLabel];
         _orderCodeLabel.textColor=[UIColor lightGrayColor];
-        _orderCodeLabel.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_SMALL_SIZE ];
+        
         [self addSubview:_orderCodeLabel];
         [self addSubview:_imgView];
         [self addSubview:_orderPriceLabel];

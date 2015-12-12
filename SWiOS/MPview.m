@@ -59,7 +59,7 @@ static CGFloat kSWCellCountTag = 1;
 //    _activityProduct.buyCount+=1;
 //    []
 //    [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
-    if (_product.buyCount<_product.rushQuantity) {
+    if (_product.buyCount.intValue<_product.rushQuantity) {
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
         countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) ++_count];
 //        _product.buyCount=_product.buyCount+1;

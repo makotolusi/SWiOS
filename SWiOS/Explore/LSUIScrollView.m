@@ -39,7 +39,7 @@
     int i=0;
     
     _toolbar=[[UIScrollView alloc] initWithFrame:frame];
-    
+
     [_toolbar setShowsHorizontalScrollIndicator:NO];
 //        _toolbar.backgroundColor=[UIColor redColor];
     for (NSString* area in _titleList) {

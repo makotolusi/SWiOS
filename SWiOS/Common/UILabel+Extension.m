@@ -12,14 +12,20 @@
 
 
 -(void)midLabel{
-    self.textColor=[UIColor darkGrayColor];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
+        self.textColor=[UIColor darkGrayColor];
+   
 //    self.textAlignment=NSTextAlignmentCenter;
-    self.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_MID_SIZE ];
+    self.font=[UIFont fontWithName:FONT_TYPE size:FONT_MID_SIZE ];
+         }
 }
 
 -(void)smallLabel{
-    self.textColor=[UIColor darkGrayColor];
-    self.font=[UIFont fontWithName:@"STHeitiK-Light" size:FONT_SMALL_SIZE ];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
+        self.textColor=[UIColor darkGrayColor];
+    
+    self.font=[UIFont fontWithName:FONT_TYPE size:FONT_SMALL_SIZE ];
+        }
 }
 
 -(UIView*)tableSectionLabel:(NSString*)text y:(NSInteger)y{
@@ -29,7 +35,7 @@
 //    label.backgroundColor=[UIColor blackColor];
     label.textColor=[UIColor darkGrayColor];
     label.text=text;
-    label.font=[UIFont fontWithName:@"STHeitiK-Light" size:13 ];
+    label.font=[UIFont fontWithName:@"Helvetica" size:13 ];
     [view addSubview:label];
     return view;
 }

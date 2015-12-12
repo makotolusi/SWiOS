@@ -24,7 +24,7 @@
         OrderDetailModel *orderDetail=[[OrderDetailModel alloc] init];
         [orderDetail setValue:ap.activityId forKey:@"activityId"];
         [orderDetail setValue:ap.productCode forKey:@"productCode"];
-        [orderDetail setValue:[NSNumber numberWithInteger:ap.buyCount] forKey:@"count"];
+        [orderDetail setValue:[NSNumber numberWithInteger:ap.buyCount.intValue] forKey:@"count"];
         [orderDetail setValue:ap.rushPrice forKey:@"price"];
         [orderDetails addObject:[orderDetail toDictionary]];
     }

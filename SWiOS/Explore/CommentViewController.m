@@ -26,18 +26,23 @@ static int gap=5;
     int page;
 }
 -(void)viewDidAppear:(BOOL)animated{
-   
+     self.view.backgroundColor=[UIColor whiteColor];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _data=[[NSMutableArray alloc] init];
+    // 创建表视图
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
+//    _tableView.backgroundColor=[UIColor blueColor];
     page=1;
     [self getData:^(){
         [self _loadView];
     }];
 }
+-(void)initView{
 
+}
 -(void)getData:(void (^)())handle{
     [CommentRequest listComment:self.productCode page:page next:^(NSDictionary* items){
         
@@ -56,8 +61,6 @@ static int gap=5;
 }
 
 -(void)_loadView{
-    // 创建表视图
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
     _tableView.contentInset = UIEdgeInsetsMake(64.f, 0.f, 49.f, 0.f);
     //config the load more view
     if (_loadMoreFooterView == nil) {
@@ -135,7 +138,16 @@ static int gap=5;
         [self refreshTable];
         [self getData:^(){
              [self check];
+            //*****IMPORTANT*****
+            //you need to do this when you first load your data
+            //need to check whether the data has all loaded
+            //Get the data first time
+            [self check];
+            //tell the load more view: I have load the data.
+            [self doneLoadingTableViewData];
+            //*****IMPORTANT*****
             [_tableView reloadData];
+           
         }];
     }];
 }
@@ -224,7 +236,7 @@ static int gap=5;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];//以indexPath来唯一确定cell
-    CommentViewCell *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    CommentViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"lusi"];
     if (cell == nil) {
         cell = [[CommentViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }

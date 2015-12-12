@@ -14,7 +14,7 @@
 #import "UIImageView+WebCache.h"
 @interface ActivityProductCell : EmptyCell
 @property (strong,nonatomic) ActivityProduct *activityProduct;
-@property (weak, nonatomic) UIImageView *imgView;
+//@property (weak, nonatomic) UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *productName;
 @property (weak, nonatomic) IBOutlet UILabel *price;
 @property (strong, nonatomic) IBOutlet UIButton *cartButton;

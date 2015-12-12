@@ -12,6 +12,7 @@
 #import "UILabel+Extension.h"
 #import "NSString+Extension.h"
 #import "UIWindow+Extension.h"
+#import "DetailPageController.h"
 @interface MyOrderController ()
 
 @end
@@ -59,55 +60,65 @@
     float x=self.view.frame.origin.y;
     NSLog(@"x is %f",x);
     // 创建表视图
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-60)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.rowHeight = 110;
-    //        _tableView.contentInset = UIEdgeInsetsMake(0, 0.f, 0.f, 0.f);
+    _tableView.rowHeight = SCREEN_HEIGHT*0.1;
+//            _tableView.contentInset = UIEdgeInsetsMake(60, 0.f, 0.f, 0.f);
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
-    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
+//    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
     [ShoppingCartModel clearCart];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];//以indexPath来唯一确定cell
-    ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]; //出列可重用的cell
-    if (cell == nil) {
-        cell = [[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-//    ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shoppingCartCell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.indexPath=indexPath;
-      OrderModel *order=_orders[indexPath.section];
+    OrderModel *order=_orders[indexPath.section];
     NSDictionary *ods=order.orderDetails[indexPath.row];
     NSDictionary *apd=ods[@"activityProductData"];
-   ActivityProduct *ap= [[ActivityProduct alloc] init];
+    ActivityProduct *ap= [[ActivityProduct alloc] init];
     ap.productName=apd[@"productName"];
     ap.picUrl1=apd[@"picUrl1"];
     ap.rushPrice=apd[@"rushPrice"];
-    cell.activityProduct=ap;
-    cell.tableView=_tableView;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
-    if (indexPath.row==0) {
-        OrderModel *order=_orders[indexPath.section];
-        UILabel *status=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
-        [status smallLabel];
-        status.text=_cartModel.orderStatus[order.status];//@"订单已取消";
-        status.textColor=[UIColor lightGrayColor];
-        [cell addSubview:status];
-        UILabel *orderNum=[[UILabel alloc] initWithFrame:CGRectMake(110, 10, 200, 20)];
-        [orderNum smallLabel];
-        orderNum.text=_S( @"订单号:%@", order.orderCode);
-//        orderNum.textColor=[UIColor lightGrayColor];
-        [cell addSubview:orderNum];
+    
+    static NSString *CellIdentifier = @"shoppingCartCell1";
+    ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell=[[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.activityProduct=ap;
+        cell.isEdit=NO;
+        [cell initEdite];
+        [cell settingFrame];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.indexPath=indexPath;
+        cell.delegate=self;
+        cell.tableView=_tableView;
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
+        if (indexPath.row==0) {
+            OrderModel *order=_orders[indexPath.section];
+            UILabel *status=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
+            [status smallLabel];
+            status.text=_cartModel.orderStatus[order.status];//@"订单已取消";
+            status.textColor=[UIColor lightGrayColor];
+            [cell addSubview:status];
+            UILabel *orderNum=[[UILabel alloc] initWithFrame:CGRectMake(110, 10, 200, 20)];
+            [orderNum smallLabel];
+            orderNum.text=_S( @"订单号:%@", order.orderCode);
+            //        orderNum.textColor=[UIColor lightGrayColor];
+            [cell addSubview:orderNum];
+        }
+    }else{
+        
     }
+    
+    [cell settingData];
+    
+  
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 10;
+    return SCREEN_HEIGHT*0.01;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -120,8 +131,31 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row==0) {
-        return _tableView.rowHeight+40;
+        return _tableView.rowHeight+SCREEN_HEIGHT*0.1;
     }
     return _tableView.rowHeight;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    // 图片
+    DetailPageController *thumbViewController = [[DetailPageController alloc] init];
+    OrderModel *order=_orders[indexPath.section];
+    NSDictionary *ods=order.orderDetails[indexPath.row];
+    NSDictionary *apd=ods[@"activityProductData"];
+    ActivityProduct *ap= [[ActivityProduct alloc] init];
+    ap.productCode=apd[@"productCode"];
+    ap.productName=apd[@"productName"];
+    ap.picUrl1=apd[@"picUrl1"];
+    ap.rushPrice=apd[@"rushPrice"];
+    thumbViewController.product=ap;
+    //back button style
+    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                     initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                     target:self
+                                     action:nil];
+    self.navigationItem.backBarButtonItem = cancelButton;
+    [self.navigationController pushViewController:thumbViewController animated:YES];
+}
+
 @end

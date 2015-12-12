@@ -20,6 +20,7 @@
 #import "NSString+Extension.h"
 #import "UIWindow+Extension.h"
 #import "CommentViewController.h"
+#import "MJRefresh.h"
 NSInteger kWDTransitionViewTag = 33331;
 
 @interface SWExploreEntranceViewController () <LSUIScrollViewDelegate,SWExploreEntranceDataProviderDelegate>
@@ -33,6 +34,9 @@ NSInteger kWDTransitionViewTag = 33331;
 @property (nonatomic, strong) SWExploreEntranceDataProvider *dataProvider;
 
 @property (nonatomic, strong) NSMutableArray *titleList;
+
+@property (nonatomic, assign) int curIndex;
+
 
 @property (nonatomic,strong) UIImageView *zan;
 
@@ -91,7 +95,7 @@ NSInteger kWDTransitionViewTag = 33331;
 {
     [super viewWillAppear:animated];
     
-    [self.view bringSubviewToFront:_scrollableToolbar];
+//    [self.view bringSubviewToFront:_scrollableToolbar];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -145,29 +149,24 @@ NSInteger kWDTransitionViewTag = 33331;
     }];
 }
 
-- (void)p_mockData
-{
-    [_titleList addObjectsFromArray:@[@"香港",@"美国",@"韩国",@"日本",@"法国",@"台湾",@"泰国",@"新加坡",@"德国",@"登录",@"美国",@"韩国",@"日本",@"美国",@"韩国",@"日本",@"美国",@"韩国",@"日本",]];
-}
-
 - (void)drawViews
 {
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    const CGFloat toolbarHeight = 40;
+ 
     
 //    self.scrollableToolbar = [[ZYCScrollableToolbar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, toolbarHeight) titles:_titleList];
+////
 //    
-    
 //    _scrollableToolbar.backgroundColor = [UIColor whiteColor];
 //    _scrollableToolbar.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
-    
-    [self.view addSubview:_scrollableToolbar];
+//    
+//    [self.view addSubview:_scrollableToolbar];
   
     self.contentView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                     toolbarHeight,
+                                                                     kSWHeadBarViewHeight,
                                                                      SCREEN_WIDTH,
-                                                                     CGRectGetHeight(self.view.bounds) - toolbarHeight)
+                                                                     SCREEN_HEIGHT-kSWTabBarViewHeight-kSWHeadBarViewHeight*2.5)
                                                     style:UITableViewStylePlain];
     
     _contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -175,7 +174,11 @@ NSInteger kWDTransitionViewTag = 33331;
     _contentView.dataSource = _dataProvider;
     _contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    _contentView.backgroundColor=[UIColor darkGrayColor];
-
+    
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [_contentView addHeaderWithTarget:self action:@selector(headerRereshing)];
+#warning 自动刷新(一进入程序就下拉刷新)
+    [_contentView headerBeginRefreshing];
     
     NSMutableArray* tl=[[NSMutableArray alloc] init];
     [HttpHelper sendGetRequest:@"getPiece/1" parameters:nil success:^(id response){
@@ -185,7 +188,7 @@ NSInteger kWDTransitionViewTag = 33331;
             [tl addObject:title];
         }
         
-        LSUIScrollView* toolbar=[[LSUIScrollView alloc] initWithFrame:CGRectMake(0, -5, SCREEN_WIDTH, 50) titleList:tl];
+        LSUIScrollView* toolbar=[[LSUIScrollView alloc] initWithFrame:CGRectMake(0, -5, SCREEN_WIDTH, SCREEN_HEIGHT/15) titleList:tl];
         toolbar.toolbarDelegate = self;
         [self.view addSubview:toolbar];
         [self.view addSubview:_contentView];
@@ -198,6 +201,29 @@ NSInteger kWDTransitionViewTag = 33331;
 }
 
 
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+//    // 1.添加假数据
+//    for (int i = 0; i<5; i++) {
+//        [self.fakeData insertObject:MJRandomData atIndex:0];
+//    }
+    
+    // 2.2秒后刷新表格UI
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 刷新表格
+        NSDictionary *pieceInfo = [_titleList objectAtIndex:_curIndex];
+        
+        NSString *pieceID = pieceInfo[@"id"];
+        
+        NSString *pieceImageURL = pieceInfo[@"sortUrl"];
+        
+        [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0];
+        
+        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+        [_contentView headerEndRefreshing];
+    });
+}
 
 - (SWExploreEntranceDataProvider *)dataProvider
 {
@@ -219,6 +245,7 @@ NSInteger kWDTransitionViewTag = 33331;
 //
     
     NSDictionary *pieceInfo = [_titleList objectAtIndex:index];
+    _curIndex=index;
     NSString *pieceID = pieceInfo[@"id"];
     
     NSString *pieceImageURL = pieceInfo[@"sortUrl"];

@@ -16,7 +16,9 @@
 #import "HttpHelper.h"
 #import "NSString+Extension.h"
 #import "RegisterViewController.h"
-static CGFloat kSWTabBarViewHeight = 66;
+#import "ShoppingCartLocalDataManager.h"
+#import "DatabaseManager.h"
+UIButton *lastButton;
 
 static CGFloat kSWCurrentShowingViewTag = 12333;
 
@@ -36,7 +38,7 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = UIColorFromRGB(0x1abc9c);
+        self.backgroundColor = DEFAULT_BAR_COLOR;
         self.selfTarget = target;
         self.buttons = buttons;
     
@@ -66,6 +68,11 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
         b.tag = idx;
         b.titleLabel.font = [UIFont systemFontOfSize:14.0f];
         [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        if (startX==0) {
+            b.backgroundColor=[UIColor blackColor];
+            b.selected=YES;
+            lastButton=b;
+        }
         
         startX += bWidth;
         
@@ -105,13 +112,22 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
                                     } else{ //entrance
                                         RegisterModel  *userinfo1 = [[RegisterModel alloc] initWithString:result[@"data"] error:nil];
                                         cart.registerModel=userinfo1;
-                                        //                                [userinfo setValue:userinfo1.username forKey:@"username"];
-                                        //                                [userinfo setValue:userinfo1.phoneNum forKey:@"phoneNum"];
+                                        [ShoppingCartModel loadAddressModel];
                                         NSLog(@"获取到的数据为dict：%@", userinfo1);
+                                       cart.arOfWatchesOfCart=[ShoppingCartLocalDataManager getAllShoppingCart];
+                                       OrderModel* order= [ShoppingCartLocalDataManager getAllOrderModel];
+                                        if (order) {
+                                            cart.orderModel=order;
+                                        }
                                         
+                                      DatabaseManager *databaseManager=[DatabaseManager sharedDatabaseManager];
+                                        NSArray *array=databaseManager.getAllAddress;
+                                        if (array==nil||array.count==0) {
+                                            [databaseManager insertAddress:cart.addressModel];
+                                        }
                                         
-//                                        [NSThread sleepForTimeInterval:3.0];
                                           [self p_initUI];
+                                            
                                     }
                                 }
                             } fail:^{
@@ -141,13 +157,15 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
     SWExploreEntranceViewController* ex = [[SWExploreEntranceViewController alloc] init];
     SWBuyBuyBuyViewController* buy = [[SWBuyBuyBuyViewController alloc] init];
     ShoppingCartController *cart=[[ShoppingCartController alloc] init];
+    cart.fromMain=YES;
     SWMeTableViewController* me = [[SWMeTableViewController alloc] init];
 
     ex.title = @"探索";
     buy.title = @"抢抢抢";
     cart.title=@"购物车";
     me.title = @"我";
-
+    
+    
     UINavigationController* nav1 = [[UINavigationController alloc] initWithRootViewController:ex];
 
     UINavigationController* nav2 = [[UINavigationController alloc] initWithRootViewController:buy];
@@ -169,10 +187,36 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
     [_viewControlers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIViewController *vc = obj;
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.tag=idx;
         [button addTarget:self
                    action:@selector(tabClicked:atIndex:)
          forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:vc.title forState:UIControlStateNormal];
+//        [button setTitle:vc.title forState:UIControlStateNormal];
+        NSString* imgName=@"";
+        switch (idx) {
+            case 0:
+                imgName=@"sousuo64";
+                break;
+            case 1:
+                imgName=@"huodong64";
+                break;
+            case 2:
+                imgName=@"gouwuche64";
+                break;
+            case 3:
+                imgName=@"yonghu64";
+                break;
+            default:
+                break;
+        }
+        [button setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
+         [button setImage:[UIImage imageNamed:[imgName stringByAppendingString:@"-light"]] forState:UIControlStateSelected];
+        float s=SCREEN_WIDTH/4;
+        [button setImageEdgeInsets:UIEdgeInsetsMake(kSWTabBarViewHeight/5,s/3,kSWTabBarViewHeight/5,s/3)];
+//        button.imageView.image=;
+//        float s=kSWTabBarViewHeight/2+5;
+//        button.imageView.frame=CGRectMake(SCREEN_WIDTH/4/2-s/2, kSWTabBarViewHeight/2-s/2,s, s);
+        
         [buttons insertObject:button atIndex:idx];
         
         
@@ -226,6 +270,7 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
     if (oldShowingView) {
         UIViewController *vc = (UIViewController *)[oldShowingView nextResponder];
         [vc willMoveToParentViewController:nil];
+        UIView * sv=[oldShowingView superview];
         [oldShowingView removeFromSuperview];
         [vc removeFromParentViewController];
     }
@@ -256,11 +301,14 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
            atIndex:(NSInteger)index
 {
     UIViewController *shouldShowVc = [_viewControlers objectAtIndex:button.tag];
+    button.backgroundColor=[UIColor blackColor];
+    button.selected=YES;
     
-    
-    if (button.tag==1) {
-        
-         NSLog(@" buy buy buy ");
+    if (button.tag!=lastButton.tag) {
+        lastButton.backgroundColor=DEFAULT_BAR_COLOR;
+        lastButton.selected=NO;
+        lastButton=button;
+
         
     }
 //    if([shouldShowVc isKindOfClass:[SWBuyBuyBuyViewController class]]){

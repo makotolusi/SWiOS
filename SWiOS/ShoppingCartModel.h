@@ -23,4 +23,5 @@
 @property (strong,nonatomic) NSDictionary *orderStatus;
 +(ShoppingCartModel *)sharedInstance;
 +(void)clearCart;
++(void)loadAddressModel;
 @end

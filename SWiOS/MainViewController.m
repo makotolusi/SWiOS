@@ -13,7 +13,7 @@
 #import "SWBaseNavigationController.h"
 #import "TabBarView.h"
 
-static CGFloat kSWTabBarViewHeight = 66;
+
 
 
 @interface MainViewController ()

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AddressModel.h"
+#import "FMDatabase.h"
 /**
  订阅管理
  */
@@ -21,4 +22,23 @@
 - (NSArray *)getAllAddress;
 - (AddressModel *)getAddressByID:(NSInteger)AddressModelID;
 - (BOOL)deleteAddressByID:(NSInteger)AddressModelID;
+
+
+- (BOOL)tableExists:(NSString *)tableName;
+
+- (BOOL)createTableWithName:(NSString*)tableName createSql:(NSString*)createSql;
+
+- (BOOL)exWithName:(NSString *)tableName sql:(NSString*)sql param:(NSArray*)param;
+
+-(NSMutableArray *)getAllwithName:(NSString*)tableName sql:(NSString*)sql;
+
+- (BOOL)openDatabase;
+
+- (BOOL)closeDatabase;
+
+- (FMDatabase*)getDB;
+
+
+-(BOOL)deleteWithName:(NSString*)tableName byId:(int)objId;
+
 @end

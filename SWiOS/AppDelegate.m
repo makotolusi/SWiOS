@@ -13,6 +13,10 @@
 #import "SWBuyBuyBuyViewController.h"
 #import "SWIntroductionViewController.h"
 #import "ShoppingCartModel.h"
+#import "RegisterViewController.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "TradeFinishViewController.h"
+#import "UILabel+Extension.h"
 #define LAST_RUN_VERSION_KEY        @"last_run_version_of_application"
 
 @interface AppDelegate ()
@@ -33,16 +37,17 @@
         self.window.rootViewController = vc;
         
     }else{
-        SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
-        self.window.rootViewController = mainContorll;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+       id phoneNum=[defaults objectForKey:USER_LOGIN_PHONE_NUM];
+        if (phoneNum) {
+            SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
+            self.window.rootViewController = mainContorll;
+        }else {
+            RegisterViewController * mvc = [[RegisterViewController alloc]init];
+            self.window.rootViewController = mvc;
+        }
        
     }
-    
-    
-    
-    // clean key for only once login
-//    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:LAST_RUN_VERSION_KEY];
-    
    
     return YES;
 }
@@ -89,5 +94,47 @@
     }
     return NO;
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation NS_DEPRECATED_IOS(4_2, 9_0, "Please use application:openURL:options:") __TVOS_PROHIBITED{
+    if ([url.host isEqualToString:@"safepay"]) {
+//        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//            NSLog(@"result = %@",resultDic);
+//        }];
+//        [[AlipaySDK defaultService]
+//         processOrderWithPaymentResult:url
+//         standbyCallback:^(NSDictionary *resultDic) {
+//             NSLog(@"result = %@",resultDic);//返回的支付结果 //【由于在跳转支付宝客户端支付的过程中,商户 app 在后台很可能被系统 kill 了,所以 pay 接 口的 callback 就会失效,请商户对 standbyCallback 返回的回调结果进行处理,就是在这个方法 里面处理跟 callback 一样的逻辑】
+//         }];
+//        //        [[AlipaySDK defaultService] processAuth_V2Result:url
+//        //                                         standbyCallback:^(NSDictionary *resultDic) {
+//        //                                             NSLog(@"result = %@",resultDic);
+//        //                                             NSString *resultStr = resultDic[@"result"];
+//        //                                             NSLog(@"result = %@",resultStr);
+//        //                                         }];
+    }
+    else if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
+//        [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
+//            NSLog(@"result = %@",resultDic);
+//        }];
+    }
+    
+    return YES;
+}
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options NS_AVAILABLE_IOS(9_0){
+//    [WXApi handleOpenURL:url delegate:self];
+    if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+        }];
+    }
+    else if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
+        [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+        }];
+    }
+    
+    return YES;
+}
+
 
 @end

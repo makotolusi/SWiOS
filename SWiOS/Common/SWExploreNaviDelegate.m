@@ -152,21 +152,21 @@
         
 //        transitionToFrame.origin.y += navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
         
-        UIView *toolbarSnapView = [[listVC scrollableToolbar] snapshotViewAfterScreenUpdates:NO];
-        
-        CGRect toolbarFrame =  [listVC scrollableToolbar].frame;
-        
-        toolbarFrame.origin.y += navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
-        
-        
-        toolbarSnapView.frame = toolbarFrame;
-        
-    
-        _dat.appearing = YES;
-        _dat.transitionFromRect = transitionFrame;
-//        _dat.transitionToRect = transitionToFrame;
-        _dat.transitionImage = listVC.transViewImage;
-        _dat.toolbarSnapView = toolbarSnapView;
+//        UIView *toolbarSnapView = [[listVC scrollableToolbar] snapshotViewAfterScreenUpdates:NO];
+//        
+//        CGRect toolbarFrame =  [listVC scrollableToolbar].frame;
+//        
+//        toolbarFrame.origin.y += navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
+//        
+//        
+//        toolbarSnapView.frame = toolbarFrame;
+//        
+//    
+//        _dat.appearing = YES;
+//        _dat.transitionFromRect = transitionFrame;
+////        _dat.transitionToRect = transitionToFrame;
+//        _dat.transitionImage = listVC.transViewImage;
+//        _dat.toolbarSnapView = toolbarSnapView;
         return _dat;
     }
     else if (operation == UINavigationControllerOperationPop)

@@ -50,19 +50,19 @@
 	switch (aState) {
 		case PWLoadMoreNormal:
             [self addTarget:self action:@selector(callDelegateToLoadMore) forControlEvents:UIControlEventTouchUpInside];
-			_statusLabel.text = NSLocalizedString(@"Load More", @"Load More items");
+			_statusLabel.text = NSLocalizedString(@"加载更多", @"Load More items");
 			[_activityView stopAnimating];
 			
 			break;
 		case PWLoadMoreLoading:
             [self removeTarget:self action:@selector(callDelegateToLoadMore) forControlEvents:UIControlEventTouchUpInside];
-			_statusLabel.text = NSLocalizedString(@"Loading...", @"Loading items");
+			_statusLabel.text = NSLocalizedString(@"加载中...", @"Loading items");
 			[_activityView startAnimating];
 			
 			break;
 		case PWLoadMoreDone:
             [self removeTarget:self action:@selector(callDelegateToLoadMore) forControlEvents:UIControlEventTouchUpInside];
-			_statusLabel.text = NSLocalizedString(@"No More", @"There is no more item");
+			_statusLabel.text = NSLocalizedString(@"没有更多内容", @"There is no more item");
 			[_activityView stopAnimating];
 			
 			break;

@@ -7,13 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BaseModel.h"
-@interface ActivityProduct : BaseModel
+#import "JSONModel.h"
+@interface ActivityProduct : JSONModel
+
+@property(nonatomic,assign)NSNumber* id;
 @property(nonatomic,strong)NSNumber *activityId;
 @property(nonatomic,copy)NSString *productCode;
 @property(nonatomic,copy)NSString *productName;
 @property(nonatomic,strong)NSNumber *rushPrice;
 @property(nonatomic,assign)int rushQuantity;
 @property(nonatomic,copy)NSString *picUrl1;
-@property (assign,nonatomic) NSInteger buyCount;
+@property  (strong,nonatomic) NSNumber<Optional> *buyCount;
+
+-(NSNumber*)calProductTotalPriceWithAddCount:(int)addCount;
 @end

@@ -12,11 +12,9 @@
 #import "UIAlertView+Extension.h"
 @implementation HttpHelper
 
-
-
 bool const isDev=NO;
 
-bool const isLocal=YES;
+bool const isLocal=NO;
 
 NSString * const kBaseURL = @"http://okeasy.eicp.net:9889/mgserver/ApCommonServices/";
 

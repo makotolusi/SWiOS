@@ -12,5 +12,6 @@
 
 +(void)addZan:(NSString*)productCode userId:(NSString*)userId next:(void (^)())next;
 
++(void)addFavor:(NSString*)productCode userId:(NSString*)userId next:(void (^)())next;
 
 @end

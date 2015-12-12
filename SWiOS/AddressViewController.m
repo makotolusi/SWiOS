@@ -138,7 +138,7 @@
     {
         _placeholderLabel.hidden = YES;
     }
-    if ([text isEqualToString:@""] && range.location == 0 && range.length == 1)
+    if ([text isEqualToString:@""])
     {
         _placeholderLabel.hidden = NO;
     }
@@ -281,7 +281,7 @@
                            }
                        }fail:^{
                            NSLog(@"网络异常，取数据异常");
-                       }];
+                       } parentView:nil];
 }
 
 

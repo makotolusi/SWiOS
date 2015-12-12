@@ -83,7 +83,7 @@ static NSString *orderListCell = @"orderListCell";
      [_tableView registerNib:[UINib nibWithNibName:@"OrderListCell" bundle:nil] forCellReuseIdentifier:orderListCell];
     [self.view addSubview:_tableView];
     //快递公司
-    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-200, SCREEN_WIDTH, 50)];
+    _paymentPicker=[[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-200, SCREEN_WIDTH, 100)];
     _paymentPicker.dataSource=self;
     _paymentPicker.delegate=self;
 
@@ -93,10 +93,10 @@ static NSString *orderListCell = @"orderListCell";
     SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
     bool a=mainController.tabBarView.hidden;
     if(a){
-        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kSWButtonWidth, SCREEN_WIDTH, kSWButtonWidth)];
     }else
     {
-        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50-66, SCREEN_WIDTH, 50)];
+        submit=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kSWButtonWidth-kSWTabBarViewHeight, SCREEN_WIDTH, kSWButtonWidth)];
     }
     submit.backgroundColor = UIColorFromRGB(0x1abc9c);
     submit.alpha=0.7f;
@@ -126,36 +126,33 @@ static NSString *orderListCell = @"orderListCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section==0) {
-        return 30;
+        return SCREEN_HEIGHT*0.04;
     }else
-    return 50;
+    return SCREEN_HEIGHT*0.05;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
 //    UIView *view=[
     if(section==1)
-        return [[[UILabel alloc] init] tableSectionLabel:@"收货人信息" y:30];
+        return [[[UILabel alloc] init] tableSectionLabel:@"收货人信息" y:SCREEN_HEIGHT*0.05-20];
     else if (section==2)
-        return [[[UILabel alloc] init] tableSectionLabel:@"快递公司" y:30];
+        return [[[UILabel alloc] init] tableSectionLabel:@"快递公司" y:SCREEN_HEIGHT*0.05-20];
     else
         return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section==0) {
-        return 40.f;
-    }else if (indexPath.section==1){
-        return orderListCellHeight+10;
-    }else if(indexPath.section==2){
-        if (_cartModel.addressModel.name!=nil)
-         {
-             return orderListCellHeight+20;
-        }else {
-            return 40.f;
-         }
-    } else{
-        return 40.f;
+    if(indexPath.section==1){
+        return SCREEN_HEIGHT*0.12;
     }
+    if(indexPath.section==2){
+        if (_cartModel.addressModel.name!=nil)
+        {
+            return SCREEN_HEIGHT*0.15;
+        }else
+            return SCREEN_HEIGHT*0.06;
+    }else
+        return SCREEN_HEIGHT*0.06;
 }
 
 #pragma mark - TableView Datasource
@@ -171,8 +168,8 @@ static NSString *orderListCell = @"orderListCell";
         return cell;
     }else if(indexPath.section==1){
         OrderListCell *cell = [tableView dequeueReusableCellWithIdentifier:orderListCell forIndexPath:indexPath];
-         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
-         cell.selectionStyle = UITableViewCellSelectionStyleNone;   
+//         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if(indexPath.section==2){
        
@@ -180,7 +177,7 @@ static NSString *orderListCell = @"orderListCell";
             return [self editCell: @"添加收货人信息" tag:10];
         }else{
             EmptyCell *cell=[[EmptyCell alloc] init];
-            AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(0, 0, 10, 10) data:_cartModel.addressModel];
+            AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, SCREEN_WIDTH, cell.frame.size.height) data:_cartModel.addressModel];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addSubview:addressView];
             return cell;

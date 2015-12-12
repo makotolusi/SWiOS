@@ -22,11 +22,11 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.rowHeight = 110;
+    _tableView.rowHeight = SCREEN_HEIGHT/7;
     //        _tableView.contentInset = UIEdgeInsetsMake(0, 0.f, 0.f, 0.f);
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
-    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
+
     
    
 }
@@ -46,12 +46,23 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shoppingCartCell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.indexPath=indexPath;
-    cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row];
-    cell.tableView=_tableView;
-
+    static NSString *CellIdentifier = @"shoppingCartCell1";
+    ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell=[[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row];
+         cell.isEdit=NO;
+        [cell initEdite];
+        [cell settingFrame];
+       
+        cell.indexPath=indexPath;
+        cell.delegate=self;
+        cell.tableView=_tableView;
+        
+    }else{
+        
+    }
+    [cell settingData];
     return cell;
 }
 

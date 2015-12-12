@@ -26,7 +26,7 @@
 -(void)layoutSubviews{
     ShoppingCartModel *cartModel=[ShoppingCartModel sharedInstance];
     NSMutableArray *orders=cartModel.arOfWatchesOfCart;
-    int with=orderListCellHeight;
+    int with=SCREEN_HEIGHT*0.1;
     int startX=5;
     _imgScroll=[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, with*4+startX*4, with+5)];
     

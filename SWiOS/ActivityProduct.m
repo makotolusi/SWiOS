@@ -25,4 +25,13 @@
 {
     return NSUINTROTATE([_activityId hash], NSUINT_BIT / 2) ^ [_productCode hash];
 }
+
+-(NSNumber*)calProductTotalPriceWithAddCount:(int)addCount{
+    NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithDecimal:[[NSNumber alloc] initWithInt:addCount].decimalValue];
+    NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithDecimal:self.rushPrice.decimalValue];
+    NSDecimalNumber *sum=[t1 decimalNumberByMultiplyingBy: t2];
+    return [[NSNumber alloc] initWithInt:sum.intValue];
+}
+
+
 @end

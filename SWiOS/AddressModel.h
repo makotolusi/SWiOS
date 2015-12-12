@@ -15,6 +15,7 @@
 @property(nonatomic,copy)NSString *city;
 @property(nonatomic,copy)NSString *code;
 @property(nonatomic,copy)NSString *address;
+@property(nonatomic,assign)int index;
 ///时间戳
 @property (nonatomic, assign) NSTimeInterval mts;
 @end

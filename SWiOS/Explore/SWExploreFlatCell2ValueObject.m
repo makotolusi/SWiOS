@@ -42,7 +42,10 @@
             self.rushQuantity=dic[@"rushQuantity"];
             NSNumber* number=dic[@"zanCount"];
              self.zans=number.longValue;
-            self.isZan=dic[@"isZan"];
+            NSNumber* isZ=dic[@"isZan"];
+            self.isZan=isZ.intValue;
+             NSNumber* isF=dic[@"isFavor"];
+             self.isFavor=isF.intValue;
         }
     }
     

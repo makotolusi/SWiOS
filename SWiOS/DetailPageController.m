@@ -14,6 +14,7 @@
 #import "ShoppingCartController.h"
 #import "UIAlertView+Extension.h"
 #import "UIWindow+Extension.h"
+#import "ShoppingCartLocalDataManager.h"
 @interface DetailPageController ()<UIWebViewDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong)UIView* infoView;
@@ -35,7 +36,7 @@
     
     [self.view addSubview:_webView];
     //button
-    UIButton *buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+    UIButton *buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kSWTabBarViewHeight, SCREEN_WIDTH, kSWTabBarViewHeight)];
     buy.backgroundColor = UIColorFromRGB(0x1abc9c);
     buy.alpha=0.7f;
     [buy setTitle:@"加入购物车" forState:UIControlStateNormal];
@@ -137,8 +138,8 @@
 }
 
 - (void)cartAction:(UIButton*)sender {
-    _product.buyCount=_product.buyCount+_mp.count;
-    if (_product.buyCount>_product.rushQuantity) {
+//    _product.buyCount=[[NSNumber alloc] initWithInt:_product.buyCount.intValue+_mp.count];
+    if (_product.buyCount.intValue>_product.rushQuantity) {
         [UIAlertView showMessage:@"库存不足"];
         return;
     }else{
@@ -150,9 +151,7 @@
                                      raiseOnUnderflow:NO
                                      raiseOnDivideByZero:YES];
     NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
-    NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:_product.rushPrice.stringValue];
-     NSDecimalNumber *oneTimeCount=[[NSDecimalNumber alloc] initWithUnsignedInt:_mp.count];
-     NSDecimalNumber *oneTimePrice=[t2 decimalNumberByMultiplyingBy:oneTimeCount];
+    NSDecimalNumber *pPrice=[NSDecimalNumber decimalNumberWithDecimal:[_product calProductTotalPriceWithAddCount:_mp.count].decimalValue];
     
     if ([_cartModel.arOfWatchesOfCart containsObject:_product]) {
         NSInteger index= [_cartModel.arOfWatchesOfCart indexOfObject:_product];
@@ -161,14 +160,15 @@
         [_cartModel.arOfWatchesOfCart addObject:_product];
     }
     
-
-   
-    _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: oneTimePrice withBehavior:round];
-//    _product.buyCount=_product.buyCount+_mp.count;
+        
+       
+    _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: pPrice withBehavior:round];
+    _product.buyCount=[[NSNumber alloc] initWithInt:_product.buyCount.intValue+_mp.count];
   
-    [_cartModel.productCode_buyCount setObject:[NSNumber numberWithInteger:_product.buyCount] forKey:_product.productCode];
+//    [_cartModel.productCode_buyCount setObject:_product.buyCount forKey:_product.productCode];
 //    NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
-    
+    [ShoppingCartLocalDataManager insertShoppingCart:_product];
+    [ShoppingCartLocalDataManager insertOrderModel:_cartModel.orderModel];
     ShoppingCartController *vc =[[ShoppingCartController alloc]init];
     vc.navigationItem.titleView = [UILabel navTitleLabel:@"购物车"];
     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]

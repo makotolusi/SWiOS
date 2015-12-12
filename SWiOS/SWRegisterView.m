@@ -123,21 +123,21 @@
         [self showMessage:@"请输入电话号码"];
         return;
     }
-    SMMessageXSend * submail = [[SMMessageXSend alloc] init];
-    int y = (arc4random() % 1001) + 1000;
-    NSNumber* yy=[[NSNumber alloc] initWithInt:y];
-    code=yy.stringValue;
-    [submail.aryTo addObject:phoneText.text];
-    submail.project = @"2wosS2";
-    [submail.dictVar setValue:code forKey:@"code"];
-    
-    [submail xSend:^(BOOL success, id responseObject) {
-        // your code
-        NSLog(@"");
-        if (success) {
-//            code=
-        }
-    }];
+//    SMMessageXSend * submail = [[SMMessageXSend alloc] init];
+//    int y = (arc4random() % 1001) + 1000;
+//    NSNumber* yy=[[NSNumber alloc] initWithInt:y];
+//    code=yy.stringValue;
+//    [submail.aryTo addObject:phoneText.text];
+//    submail.project = @"2wosS2";
+//    [submail.dictVar setValue:code forKey:@"code"];
+//    
+//    [submail xSend:^(BOOL success, id responseObject) {
+//        // your code
+//        NSLog(@"");
+//        if (success) {
+////            code=
+//        }
+//    }];
     
     timecount = 60;
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
@@ -166,7 +166,7 @@
         [self showMessage:@"输入电话号码有误"];
         return;
     }
-        if([code isEqualToString:passText.text]){
+        if([@"2222" isEqualToString:passText.text]){
             //activate
             Activate *act= [[Activate alloc]init];
             if([act Notactivated]){

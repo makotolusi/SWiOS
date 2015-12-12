@@ -50,6 +50,8 @@ extern const CGFloat kSWPieceCellRbHeight;
 
 @property (nonatomic, strong) SWExploreFlatCell2ValueObject *cellVo;
 
+@property (nonatomic, strong) UIView *headerView;
+
 - (void)updateUIWithVO:(SWExploreFlatCell2ValueObject *)cellVO;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier cellVO:(SWExploreFlatCell2ValueObject*) cellVO;

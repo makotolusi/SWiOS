@@ -72,6 +72,11 @@
 //    [_db setShouldCacheStatements:YES];
 }
 
+- (FMDatabase*)getDB
+{
+    return _db;
+}
+
 - (BOOL)openDatabase
 {
     //先判断数据库是否存在，如果不存在，创建数据库
@@ -109,6 +114,59 @@
     }
     
     return isCloseSuccess;
+}
+
+- (BOOL)createTableWithName:(NSString*)tableName createSql:(NSString*)createSql
+{
+    //判断数据库中是否已经存在这个表，如果不存在则创建该表
+    //打开数据库，如果没有打开，直接返回
+    if(![self openDatabase])
+        return NO;
+    
+    if(![_db tableExists:tableName])
+    {
+        BOOL creatSuccess = [_db executeUpdate:createSql];
+        [self closeDatabase];
+        if(!creatSuccess)
+        {
+            NSLog(@"表完成");
+        }
+        return creatSuccess;
+    }
+    
+    
+    
+    
+    //已存在此表
+    return YES;
+}
+
+- (BOOL)tableExists:(NSString *)tableName{
+    //打开数据库，如果没有打开，直接返回
+    if(![self openDatabase])
+        return NO;
+    
+    BOOL lu= [_db tableExists:tableName];
+     [self closeDatabase];
+    return lu;
+}
+- (BOOL)exWithName:(NSString *)tableName sql:(NSString*)sql param:(NSArray*)param
+{
+    
+    //打开数据库，如果没有打开，直接返回
+    if(![self openDatabase])
+        return NO;
+    
+    
+    BOOL isExecuteSuccess = NO;
+//    va_list args;
+//    va_start(args, sql);
+    isExecuteSuccess = [_db executeUpdate:sql,param];
+    
+    
+    [self closeDatabase];
+    
+    return isExecuteSuccess;
 }
 
 - (BOOL)creatAddressTable
@@ -161,6 +219,44 @@
     return isExecuteSuccess;
 }
 
+-(BOOL)deleteWithName:(NSString*)tableName byId:(int)objId
+{
+    //打开数据库，如果没有打开，直接返回
+    if(![self openDatabase])
+        return nil;
+    
+    if(![_db tableExists:tableName])
+    {
+        return nil;
+    }
+    //定义一个结果集，存放查询的数据
+    NSString* sql=[NSString stringWithFormat:@"delete from %@ where id = %d ",tableName,objId];
+    BOOL result=  [_db executeUpdate:sql];
+    [self closeDatabase];
+    return result;
+}
+
+-(NSMutableArray *)getAllwithName:(NSString*)tableName sql:(NSString*)sql
+{
+    //打开数据库，如果没有打开，直接返回
+    if(![self openDatabase])
+        return nil;
+    
+    if(![_db tableExists:tableName])
+    {
+        return nil;
+    }
+    //定义一个结果集，存放查询的数据
+    NSMutableArray *array = [NSMutableArray array];
+    FMResultSet* result=  [_db executeQuery:sql];
+    while ([result next])
+    {
+        NSDictionary* dic=[result resultDictionary];
+        [array addObject:dic];
+    }
+        [self closeDatabase];
+    return array;
+}
 
 #pragma mark -
 

@@ -26,7 +26,7 @@
                             NSLog(@"获取到的数据为dict：%@", result);
                         } fail:^{
                             NSLog(@"fail");
-                        }];
+                        } parentView:nil];
 }
 
 +(void)addComment:(CommentModel*)comment next:(void (^)())next{

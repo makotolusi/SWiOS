@@ -20,4 +20,6 @@
 }
 //@property (nonatomic,strong) NSMutableArray *arOfWatchesOfCart;
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
+@property (nonatomic,assign) BOOL fromMain;
+
 @end
