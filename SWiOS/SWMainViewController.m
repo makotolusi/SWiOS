@@ -133,7 +133,7 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
                             } fail:^{
                                 //                            [UIAlertView showMessage:@"取得用户注册信息失败"];
                                 NSLog(@"请求失败");
-                            }];
+                            } parentView:nil];
     }];
   
     [self p_initUI];

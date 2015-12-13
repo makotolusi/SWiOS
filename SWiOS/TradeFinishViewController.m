@@ -36,7 +36,7 @@
     _tableView.separatorStyle=UITableViewStyleGrouped;
     _tableView.separatorColor=[UIColor clearColor];
     [self.view addSubview:_tableView];
-    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
+//    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
     
 }
 
@@ -112,13 +112,25 @@
       
     }else if(indexPath.section==1)
     {
-        ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shoppingCartCell" forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.indexPath=indexPath;
-        cell.isEdit=NO;
-        cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row];
-        cell.tableView=_tableView;
-         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        static NSString *CellIdentifier = @"shoppingCartCell1";
+        ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell=[[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row];
+            cell.isEdit=NO;
+            [cell initEdite];
+            [cell settingFrame];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.indexPath=indexPath;
+            cell.delegate=self;
+            cell.tableView=_tableView;
+        }else{
+            
+        }
+        
+        [cell settingData];
+        
         return cell;
     }else{
         cell=[[EmptyCell alloc] init];

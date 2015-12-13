@@ -15,7 +15,7 @@
     self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
     _indexPath=indexPath;
     if(self){
-        self.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH/16*9);
+//        self.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH);
         [self _initialize];
     }
     return self;

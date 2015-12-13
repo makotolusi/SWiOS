@@ -103,7 +103,7 @@ NSString * const kLocalURL = @"http://10.6.110.4:8080/mgserver/ApCommonServices/
         success(operation.responseString);
 //         [LoadingView stopAnimating:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         [UIAlertView showMessage:@"不能连接到服务器！"];
+         [UIAlertView showMessage:@"连接异常！"];
 //         [LoadingView stopAnimating:nil];
            NSLog(@"发生错误！%@", error);
     }];

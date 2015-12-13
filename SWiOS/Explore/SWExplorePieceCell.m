@@ -248,8 +248,8 @@ const CGFloat kSWPieceCellRbHeight = 559;
     
     offsetY += headerHeight;
     
-    UIView *hdImageView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, SCREEN_WIDTH, bigImageHeight)];
-    _bigImageView = [[YCAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, bigImageHeight)];
+    UIView *hdImageView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, SCREEN_WIDTH, SCREEN_WIDTH)];
+    _bigImageView = [[YCAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH)];
     _bigImageView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bigImageTapped:)];
     [_bigImageView addGestureRecognizer:tap];

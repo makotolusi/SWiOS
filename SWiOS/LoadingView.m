@@ -28,13 +28,13 @@
             
             
             //设置背景色
-            view.backgroundColor = [UIColor blackColor];
+            view.backgroundColor = [UIColor darkGrayColor];
             
             //设置背景透明
             view.alpha = 0.5;
             
             //设置背景为圆角矩形
-            view.layer.cornerRadius = 6;
+//            view.layer.cornerRadius = 6;
             view.layer.masksToBounds = YES;
             //设置显示位置
             [view setCenter:CGPointMake(parentView.frame.size.width / 2.0, parentView.frame.size.height / 2.0)];

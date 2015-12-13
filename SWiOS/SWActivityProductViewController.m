@@ -63,7 +63,9 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
                            for (id content in result) {
                                ActivityProduct *model = [[ActivityProduct alloc] initWithDictionary:content error:nil];
                                model.id=nil;
-                               [_data addObject:model];
+                               if (model) {
+                                    [_data addObject:model];
+                               }
                            }
                            [self _loadContentView];
                        } fail:^{

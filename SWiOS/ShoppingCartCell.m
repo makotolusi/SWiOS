@@ -80,7 +80,7 @@ static CGFloat kSWCellCountTag = 1;
         [views setValue:_count forKey:@"_count"];
     }
     
-    NSDictionary *metrics = @{@"imageEdge":[NSString stringWithFormat:@"%f",w-10.0],@"padding":@5.0,@"toImg":@10.0,@"titleWidth":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.7],@"titleHeight":@40,@"editViewWidth":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.3]};//设置一些常量
+    NSDictionary *metrics = @{@"imageEdge":[NSString stringWithFormat:@"%f",w-10.0],@"padding":@5.0,@"toImg":@10.0,@"titleWidth":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.7],@"titleHeight":@40,@"editViewWidth":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.3],@"plusminusW":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.06]};//设置一些常量
     //    NSLog(@"%f",size.height);
     //设置bgView与superview左右对齐
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[_imgView(imageEdge)]-toImg-[_title(titleWidth)]" options:NSLayoutFormatAlignAllTop metrics:metrics views:views]];
@@ -91,8 +91,8 @@ static CGFloat kSWCellCountTag = 1;
     
     if (_isEdit) {
   
-       [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_minus(15)]-50-[_count(40)]-20-[_plus(15)]-40-|" options:0 metrics:metrics views:views]];
-     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_minus(15)]-toImg-|" options:0 metrics:metrics views:views]];
+       [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_minus(plusminusW)]-50-[_count(40)]-20-[_plus(plusminusW)]-40-|" options:0 metrics:metrics views:views]];
+     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_minus(plusminusW)]-toImg-|" options:0 metrics:metrics views:views]];
      [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_plus(==_minus)]-toImg-|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_count(20)]-toImg-|" options:0 metrics:metrics views:views]];
           }
@@ -148,9 +148,9 @@ static CGFloat kSWCellCountTag = 1;
 }
 -(void)minusPlus:(UIButton*)button withSign:(NSString *) sign{
     [button setImage:[UIImage imageNamed:sign] forState:UIControlStateNormal];
-    button.imageEdgeInsets=UIEdgeInsetsMake(3, 3, 3, 3);
+    button.imageEdgeInsets=UIEdgeInsetsMake(4, 4, 4, 4);
     button.layer.masksToBounds=YES;
-    button.layer.cornerRadius=7.0f;
+    button.layer.cornerRadius=9.0f;
     button.alpha=0.7f;
 //    [button setTitle:sign forState:UIControlStateNormal];
     //    minus.titleLabel.font=[UIFont systemFontOfSize:15];

@@ -77,10 +77,11 @@ static inline NSString *kCacheGetKeyFromURL(NSString *url)
 
 - (void)p_loadImage
 {
-    UIImage* img=[UIImage imageNamed:@"imageplaceholder-120"];
+//    UIImage* img=[UIImage imageNamed:@"jiazai.gif"];
+//    UIImageView *imgv=[[UIImageView alloc] initWithImage:img];
+//    imgv.contentMode=UIViewContentModeScaleAspectFit;
 //    img=[self scaleToSize:img size:CGSizeMake(60, 60)];
-    [self sd_setImageWithURL:[NSURL URLWithString:_url]
-            placeholderImage:img];
+    [self sd_setImageWithURL:[NSURL URLWithString:_url]];
 //    NSData *cachedData = [kMemCache objectForKey:kCacheGetKeyFromURL(_url)];
 //    
 //    UIImage *image = nil;

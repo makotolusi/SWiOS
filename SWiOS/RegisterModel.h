@@ -21,7 +21,7 @@
 @property (copy, nonatomic) NSString *originalImgUrl;
 //@property (copy, nonatomic) NSString *qq;
 //@property (copy, nonatomic) NSString *weixin;
-@property (copy, nonatomic) NSString *addr;
+@property (copy, nonatomic) NSString<Optional> *addr;
 //@property (copy, nonatomic) NSString *idNumber;
 //@property (copy, nonatomic) NSString *email;
 //@property (copy, nonatomic) NSString *role;

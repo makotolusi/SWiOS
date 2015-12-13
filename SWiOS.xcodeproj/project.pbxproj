@@ -118,6 +118,7 @@
 		C543D2001BD4EF5A00E03AE8 /* AddressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C543D1FF1BD4EF5A00E03AE8 /* AddressListViewController.m */; };
 		C543D2031BD4F0D500E03AE8 /* AddressListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C543D2021BD4F0D500E03AE8 /* AddressListCell.m */; };
 		C543D2051BD51E7E00E03AE8 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = C543D2041BD51E7E00E03AE8 /* edit.png */; };
+		C545A4391C1C6934008F42C7 /* jiazai.gif in Resources */ = {isa = PBXBuildFile; fileRef = C545A4381C1C6934008F42C7 /* jiazai.gif */; };
 		C54BC0351BC8EDE6007D46BA /* trash1.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0331BC8EDE6007D46BA /* trash1.png */; };
 		C54BC0361BC8EDE6007D46BA /* trash2.png in Resources */ = {isa = PBXBuildFile; fileRef = C54BC0341BC8EDE6007D46BA /* trash2.png */; };
 		C54D65D11BD8E790003207C0 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C54D65D01BD8E790003207C0 /* OrderModel.m */; };
@@ -456,6 +457,7 @@
 		C543D2011BD4F0D500E03AE8 /* AddressListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressListCell.h; sourceTree = "<group>"; };
 		C543D2021BD4F0D500E03AE8 /* AddressListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressListCell.m; sourceTree = "<group>"; };
 		C543D2041BD51E7E00E03AE8 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		C545A4381C1C6934008F42C7 /* jiazai.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = jiazai.gif; sourceTree = "<group>"; };
 		C54BC0331BC8EDE6007D46BA /* trash1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash1.png; sourceTree = "<group>"; };
 		C54BC0341BC8EDE6007D46BA /* trash2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash2.png; sourceTree = "<group>"; };
 		C54D65CF1BD8E790003207C0 /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
@@ -1041,6 +1043,7 @@
 		24FA81FF1B85D6F30023F71D /* images */ = {
 			isa = PBXGroup;
 			children = (
+				C545A4381C1C6934008F42C7 /* jiazai.gif */,
 				C56AB4F71BC4E6DF0061750B /* BuyBuyBuy */,
 				2497272A1BB0E543007D9704 /* me */,
 				2452FF8F1B94601E006C7E09 /* introduce */,
@@ -1871,6 +1874,7 @@
 				C59A20811BE068C700FB0D88 /* goumaichenggong.png in Resources */,
 				249727421BB0E573007D9704 /* setting@2x.png in Resources */,
 				2452FFA11B94603B006C7E09 /* title3@2x.png in Resources */,
+				C545A4391C1C6934008F42C7 /* jiazai.gif in Resources */,
 				2452FF9E1B94603B006C7E09 /* bg_05.jpg in Resources */,
 				C571E8621BFAD0EB00126993 /* public_key.der in Resources */,
 				C5A4E4431BF5CB6A00C0E761 /* cha.png in Resources */,

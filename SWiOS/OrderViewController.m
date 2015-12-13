@@ -117,13 +117,13 @@
                                @"label2Label":[[NSNumber alloc] initWithFloat:SCREEN_WIDTH*0.05].stringValue
                               };//设置一些常量
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[imgView(imgWidth)]" options:NSLayoutFormatAlignAllTop metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[label1(>=100)]-|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[imgView(imgWidth)]-[label1(>=100)]" options:NSLayoutFormatAlignAllFirstBaseline metrics:metrics views:views]];
     
+  
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[label1(>=100)]-|" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views]];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[imgView(imgWidth)]-imgToBottom-|" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label1(20)]-[label2(20)]-imgToBottom-|" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[imgView(imgWidth)]-imgToBottom-|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label1(20)]-5-[label2(20)]-imgToBottom-|" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -207,16 +207,20 @@
 -(void)alipay{
 
 //
-    [LUAliPay alipay:^(){
-        TradeFinishViewController *vc =[[TradeFinishViewController alloc]init];
-        vc.navigationItem.titleView = [UILabel navTitleLabel:@"订单详情"];
-        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-                                         initWithTitle:@""
-                                         style:UIBarButtonItemStylePlain
-                                         target:self
-                                         action:nil];
-        self.navigationItem.backBarButtonItem = cancelButton;
-        [self.navigationController pushViewController:vc animated:YES];
+    [LUAliPay alipay:^(NSDictionary *resultDic){
+       int statusCode=((NSString*)resultDic[@"resultStatus"]).intValue;
+        if (statusCode==9000) {
+            TradeFinishViewController *vc =[[TradeFinishViewController alloc]init];
+            vc.navigationItem.titleView = [UILabel navTitleLabel:@"订单详情"];
+            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:nil];
+            self.navigationItem.backBarButtonItem = cancelButton;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
     }];
 }
 

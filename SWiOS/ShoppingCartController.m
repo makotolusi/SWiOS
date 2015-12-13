@@ -87,7 +87,7 @@
         _tableView.dataSource = self;
         _tableView.delegate = self;
 //    _tableView.backgroundColor=[UIColor blackColor];
-        _tableView.rowHeight = SCREEN_HEIGHT/7;
+        _tableView.rowHeight = SCREEN_HEIGHT*0.16;
 //        _tableView.contentInset = UIEdgeInsetsMake(50, 0.f, 0.f, 0.f);
         _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
         [self.view addSubview:_tableView];
