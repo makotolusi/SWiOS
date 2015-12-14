@@ -194,7 +194,8 @@
     //插入的数据为空，直接返回失败
     if(!address)
         return NO;
-    
+    if(!address.name)
+        return NO;
     //打开数据库，如果没有打开，直接返回
     if(![self openDatabase])
         return NO;

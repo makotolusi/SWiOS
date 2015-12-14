@@ -80,10 +80,10 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[label1(>=100)]-[totalPrice(>=60)]-5-|" options:NSLayoutFormatAlignAllTop metrics:metrics views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-top-[label1(20)]-2-[label2(20)]" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
     
-
+    float payButtonHeight=SCREEN_HEIGHT/11;
         isEdit=YES;
         // 创建表视图
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kSWTopViewHeight*1.7, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kSWTopViewHeight*1.7, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight-kSWTopViewHeight*1.7-payButtonHeight)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
 //    _tableView.backgroundColor=[UIColor blackColor];
@@ -114,7 +114,7 @@
         UIWindow * window = [[UIApplication sharedApplication] keyWindow];
         SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
         bool a=mainController.tabBarView.hidden;
-    float payButtonHeight=SCREEN_HEIGHT/11;
+
         if(a){
             buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - payButtonHeight, SCREEN_WIDTH, payButtonHeight)];
         }else

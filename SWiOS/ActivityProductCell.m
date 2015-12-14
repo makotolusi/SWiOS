@@ -25,13 +25,13 @@
     [super layoutSubviews];
 //    [_imgView setUrl:_activityProduct.picUrl1];
 //    
-    UIImage* img=[UIImage imageNamed:@"imageplaceholder-120"];
+//    UIImage* img=[UIImage imageNamed:@"imageplaceholder-120"];
     //    img=[self scaleToSize:img size:CGSizeMake(60, 60)];
     float imgViewSize=SCREEN_WIDTH/3;
     UIImageView* imgView=[[UIImageView alloc] init];//initWithFrame:CGRectMake(8, 8, imgViewSize, imgViewSize)];
     [imgView sd_setImageWithURL:[NSURL URLWithString:_activityProduct.picUrl1]
-            placeholderImage:img];
-    
+            placeholderImage:nil];
+    imgView.tag=1;
     _productName.text=_activityProduct.productName;
     _productName.textAlignment=NSTextAlignmentLeft;
     [_productName midLabel];
@@ -48,6 +48,7 @@
     //设置bgView与superview左右对齐
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[imgView(imageEdge)]-toImg-[_productName]" options:0 metrics:metrics views:views]];        // 设置bgView与superview 上边界对齐
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-padding-[imgView(imageEdge)]" options:0 metrics:metrics views:views]];        // labelOne与imageview 的水平约束
+    
 }
 
 

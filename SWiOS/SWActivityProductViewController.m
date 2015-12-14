@@ -18,6 +18,7 @@
 #import "DetailPageController.h"
 #import "UIAlertView+Extension.h"
 #import "ShoppingCartLocalDataManager.h"
+#import "UIImageView+WebCache.h"
 #define kCCell_Img			1
 #define kCCell_Button		4
 static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier";
@@ -87,22 +88,22 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     [_tableView registerNib:[UINib nibWithNibName:@"ActivityProductCell" bundle:nil] forCellReuseIdentifier:activityProductCellIdentifier];
     [self.view addSubview:_tableView];
     //shopping cart
-    UIView  *barView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 66, SCREEN_WIDTH, 66)];
+    UIView  *barView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kSWTabBarViewHeight, SCREEN_WIDTH, kSWTabBarViewHeight)];
     barView.backgroundColor = UIColorFromRGB(0x1abc9c);
-    barView.center = CGPointMake(barView.frame.size.width / 2,SCREEN_HEIGHT - 66 / 2);
+//    barView.center = CGPointMake(barView.frame.size.width / 2,SCREEN_HEIGHT - kSWTabBarViewHeight / 2);
     //cart home image view
-    bottomImageView=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
+    bottomImageView=[[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 40, 40)];
     bottomImageView.image=[UIImage imageNamed:@"fish"];
     
     [barView addSubview:bottomImageView];
     //price label
-    priceLabel=[[UILabel alloc] initWithFrame:CGRectMake(bottomImageView.frame.size.width+20, 20, 200, 30)];
+    priceLabel=[[UILabel alloc] initWithFrame:CGRectMake(bottomImageView.frame.size.width+20, barView.frame.size.height/2-15, 200, 30)];
     priceLabel.textColor=[UIColor whiteColor];
     priceLabel.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
     priceLabel.font=[UIFont boldSystemFontOfSize:20];
     [barView addSubview:priceLabel];
     //buy label
-    bottomLabel=[[UIButton alloc] initWithFrame:CGRectMake(barView.frame.size.width-80, 20, 65, 34)];
+    bottomLabel=[[UIButton alloc] initWithFrame:CGRectMake(barView.frame.size.width-80, barView.frame.size.height/2-15, 65, 30)];
     [bottomLabel setTitle:@"请选购" forState:UIControlStateNormal];
 //    [bottomLabel setTitle:@"去结算" forState:UIControlStateSelected];
     bottomLabel.backgroundColor=UIColorFromRGB(0x1abc9c);
@@ -198,7 +199,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
         }
 //        NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
         // perform add to cart animation
-        [self addToCartTapped:ip];
+        [self addToCartTapped:ip url:model.picUrl1];
     }
     _cartModel.orderModel.totalCount=[_cartModel.arOfWatchesOfCart count];
     NSLog(@"total count %ld",[_cartModel.arOfWatchesOfCart count]);
@@ -216,12 +217,14 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     [ShoppingCartLocalDataManager insertOrderModel:_cartModel.orderModel];
 }
 
-- (void)addToCartTapped:(NSIndexPath*)indexPath {
+- (void)addToCartTapped:(NSIndexPath*)indexPath url:(NSString*)url {
     // grab the cell using indexpath
     UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
     // grab the imageview using cell
     UIImageView *imgV = (UIImageView*)[cell viewWithTag:kCCell_Img];
-    
+    [imgV sd_setImageWithURL:[NSURL URLWithString:url]
+               placeholderImage:nil];
+
     // get the exact location of image
     CGRect rect = [imgV.superview convertRect:imgV.frame fromView:nil];
     rect = CGRectMake(5, (rect.origin.y*-1)-10, imgV.frame.size.width, imgV.frame.size.height);
