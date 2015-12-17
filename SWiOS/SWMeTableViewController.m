@@ -21,6 +21,7 @@
 #import "RegisterViewController.h"
 #import "LoadingView.h"
 #import "FavorViewController.h"
+#import "ShoppingCartLocalDataManager.h"
 NSString * const killShark = @"柠檬鲨别捣乱";
 NSString * const kME = @"头像";
 NSString * const kMoney = @"钱包";
@@ -146,24 +147,25 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     SWMe* s16 = [[SWMe alloc] initWithDescribe:kFavor andImgUrl:@""];
     
     
-    SWMe* s21 = [[SWMe alloc] initWithDescribe:kMoney andImgUrl:@"qianbao"];
+    SWMe* s21 = [[SWMe alloc] initWithDescribe:kMoney andImgUrl:@""];
 
-    SWMe* s31 = [[SWMe alloc] initWithDescribe:clearCache andImgUrl:@"qingchuhuancun"];
+    SWMe* s31 = [[SWMe alloc] initWithDescribe:clearCache andImgUrl:@""];
     SWMe* s32 = [[SWMe alloc] initWithDescribe:killShark andImgUrl:@"shark.png"];
-    NSArray* array = [NSArray arrayWithObjects:s1,s12,s13,s14,s15,s16,s21,s31,s32, nil];
+    
+    SWMe* s41 = [[SWMe alloc] initWithDescribe:kLogOut andImgUrl:@""];
+    NSArray* array = [NSArray arrayWithObjects:s1,s12,s13,s14,s15,s16,s21,s31,s41,s32, nil];
 
 //    NSArray* array2 = [NSArray arrayWithObjects:s21, nil];
 
 
 //    NSArray* array3 = [NSArray arrayWithObjects:s31, nil];
     
-    SWMe* s41 = [[SWMe alloc] initWithDescribe:kLogOut andImgUrl:@""];
-     NSArray* array4 = [NSArray arrayWithObjects:s41,nil];
+//     NSArray* array4 = [NSArray arrayWithObjects:s41,nil];
     groups = [[NSMutableArray alloc] init];
     [groups addObject:array];
 //    [groups addObject:array2];
 //    [groups addObject:array3];
-    [groups addObject:array4];
+//    [groups addObject:array4];
 //    _rootController = [[UINavigationController alloc]init];
 //    [self.view.window addSubview:_rootController.view];
 //    navController = [[UINavigationController alloc]initWithRootViewController:self];
@@ -205,6 +207,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
     //    cell.detailTextLabel.text = @"detail";
     cell.textLabel.text = s.describe;
+    [cell.textLabel smallLabel];
     cell.imageView.image=[UIImage imageNamed:s.imgUrl];
     if (![s.describe isEqual:killShark]&&![s.describe isEqual:kLogOut]) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -219,7 +222,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         bigImageView=[[YCAsyncImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, HEAD_RES_BIG, HEAD_RES_BIG)];
         [bigImageView setUrl:_headUrl];
         UILabel *headLabel=[[UILabel alloc] initWithFrame:CGRectMake(20, 40, 100, 10)];
-
+        [headLabel smallLabel];
         [cell addSubview:headLabel];
 //        if ([self existsFileSelfPhoto:kSelfPhoto delFlg:NO]) {
 //            meUIImageView.image = [UIImage imageNamed:rawImageFilePath];
@@ -237,7 +240,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     
     if ([s.describe isEqual:kName]) {
         meTextLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-110, cell.frame.origin.y+5, 100, 20)];
-        [meTextLabel midLabel];
+        [meTextLabel smallLabel];
         [meTextLabel setUserInteractionEnabled:YES];
         meTextLabel.text=_username==nil?@"柠檬鲨":_username;
         UITapGestureRecognizer* singleTapTextLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTextLabelClicked:)];
@@ -246,7 +249,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     }
     if ([s.describe isEqual:kGender]) {
         meGenderLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, cell.frame.origin.y+5, 60, 20)];
-        [meGenderLabel midLabel];
+        [meGenderLabel smallLabel];
         [meGenderLabel setUserInteractionEnabled:YES];
         meGenderLabel.text=_gender==0?@"男":@"女";
         [cell addSubview:meGenderLabel];
@@ -261,7 +264,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
      if ([s.describe isEqual:kLogOut]) {
          UILabel *logoutLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, cell.frame.size.height/2-10, 200, 20)];
          logoutLabel.textAlignment=NSTextAlignmentCenter;
-//         [logoutLabel midLabel];
+         [logoutLabel smallLabel];
 //         logoutLabel.textColor=[UIColor blackColor];
          logoutLabel.text=cell.textLabel.text;
          cell.textLabel.text=@"";
@@ -273,17 +276,18 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
     SWMe* s = [groups[[indexPath section]] objectAtIndex:[indexPath row]];
     if ([s.describe isEqual:kME]) {
-        return 80.0f;
+        return SCREEN_HEIGHT*0.13;
     }
-    return 40.f;
+    return SCREEN_HEIGHT*0.07;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 5;
+    return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 5;
+    return 1;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
@@ -413,7 +417,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults removeObjectForKey:USER_LOGIN_PHONE_NUM];
         [self presentViewController:mvc animated:YES completion:nil];
-        
+        [ShoppingCartLocalDataManager dropAllTables];
     }
 }
 
@@ -498,7 +502,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
                                    }
                                }fail:^{
                                    NSLog(@"网络异常，取数据异常");
-                               }];
+                               } parentView:nil];
             
         }];
         action;

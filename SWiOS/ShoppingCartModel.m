@@ -9,6 +9,9 @@
 #import "ShoppingCartModel.h"
 #import "OrderModel.h"
 #import "NSString+Extension.h"
+#import "ActivityProduct.h"
+#import "UIAlertView+Extension.h"
+#import "ShoppingCartLocalDataManager.h"
 @implementation ShoppingCartModel
 
  static ShoppingCartModel *sharedManager;
@@ -21,7 +24,8 @@
         sharedManager = [[ShoppingCartModel alloc] init];
         sharedManager.addressModel=[[AddressModel alloc] init];
         sharedManager.arOfWatchesOfCart = [NSMutableArray array];
-        sharedManager.productCode_buyCount = [[NSMutableDictionary alloc] init];
+        sharedManager.productCode_buyCount = [[NSMutableDictionary
+                                               alloc] init];
         sharedManager.orderModel=[[OrderModel alloc] init];
         sharedManager.orderModel.orderDetails = [NSMutableArray array];
         sharedManager.orderModel.totalPrice=[NSNumber numberWithFloat:0.00f];
@@ -61,5 +65,94 @@
     sharedManager.orderModel=[[OrderModel alloc] init];
     sharedManager.orderModel.orderDetails = [NSMutableArray array];
     sharedManager.orderModel.totalPrice=[NSNumber numberWithFloat:0.00f];
+}
+
++(BOOL)add2CartWithProduct:(ActivityProduct*)product buyCount:(int)buyCount{
+    
+    if (product.rushQuantity<1) {
+        [UIAlertView showMessage:@"库存不足"];
+        return NO;
+    }
+    NSInteger index=-1;
+    int total=0;
+    if ([sharedManager.arOfWatchesOfCart containsObject:product]) {
+        index= [sharedManager.arOfWatchesOfCart indexOfObject:product];
+        product=sharedManager.arOfWatchesOfCart[index];
+        total=product.buyCount.intValue+buyCount;
+    }else {
+        [sharedManager.arOfWatchesOfCart addObject:product];
+        total=buyCount;
+        sharedManager.orderModel.totalCount=sharedManager.orderModel.totalCount+1;
+    }
+    
+    if (product.buyCount==nil) {
+        product.buyCount=[[NSNumber alloc] initWithInt:1];
+    }
+    
+    if (total>product.rushQuantity) {
+        [UIAlertView showMessage:@"库存不足"];
+        return NO;
+    }
+    
+    
+    product.buyCount=[[NSNumber alloc] initWithInt:total];
+    if (index!=-1) {
+        [sharedManager.arOfWatchesOfCart replaceObjectAtIndex:index withObject:product ];
+    }
+    NSDecimalNumberHandler *round = [NSDecimalNumberHandler
+                                     decimalNumberHandlerWithRoundingMode:NSRoundPlain
+                                     scale:2
+                                     raiseOnExactness:NO
+                                     raiseOnOverflow:NO
+                                     raiseOnUnderflow:NO
+                                     raiseOnDivideByZero:YES];
+    NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:sharedManager.orderModel.totalPrice.stringValue];
+    NSDecimalNumber *pPrice=[NSDecimalNumber decimalNumberWithDecimal:[product calProductTotalPriceWithAddCount:buyCount].decimalValue];
+   
+    sharedManager.orderModel.totalPrice=[t1 decimalNumberByAdding: pPrice withBehavior:round];
+    [ShoppingCartLocalDataManager insertShoppingCart:product];
+    [ShoppingCartLocalDataManager insertOrderModel:sharedManager.orderModel];
+    return YES;
+}
+
++(BOOL)removeCartWithProduct:(ActivityProduct*)product count:(int)count{
+     int total=0;
+    NSInteger index = 0;
+    if ([sharedManager.arOfWatchesOfCart containsObject:product]) {
+        index= [sharedManager.arOfWatchesOfCart indexOfObject:product];
+        product=sharedManager.arOfWatchesOfCart[index];
+        total=product.buyCount.intValue-count;
+    }
+    if (total>0) {
+        product.buyCount=[[NSNumber alloc] initWithInt:total];
+        
+        NSNumber *pPrice=[product calProductTotalPriceWithAddCount:count];
+        [sharedManager.orderModel subtractTotalPriceWithSingleProductPrice:[[NSDecimalNumber alloc] initWithDecimal:pPrice.decimalValue]];
+        [sharedManager.arOfWatchesOfCart replaceObjectAtIndex:index withObject:product ];
+        [ShoppingCartLocalDataManager insertOrderModel:sharedManager.orderModel];
+        [ShoppingCartLocalDataManager insertShoppingCart:product];
+//        [sharedManager.arOfWatchesOfCart removeObject:product];
+        return YES;
+    }else
+        return NO;
+ 
+
+}
++(BOOL)removeCartWithProduct:(ActivityProduct*)product{
+    NSInteger index = 0;
+    if ([sharedManager.arOfWatchesOfCart containsObject:product]) {
+        index= [sharedManager.arOfWatchesOfCart indexOfObject:product];
+        product=sharedManager.arOfWatchesOfCart[index];
+    }
+    
+    if ( [ShoppingCartLocalDataManager deleteShoppingCartById:product.id.intValue]) {
+        NSNumber *pPrice=[product calProductTotalPriceWithAddCount:product.buyCount.intValue];
+        [sharedManager.orderModel subtractTotalPriceWithSingleProductPrice:[[NSDecimalNumber alloc] initWithDecimal:pPrice.decimalValue]];
+        sharedManager.orderModel.totalCount=sharedManager.orderModel.totalCount-1;
+        [ShoppingCartLocalDataManager insertOrderModel:sharedManager.orderModel];
+        [sharedManager.arOfWatchesOfCart removeObject:product];
+        return YES;
+    }else
+        return NO;
 }
 @end

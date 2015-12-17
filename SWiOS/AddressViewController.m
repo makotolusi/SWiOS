@@ -15,6 +15,7 @@
 #import "HttpHelper.h"
 #import "UIAlertView+Extension.h"
 #import "SWMeTableViewController.h"
+#import "UILabel+Extension.h"
 @interface AddressViewController ()
 @property (retain, nonatomic) UITextField *areaText;
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
@@ -39,7 +40,7 @@
     _tableView.delegate = self;
     _tableView.contentInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, 0.f);
     _tableView.separatorColor=[UIColor clearColor];
-    _tableView.rowHeight=60.f;
+    _tableView.rowHeight=SCREEN_HEIGHT*0.07;
     //创建编辑按钮
     UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 55, 40)];
     editButton.backgroundColor = [UIColor clearColor];
@@ -98,7 +99,8 @@
             [cell addSubview:_areaText];
             break;
         case 4:
-            [cell addSubview:[self textView:_addressModel.address]];
+//            [cell addSubview:[self textView:_addressModel.address]];
+              [cell addSubview:[self input:@"详细地址" tag:15 text: _addressModel.address]];
             break;
         default:
             break;
@@ -129,6 +131,7 @@
     input.placeholder=placeholderText;
     input.tag=tag;
     input.text=text;
+    input.font=[UIFont systemFontOfSize:13];
     [input setValue:[UIFont boldSystemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
     return input;
 }

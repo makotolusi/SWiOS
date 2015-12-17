@@ -11,10 +11,10 @@
 @interface ActivityProduct : JSONModel
 
 @property(nonatomic,assign)NSNumber* id;
-@property(nonatomic,strong)NSNumber *activityId;
+@property(nonatomic,strong)NSNumber<Optional> *activityId;
 @property(nonatomic,copy)NSString *productCode;
-@property(nonatomic,copy)NSString *productName;
-@property(nonatomic,strong)NSNumber *rushPrice;
+@property(nonatomic,copy)NSString<Optional> *productName;
+@property(nonatomic,strong)NSNumber<Optional> *rushPrice;
 @property(nonatomic,assign)int rushQuantity;
 @property(nonatomic,copy)NSString *picUrl1;
 @property  (strong,nonatomic) NSNumber<Optional> *buyCount;

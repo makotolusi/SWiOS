@@ -11,6 +11,7 @@
 #import "OrderModel.h"
 #import "AddressModel.h"
 #import "RegisterModel.h"
+#import "ActivityProduct.h"
 @interface ShoppingCartModel : JSONModel
 @property (nonatomic,strong) NSMutableArray *arOfWatchesOfCart;
 @property (nonatomic,strong) NSMutableDictionary *productCode_buyCount;
@@ -24,4 +25,10 @@
 +(ShoppingCartModel *)sharedInstance;
 +(void)clearCart;
 +(void)loadAddressModel;
+
++(BOOL)add2CartWithProduct:(ActivityProduct*)product buyCount:(int)buyCount;
+
++(BOOL)removeCartWithProduct:(ActivityProduct*)product;
+
++(BOOL)removeCartWithProduct:(ActivityProduct*)product count:(int)count;
 @end

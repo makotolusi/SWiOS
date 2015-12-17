@@ -24,4 +24,5 @@
 
 + (BOOL)insertOrderModel:(OrderModel*)order;
 
++ (BOOL)dropAllTables;
 @end

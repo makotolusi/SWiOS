@@ -12,20 +12,20 @@
 
 
 -(void)midLabel{
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
         self.textColor=[UIColor darkGrayColor];
    
 //    self.textAlignment=NSTextAlignmentCenter;
     self.font=[UIFont fontWithName:FONT_TYPE size:FONT_MID_SIZE ];
-         }
+//         }
 }
 
 -(void)smallLabel{
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
         self.textColor=[UIColor darkGrayColor];
     
     self.font=[UIFont fontWithName:FONT_TYPE size:FONT_SMALL_SIZE ];
-        }
+//        }
 }
 
 -(UIView*)tableSectionLabel:(NSString*)text y:(NSInteger)y{

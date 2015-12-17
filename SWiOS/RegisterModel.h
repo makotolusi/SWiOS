@@ -12,13 +12,13 @@
 
 
 @property (assign, nonatomic) int id;
-@property (copy, nonatomic) NSString *username;
+@property (copy, nonatomic) NSString<Optional> *username;
 @property (copy, nonatomic) NSString *phoneNum;
 //@property (copy, nonatomic) NSString *password;
-@property (copy, nonatomic) NSString *gender;
-@property (copy, nonatomic) NSString *imgUrl;
-@property (copy, nonatomic) NSString *smallImgUrl;
-@property (copy, nonatomic) NSString *originalImgUrl;
+@property (copy, nonatomic) NSString<Optional> *gender;
+@property (copy, nonatomic) NSString<Optional> *imgUrl;
+@property (copy, nonatomic) NSString<Optional> *smallImgUrl;
+@property (copy, nonatomic) NSString<Optional> *originalImgUrl;
 //@property (copy, nonatomic) NSString *qq;
 //@property (copy, nonatomic) NSString *weixin;
 @property (copy, nonatomic) NSString<Optional> *addr;

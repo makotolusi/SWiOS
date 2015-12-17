@@ -28,7 +28,7 @@
     self.navigationItem.hidesBackButton = YES;
      [UIWindow showTabBar:YES];
     _cartModel=[ShoppingCartModel sharedInstance];
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) ];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight) ];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight=100;

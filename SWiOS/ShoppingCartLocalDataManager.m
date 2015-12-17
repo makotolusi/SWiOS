@@ -125,4 +125,20 @@
         return nil;
 }
 
+
++ (BOOL)dropAllTables{
+    BOOL isExecuteSuccess = NO;
+    DatabaseManager* dataBaseManager=[DatabaseManager sharedDatabaseManager];
+    //打开数据库，如果没有打开，直接返回
+    if(![dataBaseManager openDatabase])
+        return NO;
+    FMDatabase *db=[dataBaseManager getDB];
+    isExecuteSuccess = [db executeUpdate:@"DROP TABLE ordermodel"];
+    isExecuteSuccess = [db executeUpdate:@"DROP TABLE address"];
+    isExecuteSuccess = [db executeUpdate:@"DROP TABLE shoppingcart"];
+    [dataBaseManager closeDatabase];
+    return isExecuteSuccess;
+
+}
+
 @end

@@ -118,12 +118,15 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
          [bottomLabel setTitle:@"请选购" forState:UIControlStateNormal];
     }
     [barView addSubview:bottomLabel];
-    [self.view addSubview:barView];
+    
     if(_cartModel.orderModel.totalCount>0){
         //badgeView
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
         badgeView.badgeText = [NSString stringWithFormat:@"%ld", (long) _cartModel.orderModel.totalCount];
     }
+    [self.view addSubview:barView];
+//    [self.view insertSubview:barView atIndex:[self.view.subviews count]];
+//    [self.view bringSubviewToFront:barView];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -166,55 +169,38 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     ActivityProduct *model = _data[index];
     // create indexpath
     NSIndexPath *ip = [NSIndexPath indexPathForRow:index inSection:0];
-    
+    BOOL sta=YES;
     // perform action
     if(sender.selected) {
         // remove selected array
-       NSInteger index= [_cartModel.arOfWatchesOfCart indexOfObject:model];
-        if (index>=0) {
-              model=[_cartModel.arOfWatchesOfCart objectAtIndex:index];
+        sta=[ShoppingCartModel removeCartWithProduct:model];
+        if (sta) {
+            // update badge number
+            [self reloadBadgeNumber];
         }
-        model.buyCount=[[NSNumber alloc] initWithInt:model.buyCount.intValue-1];//;
-        if([ShoppingCartLocalDataManager deleteShoppingCartById:model.id.intValue]){
-            [_cartModel.arOfWatchesOfCart removeObject:model];
-            NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithDecimal:[model calProductTotalPriceWithAddCount:model.buyCount.intValue].decimalValue];
-            [ _cartModel.orderModel subtractTotalPriceWithSingleProductPrice:t2];
-            [_cartModel.productCode_buyCount removeObjectForKey:model.productCode];
-        }
-        // update badge number
-        [self reloadBadgeNumber];
+       
     } else {
-        // add into selected array
-        if(model.rushQuantity==0){
-            [UIAlertView showMessage:@"库存不足"];
-            return;
+        sta=[ShoppingCartModel add2CartWithProduct:model buyCount:1];
+        if (sta) {
+            // perform add to cart animation
+            [self addToCartTapped:ip url:model.picUrl1];
         }
-        model.buyCount=[[NSNumber alloc] initWithInt:model.buyCount.intValue+1];
-        if ([ShoppingCartLocalDataManager insertShoppingCart:model]) {
-            [_cartModel.arOfWatchesOfCart addObject:model];
-            NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithDecimal:[model calProductTotalPriceWithAddCount:model.buyCount.intValue].decimalValue];
-            [ _cartModel.orderModel addTotalPriceWithSingleProductPrice:t2];
-            
-            [_cartModel.productCode_buyCount setObject:[NSNumber numberWithInteger:model.buyCount] forKey:model.productCode];
+    }
+    if (sta) {
+        //badgeView
+        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
+        badgeView.badgeText = [NSString stringWithFormat:@"%ld",(long)_cartModel.orderModel.totalCount];
+        priceLabel.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
+        // reload specific row with animation
+        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:ip] withRowAnimation:UITableViewRowAnimationLeft];
+        if(_cartModel.orderModel.totalCount>0){
+            [bottomLabel setTitle:@"去结算" forState:UIControlStateNormal];
+        }else{
+            [bottomLabel setTitle:@"请选购" forState:UIControlStateNormal];
         }
-//        NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
-        // perform add to cart animation
-        [self addToCartTapped:ip url:model.picUrl1];
     }
-    _cartModel.orderModel.totalCount=[_cartModel.arOfWatchesOfCart count];
-    NSLog(@"total count %ld",[_cartModel.arOfWatchesOfCart count]);
-    //badgeView
-    JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:bottomImageView alignment:JSBadgeViewAlignmentBuyBuyBuy];
-    badgeView.badgeText = [NSString stringWithFormat:@"%ld",(long)_cartModel.orderModel.totalCount];
-    priceLabel.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
-    // reload specific row with animation
-    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:ip] withRowAnimation:UITableViewRowAnimationLeft];
-    if(_cartModel.orderModel.totalCount>0){
-         [bottomLabel setTitle:@"去结算" forState:UIControlStateNormal];
-    }else{
-         [bottomLabel setTitle:@"请选购" forState:UIControlStateNormal];
-    }
-    [ShoppingCartLocalDataManager insertOrderModel:_cartModel.orderModel];
+    
+
 }
 
 - (void)addToCartTapped:(NSIndexPath*)indexPath url:(NSString*)url {

@@ -112,8 +112,14 @@
         //根据不同入口修改button坐标
         UIButton *buy;
         UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-        SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
-        bool a=mainController.tabBarView.hidden;
+//        SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
+    UIViewController *con=window.rootViewController;
+    bool a=YES;
+    if ([con isKindOfClass:[SWMainViewController class]]) {
+        SWMainViewController *mainController=(SWMainViewController*)con;
+         a=mainController.tabBarView.hidden;
+    }
+    
 
         if(a){
             buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - payButtonHeight, SCREEN_WIDTH, payButtonHeight)];
@@ -127,12 +133,12 @@
         [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [buy addTarget:self action:@selector(goBalace) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:buy];
-    if (_cartModel.arOfWatchesOfCart.count==0) {
-        UIImageView *kongImg=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"kong"]];
-        kongImg.frame=CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-100, 200, 200);
-        kongImg.tag=111;
-        [self.view addSubview:kongImg];
-    }
+//    if (_cartModel.arOfWatchesOfCart.count==0) {
+//        UIImageView *kongImg=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"kong"]];
+//        kongImg.frame=CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-100, 200, 200);
+//        kongImg.tag=111;
+//        [self.view addSubview:kongImg];
+//    }
 
 }
 #pragma mark - TableView Datasource
@@ -155,7 +161,7 @@
         cell.tableView=_tableView;
 
     }else{
-       
+       cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row];
     }
 
      [cell settingData];
@@ -189,18 +195,6 @@
 }
 
 - (void)totalPrice:(ActivityProduct*)activityProduct type:(int)type{
-    NSDecimalNumber *sum;
-    if (type==0) {
-        NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
-        NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:activityProduct.rushPrice.stringValue];
-        sum=[t1 decimalNumberByAdding: t2];
-    }else{
-        NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
-        NSDecimalNumber *t2=[NSDecimalNumber decimalNumberWithString:activityProduct.rushPrice.stringValue];
-        sum=[t1 decimalNumberBySubtracting: t2];
-    }
-    _cartModel.orderModel.totalPrice=sum;
-    [ShoppingCartLocalDataManager insertOrderModel:_cartModel.orderModel];
     totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@", _cartModel.orderModel.totalPrice];
 }
 
@@ -227,16 +221,14 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         ActivityProduct *product= _cartModel.arOfWatchesOfCart[indexPath.row];
-        if ( [ShoppingCartLocalDataManager deleteShoppingCartById:product.id.intValue]) {
-            NSNumber *pPrice=[product calProductTotalPriceWithAddCount:product.buyCount.intValue];
-            [_cartModel.orderModel subtractTotalPriceWithSingleProductPrice:[[NSDecimalNumber alloc] initWithDecimal:pPrice.decimalValue]];
-            _cartModel.orderModel.totalCount=_cartModel.orderModel.totalCount-1;
-            [ShoppingCartLocalDataManager insertOrderModel:_cartModel.orderModel];
-            [_cartModel.arOfWatchesOfCart removeObjectAtIndex:indexPath.row];
+        
+        if ([ShoppingCartModel removeCartWithProduct:product]) {
+//            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [_tableView reloadData];
             // Delete the row from the data source.
-            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             totalPrice.text=[@"¥ " stringByAppendingFormat:@"%@",_cartModel.orderModel.totalPrice];
         }
+
 
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {

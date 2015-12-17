@@ -21,6 +21,7 @@
 {
     @private
 //        UIView *editView;
+  
     
 }
 @property (strong, nonatomic)  YCAsyncImageView *imgView;
@@ -29,15 +30,21 @@
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
 @property (nonatomic,strong) ActivityProduct* activityProduct;
 @property (assign,nonatomic) BOOL isEdit;
+@property (assign,nonatomic) BOOL isOrder;
 @property (strong,nonatomic) UITableView *tableView;
 @property (nonatomic,strong) NSIndexPath *indexPath;
 @property (nonatomic,strong) UIButton *minus;
 @property (nonatomic,strong) UIButton *plus;
 @property (nonatomic,strong) UILabel *count;
+@property (nonatomic,strong) UILabel *status;
+@property (nonatomic,strong) UILabel *orderNum;
 // 委托代理人，代理一般需使用弱引用(weak)
 @property (weak, nonatomic) id<ShoppingCartCellDelegate> delegate;
 
 - (void)settingData;
 - (void)initEdite;
 - (void)settingFrame;
+-(void)initOrderViewWithOrderModel;
+- (void)settingDataOrderModel:(OrderModel*)order;
+- (void)removeOrderMode;
 @end

@@ -12,6 +12,7 @@
 #import "ShoppingCartLocalDataManager.h"
 #import "UILabel+Extension.h"
 #import "MPview.h"
+#import "NSString+Extension.h"
 static CGFloat kSWCellCountTag = 1;
 @implementation ShoppingCartCell
 
@@ -19,6 +20,7 @@ static CGFloat kSWCellCountTag = 1;
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _cartModel=[ShoppingCartModel sharedInstance];
         _imgView=[[YCAsyncImageView alloc] init];
         [self addSubview:_imgView];
         
@@ -33,6 +35,17 @@ static CGFloat kSWCellCountTag = 1;
         [self labelStyle:_price text:[@"¥ " stringByAppendingFormat:@"%@",_activityProduct.rushPrice] size:13];
         [self addSubview:_price];
         
+//        UILabel *status=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
+//        [status smallLabel];
+//        status.text=@"订单已取消";
+//        status.textColor=[UIColor lightGrayColor];
+//        [self addSubview:status];
+//        UILabel *orderNum=[[UILabel alloc] initWithFrame:CGRectMake(110, 10, 200, 20)];
+//        [orderNum smallLabel];
+//        orderNum.text=@"订单号:%@";
+//        //        orderNum.textColor=[UIColor lightGrayColor];
+//        self.backgroundColor=[UIColor redColor];
+//        [self addSubview:orderNum];
     }
     return self;
 }
@@ -56,6 +69,31 @@ static CGFloat kSWCellCountTag = 1;
      }
 }
 
+-(void)initOrderViewWithOrderModel{
+//    if (_isOrder) {
+         _status=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
+        [_status smallLabel];
+    
+        _status.textColor=[UIColor lightGrayColor];
+        [self addSubview:_status];
+        _orderNum=[[UILabel alloc] initWithFrame:CGRectMake(110, 10, 200, 20)];
+        [_orderNum smallLabel];
+        [self addSubview:_orderNum];
+//    }
+}
+- (void)settingDataOrderModel:(OrderModel*)order{
+    
+//    if (_isOrder) {
+    _status.text=_cartModel.orderStatus[order.status];//@"订单已取消";
+    _orderNum.text=_S( @"订单号:%@", order.orderCode);
+//    }
+}
+
+- (void)removeOrderMode{
+
+//    [status removeFromSuperview];
+//    [orderNum removeFromSuperview];
+}
 - (void)settingData{
     _imgView.url=_activityProduct.picUrl1;
     _title.text=_activityProduct.productName;
@@ -162,30 +200,22 @@ static CGFloat kSWCellCountTag = 1;
 }
 
 - (void)plusAction:(UIButton*)sender{
-    if (_activityProduct.buyCount.intValue<_activityProduct.rushQuantity) {
-        _activityProduct.buyCount=[[NSNumber alloc] initWithInt:_activityProduct.buyCount.intValue+1];
-         [ShoppingCartLocalDataManager insertShoppingCart:_activityProduct];
-        [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
+    if ([ShoppingCartModel add2CartWithProduct:_activityProduct buyCount:1]) {
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
         countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount.intValue];
         if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
             [_delegate totalPrice: _activityProduct type:0]; // 通知执行协议方法
         }
-    }else{
-        [UIAlertView showMessage:@"库存不足"];
     }
-    
 }
 - (void)minusAction:(UIButton*)sender{
-    if( _activityProduct.buyCount.intValue>1){
-         _activityProduct.buyCount=[[NSNumber alloc] initWithInt:_activityProduct.buyCount.intValue-1];
-        [ShoppingCartLocalDataManager insertShoppingCart:_activityProduct];
-        [_cartModel.arOfWatchesOfCart replaceObjectAtIndex:_indexPath.row-1 withObject:_activityProduct ];
+    if ([ShoppingCartModel removeCartWithProduct:_activityProduct count:1]) {
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
         countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) _activityProduct.buyCount.intValue];
         if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法
             [_delegate totalPrice: _activityProduct type:1]; // 通知执行协议方法
         }
+
     }
 }
 

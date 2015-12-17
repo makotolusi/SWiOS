@@ -59,15 +59,15 @@ static NSString *orderListCell = @"orderListCell";
       paymentArray=[NSArray arrayWithObjects:@"EMS",@"中通", @"顺丰",nil];
      _cartModel=[ShoppingCartModel sharedInstance];
     
-    if (!StringIsNullOrEmpty(_cartModel.registerModel.addr)) {
-        
-        NSArray *aTest = [_cartModel.registerModel.addr componentsSeparatedByString:@";"];
-        _cartModel.addressModel.name=aTest[0];
-        _cartModel.addressModel.phone=aTest[1];
-        _cartModel.addressModel.code=aTest[2];
-        _cartModel.addressModel.city=aTest[3];
-        _cartModel.addressModel.address=aTest[4];
-    }
+//    if (!StringIsNullOrEmpty(_cartModel.registerModel.addr)) {
+//        
+//        NSArray *aTest = [_cartModel.registerModel.addr componentsSeparatedByString:@";"];
+//        _cartModel.addressModel.name=aTest[0];
+//        _cartModel.addressModel.phone=aTest[1];
+//        _cartModel.addressModel.code=aTest[2];
+//        _cartModel.addressModel.city=aTest[3];
+//        _cartModel.addressModel.address=aTest[4];
+//    }
     _cartModel.route=@"BalanceController";
 }
 

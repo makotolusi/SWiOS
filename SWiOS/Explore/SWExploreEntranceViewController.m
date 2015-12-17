@@ -211,17 +211,20 @@ NSInteger kWDTransitionViewTag = 33331;
     
     // 2.2秒后刷新表格UI
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        NSDictionary *pieceInfo = [_titleList objectAtIndex:_curIndex];
-        
-        NSString *pieceID = pieceInfo[@"id"];
-        
-        NSString *pieceImageURL = pieceInfo[@"sortUrl"];
-        
-        [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0];
-        
-        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-        [_contentView headerEndRefreshing];
+        if ([_titleList count]!=0) {
+            // 刷新表格
+            NSDictionary *pieceInfo = [_titleList objectAtIndex:_curIndex];
+            
+            NSString *pieceID = pieceInfo[@"id"];
+            
+            NSString *pieceImageURL = pieceInfo[@"sortUrl"];
+            
+            [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0];
+            
+            // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+            [_contentView headerEndRefreshing];
+        }
+      
     });
 }
 

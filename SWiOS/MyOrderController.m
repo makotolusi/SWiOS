@@ -63,7 +63,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.rowHeight = SCREEN_HEIGHT*0.1;
+    _tableView.rowHeight = SCREEN_HEIGHT*0.15;
 //            _tableView.contentInset = UIEdgeInsetsMake(60, 0.f, 0.f, 0.f);
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
@@ -85,6 +85,7 @@
     ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell=[[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+       
         cell.activityProduct=ap;
         cell.isEdit=NO;
         [cell initEdite];
@@ -93,25 +94,26 @@
         cell.indexPath=indexPath;
         cell.delegate=self;
         cell.tableView=_tableView;
+        
 //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
         if (indexPath.row==0) {
-            OrderModel *order=_orders[indexPath.section];
-            UILabel *status=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
-            [status smallLabel];
-            status.text=_cartModel.orderStatus[order.status];//@"订单已取消";
-            status.textColor=[UIColor lightGrayColor];
-            [cell addSubview:status];
-            UILabel *orderNum=[[UILabel alloc] initWithFrame:CGRectMake(110, 10, 200, 20)];
-            [orderNum smallLabel];
-            orderNum.text=_S( @"订单号:%@", order.orderCode);
-            //        orderNum.textColor=[UIColor lightGrayColor];
-            [cell addSubview:orderNum];
+            // cell.status
+            //            cell.isOrder=YES;
+            
+            [cell initOrderViewWithOrderModel];
+             [cell settingDataOrderModel:order];
         }
     }else{
-        
+        [cell.orderNum removeFromSuperview];
+        [cell.status removeFromSuperview];
+        if (indexPath.row==0) {
+            [cell initOrderViewWithOrderModel];
+            [cell settingDataOrderModel:order];
+        }
     }
     
-    [cell settingData];
+    
+            [cell settingData];
     
   
     return cell;
@@ -131,7 +133,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row==0) {
-        return _tableView.rowHeight+SCREEN_HEIGHT*0.1;
+        return _tableView.rowHeight+SCREEN_HEIGHT*0.05;
     }
     return _tableView.rowHeight;
 }

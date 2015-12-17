@@ -374,20 +374,21 @@ const CGFloat kSWPieceCellRbHeight = 559;
         case 0:
         {
             type = kSWExploreCellClickTypeCommnet;
-            CommentViewController *thumbViewController = [[CommentViewController alloc] init];
-
-            thumbViewController.productCode=_cellVo.productCode;
-            //vo
-            thumbViewController.navigationItem.titleView = [UILabel navTitleLabel:@"评论"];
-            //back button style
-            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-                                             initWithTitle:@""
-                                             style:UIBarButtonItemStylePlain
-                                             target:self
-                                             action:nil];
-            self.vc.navigationItem.backBarButtonItem = cancelButton;
-            [UIWindow showTabBar:NO];
-            [self.vc.navigationController pushViewController:thumbViewController animated:NO];
+//            UIViewController* u= [[UIViewController alloc] init];
+////            CommentViewController *thumbViewController = [[CommentViewController alloc] init];
+////
+////            thumbViewController.productCode=_cellVo.productCode;
+////            //vo
+////            thumbViewController.navigationItem.titleView = [UILabel navTitleLabel:@"评论"];
+////            //back button style
+////            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+////                                             initWithTitle:@""
+////                                             style:UIBarButtonItemStylePlain
+////                                             target:self
+////                                             action:nil];
+////            self.vc.navigationItem.backBarButtonItem = cancelButton;
+//            [UIWindow showTabBar:NO];
+//            [self.vc.navigationController pushViewController:u animated:YES];
         }
             break;
         case 1:

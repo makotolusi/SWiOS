@@ -46,11 +46,12 @@
                         <rect key="frame" x="310" y="68" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="5gD-TG-Okx"/>
-                            <constraint firstAttribute="width" constant="40" id="5hs-k1-Sls"/>
-                            <constraint firstAttribute="height" constant="40" id="Kqp-gO-ynb"/>
+                            <constraint firstAttribute="width" constant="70" id="5hs-k1-Sls"/>
+                            <constraint firstAttribute="height" constant="70" id="Kqp-gO-ynb"/>
                             <constraint firstAttribute="height" constant="30" id="knc-n7-AHf"/>
                             <constraint firstAttribute="width" constant="30" id="mPB-pi-99x"/>
                         </constraints>
+                        <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
                         <state key="normal" image="qianggou.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -99,7 +100,7 @@
                     <constraint firstItem="UYp-Rn-B0k" firstAttribute="leading" secondItem="3Yr-9e-Idi" secondAttribute="leading" id="Sta-ek-TdY"/>
                     <constraint firstAttribute="trailingMargin" secondItem="UYp-Rn-B0k" secondAttribute="trailing" constant="161" id="Wdf-wG-ao7"/>
                     <constraint firstItem="hoO-l7-JnL" firstAttribute="leading" secondItem="UYp-Rn-B0k" secondAttribute="trailing" constant="10" id="Zch-MS-zg2"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="hoO-l7-JnL" secondAttribute="bottom" constant="10" id="a4K-tX-bZs"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="hoO-l7-JnL" secondAttribute="bottom" id="a4K-tX-bZs"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hoO-l7-JnL" secondAttribute="bottom" constant="10" id="a88-Z1-P8I"/>
                     <constraint firstItem="UYp-Rn-B0k" firstAttribute="top" secondItem="9Y8-co-bP1" secondAttribute="bottom" constant="8" id="aOW-uf-OK9"/>
                     <constraint firstItem="3Yr-9e-Idi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="100" id="aV1-jW-OnZ"/>

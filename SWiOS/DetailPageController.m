@@ -105,7 +105,7 @@
                                               [_mp setFrame:CGRectMake(_infoView.frame.size.width/2-bw/2, title.frame.origin.y+35, bw, bh)];
                                               [cartBtn setFrame:CGRectMake(_infoView.frame.size.width/2-bw/2, _mp.frame.origin.y+40, bw, bh)];
                                               UIImageView *cha=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cha"]];
-                                              [cha setFrame:CGRectMake(_infoView.frame.origin.x+_infoView.frame.size.width-60, 5, 15, 15)];
+                                              [cha setFrame:CGRectMake(_infoView.frame.origin.x+_infoView.frame.size.width-30, 5, 20, 20)];
                                               [_infoView addSubview:cha];
                                               UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesturedDetected:)]; // 手势类型随你喜欢。
                                               cha.userInteractionEnabled = YES;
@@ -138,50 +138,22 @@
 }
 
 - (void)cartAction:(UIButton*)sender {
-//    _product.buyCount=[[NSNumber alloc] initWithInt:_product.buyCount.intValue+_mp.count];
-    if (_product.buyCount.intValue>_product.rushQuantity) {
-        [UIAlertView showMessage:@"库存不足"];
-        return;
-    }else{
-    NSDecimalNumberHandler *round = [NSDecimalNumberHandler
-                                     decimalNumberHandlerWithRoundingMode:NSRoundPlain
-                                     scale:2
-                                     raiseOnExactness:NO
-                                     raiseOnOverflow:NO
-                                     raiseOnUnderflow:NO
-                                     raiseOnDivideByZero:YES];
-    NSDecimalNumber *t1=[NSDecimalNumber decimalNumberWithString:_cartModel.orderModel.totalPrice.stringValue];
-    NSDecimalNumber *pPrice=[NSDecimalNumber decimalNumberWithDecimal:[_product calProductTotalPriceWithAddCount:_mp.count].decimalValue];
-    
-    if ([_cartModel.arOfWatchesOfCart containsObject:_product]) {
-        NSInteger index= [_cartModel.arOfWatchesOfCart indexOfObject:_product];
-        _product=_cartModel.arOfWatchesOfCart[index];
-    }else {
-        [_cartModel.arOfWatchesOfCart addObject:_product];
-    }
-    
+    if ( [ShoppingCartModel add2CartWithProduct:_product buyCount:_mp.count]) {  
+        ShoppingCartController *vc =[[ShoppingCartController alloc]init];
+        vc.navigationItem.titleView = [UILabel navTitleLabel:@"购物车"];
+        UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                         initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                         target:self
+                                         action:nil];
+        self.navigationItem.backBarButtonItem = cancelButton;
+        [self.navigationController pushViewController:vc animated:YES];
         
-       
-    _cartModel.orderModel.totalPrice=[t1 decimalNumberByAdding: pPrice withBehavior:round];
-    _product.buyCount=[[NSNumber alloc] initWithInt:_product.buyCount.intValue+_mp.count];
-  
-//    [_cartModel.productCode_buyCount setObject:_product.buyCount forKey:_product.productCode];
-//    NSNumber *value=[NSNumber numberWithInteger:[_cartModel.arOfWatchesOfCart count]-1];
-    [ShoppingCartLocalDataManager insertShoppingCart:_product];
-    [ShoppingCartLocalDataManager insertOrderModel:_cartModel.orderModel];
-    ShoppingCartController *vc =[[ShoppingCartController alloc]init];
-    vc.navigationItem.titleView = [UILabel navTitleLabel:@"购物车"];
-    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-                                     initWithTitle:@""
-                                     style:UIBarButtonItemStylePlain
-                                     target:self
-                                     action:nil];
-    self.navigationItem.backBarButtonItem = cancelButton;
-    [self.navigationController pushViewController:vc animated:YES];
-    
-    [_infoView removeFromSuperview];
-    [_modal removeFromSuperview];
+        [_infoView removeFromSuperview];
+        [_modal removeFromSuperview];
     }
+
+//    }
 }
 
 
