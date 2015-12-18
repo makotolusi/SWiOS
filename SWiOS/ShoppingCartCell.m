@@ -154,29 +154,7 @@ static CGFloat kSWCellCountTag = 1;
 -(void)layoutSubviews{
     
     [super layoutSubviews];
-//    [_infoView removeFromSuperview];
-//    [editView removeFromSuperview];
- 
-
-   
     NSLog(@" y %f cell height %f",_imgView.frame.origin.y,self.frame.size.height);
-    //info view
-   
-
-
-  
-
-   
-   
-    
-//
-////    _infoView.backgroundColor=[UIColor lightGrayColor];
-//  
-//    
-//    //count1
-//    UILabel *count1=[[UILabel alloc] initWithFrame:CGRectMake(_infoView.frame.size.width-40, _infoView.frame.size.height-15, 50, 15)];
-//    [self labelStyle:count1 text:[NSString stringWithFormat:@"X%d",_activityProduct.buyCount.intValue] size:11];
-//
     
 }
 -(void)labelStyle:(UILabel*)label text:(NSString *)text size:(int)size{
@@ -188,7 +166,7 @@ static CGFloat kSWCellCountTag = 1;
     [button setImage:[UIImage imageNamed:sign] forState:UIControlStateNormal];
     button.imageEdgeInsets=UIEdgeInsetsMake(4, 4, 4, 4);
     button.layer.masksToBounds=YES;
-    button.layer.cornerRadius=9.0f;
+    button.layer.cornerRadius=8.0f;
     button.alpha=0.7f;
 //    [button setTitle:sign forState:UIControlStateNormal];
     //    minus.titleLabel.font=[UIFont systemFontOfSize:15];

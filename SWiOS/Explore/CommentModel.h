@@ -9,10 +9,10 @@
 #import "JSONModel.h"
 #import "YCAsyncImageView.h"
 @interface CommentModel : JSONModel
-@property(nonatomic,copy) NSString* comments;
-@property(nonatomic,copy) NSString* userName;
+@property(nonatomic,copy) NSString<Optional>* comments;
+@property(nonatomic,copy) NSString<Optional>* userName;
 @property(nonatomic,assign) int userId;
-@property(nonatomic,copy) NSString* userHeadPortraitUrl;
-@property(nonatomic,copy) NSString* productCode;
-@property(nonatomic,strong) NSString* entertime;
+@property(nonatomic,copy) NSString<Optional>* userHeadPortraitUrl;
+@property(nonatomic,copy) NSString<Optional>* productCode;
+@property(nonatomic,strong) NSString<Optional>* entertime;
 @end

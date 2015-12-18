@@ -249,6 +249,8 @@
 		C5A725B71BCB549900DF040D /* BalanceFieldModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B61BCB549900DF040D /* BalanceFieldModel.m */; };
 		C5A725BB1BCB5ACF00DF040D /* OrderPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B91BCB5ACF00DF040D /* OrderPriceCell.m */; };
 		C5A725BC1BCB5ACF00DF040D /* OrderPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A725BA1BCB5ACF00DF040D /* OrderPriceCell.xib */; };
+		C5CFF1C61C2296CE005B3310 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CFF1C31C2296CE005B3310 /* libMobClickLibrary.a */; };
+		C5CFF1C81C2297D4005B3310 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CFF1C71C2297D4005B3310 /* libz.tbd */; };
 		C5D37BCF1BFECAF400E5A851 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D37BCE1BFECAF400E5A851 /* CommentViewController.m */; };
 		C5D37BD21BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D37BD11BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.m */; };
 		C5E77CEB1C02EB15005370AB /* CommentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E77CEA1C02EB15005370AB /* CommentRequest.m */; };
@@ -748,6 +750,10 @@
 		C5A725B81BCB5ACF00DF040D /* OrderPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPriceCell.h; sourceTree = "<group>"; };
 		C5A725B91BCB5ACF00DF040D /* OrderPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPriceCell.m; sourceTree = "<group>"; };
 		C5A725BA1BCB5ACF00DF040D /* OrderPriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderPriceCell.xib; sourceTree = "<group>"; };
+		C5CFF1C31C2296CE005B3310 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		C5CFF1C41C2296CE005B3310 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		C5CFF1C51C2296CE005B3310 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		C5CFF1C71C2297D4005B3310 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		C5D37BCD1BFECAF400E5A851 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		C5D37BCE1BFECAF400E5A851 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		C5D37BD01BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWExploreFlatCell2ValueObject.h; sourceTree = "<group>"; };
@@ -770,9 +776,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5CFF1C81C2297D4005B3310 /* libz.tbd in Frameworks */,
 				C571E85E1BFACEB000126993 /* libHappyDNS.a in Frameworks */,
 				C571E85F1BFACEB000126993 /* libPods.a in Frameworks */,
 				C571E8601BFACEB000126993 /* libQiniu.a in Frameworks */,
+				C5CFF1C61C2296CE005B3310 /* libMobClickLibrary.a in Frameworks */,
 				C571E85A1BFACD9600126993 /* libAFNetworking.a in Frameworks */,
 				C54D9BEA1BDA2C57009BB7D0 /* AlipaySDK.bundle in Frameworks */,
 				C54D9BEF1BDA2DDF009BB7D0 /* libcrypto.a in Frameworks */,
@@ -850,6 +858,7 @@
 		248578BF1B5A036700379927 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C5CFF1C21C2296CE005B3310 /* UMAnalytics */,
 				C5149AF21C1526D500D74F6A /* MJRefresh */,
 				C564F6181C0358A7008D3B5D /* SDWebImage */,
 				C564F5EF1C035028008D3B5D /* Submail */,
@@ -1055,6 +1064,7 @@
 		6ADE9F5F5E3C4BE4C42C0A00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5CFF1C71C2297D4005B3310 /* libz.tbd */,
 				C571E85B1BFACEB000126993 /* libHappyDNS.a */,
 				C571E85C1BFACEB000126993 /* libPods.a */,
 				C571E85D1BFACEB000126993 /* libQiniu.a */,
@@ -1707,6 +1717,17 @@
 			name = balance;
 			sourceTree = "<group>";
 		};
+		C5CFF1C21C2296CE005B3310 /* UMAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				C5CFF1C31C2296CE005B3310 /* libMobClickLibrary.a */,
+				C5CFF1C41C2296CE005B3310 /* MobClick.h */,
+				C5CFF1C51C2296CE005B3310 /* MobClickSocialAnalytics.h */,
+			);
+			name = UMAnalytics;
+			path = UMAnalytics_Sdk_3.6.6;
+			sourceTree = "<group>";
+		};
 		C5F474DB1C083368003A28EE /* zan */ = {
 			isa = PBXGroup;
 			children = (
@@ -2247,6 +2268,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SWiOS",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/SWiOS/Common/UMAnalytics_Sdk_3.6.6",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2283,6 +2305,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SWiOS",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/SWiOS/Common/UMAnalytics_Sdk_3.6.6",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

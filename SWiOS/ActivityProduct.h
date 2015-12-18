@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JSONModel.h"
-@interface ActivityProduct : JSONModel
+@interface ActivityProduct : JSONModel<NSCopying>
 
 @property(nonatomic,assign)NSNumber* id;
 @property(nonatomic,strong)NSNumber<Optional> *activityId;

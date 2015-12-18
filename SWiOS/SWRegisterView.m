@@ -14,6 +14,7 @@
 #import "SWMainViewController.h"
 #import "ShoppingCartModel.h"
 #import "SMMessageXSend.h"
+#import "MobClick.h"
 #define   WIN_WIDTH  [[UIScreen mainScreen] bounds].size.width
 #define   WIN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
@@ -191,6 +192,10 @@
                            NSDictionary* result=[response jsonString2Dictionary];
                            BOOL success=[result valueForKey:@"success"];
                            if(success){
+                               
+                               //um uid
+                               [MobClick profileSignInWithPUID:phoneText.text];
+                               
                                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                
                                [defaults setObject:phoneText.text forKey:USER_LOGIN_PHONE_NUM];

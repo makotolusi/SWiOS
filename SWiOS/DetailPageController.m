@@ -105,7 +105,7 @@
                                               [_mp setFrame:CGRectMake(_infoView.frame.size.width/2-bw/2, title.frame.origin.y+35, bw, bh)];
                                               [cartBtn setFrame:CGRectMake(_infoView.frame.size.width/2-bw/2, _mp.frame.origin.y+40, bw, bh)];
                                               UIImageView *cha=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cha"]];
-                                              [cha setFrame:CGRectMake(_infoView.frame.origin.x+_infoView.frame.size.width-30, 5, 20, 20)];
+                                              [cha setFrame:CGRectMake(5, 5, 20, 20)];
                                               [_infoView addSubview:cha];
                                               UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesturedDetected:)]; // 手势类型随你喜欢。
                                               cha.userInteractionEnabled = YES;

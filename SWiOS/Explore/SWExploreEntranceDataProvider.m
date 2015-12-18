@@ -166,8 +166,8 @@
                     // 图片
                     DetailPageController *thumbViewController = [[DetailPageController alloc] init];
                     ActivityProduct *product=[[ActivityProduct alloc] init];
-                    product.productCode=cellVO.productCode;
-                    product.picUrl1=cellVO.bigImageURL;
+                    product.productCode=cell.cellVo.productCode;
+                    product.picUrl1=cell.cellVo.bigImageURL;
                     thumbViewController.product=product;
                     //back button style
                     UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
@@ -182,8 +182,8 @@
                 if (type == kSWExploreCellClickTypeCommnet) {
 //                    UIViewController* u= [[UIViewController alloc] init];
                                 CommentViewController *thumbViewController = [[CommentViewController alloc] init];
-                    
-                                thumbViewController.productCode=cellVO.productCode;
+                    NSLog(@"%@ ",cell.cellVo.productCode);
+                                thumbViewController.productCode=cell.cellVo.productCode;
                                 //vo
                                 thumbViewController.navigationItem.titleView = [UILabel navTitleLabel:@"评论"];
                                 //back button style

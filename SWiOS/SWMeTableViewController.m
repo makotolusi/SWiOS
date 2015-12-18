@@ -22,6 +22,7 @@
 #import "LoadingView.h"
 #import "FavorViewController.h"
 #import "ShoppingCartLocalDataManager.h"
+#import "MobClick.h"
 NSString * const killShark = @"柠檬鲨别捣乱";
 NSString * const kME = @"头像";
 NSString * const kMoney = @"钱包";
@@ -412,12 +413,13 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
-
         RegisterViewController * mvc = [[RegisterViewController alloc]init];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults removeObjectForKey:USER_LOGIN_PHONE_NUM];
         [self presentViewController:mvc animated:YES completion:nil];
         [ShoppingCartLocalDataManager dropAllTables];
+        //um uid
+        [MobClick profileSignOff];
     }
 }
 

@@ -86,7 +86,7 @@
     }
     
     if (product.buyCount==nil) {
-        product.buyCount=[[NSNumber alloc] initWithInt:1];
+        product.buyCount=[[NSNumber alloc] initWithInt:0];
     }
     
     if (total>product.rushQuantity) {
@@ -151,6 +151,7 @@
         sharedManager.orderModel.totalCount=sharedManager.orderModel.totalCount-1;
         [ShoppingCartLocalDataManager insertOrderModel:sharedManager.orderModel];
         [sharedManager.arOfWatchesOfCart removeObject:product];
+        product.buyCount=nil;
         return YES;
     }else
         return NO;

@@ -7,7 +7,7 @@
 //
 
 #import "SWBaseViewController.h"
-
+#import "MobClick.h"
 @implementation SWBaseViewController
 
 - (void)viewDidLoad
@@ -21,6 +21,12 @@
 {
     [super viewWillAppear:animated];
     [self updateViews];
+     [MobClick beginLogPageView:_pageName];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:_pageName];
 }
 
 - (void)drawViews

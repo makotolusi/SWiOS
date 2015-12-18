@@ -17,6 +17,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "TradeFinishViewController.h"
 #import "UILabel+Extension.h"
+#import "MobClick.h"
 #define LAST_RUN_VERSION_KEY        @"last_run_version_of_application"
 
 @interface AppDelegate ()
@@ -27,6 +28,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //key
+     [MobClick startWithAppkey:@"567264a767e58ece0e005e9d" reportPolicy:BATCH   channelId:@""];
+    //version
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    //uid
+    
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     

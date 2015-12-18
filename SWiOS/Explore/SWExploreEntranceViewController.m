@@ -93,6 +93,7 @@ NSInteger kWDTransitionViewTag = 33331;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.pageName=@"探索";
     [super viewWillAppear:animated];
     
 //    [self.view bringSubviewToFront:_scrollableToolbar];
@@ -102,6 +103,7 @@ NSInteger kWDTransitionViewTag = 33331;
 {
     [super viewDidAppear:animated];
     [UIWindow showTabBar:YES];
+    
 }
 
 /*

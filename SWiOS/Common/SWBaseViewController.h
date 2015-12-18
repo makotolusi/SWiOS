@@ -10,6 +10,7 @@
 
 @interface SWBaseViewController : UIViewController
 
+@property(nonatomic,strong) NSString* pageName;
 - (void)drawViews;
 
 - (void)updateViews;
