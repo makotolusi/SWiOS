@@ -46,8 +46,10 @@
     _dateLabel.font=[UIFont systemFontOfSize:12];
   
     _img.layer.cornerRadius=15.0;
-    
-    [_img setUrl:self.commentM.userHeadPortraitUrl];
+    if (StringIsNullOrEmpty(self.commentM.userHeadPortraitUrl)) {
+         [_img setImage:[UIImage imageNamed:@"sun"]];
+    }else
+        [_img setUrl:self.commentM.userHeadPortraitUrl];
     // Initialization code
     if (!StringIsNullOrEmpty(self.commentM.entertime)) {
         _dateLabel.text=[self.commentM.entertime substringWithRange:NSMakeRange(2,[self.commentM.entertime length]-2)];
@@ -63,7 +65,8 @@
     
     _commentLabelSize = [self.commentM.comments boundingRectWithSize:CGSizeMake(207, 999) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
     _commentLabel.frame=CGRectMake(_username.frame.origin.x, _username.frame.origin.y+25, SCREEN_WIDTH-_img.frame.size.width-30, _commentLabelSize.height);
-    self.username.text=self.commentM.userName;
+    
+    self.username.text=self.commentM.userName==nil?[NSString stringWithFormat:@"柠檬鲨%d",self.commentM.userId]:self.commentM.userName;
 
 }
 
