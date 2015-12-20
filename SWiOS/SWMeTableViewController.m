@@ -217,9 +217,12 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     if ([s.describe isEqual:kME]) {
         
         meUIImageView=[[YCAsyncImageView alloc] init];
-        [meUIImageView setUrl:_smallHeadUrl];
+        if (StringIsNullOrEmpty(_smallHeadUrl)) {
+            meUIImageView.image=[UIImage imageNamed:@"sun"];
+        }else
+            [meUIImageView setUrl:_smallHeadUrl];
 //        meUIImageView.hidden = YES;
-        meUIImageView.frame=CGRectMake(SCREEN_WIDTH-100, 10, HEAD_RES_SMALL, HEAD_RES_SMALL);
+        meUIImageView.frame=CGRectMake(SCREEN_WIDTH-100, cell.frame.size.height/2-10, HEAD_RES_SMALL, HEAD_RES_SMALL);
         bigImageView=[[YCAsyncImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, HEAD_RES_BIG, HEAD_RES_BIG)];
         [bigImageView setUrl:_headUrl];
         UILabel *headLabel=[[UILabel alloc] initWithFrame:CGRectMake(20, 40, 100, 10)];
@@ -240,16 +243,16 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     }
     
     if ([s.describe isEqual:kName]) {
-        meTextLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-110, cell.frame.origin.y+5, 100, 20)];
+        meTextLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-110, cell.frame.size.height/2-10, 100, 20)];
         [meTextLabel smallLabel];
         [meTextLabel setUserInteractionEnabled:YES];
-        meTextLabel.text=_username==nil?@"柠檬鲨":_username;
+        meTextLabel.text=StringIsNullOrEmpty(_username)?@"柠檬鲨":_username;
         UITapGestureRecognizer* singleTapTextLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTextLabelClicked:)];
         [cell  addGestureRecognizer:singleTapTextLabel];
         [cell addSubview:meTextLabel];
     }
     if ([s.describe isEqual:kGender]) {
-        meGenderLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, cell.frame.origin.y+5, 60, 20)];
+        meGenderLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, cell.frame.size.height/2-10, 60, 20)];
         [meGenderLabel smallLabel];
         [meGenderLabel setUserInteractionEnabled:YES];
         meGenderLabel.text=_gender==0?@"男":@"女";
@@ -416,6 +419,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         RegisterViewController * mvc = [[RegisterViewController alloc]init];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults removeObjectForKey:USER_LOGIN_PHONE_NUM];
+        [ShoppingCartModel clearCart ];
         [self presentViewController:mvc animated:YES completion:nil];
         [ShoppingCartLocalDataManager dropAllTables];
         //um uid
@@ -489,6 +493,10 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
             
             // 用户名
             NSString *userNameStr = [alertController.textFields[0] text];
+            if ([userNameStr length]>10) {
+                [UIAlertView showMessage:@"用户名过长"];
+                return;
+            }
             if ([userNameStr length] != 0) {
                 [meTextLabel setText:userNameStr];
             }

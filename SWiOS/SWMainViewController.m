@@ -195,16 +195,16 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
         NSString* imgName=@"";
         switch (idx) {
             case 0:
-                imgName=@"sousuo64";
+                imgName=icon_sousuo;
                 break;
             case 1:
-                imgName=@"huodong64";
+                imgName=icon_qiang;
                 break;
             case 2:
-                imgName=@"gouwuche64";
+                imgName=icon_gouwuche;
                 break;
             case 3:
-                imgName=@"yonghu64";
+                imgName=icon_yonghu;
                 break;
             default:
                 break;
