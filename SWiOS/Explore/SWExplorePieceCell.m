@@ -401,6 +401,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
                 _cellVo.zans++;
                 NSString* newTitle=[NSString stringWithFormat:@"%ld次赞",_cellVo.zans] ;
                 [b setTitle:newTitle forState:UIControlStateNormal];
+                _cellVo.isZan=YES;
             }];
         }
             break;
@@ -410,6 +411,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
             [ZanRequest addFavor:self.cellVo.productCode userId:[NSString stringWithFormat:@"%d",cart.registerModel.id] next:^(){
                 UIImageView* favor=[self viewWithTag:1002];
                 favor.image=[UIImage imageNamed:@"yishoucang64"];
+                self.cellVo.isFavor=YES;
             }];
         }
             break;

@@ -50,6 +50,6 @@
     [self addSubview:_imgScroll];
     [ _countLabel smallLabel];
     _countLabel.textAlignment=NSTextAlignmentCenter;
-    _countLabel.text=[NSString stringWithFormat:@"共%ld件",cartModel.orderModel.totalCount];
+    _countLabel.text=[NSString stringWithFormat:@"共%ld项",cartModel.orderModel.totalCount];
 }
 @end

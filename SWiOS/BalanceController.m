@@ -295,7 +295,7 @@ static NSString *orderListCell = @"orderListCell";
 - (void)checkOrder:(UIButton*)sender {
     UILabel* tf=[self.view viewWithTag:11];
     UIAlertView *alert=[[UIAlertView alloc] init];
-    if (_cartModel.addressModel==nil)//alert
+    if (_cartModel.addressModel.name==nil)//alert
     {
         [UIAlertView showMessage:@"收货人信息是必须填写的哦！"];
     }else if([tf.text isEqualToString:@"快递公司"]){

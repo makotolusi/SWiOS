@@ -100,7 +100,7 @@
 
         } fail:^(){
           self.isLoading = NO;
-        } parentView:nil];
+        }];
         
     
         
@@ -197,6 +197,7 @@
                     [self.vc.navigationController pushViewController:thumbViewController animated:NO];
                     
                 }
+                
                 
             };
             
