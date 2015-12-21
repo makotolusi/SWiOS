@@ -57,7 +57,7 @@
     }
 }
 
-+(void)clearCart
++(void)clearUserCartAll
 {
     sharedManager.arOfWatchesOfCart = [NSMutableArray array];
       sharedManager.orderModel=[[OrderModel alloc] init];
@@ -65,6 +65,16 @@
     sharedManager.orderModel.orderDetails = [NSMutableArray array];
     sharedManager.registerModel=[[RegisterModel alloc] init];
     sharedManager.addressModel=[[AddressModel alloc] init];
+    sharedManager.orderModel.totalPrice=[NSNumber numberWithFloat:0.00f];
+    sharedManager.orderModel.totalCount=0;
+}
+
++(void)clearCart
+{
+    sharedManager.arOfWatchesOfCart = [NSMutableArray array];
+    sharedManager.orderModel=[[OrderModel alloc] init];
+    sharedManager.orderModel=[[OrderModel alloc] init];
+    sharedManager.orderModel.orderDetails = [NSMutableArray array];
     sharedManager.orderModel.totalPrice=[NSNumber numberWithFloat:0.00f];
     sharedManager.orderModel.totalCount=0;
 }

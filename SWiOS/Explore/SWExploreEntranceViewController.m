@@ -190,7 +190,7 @@ NSInteger kWDTransitionViewTag = 33331;
             [tl addObject:title];
         }
         
-        LSUIScrollView* toolbar=[[LSUIScrollView alloc] initWithFrame:CGRectMake(0, -5, SCREEN_WIDTH, SCREEN_HEIGHT/15) titleList:tl];
+        LSUIScrollView* toolbar=[[LSUIScrollView alloc] initWithFrame:CGRectMake(0, -5, SCREEN_WIDTH, SCREEN_HEIGHT*0.1) titleList:tl];
         toolbar.toolbarDelegate = self;
         [self.view addSubview:toolbar];
         [self.view addSubview:_contentView];

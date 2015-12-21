@@ -24,6 +24,7 @@
 @property (strong,nonatomic) NSDictionary *orderStatus;
 +(ShoppingCartModel *)sharedInstance;
 +(void)clearCart;
++(void)clearUserCartAll;
 +(void)loadAddressModel;
 
 +(BOOL)add2CartWithProduct:(ActivityProduct*)product buyCount:(int)buyCount;

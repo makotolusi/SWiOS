@@ -265,6 +265,7 @@
 		C5CFF1E31C2584CE005B3310 /* 购物车.png in Resources */ = {isa = PBXBuildFile; fileRef = C5CFF1D51C2584CE005B3310 /* 购物车.png */; };
 		C5CFF1E41C2584CE005B3310 /* 返回.png in Resources */ = {isa = PBXBuildFile; fileRef = C5CFF1D61C2584CE005B3310 /* 返回.png */; };
 		C5CFF1E51C2584CE005B3310 /* 退出.png in Resources */ = {isa = PBXBuildFile; fileRef = C5CFF1D71C2584CE005B3310 /* 退出.png */; };
+		C5CFF1E71C27983A005B3310 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5CFF1E61C27983A005B3310 /* icon.png */; };
 		C5D37BCF1BFECAF400E5A851 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D37BCE1BFECAF400E5A851 /* CommentViewController.m */; };
 		C5D37BD21BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D37BD11BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.m */; };
 		C5E77CEB1C02EB15005370AB /* CommentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E77CEA1C02EB15005370AB /* CommentRequest.m */; };
@@ -782,6 +783,7 @@
 		C5CFF1D51C2584CE005B3310 /* 购物车.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "购物车.png"; sourceTree = "<group>"; };
 		C5CFF1D61C2584CE005B3310 /* 返回.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回.png"; sourceTree = "<group>"; };
 		C5CFF1D71C2584CE005B3310 /* 退出.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "退出.png"; sourceTree = "<group>"; };
+		C5CFF1E61C27983A005B3310 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		C5D37BCD1BFECAF400E5A851 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		C5D37BCE1BFECAF400E5A851 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		C5D37BD01BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWExploreFlatCell2ValueObject.h; sourceTree = "<group>"; };
@@ -1225,6 +1227,7 @@
 		89CD42931B59F92E00997C18 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C5CFF1E61C27983A005B3310 /* icon.png */,
 				C571E8611BFAD0EB00126993 /* public_key.der */,
 				C537D4741BDB720300DB4D74 /* private_key_pkcs8.pem */,
 				24FA81FF1B85D6F30023F71D /* images */,
@@ -1917,6 +1920,7 @@
 				C5CFF1D91C2584CE005B3310 /* 我.png in Resources */,
 				C54BC0351BC8EDE6007D46BA /* trash1.png in Resources */,
 				C564251F1C0EFE1200B40F58 /* gouwuche64-light.png in Resources */,
+				C5CFF1E71C27983A005B3310 /* icon.png in Resources */,
 				249727391BB0E573007D9704 /* me@2x.png in Resources */,
 				C5CFF1D81C2584CE005B3310 /* 密码.png in Resources */,
 				89CD42A41B59F92E00997C18 /* LaunchScreen.xib in Resources */,

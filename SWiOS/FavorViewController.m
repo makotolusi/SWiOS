@@ -58,7 +58,6 @@
     _tableView.rowHeight = SCREEN_HEIGHT*0.15;
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
-    [ShoppingCartModel clearCart];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

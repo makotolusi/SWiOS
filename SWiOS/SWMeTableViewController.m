@@ -144,7 +144,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     SWMe* s12 = [[SWMe alloc] initWithDescribe:kName andImgUrl:@""];
     SWMe* s13 = [[SWMe alloc] initWithDescribe:kGender andImgUrl:@""];
     SWMe* s14 = [[SWMe alloc] initWithDescribe:kAddress andImgUrl:@""];
-       SWMe* s15 = [[SWMe alloc] initWithDescribe:@"我的订单" andImgUrl:@""];
+    SWMe* s15 = [[SWMe alloc] initWithDescribe:@"我的订单" andImgUrl:@""];
     SWMe* s16 = [[SWMe alloc] initWithDescribe:kFavor andImgUrl:@""];
     
     
@@ -320,6 +320,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     }
     if ([s.describe isEqual:kOrder]) {
         MyOrderController* uiNavigationController = [[MyOrderController alloc] init];
+        uiNavigationController.prePage=@"SWMeTableViewController";
         uiNavigationController.navigationItem.titleView = [UILabel navTitleLabel:kOrder];
         UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
                                          initWithTitle:@""
@@ -419,7 +420,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         RegisterViewController * mvc = [[RegisterViewController alloc]init];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults removeObjectForKey:USER_LOGIN_PHONE_NUM];
-        [ShoppingCartModel clearCart ];
+        [ShoppingCartModel clearUserCartAll];
         [self presentViewController:mvc animated:YES completion:nil];
         [ShoppingCartLocalDataManager dropAllTables];
         //um uid

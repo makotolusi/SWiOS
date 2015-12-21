@@ -42,6 +42,7 @@
 
 -(void)myorder:(id)sender{
     MyOrderController* uiNavigationController = [[MyOrderController alloc] init];
+    uiNavigationController.prePage=@"TradeFinishViewController";
     uiNavigationController.navigationItem.titleView = [UILabel navTitleLabel:@"我的订单"];
 //    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
 //                                     initWithTitle:@""

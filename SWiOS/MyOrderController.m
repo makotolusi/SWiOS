@@ -68,7 +68,10 @@
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
 //    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
-    [ShoppingCartModel clearCart];
+    if ([@"TradeFinishViewController" isEqualToString:_prePage]) {
+         [ShoppingCartModel clearCart];
+    }
+   
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
