@@ -28,7 +28,7 @@
             
             
             //设置背景色
-            view.backgroundColor = [UIColor darkGrayColor];
+            view.backgroundColor = [UIColor grayColor];
             
             //设置背景透明
             view.alpha = 0.5;

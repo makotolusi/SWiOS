@@ -12,6 +12,7 @@
 #import "ActivityProduct.h"
 #import "ShoppingCartCell.h"
 #import "DetailPageController.h"
+#import "MJRefresh.h"
 @interface FavorViewController ()
 
 @end
@@ -21,30 +22,62 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _cartModel=[ShoppingCartModel sharedInstance];
-//    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"结束" style:UIBarButtonItemStyleDone target:self action:@selector(backRoot:)]];
-    _cartModel=[ShoppingCartModel sharedInstance];
+    _currentPageNum=1;
+    _data=[NSMutableArray array];
+     [self loadTable];
+}
+
+-(void)loadDataWithPageNum:(NSString*)pageNum{
     [HttpHelper sendPostRequest:@"CommerceUserServices/listFavor"
-                    parameters: @{@"pageNum": @"1",@"userId":[NSString stringWithFormat:@"%d",_cartModel.registerModel.id]}
-                       success:^(id response) {
-                           NSDictionary* result=[response jsonString2Dictionary];
-                           BOOL success=[result valueForKey:@"success"];
-                           if(success){
-                               _data=[NSMutableArray array];
-                               NSArray* data=result[@"data"];
-                               for (id content in data) {
-                                   ActivityProduct *product=[[ActivityProduct alloc] init];
-                                   product.productCode=content[@"productCode"];
-                                   product.productName=content[@"name"];
-                                   product.picUrl1=content[@"picUrl1"];
-                                   product.rushPrice=content[@"price"];
-                                   [_data addObject:product];
-                               }
-                               [self loadTable];
-                           }
-                       }fail:^{
-                           NSLog(@"网络异常，取数据异常");
-                       }];
-    
+                     parameters: @{@"pageNum": pageNum,@"userId":[NSString stringWithFormat:@"%d",_cartModel.registerModel.id]}
+                        success:^(id response) {
+                            NSDictionary* result=[response jsonString2Dictionary];
+                            BOOL success=[result valueForKey:@"success"];
+                            if(success){
+                                NSArray* data=result[@"data"];
+                                if ([data count]==0) {
+                                    _currentPageNum--;
+                                }
+                                for (id content in data) {
+                                    ActivityProduct *product=[[ActivityProduct alloc] init];
+                                    product.productCode=content[@"productCode"];
+                                    product.productName=content[@"name"];
+                                    product.picUrl1=content[@"picUrl1"];
+                                    product.rushPrice=content[@"price"];
+                                    [_data addObject:product];
+                                }
+                                [_tableView reloadData];
+                                 [_tableView footerEndRefreshing];
+                            }
+                        }fail:^{
+                            NSLog(@"网络异常，取数据异常");
+                        }];
+}
+
+-(void)reload{
+    [HttpHelper sendPostRequest:@"CommerceUserServices/listFavor"
+                     parameters: @{@"pageNum": @"1",@"userId":[NSString stringWithFormat:@"%d",_cartModel.registerModel.id]}
+                        success:^(id response) {
+                            [_data removeAllObjects];
+                            NSDictionary* result=[response jsonString2Dictionary];
+                            BOOL success=[result valueForKey:@"success"];
+                            if(success){
+                                NSArray* data=result[@"data"];
+                                for (id content in data) {
+                                    ActivityProduct *product=[[ActivityProduct alloc] init];
+                                    product.productCode=content[@"productCode"];
+                                    product.productName=content[@"name"];
+                                    product.picUrl1=content[@"picUrl1"];
+                                    product.rushPrice=content[@"price"];
+                                    [_data addObject:product];
+                                }
+                                [_tableView reloadData];
+                                 [_tableView headerEndRefreshing];
+                                _currentPageNum=1;
+                            }
+                        }fail:^{
+                            NSLog(@"网络异常，取数据异常");
+                        }];
 }
 
 -(void)loadTable{
@@ -52,20 +85,31 @@
     float x=self.view.frame.origin.y;
     NSLog(@"x is %f",x);
     // 创建表视图
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-60)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight = SCREEN_HEIGHT*0.15;
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
+    [_tableView addHeaderWithCallback:^{
+        [self reload];
+       
+    }];
+    [_tableView headerBeginRefreshing];
+    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
     [self.view addSubview:_tableView];
+}
+
+- (void)footerRereshing{
+    _currentPageNum++;
+    [self loadDataWithPageNum:[NSString stringWithFormat:@"%ld",_currentPageNum]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"shoppingCartCell1";
     ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+     ActivityProduct *ap= _data[indexPath.row];
     if (!cell) {
         cell=[[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        ActivityProduct *ap= _data[indexPath.row];
         cell.activityProduct=ap;
         cell.isEdit=NO;
         [cell initEdite];
@@ -76,7 +120,8 @@
         cell.tableView=_tableView;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
     }else{
-        
+         cell.activityProduct=ap;
+
     }
     [cell settingData];
     return cell;

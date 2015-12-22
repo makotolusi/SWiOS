@@ -36,23 +36,23 @@
 -(void)backRoot:(id)sender{
     int i=_lastPath.row;
     NSLog(@"index %d",i);
-    [HttpHelper sendGetRequest:@"CommerceUserServices/updateGender"
-                           parameters: @{@"gender":[NSString stringWithFormat:@"%d",i]}
-                              success:^(id response) {
-                                  NSDictionary* result=[response jsonString2Dictionary];
-                                  BOOL success=[result valueForKey:@"success"];
-                                  if(success){
-                                      UITableViewCell *currentCell = [self.tableView cellForRowAtIndexPath:_lastPath];
-                                      _gender=currentCell.textLabel.text;
-                                    [self.navigationController popViewControllerAnimated:YES ];
-
-                                      if ([_delegate respondsToSelector:@selector(updateGenderView:)]) { // 如果协议响应了sendValue:方法
-                                          [_delegate updateGenderView:_gender]; // 通知执行协议方法
-                                      }
-                                  }
-                              }fail:^{
-                                  NSLog(@"网络异常，取数据异常");
-                              } parentView:self.view];
+//    [HttpHelper sendGetRequest:@"CommerceUserServices/updateGender"
+//                           parameters: @{@"gender":[NSString stringWithFormat:@"%d",i]}
+//                              success:^(id response) {
+//                                  NSDictionary* result=[response jsonString2Dictionary];
+//                                  BOOL success=[result valueForKey:@"success"];
+//                                  if(success){
+//                                      UITableViewCell *currentCell = [self.tableView cellForRowAtIndexPath:_lastPath];
+//                                      _gender=currentCell.textLabel.text;
+//                                    [self.navigationController popViewControllerAnimated:YES ];
+//
+//                                      if ([_delegate respondsToSelector:@selector(updateGenderView:)]) { // 如果协议响应了sendValue:方法
+//                                          [_delegate updateGenderView:_gender]; // 通知执行协议方法
+//                                      }
+//                                  }
+//                              }fail:^{
+//                                  NSLog(@"网络异常，取数据异常");
+//                              } parentView:self.view];
     
 }
 

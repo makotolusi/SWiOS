@@ -39,8 +39,9 @@
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
     [self.window makeKeyAndVisible];
+    
     if([self isFirstLoad]){//[self isFirstLoad]
-        
+    
         SWIntroductionViewController *vc = [[SWIntroductionViewController alloc]init];
         self.window.rootViewController = vc;
         

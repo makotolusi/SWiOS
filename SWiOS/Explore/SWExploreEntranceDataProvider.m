@@ -66,7 +66,7 @@
 }
 
 #pragma mark Data Request
-- (void)reloadDataWithPieceID:(NSString *)categoryID pieceImageUrl:(NSString *)pieceImageURL pageNum:(NSUInteger)pageNum
+- (void)reloadDataWithPieceID:(NSString *)categoryID pieceImageUrl:(NSString *)pieceImageURL pageNum:(NSUInteger)pageNum last:(void (^)())last
 {
     
      NSString *url = [NSString stringWithFormat:@"getRescueProcut/%@/0/%ld", categoryID, pageNum];
@@ -74,8 +74,7 @@
     _currentPieceImageURL = pieceImageURL;
     _currentPieceID = categoryID;
     
-    
-//    [[SWCommonAPI sharedInstance] post:url params:nil withSuccess:^(SWHttpRequestOperation *operation, id response) {
+
         [HttpHelper sendPostRequest:url parameters:nil success:^(id response){
             NSArray *res =[response jsonString2Dictionary];
             if (![res isKindOfClass:[NSArray class]]) {
@@ -98,9 +97,10 @@
                 self.isLoading = NO;
             });
 
+            last();
         } fail:^(){
           self.isLoading = NO;
-        }];
+        } ];
         
     
         
@@ -116,7 +116,7 @@
     
     [self reloadDataWithPieceID:_currentPieceID
                   pieceImageUrl:_currentPieceImageURL
-                        pageNum:self.currentPageNum];
+                        pageNum:self.currentPageNum last:^(){}];
 }
 
 #pragma mark UITableViewDelegate

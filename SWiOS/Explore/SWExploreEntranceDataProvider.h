@@ -39,8 +39,6 @@
 
 @property (nonatomic, weak) id<SWExploreEntranceDataProviderDelegate> delegate;
 
-- (void)reloadDataWithPieceID:(NSString *)categoryID
-                pieceImageUrl:(NSString *)pieceImageURL
-                      pageNum:(NSUInteger)pageNum;
+- (void)reloadDataWithPieceID:(NSString *)categoryID pieceImageUrl:(NSString *)pieceImageURL pageNum:(NSUInteger)pageNum last:(void (^)())last;
 
 @end

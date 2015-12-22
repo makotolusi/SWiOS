@@ -14,7 +14,7 @@
 
 bool const isDev=NO;
 
-bool const isLocal=NO;
+bool const isLocal=YES;
 
 NSString * const kBaseURL = @"http://okeasy.eicp.net:9889/mgserver/ApCommonServices/";
 

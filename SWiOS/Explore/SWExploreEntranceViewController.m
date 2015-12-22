@@ -143,27 +143,17 @@ NSInteger kWDTransitionViewTag = 33331;
         
         NSString *pieceImageURL = pieceInfo[@"sortUrl"];
         
-        [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0];
+//        [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0];
     
         
     } failure:^(SWHttpRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"");
     }];
 }
 
 - (void)drawViews
 {
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
- 
-    
-//    self.scrollableToolbar = [[ZYCScrollableToolbar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, toolbarHeight) titles:_titleList];
-////
-//    
-//    _scrollableToolbar.backgroundColor = [UIColor whiteColor];
-//    _scrollableToolbar.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
-//    
-//    [self.view addSubview:_scrollableToolbar];
   
     self.contentView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                      kSWHeadBarViewHeight,
@@ -175,11 +165,10 @@ NSInteger kWDTransitionViewTag = 33331;
     _contentView.delegate = [self dataProvider];
     _contentView.dataSource = _dataProvider;
     _contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    _contentView.backgroundColor=[UIColor darkGrayColor];
     
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [_contentView addHeaderWithTarget:self action:@selector(headerRereshing)];
-#warning 自动刷新(一进入程序就下拉刷新)
+    #warning 自动刷新(一进入程序就下拉刷新)
     [_contentView headerBeginRefreshing];
     
     NSMutableArray* tl=[[NSMutableArray alloc] init];
@@ -221,10 +210,12 @@ NSInteger kWDTransitionViewTag = 33331;
             
             NSString *pieceImageURL = pieceInfo[@"sortUrl"];
             
-            [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0];
+            [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0 last:^(){
+                // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+                [_contentView headerEndRefreshing];
+            }];
             
-            // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-            [_contentView headerEndRefreshing];
+        
         }
       
     });
@@ -254,8 +245,13 @@ NSInteger kWDTransitionViewTag = 33331;
     NSString *pieceID = pieceInfo[@"id"];
     
     NSString *pieceImageURL = pieceInfo[@"sortUrl"];
+#warning 自动刷新(一进入程序就下拉刷新)
+    [_contentView headerBeginRefreshing];
     
-    [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0];
+//    [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0 last:^{
+//        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+//        [_contentView headerEndRefreshing];
+//    }];
 
 }
 

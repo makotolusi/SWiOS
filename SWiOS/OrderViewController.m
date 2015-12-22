@@ -20,6 +20,8 @@
 #import "SWMainViewController.h"
 #import "HttpHelper.h"
 #import "OrderRequest.h"
+#import "MyOrderController.h"
+#import "UIWindow+Extension.h"
 #define kOffsetHeight (SCREEN_HEIGHT*0.1)
 @interface OrderViewController ()
 
@@ -43,7 +45,12 @@
 {
     if (buttonIndex==1) {
         [OrderRequest orderCancel:self.view next:^{
-            [self.navigationController popViewControllerAnimated:YES];
+//            [self.navigationController popViewControllerAnimated:YES];
+            MyOrderController* uiNavigationController = [[MyOrderController alloc] init];
+            uiNavigationController.prePage=@"OrderViewController";
+            uiNavigationController.navigationItem.titleView = [UILabel navTitleLabel:@"我的订单"];
+//            [UIWindow showTabBar:YES];
+            [self.navigationController pushViewController:uiNavigationController animated:YES];
         }];
         
     }

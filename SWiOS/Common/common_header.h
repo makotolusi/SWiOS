@@ -26,7 +26,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define kSWTabBarViewHeight (SCREEN_WIDTH/7)
 #define kSWTopViewHeight (SCREEN_WIDTH/5)
 #define kSWHeadBarViewHeight (SCREEN_WIDTH/10)
-#define FONT_SMALL_SIZE 12
+#define FONT_SMALL_SIZE 13
 
 #define icon_type 1
 //#define icon_yonghu @"yonghu64"
@@ -36,9 +36,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define icon_sousuo (icon_type==1?@"sousuo64":@"搜索")
 
 
-#define FONT_MID_SIZE 15
+#define FONT_MID_SIZE 14
 
-#define FONT_TYPE @"Helvetica"
+#define FONT_TYPE @"STHeitiJ-light"
 
 #endif
 

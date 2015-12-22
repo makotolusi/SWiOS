@@ -237,8 +237,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
     CGFloat labelWidth = headerView.frame.size.width - (_leftUpSideContryImageView.frame.origin.x + _leftUpSideContryImageView.frame.size.width) * 2;
     _itemNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, labelWidth, headerHeight)];
     _itemNameLabel.textColor = [UIColor blackColor];
-    _itemNameLabel.font = [UIFont systemFontOfSize:14.0f];
-    
+    [_itemNameLabel smallLabel];
     [headerView addSubview:_itemNameLabel];
     
     
@@ -267,7 +266,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
     
     _descLabel.text = @"韩国爱茉莉color lasting tint持久炫彩唇彩 真正的唇膏狂魔绝不会单单喜欢一种唇膏类型，julia最近的心头好是高保湿透明感强的唇彩及唇膏哦[嘿嘿]如果你对亚光、丝绒、唇漆、染唇液等等巨巨巨干的产品都无法接受，那么就试试julia推荐的这款唇彩吧[酷] 1.价格便宜";
     _descLabel.numberOfLines = 3;
-    _descLabel.font = [UIFont systemFontOfSize:14.0f];
+    [_descLabel smallLabel];
     [bottomView addSubview:_descLabel];
     
     

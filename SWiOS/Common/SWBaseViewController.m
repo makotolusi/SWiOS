@@ -8,11 +8,19 @@
 
 #import "SWBaseViewController.h"
 #import "MobClick.h"
+#import "UILabel+Extension.h"
 @implementation SWBaseViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //title
+    UILabel *t = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    [t midLabel];
+    t.textAlignment = NSTextAlignmentCenter;
+    t.text = self.title;
+    self.navigationItem.titleView=t;
     
     [self drawViews];
 }
@@ -20,6 +28,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self updateViews];
      [MobClick beginLogPageView:_pageName];
 }
@@ -31,7 +40,7 @@
 
 - (void)drawViews
 {
-    
+  
 }
 
 - (void)updateViews

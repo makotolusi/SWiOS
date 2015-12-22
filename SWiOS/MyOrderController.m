@@ -13,6 +13,7 @@
 #import "NSString+Extension.h"
 #import "UIWindow+Extension.h"
 #import "DetailPageController.h"
+#import "MJRefresh.h"
 @interface MyOrderController ()
 
 @end
@@ -23,33 +24,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"结束" style:UIBarButtonItemStyleDone target:self action:@selector(backRoot:)]];
+    [self loadTable];
+    _currentPageNum=1;
+     _orders=[NSMutableArray array];
+    [_tableView addHeaderWithCallback:^(){
+        [self loadData];
+    }];
+    [_tableView headerBeginRefreshing];
+    [_tableView addFooterWithCallback:^(){
+        _currentPageNum++;
+        [self loadData];
+    }];
+}
+-(void)loadData{
     [HttpHelper sendGetRequest:@"OrderServices/getUserOrderByToken"
-                    parameters: @{}
+                    parameters: @{@"index":[NSString stringWithFormat:@"%ld",_currentPageNum]}
                        success:^(id response) {
                            NSDictionary* result=[response jsonString2Dictionary];
                            BOOL success=[result valueForKey:@"success"];
                            if(success){
-                               _orders=[NSMutableArray array];
                                NSArray* data=[result[@"data"] jsonString2Dictionary];
+                               if ([data count]==0) {
+                                   _currentPageNum--;
+                               }
                                for (id content in data) {
                                    OrderModel *order=[[OrderModel alloc] init];
                                    order.orderCode=content[@"orderCode"];
                                    order.status=content[@"status"];
                                    order.orderDetails=[NSMutableArray arrayWithArray:content[@"orderDetails"]];
-//                                   NSDictionary* orderDetails=content[@"orderDetails"];
-//                                   NSDictionary* activityProductData=orderDetails[@"activityProductData"];
-                                   NSLog(@"%@",order.orderCode);
                                    [_orders addObject:order];
                                }
-                               [self loadTable];
+                               [_tableView reloadData];
+                               [_tableView headerEndRefreshing];
+                               [_tableView footerEndRefreshing];
                            }
+                           
                        }fail:^{
                            NSLog(@"网络异常，取数据异常");
                        }];
-    
-    
 }
-
 
 -(void)backRoot:(id)sender{
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -88,8 +101,7 @@
     ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell=[[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-       
-        cell.activityProduct=ap;
+       cell.activityProduct=ap;
         cell.isEdit=NO;
         [cell initEdite];
         [cell settingFrame];
@@ -107,6 +119,7 @@
              [cell settingDataOrderModel:order];
         }
     }else{
+        cell.activityProduct=ap;
         [cell.orderNum removeFromSuperview];
         [cell.status removeFromSuperview];
         if (indexPath.row==0) {

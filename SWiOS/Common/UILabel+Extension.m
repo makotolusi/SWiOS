@@ -12,20 +12,16 @@
 
 
 -(void)midLabel{
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
         self.textColor=[UIColor darkGrayColor];
-   
-//    self.textAlignment=NSTextAlignmentCenter;
     self.font=[UIFont fontWithName:FONT_TYPE size:FONT_MID_SIZE ];
 //         }
 }
 
 -(void)smallLabel{
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >=8.0) {
         self.textColor=[UIColor darkGrayColor];
     
     self.font=[UIFont fontWithName:FONT_TYPE size:FONT_SMALL_SIZE ];
-//        }
+    self.font=[UIFont systemFontOfSize:FONT_SMALL_SIZE];
 }
 
 -(UIView*)tableSectionLabel:(NSString*)text y:(NSInteger)y{
@@ -42,11 +38,8 @@
 
 +(UILabel*)navTitleLabel:(NSString*)title{
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200,44)];
-//    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"STHeitiK-Light" size:15];
-//    label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.8];
+    [label midLabel];
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor blackColor];
     label.text=title;
     return label;
 }

@@ -18,6 +18,7 @@
 #import "RegisterViewController.h"
 #import "ShoppingCartLocalDataManager.h"
 #import "DatabaseManager.h"
+#import "UILabel+Extension.h"
 UIButton *lastButton;
 
 static CGFloat kSWCurrentShowingViewTag = 12333;
@@ -177,6 +178,8 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
     NSArray* views = @[ nav1, nav2, nav3, nav4 ];
     self.viewControlers = [views mutableCopy];
 }
+
+
 - (void)p_initUI
 {
     self.view.backgroundColor = DEFAULT_BG_COLOR;
@@ -211,11 +214,8 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
         }
         [button setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
          [button setImage:[UIImage imageNamed:[imgName stringByAppendingString:@"-light"]] forState:UIControlStateSelected];
-        float s=SCREEN_WIDTH/4;
-        [button setImageEdgeInsets:UIEdgeInsetsMake(kSWTabBarViewHeight/5,s/3,kSWTabBarViewHeight/5,s/3)];
-//        button.imageView.image=;
-//        float s=kSWTabBarViewHeight/2+5;
-//        button.imageView.frame=CGRectMake(SCREEN_WIDTH/4/2-s/2, kSWTabBarViewHeight/2-s/2,s, s);
+        float s=SCREEN_WIDTH*0.16;
+        [button setImageEdgeInsets:UIEdgeInsetsMake(kSWTabBarViewHeight*0.27,s,kSWTabBarViewHeight*0.27,s)];
         
         [buttons insertObject:button atIndex:idx];
         
@@ -250,7 +250,6 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
 - (UIView *)contentView
 {
     if (_contentView == nil) {
-//        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
            _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         _contentView.backgroundColor = [UIColor whiteColor];
     }

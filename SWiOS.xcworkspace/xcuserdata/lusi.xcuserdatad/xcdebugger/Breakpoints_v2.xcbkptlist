@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/SWMainViewController.m"
-            timestampString = "471358259.501419"
+            timestampString = "472458108.517765"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
             landmarkName = "-tabClicked:atIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -148,7 +148,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -226,11 +226,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/Explore/SWExploreEntranceViewController.m"
-            timestampString = "472038297.849436"
+            timestampString = "472461341.41799"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
             landmarkName = "-itemBigImageDidClicked:"
             landmarkType = "5">
             <Locations>
@@ -242,12 +242,12 @@
                   moduleName = "SWiOS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/SWExploreEntranceViewController.m"
-                  timestampString = "472357912.287248"
+                  timestampString = "472469039.728481"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "270"
-                  endingLineNumber = "270"
-                  offsetFromSymbolStart = "76">
+                  startingLineNumber = "266"
+                  endingLineNumber = "266"
+                  offsetFromSymbolStart = "64">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -257,12 +257,12 @@
                   moduleName = "SWiOS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/SWExploreEntranceViewController.m"
-                  timestampString = "472357912.287596"
+                  timestampString = "472469039.72879"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "270"
-                  endingLineNumber = "270"
-                  offsetFromSymbolStart = "24">
+                  startingLineNumber = "266"
+                  endingLineNumber = "266"
+                  offsetFromSymbolStart = "12">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -274,7 +274,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/Explore/SWExploreEntranceDataProvider.m"
-            timestampString = "471250910.459892"
+            timestampString = "472461341.41799"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "154"
@@ -450,12 +450,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/Explore/SWExploreEntranceDataProvider.m"
-            timestampString = "471238842.339402"
+            timestampString = "472459097.5872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "-reloadDataWithPieceID:pieceImageUrl:pageNum:"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-reloadDataWithPieceID:pieceImageUrl:pageNum:last:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -466,11 +466,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/SWMainViewController.m"
-            timestampString = "471358259.501419"
+            timestampString = "472458108.517765"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "-p_showController:"
             landmarkType = "5">
          </BreakpointContent>
@@ -706,28 +706,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/Explore/SWExploreEntranceDataProvider.m"
-            timestampString = "471619497.586711"
+            timestampString = "472459097.5872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "-reloadDataWithPieceID:pieceImageUrl:pageNum:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SWiOS/Explore/SWExploreEntranceDataProvider.m"
-            timestampString = "471619516.202776"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "-reloadDataWithPieceID:pieceImageUrl:pageNum:"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "-reloadDataWithPieceID:pieceImageUrl:pageNum:last:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -866,11 +850,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/AppDelegate.m"
-            timestampString = "472029870.387978"
+            timestampString = "472377018.497391"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "@implementation AppDelegate"
             landmarkType = "3">
          </BreakpointContent>
@@ -882,11 +866,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/AppDelegate.m"
-            timestampString = "472029870.387978"
+            timestampString = "472377018.497391"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "@implementation AppDelegate"
             landmarkType = "3">
          </BreakpointContent>
@@ -1042,11 +1026,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/SWMainViewController.m"
-            timestampString = "471841383.235899"
+            timestampString = "472445661.980442"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -1058,11 +1042,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/SWRegisterView.m"
-            timestampString = "472029870.387978"
+            timestampString = "472378439.949816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "-registerCodeButtonClick"
             landmarkType = "5">
          </BreakpointContent>
@@ -1122,11 +1106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/MyOrderController.m"
-            timestampString = "472354975.025733"
+            timestampString = "472469038.617749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1138,11 +1122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/MyOrderController.m"
-            timestampString = "472354975.025733"
+            timestampString = "472467904.288642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1218,11 +1202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/Explore/SWExplorePieceCell.m"
-            timestampString = "472299029.500612"
+            timestampString = "472447944.045586"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
+            startingLineNumber = "398"
+            endingLineNumber = "398"
             landmarkName = "-buttonClicked:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1234,11 +1218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/Explore/SWExplorePieceCell.m"
-            timestampString = "472300405.496658"
+            timestampString = "472447944.045586"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
+            startingLineNumber = "412"
+            endingLineNumber = "412"
             landmarkName = "-buttonClicked:"
             landmarkType = "5">
             <Locations>
@@ -1282,11 +1266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWiOS/Explore/SWExplorePieceCell.m"
-            timestampString = "472300645.163398"
+            timestampString = "472447944.045586"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "396"
+            endingLineNumber = "396"
             landmarkName = "-buttonClicked:"
             landmarkType = "5">
             <Locations>
@@ -1298,12 +1282,12 @@
                   moduleName = "SWiOS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/SWExplorePieceCell.m"
-                  timestampString = "472357912.296303"
+                  timestampString = "472469039.734203"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "397"
-                  endingLineNumber = "397"
-                  offsetFromSymbolStart = "196">
+                  startingLineNumber = "396"
+                  endingLineNumber = "396"
+                  offsetFromSymbolStart = "216">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -1313,14 +1297,46 @@
                   moduleName = "SWiOS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lusi/Desktop/SWiOS/SWiOS/Explore/SWExplorePieceCell.m"
-                  timestampString = "472357912.296518"
+                  timestampString = "472469039.734455"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "397"
-                  endingLineNumber = "397"
-                  offsetFromSymbolStart = "28">
+                  startingLineNumber = "396"
+                  endingLineNumber = "396"
+                  offsetFromSymbolStart = "19">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWiOS/FavorViewController.m"
+            timestampString = "472468140.118849"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWiOS/Explore/SWExploreEntranceDataProvider.m"
+            timestampString = "472460594.334779"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "-reloadDataWithPieceID:pieceImageUrl:pageNum:last:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

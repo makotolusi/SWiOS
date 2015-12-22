@@ -9,6 +9,7 @@
 
 #import "LSUIScrollView.h"
 #import "HttpHelper.h"
+#import "UILabel+Extension.h"
 #import "NSString+Extension.h"
 @implementation LSUIScrollView
 
@@ -39,9 +40,11 @@
     int i=0;
     
     _toolbar=[[UIScrollView alloc] initWithFrame:frame];
-
-    [_toolbar setShowsHorizontalScrollIndicator:NO];
-    [_toolbar setShowsVerticalScrollIndicator:NO];
+//    _toolbar.alwaysBounceVertical=NO;
+////    [_toolbar alwaysBounceVertical:NO];
+////    _toolbar.alwaysBounceHorizontal=NO;
+//    [_toolbar setShowsHorizontalScrollIndicator:NO];
+//    [_toolbar setShowsVerticalScrollIndicator:NO];
 //        _toolbar.backgroundColor=[UIColor redColor];
     for (NSString* area in _titleList) {
         
@@ -54,17 +57,12 @@
             _lastMenuLabel=l;
         }else{
            
-            l.font=[UIFont systemFontOfSize:12.5f ];
-            l.textColor=[UIColor blackColor];
+            [l smallLabel];
+            
         }
         l.textAlignment=NSTextAlignmentCenter;
-//        if (i==0) {
-//                l.backgroundColor=[UIColor blueColor];
-//        }
-//    
         l.text=area;
         l.tag=i;
-//        [v addSubview:l];
         [_toolbar addSubview:l];
         l.userInteractionEnabled=YES;
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuPressed:)];
@@ -73,7 +71,7 @@
         totalWith=totalWith+5+with;
         i++;
     }
-    _toolbar.contentSize = CGSizeMake(totalWith, with);
+    _toolbar.contentSize = CGSizeMake(totalWith, 0);
     //用它指定 ScrollView 中内容的当前位置，即相对于 ScrollView 的左上顶点的偏移
     _toolbar.contentOffset = CGPointMake(0, 0);
     //按页滚动，总是一次一个宽度，或一个高度单位的滚动

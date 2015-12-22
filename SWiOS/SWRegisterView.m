@@ -65,6 +65,7 @@
     // cell phone num
     phoneText = [[UITextField alloc] initWithFrame:CGRectMake(offsetX+30, 30, WIN_WIDTH-60, 30)];
     phoneText.placeholder = @"请输入要注册的手机号码";
+    phoneText.text=@"18210324999";
     SET_PLACE(phoneText);
     phoneText.tag = 501;
     [self addSubview:phoneText];
@@ -87,7 +88,7 @@
     passText.placeholder = @"请输入获取到的验证码";
     SET_PLACE(passText);
     passText.tag = 201;
-    
+    passText.text=@"2222";
     
     // line
     UIImageView *passImage = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX+28, 115, WIN_WIDTH-56, 2)];
@@ -213,10 +214,10 @@
                                                                NSLog(@"获取到的数据为dict：%@", userinfo1);
 
                                                                
-                                                               [NSThread sleepForTimeInterval:3.0];
-                                                               
+//                                                               [NSThread sleepForTimeInterval:3.0];
+                                                           
                                                            //close
-                                                           [UIView animateWithDuration:0.3 animations:^{
+                                                           [UIView animateWithDuration:0.0 animations:^{
                                                                self.alpha = 0;
                                                            } completion:^(BOOL finished){
                                                                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
@@ -237,7 +238,7 @@
                            }
                        }fail:^{
                            NSLog(@"网络异常，取数据异常");
-                       }];
+                       } parentView:nil];
 
 
 }

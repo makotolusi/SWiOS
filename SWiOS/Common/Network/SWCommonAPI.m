@@ -8,7 +8,7 @@
 
 #import "SWCommonAPI.h"
 #import "SWHttpRequestOperation.h"
-
+#import "HttpHelper.h"
 
 
 #define SW_SERVER_API_BASE_URL @"http://okeasy.eicp.net:9889/mgserver/ApCommonServices/"
@@ -59,7 +59,8 @@
  withSuccess:(SWApiSuccessBlock)successBlock
      failure:(SWApiFailureBlock)failureBlock
 {
-    NSURL *reqURL = [NSURL URLWithString:apiname relativeToURL:_baseURL];
+    NSURL *baseURL=[NSURL URLWithString:[HttpHelper getUrl]];
+    NSURL *reqURL = [NSURL URLWithString:apiname relativeToURL:baseURL];
     
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:reqURL];
     [req setValue:@"post" forHTTPHeaderField:@"method"];

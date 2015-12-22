@@ -15,5 +15,6 @@
 }
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
 @property (nonatomic,strong) NSMutableArray *data;
+@property (nonatomic, assign)NSUInteger currentPageNum;
 
 @end

@@ -16,4 +16,6 @@
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
 @property (nonatomic,strong) NSMutableArray *orders;
 @property (nonatomic,copy) NSString *prePage;
+
+@property (nonatomic, assign)NSUInteger currentPageNum;
 @end
