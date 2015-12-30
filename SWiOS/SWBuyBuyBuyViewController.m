@@ -24,25 +24,14 @@
 @implementation SWBuyBuyBuyViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"SWBuyBuyBuyViewController";
      UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
     mainController.tabBarView.hidden=NO;
+    [super viewWillAppear:animated];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    UIView *titleView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 20)];
-//    UIImageView *imgView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qiangzi64"]];
-//    imgView.frame=CGRectMake(SCREEN_WIDTH/2-70, -10, 30, 30);
-//    UIImageView *imgView1=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qiangzi64"]];
-//    imgView1.frame=CGRectMake(SCREEN_WIDTH/2-50, -10, 30, 30);
-//    UIImageView *imgView2=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qiangzi64"]];
-//    imgView2.frame=CGRectMake(SCREEN_WIDTH/2-30, -10, 30, 30);
-//    UILabel *title=[UILabel navTitleLabel:@"抢抢抢"];
-//    title.frame=CGRectMake(SCREEN_WIDTH/2-130, 0, 200, 20);
-//    [titleView addSubview:imgView];
-//     [titleView addSubview:imgView1];
-//     [titleView addSubview:imgView2];
-//    [titleView addSubview:title];
     self.navigationItem.title=self.title;
     [HttpHelper sendGetRequest:@"getActivity"
                     parameters: @{}

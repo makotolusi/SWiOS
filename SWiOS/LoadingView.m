@@ -18,23 +18,22 @@
     }
    
     
-    UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0,0 , SCREEN_WIDTH, SCREEN_HEIGHT)];
+    UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0,kSWTopViewHeight , SCREEN_WIDTH, SCREEN_HEIGHT)];
     if (self) {
             
             view.tag = LoadingViewTag;
             
             //设置显示样式,见UIActivityIndicatorViewStyle的定义
-            view.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-            
+            view.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
             
             //设置背景色
-            view.backgroundColor = [UIColor grayColor];
+            view.backgroundColor = [UIColor whiteColor];
             
             //设置背景透明
-            view.alpha = 0.5;
-            
+//            view.alpha = 0.5;
+        
             //设置背景为圆角矩形
-//            view.layer.cornerRadius = 6;
+
             view.layer.masksToBounds = YES;
             //设置显示位置
             [view setCenter:CGPointMake(parentView.frame.size.width / 2.0, parentView.frame.size.height / 2.0)];

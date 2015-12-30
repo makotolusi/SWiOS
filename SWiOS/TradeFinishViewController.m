@@ -135,11 +135,11 @@
         UILabel *label2=[[UILabel alloc] initWithFrame:CGRectMake(label1.frame.origin.x, label1.frame.origin.y+15, 200, 20)];
         [label2 midLabel];
         label2.text=@"实付款(含运费)";
-        UILabel *price2=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-50, label1.frame.origin.y+15, 200, 20)];
+        UILabel *price2=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-SCREEN_WIDTH*0.2, label1.frame.origin.y+15, 200, 20)];
         [price2 midLabel];
         price2.textColor=[UIColor orangeColor];
         price2.text=[@"¥ " stringByAppendingString:_cartModel.orderModel.totalPrice.stringValue];
-        UILabel *price1=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-50, label1.frame.origin.y, 200, 20)];
+        UILabel *price1=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-SCREEN_WIDTH*0.2, label1.frame.origin.y, 200, 20)];
         [price1 midLabel];
         price1.text=@"¥ 50";
         [cell addSubview:label1];

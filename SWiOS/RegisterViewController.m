@@ -67,7 +67,7 @@
     delegate.window.rootViewController = mainContorll;
    
     
-    [self presentViewController:mainContorll animated:YES completion:nil];
+    [self presentViewController:mainContorll animated:NO completion:nil];
 }
 
 @end

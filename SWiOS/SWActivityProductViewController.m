@@ -19,6 +19,7 @@
 #import "UIAlertView+Extension.h"
 #import "ShoppingCartLocalDataManager.h"
 #import "UIImageView+WebCache.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #define kCCell_Img			1
 #define kCCell_Button		4
 static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier";
@@ -208,8 +209,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
     UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
     // grab the imageview using cell
     UIImageView *imgV = (UIImageView*)[cell viewWithTag:kCCell_Img];
-    [imgV sd_setImageWithURL:[NSURL URLWithString:url]
-               placeholderImage:nil];
+    [imgV setImageWithURL:[NSURL URLWithString:url] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 
     // get the exact location of image
     CGRect rect = [imgV.superview convertRect:imgV.frame fromView:nil];

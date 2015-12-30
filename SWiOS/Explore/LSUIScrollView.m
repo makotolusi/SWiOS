@@ -11,6 +11,7 @@
 #import "HttpHelper.h"
 #import "UILabel+Extension.h"
 #import "NSString+Extension.h"
+
 @implementation LSUIScrollView
 
 
@@ -40,20 +41,13 @@
     int i=0;
     
     _toolbar=[[UIScrollView alloc] initWithFrame:frame];
-//    _toolbar.alwaysBounceVertical=NO;
-////    [_toolbar alwaysBounceVertical:NO];
-////    _toolbar.alwaysBounceHorizontal=NO;
-//    [_toolbar setShowsHorizontalScrollIndicator:NO];
-//    [_toolbar setShowsVerticalScrollIndicator:NO];
-//        _toolbar.backgroundColor=[UIColor redColor];
     for (NSString* area in _titleList) {
         
         int x=startX*(i+1)+with*i;
-//        UIView* v=[[UIView alloc] initWithFrame:CGRectMake(x, 0, with, with)];
         UILabel* l=[[UILabel alloc] initWithFrame:CGRectMake(x, 0, with, with)];
         if (i==0) {
             l.font=[UIFont systemFontOfSize:15];
-            l.textColor=[UIColor redColor];
+            l.textColor=DEFAULT_BUTTON_COLOR;
             _lastMenuLabel=l;
         }else{
            
@@ -86,7 +80,7 @@
     }
     UILabel* label=recognizer.view;
     label.font=[UIFont systemFontOfSize:15];
-    label.textColor=[UIColor redColor];
+    label.textColor=DEFAULT_BUTTON_COLOR;
     _lastMenuLabel=label;
     
     if ([_toolbarDelegate respondsToSelector:@selector(scrollableToolbar:didSelecedAtIndex:)]) {

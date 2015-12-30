@@ -13,6 +13,7 @@
 #import "ActivityProduct.h"
 #import "NSString+Extension.h"
 #import "RegisterModel.h"
+
 @implementation OrderRequest
 
 +(ShoppingCartModel*)orderCheck:(void (^)())next{
@@ -47,12 +48,13 @@
                      parameters: dict1
                         success:^(id response) {
                             NSDictionary* result=[response jsonString2Dictionary];
-                            BOOL success=[result valueForKey:@"success"];
+                            NSString* suc=(NSString*)[result valueForKey:@"success"];
+                            BOOL success=suc.intValue;
                             if(success){
                                 NSDictionary* data=[result[@"data"] jsonString2Dictionary];
                                 NSString* orderCode=data[@"orderCode"];
                                 [_shoppingCart.orderModel setValue:orderCode forKey:@"orderCode"];
-                                NSString* orderInfo=[NSString stringWithFormat:jsonString,orderCode ];
+                                NSString* orderInfo=[[NSString alloc] jsonStringWithDic:data];
                                 [self orderCofirm:orderInfo next:^{
                                      next();
                                 }];
@@ -60,6 +62,7 @@
                             NSLog(@"获取到的数据为dict：%@", result);
                         } fail:^{
                             NSLog(@"fail");
+//                            next();
                         }];
     return nil;
 }

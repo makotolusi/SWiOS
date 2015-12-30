@@ -458,4 +458,9 @@
     NSData* data = [self dataUsingEncoding:NSUTF8StringEncoding];
     return  [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
 }
+
+-(NSString*)jsonStringWithDic:(NSDictionary*)dic{
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
 @end

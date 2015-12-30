@@ -41,4 +41,5 @@
 
 -(BOOL)deleteWithName:(NSString*)tableName byId:(int)objId;
 
+- (BOOL)dropTablesWithName:(NSString*)tableName;
 @end

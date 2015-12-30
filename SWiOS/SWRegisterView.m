@@ -217,17 +217,17 @@
 //                                                               [NSThread sleepForTimeInterval:3.0];
                                                            
                                                            //close
-                                                           [UIView animateWithDuration:0.0 animations:^{
-                                                               self.alpha = 0;
-                                                           } completion:^(BOOL finished){
-                                                               dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
-                                                               dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                                                           [UIView animateWithDuration:0.0 animations:^{
+//                                                               self.alpha = 0;
+//                                                           } completion:^(BOOL finished){
+//                                                               dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)0);
+//                                                               dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                                                                    [self removeFromSuperview];
                                                                    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(registerDidDismissView:)]) {
                                                                        [self.delegate registerDidDismissView:self];
                                                                    }
-                                                               });
-                                                           }];
+//                                                               });
+//                                                           }];
 
                                                        }
                                                    } fail:^{

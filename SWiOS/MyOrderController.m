@@ -14,6 +14,7 @@
 #import "UIWindow+Extension.h"
 #import "DetailPageController.h"
 #import "MJRefresh.h"
+#import "DatabaseManager.h"
 @interface MyOrderController ()
 
 @end
@@ -83,6 +84,10 @@
 //    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
     if ([@"TradeFinishViewController" isEqualToString:_prePage]) {
          [ShoppingCartModel clearCart];
+        
+        DatabaseManager *databaseManager=[DatabaseManager sharedDatabaseManager];
+        [databaseManager dropTablesWithName:@"shoppingcart"];
+           [databaseManager dropTablesWithName:@"ordermodel"];
     }
    
 }
@@ -128,7 +133,7 @@
         }
     }
     
-    
+
             [cell settingData];
     
   

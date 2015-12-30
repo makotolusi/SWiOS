@@ -8,6 +8,7 @@
 
 #import "YCAsyncImageView.h"
 #import "UIImageView+WebCache.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 static NSCache *kMemCache;
 
 static dispatch_queue_t kYCRemoteLoadQueue;
@@ -77,32 +78,7 @@ static inline NSString *kCacheGetKeyFromURL(NSString *url)
 
 - (void)p_loadImage
 {
-//    UIImage* img=[UIImage imageNamed:@"jiazai.gif"];
-//    UIImageView *imgv=[[UIImageView alloc] initWithImage:img];
-//    imgv.contentMode=UIViewContentModeScaleAspectFit;
-//    img=[self scaleToSize:img size:CGSizeMake(60, 60)];
-    [self sd_setImageWithURL:[NSURL URLWithString:_url]];
-//    NSData *cachedData = [kMemCache objectForKey:kCacheGetKeyFromURL(_url)];
-//    
-//    UIImage *image = nil;
-//    if (cachedData) {
-//        NSLog(@"cache hitted");
-//        image = [UIImage imageWithData:cachedData];
-//        UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 0);
-//        
-//        [image drawInRect:self.bounds];
-//        
-//        UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
-//        
-//        UIGraphicsEndImageContext();
-//        self.image = finalImage;
-//        return;
-//    }
-//    
-//    self.image = nil;
-//    
-//    NSLog(@"cache hit failed");
-//    [self p_loadImageFromRemote];
+    [self setImageWithURL:[NSURL URLWithString:_url] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
 }
 
 - (void)p_loadImageFromRemote

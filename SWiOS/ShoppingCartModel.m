@@ -31,10 +31,10 @@
         sharedManager.orderModel.totalPrice=[NSNumber numberWithFloat:0.00f];
         sharedManager.registerModel=[[RegisterModel alloc] init];
         //test code user info
-        sharedManager.orderModel.submitPerson=[NSNumber numberWithInteger:222];
-        sharedManager.orderModel.receiverInfo=@"lusi";
-        sharedManager.orderModel.reviewerName=@"lusi king";
-        sharedManager.orderModel.receiverPhone=@"18210324011";
+        sharedManager.orderModel.submitPerson=[NSNumber numberWithInteger:0];
+        sharedManager.orderModel.receiverInfo=@"";
+        sharedManager.orderModel.reviewerName=@"";
+        sharedManager.orderModel.receiverPhone=@"";
         sharedManager.orderModel.payType=@"ZHIFUBAO";
        sharedManager.orderStatus = @{@"PAID":@"已支付",@"WAITING_PAYMENT":@"待支付",@"CANCEL":@"取消支付"};
     });

@@ -21,9 +21,12 @@
 #import "UIWindow+Extension.h"
 #import "CommentViewController.h"
 #import "MJRefresh.h"
+#import "SVTopScrollView.h"
+#import "SVRootScrollView.h"
+#import "SVGloble.h"
 NSInteger kWDTransitionViewTag = 33331;
 
-@interface SWExploreEntranceViewController () <LSUIScrollViewDelegate,SWExploreEntranceDataProviderDelegate>
+@interface SWExploreEntranceViewController () <LSUIScrollViewDelegate,SWExploreEntranceDataProviderDelegate,SVTopScrollViewDelegate>
 
 @property (nonatomic, strong) SWExploreNaviDelegate *naviDelegate;
 
@@ -93,10 +96,8 @@ NSInteger kWDTransitionViewTag = 33331;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.pageName=@"探索";
+    self.pageName=@"SWExploreEntranceViewController";
     [super viewWillAppear:animated];
-    
-//    [self.view bringSubviewToFront:_scrollableToolbar];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -131,12 +132,12 @@ NSInteger kWDTransitionViewTag = 33331;
         }];
         
         
-        // refresh toolbar titles with data fetched from api server
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSArray *strongRefList = titlesStrList;
-            [_scrollableToolbar updateWithTitles:strongRefList];
-            strongRefList = nil;
-        });
+//        // refresh toolbar titles with data fetched from api server
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSArray *strongRefList = titlesStrList;
+//            [_scrollableToolbar updateWithTitles:strongRefList];
+//            strongRefList = nil;
+//        });
 
         NSDictionary *pieceInfo = [_titleList objectAtIndex:0];
         NSString *pieceID = pieceInfo[@"id"];
@@ -151,43 +152,90 @@ NSInteger kWDTransitionViewTag = 33331;
     }];
 }
 
+- (UITableView*)drawTable:(NSDictionary*)title{
+    UITableView *content= [[UITableView alloc] init];
+    
+    content.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    SWExploreEntranceDataProvider *dataProvider=[self dataProvider:content];
+    content.delegate=dataProvider;
+    content.dataSource = dataProvider;
+    content.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [content addHeaderWithCallback:^(){
+        // 2.2秒后刷新表格UI
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if ([_titleList count]!=0) {
+                // 刷新表格
+                
+                NSString *pieceID = title[@"id"];
+                
+                NSString *pieceImageURL = title[@"sortUrl"];
+                
+                [dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0 last:^(){
+                    // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+                    [content headerEndRefreshing];
+                }];
+                
+                
+            }
+            
+        });
+    }];
+    #warning 自动刷新(一进入程序就下拉刷新)
+    [content headerBeginRefreshing];
+    return content;
+}
+
+-(void)itemDidClicked:(int)index{
+    SVRootScrollView *rootScrollView = [SVRootScrollView shareInstance];
+    [rootScrollView setContentOffset:CGPointMake(SCREEN_WIDTH*(index-100), 0) animated:NO];
+//    NSLog(@"");
+}
+
 - (void)drawViews
 {
     self.edgesForExtendedLayout = UIRectEdgeNone;
   
-    self.contentView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                     kSWHeadBarViewHeight,
-                                                                     SCREEN_WIDTH,
-                                                                     SCREEN_HEIGHT-kSWTabBarViewHeight-kSWHeadBarViewHeight*2.5)
-                                                    style:UITableViewStylePlain];
+//    _contentView=[self drawTable];
     
-    _contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    _contentView.delegate = [self dataProvider];
-    _contentView.dataSource = _dataProvider;
-    _contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
-    [_contentView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    #warning 自动刷新(一进入程序就下拉刷新)
-    [_contentView headerBeginRefreshing];
     
     NSMutableArray* tl=[[NSMutableArray alloc] init];
+    NSMutableArray* idtl=[[NSMutableArray alloc] init];
+    
     [HttpHelper sendGetRequest:@"getPiece/1" parameters:nil success:^(id response){
         NSArray* result=[response jsonString2Dictionary];
         for (NSDictionary* obj in result) {
             NSString* title=obj[@"sortTitle"];
             [tl addObject:title];
+            [idtl addObject:[self drawTable:obj]];//((NSNumber*)obj[@"id"]).stringValue
         }
+//        
+//        LSUIScrollView* toolbar=[[LSUIScrollView alloc] initWithFrame:CGRectMake(0, -5, SCREEN_WIDTH, SCREEN_HEIGHT*0.1) titleList:tl];
+//        toolbar.toolbarDelegate = self;
+//        [self.view addSubview:toolbar];
+//        [self.view addSubview:_contentView];
         
-        LSUIScrollView* toolbar=[[LSUIScrollView alloc] initWithFrame:CGRectMake(0, -5, SCREEN_WIDTH, SCREEN_HEIGHT*0.1) titleList:tl];
-        toolbar.toolbarDelegate = self;
-        [self.view addSubview:toolbar];
-        [self.view addSubview:_contentView];
+        SVTopScrollView *topScrollView = [SVTopScrollView shareInstance];
+        topScrollView.deleg=self;
+        SVRootScrollView *rootScrollView = [SVRootScrollView shareInstance];
+        
+        topScrollView.nameArray = tl;
+        rootScrollView.viewNameArray = idtl;
+        
+        [self.view addSubview:topScrollView];
+        [self.view addSubview:rootScrollView];
+//        rootScrollView.content=_contentView;
+//        rootScrollView.lastContent=[self drawTable];
+
+        [topScrollView initWithNameButtons];
+        [rootScrollView initWithViews];
     } fail:^{
         
-    }];
+    } parentView:self.view];
     
 
+   
 
 }
 
@@ -200,60 +248,42 @@ NSInteger kWDTransitionViewTag = 33331;
 //        [self.fakeData insertObject:MJRandomData atIndex:0];
 //    }
     
-    // 2.2秒后刷新表格UI
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if ([_titleList count]!=0) {
-            // 刷新表格
-            NSDictionary *pieceInfo = [_titleList objectAtIndex:_curIndex];
-            
-            NSString *pieceID = pieceInfo[@"id"];
-            
-            NSString *pieceImageURL = pieceInfo[@"sortUrl"];
-            
-            [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0 last:^(){
-                // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-                [_contentView headerEndRefreshing];
-            }];
-            
-        
-        }
-      
-    });
+ 
 }
 
-- (SWExploreEntranceDataProvider *)dataProvider
+- (SWExploreEntranceDataProvider *)dataProvider:(UITableView*)content
 {
-    if (_dataProvider == nil) {
+//    if (_dataProvider == nil) {
         _dataProvider = [SWExploreEntranceDataProvider new];
-        _dataProvider.targetTable = self.contentView;
+        _dataProvider.targetTable = content;//self.contentView;
         _dataProvider.vc = self;
         _dataProvider.delegate=self;
-    }
+//    }
     return _dataProvider;
 }
 
 
 
-#pragma mark ZYCScrollableToolbarDelegate
-- (void)scrollableToolbar:(ZYCScrollableToolbar *)toolbar didSelecedAtIndex:(NSInteger)index
-{
-//    NSLog(@"clicked title at index:%d with name:%@", index, [_titleList objectAtIndex:index]);
+//#pragma mark ZYCScrollableToolbarDelegate
+//- (void)scrollableToolbar:(ZYCScrollableToolbar *)toolbar didSelecedAtIndex:(NSInteger)index
+//{
+////    NSLog(@"clicked title at index:%d with name:%@", index, [_titleList objectAtIndex:index]);
+////
+//    
+//    NSDictionary *pieceInfo = [_titleList objectAtIndex:index];
+//    _curIndex=index;
+//    NSString *pieceID = pieceInfo[@"id"];
+//    
+//    NSString *pieceImageURL = pieceInfo[@"sortUrl"];
+//#warning 自动刷新(一进入程序就下拉刷新)
+//    [_contentView headerBeginRefreshing];
+//    
+////    [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0 last:^{
+////        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+////        [_contentView headerEndRefreshing];
+////    }];
 //
-    
-    NSDictionary *pieceInfo = [_titleList objectAtIndex:index];
-    _curIndex=index;
-    NSString *pieceID = pieceInfo[@"id"];
-    
-    NSString *pieceImageURL = pieceInfo[@"sortUrl"];
-#warning 自动刷新(一进入程序就下拉刷新)
-    [_contentView headerBeginRefreshing];
-    
-//    [_dataProvider reloadDataWithPieceID:pieceID pieceImageUrl:pieceImageURL pageNum:0 last:^{
-//        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-//        [_contentView headerEndRefreshing];
-//    }];
-
-}
+//}
 
 
 #pragma mark UITableViewDelegate

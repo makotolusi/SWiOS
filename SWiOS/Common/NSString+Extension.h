@@ -38,4 +38,5 @@
 +(BOOL)validateMobile:(NSString *)mobileNum;
 
 -(instancetype)jsonString2Dictionary;
+-(NSString*)jsonStringWithDic:(NSDictionary*)dic;
 @end

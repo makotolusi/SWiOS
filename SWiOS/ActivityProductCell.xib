@@ -86,6 +86,13 @@
                             </mask>
                         </variation>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dZb-8O-uLY">
+                        <rect key="frame" x="2" y="4" width="108" height="106"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="90" id="lWR-6w-mxf"/>
+                            <constraint firstAttribute="width" constant="90" id="xZD-7x-07t"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="UYp-Rn-B0k" secondAttribute="bottom" constant="7.5" id="0dp-BS-VAL"/>
@@ -99,6 +106,7 @@
                     <constraint firstItem="9Y8-co-bP1" firstAttribute="leading" secondItem="3Yr-9e-Idi" secondAttribute="leading" constant="100" id="JOk-kw-czN"/>
                     <constraint firstItem="UYp-Rn-B0k" firstAttribute="leading" secondItem="3Yr-9e-Idi" secondAttribute="leading" id="Sta-ek-TdY"/>
                     <constraint firstAttribute="trailingMargin" secondItem="UYp-Rn-B0k" secondAttribute="trailing" constant="161" id="Wdf-wG-ao7"/>
+                    <constraint firstItem="dZb-8O-uLY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="WpC-EW-xIb"/>
                     <constraint firstItem="hoO-l7-JnL" firstAttribute="leading" secondItem="UYp-Rn-B0k" secondAttribute="trailing" constant="10" id="Zch-MS-zg2"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hoO-l7-JnL" secondAttribute="bottom" id="a4K-tX-bZs"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hoO-l7-JnL" secondAttribute="bottom" constant="10" id="a88-Z1-P8I"/>
@@ -115,6 +123,7 @@
                     <constraint firstItem="3Yr-9e-Idi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="mol-zP-0zf"/>
                     <constraint firstItem="3Yr-9e-Idi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="142" id="qer-R2-gME"/>
                     <constraint firstAttribute="trailingMargin" secondItem="hoO-l7-JnL" secondAttribute="trailing" constant="10" id="wW7-MY-RZJ"/>
+                    <constraint firstItem="dZb-8O-uLY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="wdG-RM-PkD"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -142,6 +151,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="cartButton" destination="hoO-l7-JnL" id="Fm5-FQ-S44"/>
+                <outlet property="imgView" destination="dZb-8O-uLY" id="jbM-mp-T0t"/>
                 <outlet property="price" destination="9Y8-co-bP1" id="jMA-Mm-NAq"/>
                 <outlet property="productName" destination="3Yr-9e-Idi" id="ihN-Av-aMW"/>
                 <outlet property="totalCount" destination="UYp-Rn-B0k" id="c87-cZ-JJ5"/>

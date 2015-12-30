@@ -70,7 +70,7 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
         b.titleLabel.font = [UIFont systemFontOfSize:14.0f];
         [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         if (startX==0) {
-            b.backgroundColor=[UIColor blackColor];
+            b.backgroundColor=DEFAULT_BAR_SELECTED_COLOR;
             b.selected=YES;
             lastButton=b;
         }
@@ -196,12 +196,15 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
          forControlEvents:UIControlEventTouchUpInside];
 //        [button setTitle:vc.title forState:UIControlStateNormal];
         NSString* imgName=@"";
+        float s=SCREEN_WIDTH*0.15;
+        float z=kSWTabBarViewHeight*0.33;
         switch (idx) {
             case 0:
                 imgName=icon_sousuo;
                 break;
             case 1:
                 imgName=icon_qiang;
+             
                 break;
             case 2:
                 imgName=icon_gouwuche;
@@ -214,9 +217,7 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
         }
         [button setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
          [button setImage:[UIImage imageNamed:[imgName stringByAppendingString:@"-light"]] forState:UIControlStateSelected];
-        float s=SCREEN_WIDTH*0.16;
-        [button setImageEdgeInsets:UIEdgeInsetsMake(kSWTabBarViewHeight*0.27,s,kSWTabBarViewHeight*0.27,s)];
-        
+        [button setImageEdgeInsets:UIEdgeInsetsMake(z,s,z,s)];
         [buttons insertObject:button atIndex:idx];
         
         
@@ -231,18 +232,16 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
                                      
                                      self.view.bounds.size.height - kSWTabBarViewHeight / 2);
     
-    
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, 0.0f, SCREEN_WIDTH, 0.6f);
+    bottomBorder.backgroundColor = [UIColor colorWithWhite:0.7f  alpha:1.0f].CGColor;
+    [_tabBarView.layer addSublayer:bottomBorder];
     
     [self.view addSubview:[self contentView]];
     
     [self p_showController:[_viewControlers firstObject]];
-    //_tabBarView.hidden=YES;
  
     [self.view addSubview:_tabBarView];
-    
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(hehe) name:@"11" object:nil];
-  
-//    [_tabBarView addConstraint:nil];
     
 }
 
@@ -287,20 +286,11 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (void)tabClicked:(UIButton *)button
            atIndex:(NSInteger)index
 {
     UIViewController *shouldShowVc = [_viewControlers objectAtIndex:button.tag];
-    button.backgroundColor=[UIColor blackColor];
+    button.backgroundColor=DEFAULT_BAR_SELECTED_COLOR;
     button.selected=YES;
     
     if (button.tag!=lastButton.tag) {

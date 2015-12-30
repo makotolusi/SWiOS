@@ -88,7 +88,7 @@
                 v1.leftUpSideContryImagURL = pieceImageURL;
                 [self.items addObject:v1];
             }];
-            
+           
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.targetTable reloadData];
                 if (pageNum == 0) {
@@ -133,7 +133,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger rowCount = 0;
-    
+     NSLog(@"%ld",[self.items count]);
     if (_redBookStyleEnabled) {
         rowCount = self.items.count;
     } else {
@@ -243,14 +243,6 @@
     
     
     UIImageView *transIV = (UIImageView *)[self.targetTable.superview viewWithTag:kWDTransitionViewTag];
-    
-//    if (!transIV) {
-//        transIV = [[UIImageView alloc] initWithImage:cell.bigImageView.image];
-//        transIV.tag = kWDTransitionViewTag;
-//        [self.targetTable.superview addSubview:transIV];
-//    }
-//    
-//    transIV.frame = CGRectMake(cell.bigImageView.frame.origin.x, currentPoint.y, cell.bigImageView.frame.size.width, cell.bigImageView.frame.size.height);
     
     self.vc.transViewOriCenter = CGPointMake(self.targetTable.frame.size.width * 0.5, currentPoint.y + transIV.frame.size.height * 0.5);
     

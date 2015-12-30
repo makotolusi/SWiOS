@@ -338,4 +338,16 @@
     
 }
 
+- (BOOL)dropTablesWithName:(NSString*)tableName{
+    BOOL isExecuteSuccess = NO;
+    DatabaseManager* dataBaseManager=[DatabaseManager sharedDatabaseManager];
+    //打开数据库，如果没有打开，直接返回
+    if(![dataBaseManager openDatabase])
+        return NO;
+    FMDatabase *db=[dataBaseManager getDB];
+    isExecuteSuccess = [db executeUpdate:[@"DROP TABLE " stringByAppendingString:tableName]];
+    [dataBaseManager closeDatabase];
+    return isExecuteSuccess;
+}
+
 @end

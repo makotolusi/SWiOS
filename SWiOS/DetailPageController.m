@@ -28,7 +28,7 @@
     [super viewDidLoad];
 //    [UIWindow showTabBar:NO];
     _cartModel=[ShoppingCartModel sharedInstance];
-    _webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT-100)];
+    _webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
     NSString *url=[@"http://okeasy.eicp.net:9888/index.html#/Product/" stringByAppendingString:_product.productCode];
     _webView.delegate=self;
     NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString: url]];
