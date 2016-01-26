@@ -34,7 +34,9 @@
 }
 
 -(void)drawView:(CGRect)frame{
-    int with=60;
+    int count=_titleList.count;
+    int with=SCREEN_WIDTH/count;
+//    int with=60;
     int startX=5;
     
     int totalWith = 0;

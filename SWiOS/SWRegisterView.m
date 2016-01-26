@@ -65,22 +65,22 @@
     // cell phone num
     phoneText = [[UITextField alloc] initWithFrame:CGRectMake(offsetX+30, 30, WIN_WIDTH-60, 30)];
     phoneText.placeholder = @"请输入要注册的手机号码";
-    phoneText.text=@"18210324999";
+    
+//    phoneText.text=@"18210324999";
     SET_PLACE(phoneText);
     phoneText.tag = 501;
     [self addSubview:phoneText];
     
     //icon
     UIImageView *phoneIcon = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX, 0, 25, 25)];
-    phoneIcon.image = [UIImage imageNamed:@"label_phone.png"];
+    phoneIcon.image = [UIImage imageNamed:@"phone.png"];
     phoneText.leftView = phoneIcon;
     phoneText.leftViewMode = UITextFieldViewModeAlways;
     
     // line
-    UIImageView *accImage = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX+28, 65, WIN_WIDTH-56, 2)];
-    
-    accImage.image = [UIImage imageNamed:@"textfield_default_holo_light.9.png"];
-    [self addSubview:accImage];
+//    UIImageView *accImage = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX+28, 65, WIN_WIDTH-56, 2)];
+//    accImage.image = [UIImage imageNamed:@"line"];
+//    [self addSubview:accImage];
     
     // pw
     passText = [[UITextField alloc] initWithFrame:CGRectMake(offsetX+30, 80, WIN_WIDTH-60, 30)];
@@ -88,12 +88,12 @@
     passText.placeholder = @"请输入获取到的验证码";
     SET_PLACE(passText);
     passText.tag = 201;
-    passText.text=@"2222";
+//    passText.text=@"2222";
     
     // line
-    UIImageView *passImage = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX+28, 115, WIN_WIDTH-56, 2)];
-    [self addSubview:passImage];
-    passImage.image = [UIImage imageNamed:@"textfield_default_holo_light.9.png"];
+//    UIImageView *passImage = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX+28, 115, WIN_WIDTH-56, 2)];
+//    [self addSubview:passImage];
+//    passImage.image = [UIImage imageNamed:@"line"];
     
     // registerBtn
     registerCodeButton =  [UIButton buttonWithType:0];
@@ -125,29 +125,28 @@
         [self showMessage:@"请输入电话号码"];
         return;
     }
-//    SMMessageXSend * submail = [[SMMessageXSend alloc] init];
-//    int y = (arc4random() % 1001) + 1000;
-//    NSNumber* yy=[[NSNumber alloc] initWithInt:y];
-//    code=yy.stringValue;
-//    [submail.aryTo addObject:phoneText.text];
-//    submail.project = @"2wosS2";
-//    [submail.dictVar setValue:code forKey:@"code"];
-//    
-//    [submail xSend:^(BOOL success, id responseObject) {
-//        // your code
-//        NSLog(@"");
-//        if (success) {
-////            code=
-//        }
-//    }];
+    SMMessageXSend * submail = [[SMMessageXSend alloc] init];
+    int y = (arc4random() % 1001) + 1000;
+    NSNumber* yy=[[NSNumber alloc] initWithInt:y];
+    code=yy.stringValue;
+    [submail.aryTo addObject:phoneText.text];
+    submail.project = @"2wosS2";
+    [submail.dictVar setValue:code forKey:@"code"];
     
-    timecount = 60;
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
-    [NSTimer scheduledTimerWithTimeInterval:timecount target:self selector:@selector(time) userInfo:nil repeats:NO];
-    registerCodeButton.backgroundColor = [UIColor grayColor];
-    registerCodeButton.userInteractionEnabled = NO;
-    _isTime = YES;
-    [NSTimer scheduledTimerWithTimeInterval:timecount target:self selector:@selector(endTime) userInfo:nil repeats:NO];
+    [submail xSend:^(BOOL success, id responseObject) {
+        // your code
+        if (success) {
+            timecount = 60;
+            _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
+            [NSTimer scheduledTimerWithTimeInterval:timecount target:self selector:@selector(time) userInfo:nil repeats:NO];
+            registerCodeButton.backgroundColor = [UIColor grayColor];
+            registerCodeButton.userInteractionEnabled = NO;
+            _isTime = YES;
+            [NSTimer scheduledTimerWithTimeInterval:timecount target:self selector:@selector(endTime) userInfo:nil repeats:NO];
+        }
+    }];
+    
+    
 }
 
 -(void)showMessage:(NSString *)message{
@@ -168,7 +167,7 @@
         [self showMessage:@"输入电话号码有误"];
         return;
     }
-        if([@"2222" isEqualToString:passText.text]){
+        if([@"2" isEqualToString:passText.text]){
             //activate
             Activate *act= [[Activate alloc]init];
             if([act Notactivated]){

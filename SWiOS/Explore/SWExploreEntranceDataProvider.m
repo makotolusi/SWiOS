@@ -18,6 +18,7 @@
 #import "ActivityProduct.h"
 #import "HttpHelper.h"
 #import "NSString+Extension.h"
+#import "MobClick.h"
 @implementation SWExploreFlatCellValueObject
 
 
@@ -145,7 +146,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
      SWExploreFlatCell2ValueObject *cellVO = [self.items objectAtIndex:indexPath.row];
-    NSLog(@"%@ row %ld",cellVO.productCode,indexPath.row);
     if (_redBookStyleEnabled) {
         static NSString *CellIdentifier = @"cellPieceIdentifer2";
 //         NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];//以indexPath来唯一确定cell
@@ -177,12 +177,13 @@
                                                      action:nil];
                     self.vc.navigationItem.backBarButtonItem = cancelButton;
                     [self.vc.navigationController pushViewController:thumbViewController animated:YES];
+//                    
+//                    [MobClick event:@"clickExpolreProduct" attributes:@{@"name" : product.productName, @"productCode" : product.productCode, @"price" : product.rushPrice}];
                 }
                 
                 if (type == kSWExploreCellClickTypeCommnet) {
 //                    UIViewController* u= [[UIViewController alloc] init];
                                 CommentViewController *thumbViewController = [[CommentViewController alloc] init];
-                    NSLog(@"%@ ",cell.cellVo.productCode);
                                 thumbViewController.productCode=cell.cellVo.productCode;
                                 //vo
                                 thumbViewController.navigationItem.titleView = [UILabel navTitleLabel:@"评论"];

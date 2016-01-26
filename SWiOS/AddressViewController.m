@@ -26,6 +26,11 @@
 
 @implementation AddressViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"AddressViewController";
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self _loadTableView];

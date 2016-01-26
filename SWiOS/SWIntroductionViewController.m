@@ -23,6 +23,11 @@ static NSString* const s5 = @"5";
 
 @implementation SWIntroductionViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"SWIntroductionViewController";
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.

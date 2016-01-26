@@ -196,8 +196,8 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
          forControlEvents:UIControlEventTouchUpInside];
 //        [button setTitle:vc.title forState:UIControlStateNormal];
         NSString* imgName=@"";
-        float s=SCREEN_WIDTH*0.15;
-        float z=kSWTabBarViewHeight*0.33;
+        float leftright=SCREEN_WIDTH/4*0.4;
+        float topbuttom=kSWTabBarViewHeight*0.34;
         switch (idx) {
             case 0:
                 imgName=icon_sousuo;
@@ -217,7 +217,7 @@ static CGFloat kSWCurrentShowingViewTag = 12333;
         }
         [button setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
          [button setImage:[UIImage imageNamed:[imgName stringByAppendingString:@"-light"]] forState:UIControlStateSelected];
-        [button setImageEdgeInsets:UIEdgeInsetsMake(z,s,z,s)];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(topbuttom,leftright,topbuttom,leftright)];
         [buttons insertObject:button atIndex:idx];
         
         

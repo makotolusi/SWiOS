@@ -162,8 +162,8 @@ NSInteger kWDTransitionViewTag = 33331;
     content.separatorStyle = UITableViewCellSeparatorStyleNone;
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [content addHeaderWithCallback:^(){
-        // 2.2秒后刷新表格UI
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if ([_titleList count]!=0) {
                 // 刷新表格
                 
@@ -175,11 +175,9 @@ NSInteger kWDTransitionViewTag = 33331;
                     // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
                     [content headerEndRefreshing];
                 }];
-                
-                
             }
             
-        });
+//        });
     }];
     #warning 自动刷新(一进入程序就下拉刷新)
     [content headerBeginRefreshing];
@@ -205,16 +203,17 @@ NSInteger kWDTransitionViewTag = 33331;
     
     [HttpHelper sendGetRequest:@"getPiece/1" parameters:nil success:^(id response){
         NSArray* result=[response jsonString2Dictionary];
+        int i=0;
         for (NSDictionary* obj in result) {
             NSString* title=obj[@"sortTitle"];
             [tl addObject:title];
-            [idtl addObject:[self drawTable:obj]];//((NSNumber*)obj[@"id"]).stringValue
+//            if (i==0) {
+                [idtl addObject:[self drawTable:obj]];
+//            }else{
+//                [idtl addObject:[[UITableView alloc] init]];
+//            }
+            i++;
         }
-//        
-//        LSUIScrollView* toolbar=[[LSUIScrollView alloc] initWithFrame:CGRectMake(0, -5, SCREEN_WIDTH, SCREEN_HEIGHT*0.1) titleList:tl];
-//        toolbar.toolbarDelegate = self;
-//        [self.view addSubview:toolbar];
-//        [self.view addSubview:_contentView];
         
         SVTopScrollView *topScrollView = [SVTopScrollView shareInstance];
         topScrollView.deleg=self;
@@ -225,8 +224,6 @@ NSInteger kWDTransitionViewTag = 33331;
         
         [self.view addSubview:topScrollView];
         [self.view addSubview:rootScrollView];
-//        rootScrollView.content=_contentView;
-//        rootScrollView.lastContent=[self drawTable];
 
         [topScrollView initWithNameButtons];
         [rootScrollView initWithViews];

@@ -17,7 +17,7 @@
     ShoppingCartModel *cart=[ShoppingCartModel sharedInstance];
     if (self) {
         _imgView=[[UIImageView alloc] initWithFrame:CGRectMake(20, self.frame.size.height/2-15, 30, 30)];
-        _imgView.image=[UIImage imageNamed:@"order64"];
+        _imgView.image=[UIImage imageNamed:@"order"];
         _orderPriceLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 10, 200, 20)];
         [_orderPriceLabel midLabel];
         _orderPriceLabel.textAlignment=NSTextAlignmentCenter;

@@ -29,6 +29,11 @@ NSMutableArray *_testArray;
 
 @implementation AddressListViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"AddressListViewController";
+    [super viewWillAppear:animated];
+}
+
 -(void)initializeData{
     DatabaseManager *db=[DatabaseManager sharedDatabaseManager];
     _testArray=[db.getAllAddress mutableCopy];
@@ -131,7 +136,7 @@ NSMutableArray *_testArray;
         NSMutableArray *rightUtilityButtons = [NSMutableArray new];
         
         //image
-        UIImage *img=[UIImage imageNamed:@"trash2"];
+        UIImage *img=[UIImage imageNamed:@"trash"];
     
         [rightUtilityButtons addUtilityButtonWithColor:
          [UIColor whiteColor] icon:[UIImage imageNamed:@"edit"]];
@@ -151,7 +156,7 @@ NSMutableArray *_testArray;
     }
     
     AddressModel *dateObject = _testArray[indexPath.row];
-    AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(0, 0, 10, 10) data:dateObject];
+    AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, cell.frame.size.height) data:dateObject];
     [cell addSubview:addressView];
     return cell;
 }

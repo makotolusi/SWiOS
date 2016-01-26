@@ -23,7 +23,8 @@
 #import "FavorViewController.h"
 #import "ShoppingCartLocalDataManager.h"
 #import "MobClick.h"
-NSString * const killShark = @"柠檬鲨别捣乱";
+#import "EmptyCell.h"
+//NSString * const killShark = @"柠檬鲨别捣乱";
 NSString * const kME = @"头像";
 NSString * const kMoney = @"钱包";
 NSString * const kName=@"名字";
@@ -62,6 +63,8 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
 @implementation SWMeTableViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self _initData];
@@ -88,9 +91,9 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 - (void)setupRefreshControl
 {
 
-    self.sunnyRefreshControl = [YALSunnyRefreshControl attachToScrollView:self.tableView
-                                                                   target:self
-                                                            refreshAction:@selector(sunnyControlDidStartAnimation)];
+//    self.sunnyRefreshControl = [YALSunnyRefreshControl attachToScrollView:self.tableView
+//                                                                   target:self
+//                                                            refreshAction:@selector(sunnyControlDidStartAnimation)];
 }
 
 -(void)sunnyControlDidStartAnimation{
@@ -100,7 +103,8 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
 -(IBAction)endAnimationHandle{
     
-    [self.sunnyRefreshControl endRefreshing];
+//    [self.sunnyRefreshControl endRefreshing];
+    
 }
 
 -(void)_initData{
@@ -140,21 +144,21 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     
     //    [self.view addSubview:self.tableView];
 
-    SWMe* s1 = [[SWMe alloc] initWithDescribe:kME andImgUrl:@""];
-    SWMe* s12 = [[SWMe alloc] initWithDescribe:kName andImgUrl:@""];
-    SWMe* s13 = [[SWMe alloc] initWithDescribe:kGender andImgUrl:@""];
-    SWMe* s14 = [[SWMe alloc] initWithDescribe:kAddress andImgUrl:@""];
-    SWMe* s15 = [[SWMe alloc] initWithDescribe:@"我的订单" andImgUrl:@""];
-    SWMe* s16 = [[SWMe alloc] initWithDescribe:kFavor andImgUrl:@""];
+    SWMe* s1 = [[SWMe alloc] initWithDescribe:kME andImgUrl:@"head"];
+    SWMe* s12 = [[SWMe alloc] initWithDescribe:kName andImgUrl:@"name"];
+    SWMe* s13 = [[SWMe alloc] initWithDescribe:kGender andImgUrl:@"gender"];
+    SWMe* s14 = [[SWMe alloc] initWithDescribe:kAddress andImgUrl:@"map"];
+    SWMe* s15 = [[SWMe alloc] initWithDescribe:@"我的订单" andImgUrl:@"dingdan"];
+    SWMe* s16 = [[SWMe alloc] initWithDescribe:kFavor andImgUrl:@"sc"];
     
     
-    SWMe* s21 = [[SWMe alloc] initWithDescribe:kMoney andImgUrl:@""];
+//    SWMe* s21 = [[SWMe alloc] initWithDescribe:kMoney andImgUrl:@""];
 
-    SWMe* s31 = [[SWMe alloc] initWithDescribe:clearCache andImgUrl:@""];
-    SWMe* s32 = [[SWMe alloc] initWithDescribe:killShark andImgUrl:@"shark.png"];
+    SWMe* s31 = [[SWMe alloc] initWithDescribe:clearCache andImgUrl:@"cache"];
+//    SWMe* s32 = [[SWMe alloc] initWithDescribe:killShark andImgUrl:@"shark.png"];
     
     SWMe* s41 = [[SWMe alloc] initWithDescribe:kLogOut andImgUrl:@""];
-    NSArray* array = [NSArray arrayWithObjects:s1,s12,s13,s14,s15,s16,s21,s31,s41,s32, nil];
+    NSArray* array = [NSArray arrayWithObjects:s1,s12,s13,s14,s15,s16,s31,s41, nil];
 
 //    NSArray* array2 = [NSArray arrayWithObjects:s21, nil];
 
@@ -194,9 +198,9 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *TableSampleIdentifier = @"reuseIdentifier";
 
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:TableSampleIdentifier];
+    EmptyCell* cell = [tableView dequeueReusableCellWithIdentifier:TableSampleIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TableSampleIdentifier];
+        cell = [[EmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TableSampleIdentifier];
     }
     else {
         while ([cell.contentView.subviews lastObject] != nil) {
@@ -210,9 +214,9 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
     cell.textLabel.text = s.describe;
     [cell.textLabel smallLabel];
     cell.imageView.image=[UIImage imageNamed:s.imgUrl];
-    if (![s.describe isEqual:killShark]&&![s.describe isEqual:kLogOut]) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+//    if (![s.describe isEqual:killShark]&&![s.describe isEqual:kLogOut]) {
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    }
 
     if ([s.describe isEqual:kME]) {
         
@@ -259,12 +263,12 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         [cell addSubview:meGenderLabel];
     }
 
-    if (!self.sunnyRefreshControl.forbidContentInsetChanges) {
-        if ([s.describe isEqual:killShark]) {
-            cell.hidden = YES;
-            hiddenCell = cell;
-        }
-    }
+//    if (!self.sunnyRefreshControl.forbidContentInsetChanges) {
+//        if ([s.describe isEqual:killShark]) {
+//            cell.hidden = YES;
+//            hiddenCell = cell;
+//        }
+//    }
      if ([s.describe isEqual:kLogOut]) {
          UILabel *logoutLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, cell.frame.size.height/2-10, 200, 20)];
          logoutLabel.textAlignment=NSTextAlignmentCenter;
@@ -280,7 +284,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
     SWMe* s = [groups[[indexPath section]] objectAtIndex:[indexPath row]];
     if ([s.describe isEqual:kME]) {
-        return SCREEN_HEIGHT*0.13;
+        return SCREEN_HEIGHT*0.11;
     }
     return SCREEN_HEIGHT*0.07;
 }
@@ -301,11 +305,11 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         //
         [self takePictureClick];
     }
-    if ([s.describe isEqual:killShark]) {
-
-        [self endAnimationHandle];
-        hiddenCell.hidden = YES;
-    }
+//    if ([s.describe isEqual:killShark]) {
+//
+//        [self endAnimationHandle];
+//        hiddenCell.hidden = YES;
+//    }
     if ([s.describe isEqual:kMoney]) {
 
         SWMoneyNavigationController* uiNavigationController = [[SWMoneyNavigationController alloc] initWithNibName:@"SWMoneyNavigationController" bundle:nil];

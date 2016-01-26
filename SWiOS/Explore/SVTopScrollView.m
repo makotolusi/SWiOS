@@ -12,7 +12,7 @@
 
 #import "UILabel+Extension.h"
 //按钮空隙
-#define BUTTONGAP SCREEN_WIDTH*0.07
+#define BUTTONGAP SCREEN_WIDTH*0.09
 //滑条宽度
 #define CONTENTSIZEX SCREEN_WIDTH
 //按钮id
@@ -57,7 +57,7 @@
 
 - (void)initWithNameButtons
 {
-    float xPos = 5.0;
+    float xPos = 0.5;
     for (int i = 0; i < [self.nameArray count]; i++) {
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -20,6 +20,7 @@
 @implementation ShoppingCartController 
 
 -(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"ShoppingCartController";
         [super viewDidAppear:animated];
         if (_tableView) {
             [_tableView reloadData];
@@ -82,15 +83,7 @@
     
     float payButtonHeight=SCREEN_HEIGHT/11;
         isEdit=YES;
-        // 创建表视图
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kSWTopViewHeight*1.7, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight-kSWTopViewHeight*1.7-payButtonHeight)];
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
-//    _tableView.backgroundColor=[UIColor blackColor];
-        _tableView.rowHeight = SCREEN_HEIGHT*0.16;
-//        _tableView.contentInset = UIEdgeInsetsMake(50, 0.f, 0.f, 0.f);
-        _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
-        [self.view addSubview:_tableView];
+    
     
     
         //创建编辑按钮
@@ -112,7 +105,7 @@
         //根据不同入口修改button坐标
         UIButton *buy;
         UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-//        SWMainViewController *mainController=(SWMainViewController*)window.rootViewController;
+    
     UIViewController *con=window.rootViewController;
     bool a=YES;
     if ([con isKindOfClass:[SWMainViewController class]]) {
@@ -123,10 +116,23 @@
 
         if(a){
             buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - payButtonHeight, SCREEN_WIDTH, payButtonHeight)];
+            // 创建表视图
+            _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kSWTopViewHeight*1.7, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTopViewHeight*1.7-payButtonHeight)];
         }else
         {
             buy=[[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - payButtonHeight-kSWTabBarViewHeight, SCREEN_WIDTH, payButtonHeight)];
+            // 创建表视图
+            _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kSWTopViewHeight*1.7, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight-kSWTopViewHeight*1.7-payButtonHeight)];
         }
+   
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    //    _tableView.backgroundColor=[UIColor blackColor];
+    _tableView.rowHeight = SCREEN_HEIGHT*0.16;
+    //        _tableView.contentInset = UIEdgeInsetsMake(50, 0.f, 0.f, 0.f);
+    _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
+    [self.view addSubview:_tableView];
+    
         buy.backgroundColor = UIColorFromRGB(0x1abc9c);
         buy.alpha=0.7f;
         [buy setTitle:@"结算" forState:UIControlStateNormal];

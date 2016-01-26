@@ -154,7 +154,6 @@ static CGFloat kSWCellCountTag = 1;
 -(void)layoutSubviews{
     
     [super layoutSubviews];
-    NSLog(@" y %f cell height %f",_imgView.frame.origin.y,self.frame.size.height);
     
 }
 -(void)labelStyle:(UILabel*)label text:(NSString *)text size:(int)size{

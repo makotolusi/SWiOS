@@ -9,6 +9,7 @@
 #import "SWBaseViewController.h"
 #import "MobClick.h"
 #import "UILabel+Extension.h"
+#import "NSString+Extension.h"
 @implementation SWBaseViewController
 
 - (void)viewDidLoad
@@ -30,7 +31,10 @@
     [super viewWillAppear:animated];
     
     [self updateViews];
-     [MobClick beginLogPageView:_pageName];
+    if (StringNotNullAndEmpty(_pageName)) {
+         [MobClick beginLogPageView:_pageName];
+    }
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

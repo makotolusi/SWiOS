@@ -14,11 +14,11 @@
 
 bool const isDev=NO;
 
-bool const isLocal=YES;
+bool const isLocal=NO;
 
-NSString * const kBaseURL = @"http://okeasy.eicp.net:9889/mgserver/ApCommonServices/";
+NSString * const kBaseURL = @"http://115.28.47.164:9889/mgserver/ApCommonServices/";
 
-NSString * const kLocalURL = @"http://192.168.1.109:8080/mgserver/ApCommonServices/";//192.168.1.109
+NSString * const kLocalURL = @"http://10.6.110.4:8080/mgserver/ApCommonServices/";//http://115.28.47.164:9889
 
 +(NSString*)getUrl{
     return (isLocal==YES?kLocalURL:kBaseURL);
@@ -51,11 +51,10 @@ NSString * const kLocalURL = @"http://192.168.1.109:8080/mgserver/ApCommonServic
     
     // 检测网络连接的单例,网络变化时的回调方法
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        NSLog(@"%ld", status);
         switch (status) {
             case AFNetworkReachabilityStatusReachableViaWWAN:
             case AFNetworkReachabilityStatusReachableViaWiFi:
-                NSLog(@"%@", @"网络已连接");
+//                NSLog(@"%@", @"网络已连接");
                 break;
             case AFNetworkReachabilityStatusNotReachable:
                 [self showMessage:@"当前网络不可用"];

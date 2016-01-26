@@ -59,11 +59,6 @@
     
      SWMainViewController *mainContorll = [[SWMainViewController alloc]initWithViewControllers:nil];
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    // 在delegate中初始化新的controller
-//    [delegate initTabbarController];
-    // 修改rootViewController
-//    [delegate.window addSubview:delegate.tabbarController.view];
-//    [self.view removeFromSuperview];
     delegate.window.rootViewController = mainContorll;
    
     

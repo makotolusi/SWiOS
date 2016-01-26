@@ -29,4 +29,17 @@
     CGContextSetStrokeColorWithColor(context, [UIColor colorWithHexString:@"DEDEDE"].CGColor);
     CGContextStrokeRect(context, CGRectMake(40, rect.size.height, rect.size.width, 0.5f));
 }
+
+- (void)layoutSubviews{
+
+    [super layoutSubviews];
+    
+    float size=25;
+    
+    
+    self.imageView.frame =CGRectMake(self.imageView.frame.origin.x,self.imageView.frame.origin.y,size,size);
+    
+    
+}
+
 @end

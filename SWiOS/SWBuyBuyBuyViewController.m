@@ -101,7 +101,6 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"did selected!");
     // 图片
     SWActivityProductViewController *thumbViewController = [[SWActivityProductViewController alloc] init];
     //vo

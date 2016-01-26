@@ -28,29 +28,30 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //打开调试模式
+    [MobClick setLogEnabled:YES];
     //key
      [MobClick startWithAppkey:@"55d426b067e58eac68001678" reportPolicy:BATCH   channelId:@""];
     
     
-//    Class cls = NSClassFromString(@"UMANUtil");
-//    SEL deviceIDSelector = @selector(openUDIDString);
-//    NSString *deviceID = nil;
-//    if(cls && [cls respondsToSelector:deviceIDSelector]){
-//        deviceID = [cls performSelector:deviceIDSelector];
-//    }
-//    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
-//                                                       options:NSJSONWritingPrettyPrinted
-//                                                         error:nil];
-//    
-//    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-//    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+    Class cls = NSClassFromString(@"UMANUtil");
+    SEL deviceIDSelector = @selector(openUDIDString);
+    NSString *deviceID = nil;
+    if(cls && [cls respondsToSelector:deviceIDSelector]){
+        deviceID = [cls performSelector:deviceIDSelector];
+    }
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:nil];
+    
+    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     
     
     //version
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
-    //uid
-    
+   
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     

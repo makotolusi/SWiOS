@@ -24,6 +24,11 @@
 
 @implementation DetailPageController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"DetailPageController";
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [UIWindow showTabBar:NO];

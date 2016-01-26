@@ -160,7 +160,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="qianggou.png" width="128" height="128"/>
-        <image name="yiqianggou.png" width="128" height="128"/>
+        <image name="qianggou.png" width="32" height="32"/>
+        <image name="yiqianggou.png" width="32" height="32"/>
     </resources>
 </document>

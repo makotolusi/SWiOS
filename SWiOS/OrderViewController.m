@@ -29,6 +29,11 @@
 
 @implementation OrderViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"OrderViewController";
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"取消订单" style:UIBarButtonItemStyleDone target:self action:@selector(cancel:)]];
@@ -155,7 +160,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(section==1)
-        return 2;
+        return 1;
     else
         return 1;
 }
@@ -175,8 +180,8 @@
     if(indexPath.section==0){
         cell =[[EmptyCell alloc] init];
         ShoppingCartModel *ca=[ShoppingCartModel sharedInstance];
-        AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(50, 0, 20, 20) data:ca.addressModel];
-        UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dizhi64"]];
+        AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(50, 0, SCREEN_WIDTH, cell.frame.size.height) data:ca.addressModel];
+        UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dizhi"]];
                           img.frame=CGRectMake(10, 20, 30, 30);
         img.alpha=0.7f;
         [cell addSubview:img];
@@ -188,15 +193,16 @@
         NSString *imgName;
         NSString *labelText;
         if(indexPath.row==0){
-            imgName=@"zhifubao64";
+            imgName=@"zhifubao";
             labelText=@"支付宝";
-        }else if(indexPath.row==1){
-            imgName=@"weixin64";
-            labelText=@"微信支付(推荐)";
         }
+//        else if(indexPath.row==1){
+//            imgName=@"weixin64";
+//            labelText=@"微信支付(暂不支持)";
+//        }
         UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
-        img.frame=CGRectMake(10, 10, 20, 20);
-        UILabel *lab=[[UILabel alloc] initWithFrame:CGRectMake(50, 10, 200, 20)];
+        img.frame=CGRectMake(5, 5, 20, 20);
+        UILabel *lab=[[UILabel alloc] initWithFrame:CGRectMake(50, 5, 200, 20)];
         lab.text=labelText;
         lab.textColor=[UIColor lightGrayColor];
         [lab smallLabel];
@@ -212,11 +218,10 @@
 }
 
 -(void)alipay{
-
-//
-    [LUAliPay alipay:^(NSDictionary *resultDic){
-       int statusCode=((NSString*)resultDic[@"resultStatus"]).intValue;
-        if (statusCode==9000) {
+    
+//    [LUAliPay alipay:^(NSDictionary *resultDic){
+//       int statusCode=((NSString*)resultDic[@"resultStatus"]).intValue;
+//        if (statusCode==9000) {
             TradeFinishViewController *vc =[[TradeFinishViewController alloc]init];
             vc.navigationItem.titleView = [UILabel navTitleLabel:@"订单详情"];
             UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
@@ -226,9 +231,9 @@
                                              action:nil];
             self.navigationItem.backBarButtonItem = cancelButton;
             [self.navigationController pushViewController:vc animated:YES];
-        }
-        
-    }];
+//        }
+//        
+//    }];
 }
 
 @end

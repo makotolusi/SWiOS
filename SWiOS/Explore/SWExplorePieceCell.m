@@ -13,6 +13,7 @@
 #import "ShoppingCartModel.h"
 #import "SWExploreFlatCell2ValueObject.h"
 #import "UIWindow+Extension.h"
+#import "MobClick.h"
 const CGFloat kSWPieceCellHeight = 120;
 
 
@@ -218,7 +219,7 @@ const CGFloat kSWPieceCellRbHeight = 559;
     CGFloat offsetY = 0;
     CGFloat leftPadding = 10;
     const CGFloat headerHeight = 62;
-    const CGFloat bigImageHeight = 375;
+    const CGFloat bigImageHeight = SCREEN_WIDTH;
     const CGFloat descHeight = 75;
     const CGFloat bottomToolbarHeight = 37;
     
@@ -316,19 +317,19 @@ const CGFloat kSWPieceCellRbHeight = 559;
         b.tag = idx;
         [view addSubview:b];
         if (idx==0) {
-            UIImageView* pinglun32=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pinglun32"]];
+            UIImageView* pinglun32=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comment"]];
             pinglun32.frame=CGRectMake(b.titleLabel.frame.origin.x-40, b.titleLabel.frame.origin.y-10,20, 20);
             [b addSubview:pinglun32];
         }
         if (idx==1) {
-            UIImageView* zan16red=[[UIImageView alloc] initWithImage:[UIImage imageNamed:self.cellVo.isZan==YES?@"zan64red":@"zan-kong"]];
+            UIImageView* zan16red=[[UIImageView alloc] initWithImage:[UIImage imageNamed:self.cellVo.isZan==YES?@"like":@"like-kong"]];
             zan16red.tag=1001;
             zan16red.frame=CGRectMake(b.titleLabel.frame.origin.x-50, b.titleLabel.frame.origin.y-10,20, 20);
             [b setTitle:[NSString stringWithFormat:@"%ld次赞", _cellVo.zans] forState:UIControlStateNormal];
             [b addSubview:zan16red];
         }
         if (idx==2) {
-            UIImageView* favorImage=[[UIImageView alloc] initWithImage:[UIImage imageNamed:self.cellVo.isFavor==YES?@"yishoucang64":@"shoucang64"]];
+            UIImageView* favorImage=[[UIImageView alloc] initWithImage:[UIImage imageNamed:self.cellVo.isFavor==YES?@"yishoucang":@"shoucang"]];
             favorImage.tag=1002;
             favorImage.frame=CGRectMake(b.titleLabel.frame.origin.x-50, b.titleLabel.frame.origin.y-10,20, 20);
             [b setTitle:obj forState:UIControlStateNormal];
@@ -349,10 +350,10 @@ const CGFloat kSWPieceCellRbHeight = 559;
     _itemNameLabel.text = cellVO.itemName;
     _descLabel.text = cellVO.desc;
       UIImageView* favor=[self viewWithTag:1002];
-    favor.image=[UIImage imageNamed:self.cellVo.isFavor==YES?@"yishoucang64":@"shoucang64"];
+    favor.image=[UIImage imageNamed:self.cellVo.isFavor==YES?@"yishoucang":@"shoucang"];
     
     UIImageView* zan16red=[self viewWithTag:1001];
-    zan16red.image=[UIImage imageNamed:self.cellVo.isZan==YES?@"zan64red":@"zan-kong"];
+    zan16red.image=[UIImage imageNamed:self.cellVo.isZan==YES?@"like":@"like-kong"];
     
     UIButton *b=[self viewWithTag:1];
     NSString* newTitle=[NSString stringWithFormat:@"%ld次赞",_cellVo.zans] ;
@@ -373,29 +374,15 @@ const CGFloat kSWPieceCellRbHeight = 559;
         case 0:
         {
             type = kSWExploreCellClickTypeCommnet;
-//            UIViewController* u= [[UIViewController alloc] init];
-////            CommentViewController *thumbViewController = [[CommentViewController alloc] init];
-////
-////            thumbViewController.productCode=_cellVo.productCode;
-////            //vo
-////            thumbViewController.navigationItem.titleView = [UILabel navTitleLabel:@"评论"];
-////            //back button style
-////            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
-////                                             initWithTitle:@""
-////                                             style:UIBarButtonItemStylePlain
-////                                             target:self
-////                                             action:nil];
-////            self.vc.navigationItem.backBarButtonItem = cancelButton;
-//            [UIWindow showTabBar:NO];
-//            [self.vc.navigationController pushViewController:u animated:YES];
         }
             break;
         case 1:
         {
             type = kSWExploreCellClickTypeLike;
+            [MobClick event:@"likeExploreProduct" attributes:@{@"productCode" : self.cellVo.productCode,@"userId":[NSString stringWithFormat:@"%d",cart.registerModel.id] }];
             [ZanRequest addZan:self.cellVo.productCode userId:[NSString stringWithFormat:@"%d",cart.registerModel.id] next:^(){
                 UIImageView* zan16red=[self viewWithTag:1001];
-                zan16red.image=[UIImage imageNamed:@"zan64red"];
+                zan16red.image=[UIImage imageNamed:@"like"];
                 UIButton *b=[self viewWithTag:btn.tag];
                 _cellVo.zans++;
                 NSString* newTitle=[NSString stringWithFormat:@"%ld次赞",_cellVo.zans] ;
@@ -407,9 +394,10 @@ const CGFloat kSWPieceCellRbHeight = 559;
         case 2:
         {
             type = kSWExploreCellClickTypeFavourite;
+             [MobClick event:@"favouriteExploreProduct" attributes:@{@"productCode" : self.cellVo.productCode,@"userId":[NSString stringWithFormat:@"%d",cart.registerModel.id] }];
             [ZanRequest addFavor:self.cellVo.productCode userId:[NSString stringWithFormat:@"%d",cart.registerModel.id] next:^(){
                 UIImageView* favor=[self viewWithTag:1002];
-                favor.image=[UIImage imageNamed:@"yishoucang64"];
+                favor.image=[UIImage imageNamed:@"yishoucang"];
                 self.cellVo.isFavor=YES;
             }];
         }

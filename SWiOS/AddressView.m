@@ -50,10 +50,10 @@
             NSDictionary *views = NSDictionaryOfVariableBindings(nameLabel,phoneLabel,cityLabel);
          
             
-            NSDictionary *metrics = @{@"nameLabelWidth":@100,@"padding":@5.0};//设置一些常量
+            NSDictionary *metrics = @{@"nameLabelWidth":@100,@"fontsize":[NSString stringWithFormat:@"%f",self.frame.size.height*0.3]};//设置一些常量
 
-            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[nameLabel(nameLabelWidth)]" options:0 metrics:metrics views:views]];
-            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[nameLabel(20)]-[phoneLabel(20)]-[cityLabel(20)]" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[nameLabel(nameLabelWidth)]" options:0 metrics:metrics views:views]];
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[nameLabel(fontsize)]-[phoneLabel(fontsize)]-[cityLabel(fontsize)]" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
         }else{
             nameLabel=[self viewWithTag:101];
             nameLabel.text=_dateObject.name;

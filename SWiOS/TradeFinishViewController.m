@@ -22,6 +22,11 @@
 
 @implementation TradeFinishViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"TradeFinishViewController";
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"我的订单" style:UIBarButtonItemStyleDone target:self action:@selector(myorder:)]];
@@ -32,12 +37,9 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight=100;
-//    _tableView.backgroundColor=[UIColor blackColor];
     _tableView.separatorStyle=UITableViewStyleGrouped;
     _tableView.separatorColor=[UIColor clearColor];
     [self.view addSubview:_tableView];
-//    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
-    
 }
 
 -(void)myorder:(id)sender{
@@ -56,8 +58,6 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    // Return the number of sections.
     return 3;
 }
 
@@ -68,7 +68,6 @@
     if (section==1) {
         return _cartModel.arOfWatchesOfCart.count;
     }else
-    // Return the number of rows in the section.
     return 1;
 }
 
@@ -95,8 +94,8 @@
             return  cell;
         }else{
             cell =[[EmptyCell alloc] init];
-            AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(50, 0, 20, 20) data:cartModel.addressModel];
-            UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dizhi64"]];
+            AddressView *addressView=[[AddressView alloc] initWithFrame:CGRectMake(50, 0, SCREEN_WIDTH, cell.frame.size.height) data:cartModel.addressModel];
+            UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dizhi"]];
             img.frame=CGRectMake(10, 20, 30, 30);
             img.alpha=0.7f;
             [cell addSubview:img];
@@ -141,7 +140,7 @@
         price2.text=[@"¥ " stringByAppendingString:_cartModel.orderModel.totalPrice.stringValue];
         UILabel *price1=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-SCREEN_WIDTH*0.2, label1.frame.origin.y, 200, 20)];
         [price1 midLabel];
-        price1.text=@"¥ 50";
+        price1.text=@"¥ 0";
         [cell addSubview:label1];
         [cell addSubview:label2];
         [cell addSubview:price2];

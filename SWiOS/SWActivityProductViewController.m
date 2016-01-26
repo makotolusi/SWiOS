@@ -20,6 +20,7 @@
 #import "ShoppingCartLocalDataManager.h"
 #import "UIImageView+WebCache.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+#import "MobClick.h"
 #define kCCell_Img			1
 #define kCCell_Button		4
 static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier";
@@ -29,6 +30,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
 
 @implementation SWActivityProductViewController
 -(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"SWActivityProductViewController";
     [super viewDidAppear:animated];
    [self requestData];
 }
@@ -163,6 +165,8 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
                                      action:nil];
     self.navigationItem.backBarButtonItem = cancelButton;
     [self.navigationController pushViewController:thumbViewController animated:YES];
+    
+    [MobClick event:@"clickActivityProduct" attributes:@{@"name" : product.productName, @"productCode" : product.productCode, @"price" : product.rushPrice}];
 }
 
 - (void)CartTapped:(UIButton*)sender {
@@ -185,6 +189,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
         if (sta) {
             // perform add to cart animation
             [self addToCartTapped:ip url:model.picUrl1];
+            [MobClick event:@"addProduct2cart" attributes:@{@"name" : model.productName, @"productCode" : model.productCode, @"price" : model.rushPrice}];
         }
     }
     if (sta) {

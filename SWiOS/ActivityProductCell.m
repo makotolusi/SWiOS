@@ -31,7 +31,6 @@
     _productName.text=_activityProduct.productName;
     _productName.textAlignment=NSTextAlignmentLeft;
     [_productName midLabel];
-    NSLog(@"float %@",_activityProduct.rushPrice);
     _price.text=[NSString stringWithFormat:@"￥ %@", _activityProduct.rushPrice];
     _totalCount.text=[NSString stringWithFormat:@"剩余 %d 件",_activityProduct.rushQuantity];
 //    [self addSubview:self.imgView];

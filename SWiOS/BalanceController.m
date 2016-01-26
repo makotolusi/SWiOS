@@ -35,10 +35,8 @@ static NSString *orderListCell = @"orderListCell";
 
 
 -(void)viewWillAppear:(BOOL)animated{
+    self.pageName=@"BalanceController";
     [super viewDidAppear:animated];
-//    NSLog(@"edge : %@", NSStringFromUIEdgeInsets(_tableView.contentInset));
-   
-//    NSLog(@"edge : %@", NSStringFromUIEdgeInsets(_tableView.contentInset));
 }
 
 - (void)viewDidLoad {

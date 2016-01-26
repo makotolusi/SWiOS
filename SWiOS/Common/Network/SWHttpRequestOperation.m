@@ -148,7 +148,6 @@ static inline NSString * SWKeyPathFromOperationState(SWHttpReqOperationStatus st
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSLog(@"%@",NSStringFromSelector(_cmd));
     
     NSUInteger dataLength = data.length;
     if ([_outputStream hasSpaceAvailable]) {

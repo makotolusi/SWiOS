@@ -13,6 +13,7 @@
 #import "NSString+Extension.h"
 #import "ShoppingCartModel.h"
 #import "CommentRequest.h"
+#import "MobClick.h"
 int kMaxCellCount=2;
 @interface CommentViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,PWLoadMoreTableFooterDelegate>
 
@@ -105,7 +106,7 @@ static int gap=5;
     send.backgroundColor=UIColorFromRGB(0x1abc9c);
     send.layer.cornerRadius=5.0;
     [send setTitle:@"发送" forState:UIControlStateNormal];
-    [send setTitleColor:[UIColor lightTextColor] forState:UIControlStateNormal];
+    [send setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [send setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [send addTarget:self action:@selector(sendAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -132,11 +133,12 @@ static int gap=5;
     comment2.productCode=self.productCode;
     comment2.userHeadPortraitUrl=cart.registerModel.originalImgUrl;
     [sender setSelected:YES];
-
+    [MobClick event:@"commentExploreProduct" attributes:@{@"productCode" : self.productCode,@"userId":[NSString stringWithFormat:@"%d",comment2.userId] }];
     [CommentRequest addComment:comment2 next:^(void){
     _textView.text=@"";
         [self refreshTable];
         [self getData:^(){
+           
              [self check];
             //*****IMPORTANT*****
             //you need to do this when you first load your data
@@ -193,7 +195,7 @@ static int gap=5;
     
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
-    NSLog(@"keyboardWasHidden keyBoard:%f", keyboardSize.height);
+
     // keyboardWasShown = NO;
     
 }
@@ -230,7 +232,6 @@ static int gap=5;
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:12], NSParagraphStyleAttributeName:paragraphStyle.copy};
     
     CGSize _commentLabelSize = [str.comments boundingRectWithSize:CGSizeMake(207, 999) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
-    NSLog(@"%f",_commentLabelSize.height);
     return _commentLabelSize.height+45;
 }
 

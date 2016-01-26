@@ -51,25 +51,16 @@
 {
     _count=[viewNameArray count];
     for (int i = 0; i < [viewNameArray count]; i++) {
-//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0+SCREEN_WIDTH*i, 0, SCREEN_WIDTH, [SVGloble shareInstance].globleHeight-44)];
-//        label.textAlignment = NSTextAlignmentCenter;
-//        label.font = [UIFont boldSystemFontOfSize:50.0];
-//        label.tag = 200 + i;
-//        if (i == 0) {
-//            label.text = [viewNameArray objectAtIndex:i];
-//        }
-//        [self addSubview:label];
         UITableView* table=viewNameArray[i];
         table.frame=CGRectMake(0+SCREEN_WIDTH*i, 0, SCREEN_WIDTH, [SVGloble shareInstance].globleHeight);
-//        _lastContent.frame=CGRectMake(0+SCREEN_WIDTH*2, 0, SCREEN_WIDTH, [SVGloble shareInstance].globleHeight);
         [self addSubview:table];
-//        [self addSubview:_lastContent];
     }
     self.contentSize = CGSizeMake(SCREEN_WIDTH*[viewNameArray count], [SVGloble shareInstance].globleHeight);
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+    
     userContentOffsetX = scrollView.contentOffset.x;
 }
 
