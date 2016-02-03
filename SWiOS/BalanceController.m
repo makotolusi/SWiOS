@@ -311,6 +311,19 @@ static NSString *orderListCell = @"orderListCell";
 //                                             action:@selector(getOrderModel)];
 //            self.navigationItem.backBarButtonItem = cancelButton;
             [self.navigationController pushViewController:vc animated:YES];
+        } back:^(NSDictionary* data){
+           
+            [LoadingView stopAnimating:self.view];
+
+            UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
+                                             initWithTitle:@""
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:nil];
+            self.navigationItem.backBarButtonItem = cancelButton;
+            OrderItemViewController *av=[[OrderItemViewController  alloc] init];
+            av.errCartProduct=data[@"orderDetails"];
+            [self.navigationController pushViewController:av animated:YES];
         }];
     }
 }

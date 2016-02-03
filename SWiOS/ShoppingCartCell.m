@@ -24,6 +24,13 @@ static CGFloat kSWCellCountTag = 1;
         _imgView=[[YCAsyncImageView alloc] init];
         [self addSubview:_imgView];
         
+
+        _err=[[UILabel alloc] init];
+         [_err smallLabel];
+        _err.textColor=[UIColor redColor];
+[self addSubview:_err];
+       
+        
         _title=[[UILabel alloc] init];
         _title.lineBreakMode =NSLineBreakByWordWrapping;
         _title.numberOfLines = 2;
@@ -97,7 +104,20 @@ static CGFloat kSWCellCountTag = 1;
 - (void)settingData{
     _imgView.url=_activityProduct.picUrl1;
     _title.text=_activityProduct.productName;
+    if ([@"STOCK_NOT_ENOUGH" isEqualToString:_activityProduct.code]) {
+        _err.text=@"库存不足";
+    }
+    
+    if ([@"NONE_PRODUCT" isEqualToString:_activityProduct.code]) {
+        _err.text=@"库存不足";
+    }
+    
+    if ([@"NONE_ACTIVITY" isEqualToString:_activityProduct.code]) {
+        _err.text=@"库存不足";
+    }
+    
     _price.text=_activityProduct.rushPrice.stringValue;
+//
     [self labelStyle:_count text:[@"X " stringByAppendingFormat:@"%d",_activityProduct.buyCount.intValue] size:12];
 }
 
@@ -108,10 +128,11 @@ static CGFloat kSWCellCountTag = 1;
     _minus.translatesAutoresizingMaskIntoConstraints=NO;
     _plus.translatesAutoresizingMaskIntoConstraints=NO;
     _count.translatesAutoresizingMaskIntoConstraints=NO;
+    _err.translatesAutoresizingMaskIntoConstraints=NO;
     float w=SCREEN_HEIGHT/7;
   
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_imgView,_title,_price);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_imgView,_title,_price,_err);
     if (_isEdit) {
         [views setValue:_plus forKey:@"_plus"];
         [views setValue:_minus forKey:@"_minus"];
@@ -123,9 +144,13 @@ static CGFloat kSWCellCountTag = 1;
     //设置bgView与superview左右对齐
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[_imgView(imageEdge)]-toImg-[_title(titleWidth)]" options:NSLayoutFormatAlignAllTop metrics:metrics views:views]];
      [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imgView(imageEdge)]-toImg-[_price(40)]" options:0 metrics:metrics views:views]];
+    
+     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imgView(imageEdge)]-toImg-[_err]" options:0 metrics:metrics views:views]];
+    
     //-padding-[_count(40)]-padding-[_plus(20)
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_imgView(imageEdge)]-toImg-|" options:0 metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_price(20)]-toImg-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_err]-[_price(20)]-toImg-|" options:0 metrics:metrics views:views]];
+    
     
     if (_isEdit) {
   

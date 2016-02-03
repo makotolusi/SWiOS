@@ -26,6 +26,7 @@
 }
 @property (strong, nonatomic)  YCAsyncImageView *imgView;
 @property (strong, nonatomic)  UILabel *title;
+@property (strong, nonatomic)  UILabel *err;
 @property (strong, nonatomic) UILabel *price;
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
 @property (nonatomic,strong) ActivityProduct* activityProduct;

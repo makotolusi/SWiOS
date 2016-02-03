@@ -26,9 +26,11 @@
     [super viewDidLoad];
     [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"结束" style:UIBarButtonItemStyleDone target:self action:@selector(backRoot:)]];
     [self loadTable];
-    _currentPageNum=1;
+    _currentPageNum=0;
      _orders=[NSMutableArray array];
     [_tableView addHeaderWithCallback:^(){
+         _currentPageNum=0;
+        _orders=[[NSMutableArray alloc] init];
         [self loadData];
     }];
     [_tableView headerBeginRefreshing];

@@ -10,6 +10,6 @@
 #import "ShoppingCartModel.h"
 @interface OrderRequest : NSObject
 
-+(ShoppingCartModel*)orderCheck:(void (^)())next;
++(ShoppingCartModel*)orderCheck:(void (^)())next back:(void (^)(NSDictionary* data))back;
 +(void)orderCancel:(UIView*)view next:(void (^)())next;
 @end

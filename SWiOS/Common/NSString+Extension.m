@@ -456,7 +456,7 @@
 
 -(instancetype)jsonString2Dictionary{
     NSData* data = [self dataUsingEncoding:NSUTF8StringEncoding];
-    return  [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    return  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
 }
 
 -(NSString*)jsonStringWithDic:(NSDictionary*)dic{

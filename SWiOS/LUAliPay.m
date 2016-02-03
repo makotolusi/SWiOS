@@ -64,7 +64,7 @@
     order.tradeNO =orderModel.orderCode;//[self generateTradeNO];//orderModel.orderCode; //订单ID（由商家自行制定）
     order.productName = @"陆思测试一分钱支付"; //商品标题
     order.productDescription = @"一分钱支付"; //商品描述
-    order.amount =@"0.01";//[NSString stringWithFormat:@"%.2f",orderModel.totalPrice.floatValue]; //商品价格
+    order.amount =[NSString stringWithFormat:@"%.2f",orderModel.totalPrice.floatValue]; //商品价格
     order.notifyURL = [[HttpHelper getUrl] stringByAppendingString:[NSString stringWithFormat:@"/addAlipayInfo"]]; //回调URL
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";

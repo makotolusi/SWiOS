@@ -15,4 +15,6 @@
     UITableView    *_tableView;
 }
 @property (nonatomic,strong) ShoppingCartModel *cartModel;
+@property (nonatomic,strong) NSArray *errCartProduct;
+
 @end

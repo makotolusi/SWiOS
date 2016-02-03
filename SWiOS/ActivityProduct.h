@@ -17,6 +17,7 @@
 @property(nonatomic,strong)NSNumber<Optional> *rushPrice;
 @property(nonatomic,assign)int rushQuantity;
 @property(nonatomic,copy)NSString *picUrl1;
+@property(nonatomic,copy)NSString<Optional>  *code;
 @property  (strong,nonatomic) NSNumber<Optional> *buyCount;
 
 -(NSNumber*)calProductTotalPriceWithAddCount:(int)addCount;

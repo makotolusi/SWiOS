@@ -26,6 +26,7 @@
 
 - (void)sendActiveRequest:(void (^)())next
 {
+    NSLog(@"app token is %@",[TokenBuilder currentUid]);
     //设备信息
     NSString *deviceName =[UIDevice currentDevice].model;
     NSString *os =[NSString stringWithFormat:@"iOS-%@", [UIDevice currentDevice].systemVersion];

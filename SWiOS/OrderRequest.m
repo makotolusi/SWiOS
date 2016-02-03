@@ -13,10 +13,11 @@
 #import "ActivityProduct.h"
 #import "NSString+Extension.h"
 #import "RegisterModel.h"
+#import "UIAlertView+Extension.h"
 
 @implementation OrderRequest
 
-+(ShoppingCartModel*)orderCheck:(void (^)())next{
++(ShoppingCartModel*)orderCheck:(void (^)())next back:(void (^)(NSDictionary* data))back{
     ShoppingCartModel *_shoppingCart=[ShoppingCartModel sharedInstance];
     NSMutableArray *orderDetails=[NSMutableArray array];
     NSArray *activityProducts=_shoppingCart.arOfWatchesOfCart;
@@ -54,10 +55,17 @@
                                 NSDictionary* data=[result[@"data"] jsonString2Dictionary];
                                 NSString* orderCode=data[@"orderCode"];
                                 [_shoppingCart.orderModel setValue:orderCode forKey:@"orderCode"];
-                                NSString* orderInfo=[[NSString alloc] jsonStringWithDic:data];
-                                [self orderCofirm:orderInfo next:^{
+//                                NSString* orderInfo=[[NSString alloc] jsonStringWithDic:data];
+                               NSString *orderinfo=[NSString stringWithFormat:jsonString,orderCode];
+                                    _shoppingCart.orderInfoString=orderinfo;
+//                                [self orderCofirm:orderinfo next:^{
                                      next();
-                                }];
+//                                }];
+                            }else{
+                               
+                                NSDictionary* data=[result[@"data"] jsonString2Dictionary];
+                                back(data);
+                               
                             }
                             NSLog(@"获取到的数据为dict：%@", result);
                         } fail:^{
@@ -67,24 +75,24 @@
     return nil;
 }
 
-+(void)orderCofirm:(NSString*)orderInfo next:(void (^)())next{
-    NSDictionary *dict1 = @{@"content": orderInfo};
-     ShoppingCartModel *_shoppingCart=[ShoppingCartModel sharedInstance];
-    [HttpHelper sendPostRequest:@"SnapUpServices/confirm"
-                     parameters: dict1
-                        success:^(id response) {
-                            NSDictionary* result=[response jsonString2Dictionary];
-                            BOOL success=[result valueForKey:@"success"];
-                            if(success){
-                                 _shoppingCart.orderInfoString=orderInfo;
-                                next();
-                            }
-                            NSLog(@"获取到的数据为dict：%@", result);
-                        } fail:^{
-                            NSLog(@"fail");
-                        }];
-
-}
+//+(void)orderCofirm:(NSString*)orderInfo next:(void (^)())next{
+//    NSDictionary *dict1 = @{@"content": orderInfo};
+//     ShoppingCartModel *_shoppingCart=[ShoppingCartModel sharedInstance];
+//    [HttpHelper sendPostRequest:@"SnapUpServices/confirm"
+//                     parameters: dict1
+//                        success:^(id response) {
+//                            NSDictionary* result=[response jsonString2Dictionary];
+//                            BOOL success=[result valueForKey:@"success"];
+//                            if(success){
+//                                 _shoppingCart.orderInfoString=orderInfo;
+//                                next();
+//                            }
+//                            NSLog(@"获取到的数据为dict：%@", result);
+//                        } fail:^{
+//                            NSLog(@"fail");
+//                        }];
+//
+//}
 
 +(void)orderCancel:(UIView*)view next:(void (^)())next{
      ShoppingCartModel *_shoppingCart=[ShoppingCartModel sharedInstance];

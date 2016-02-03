@@ -167,7 +167,9 @@
         [self showMessage:@"输入电话号码有误"];
         return;
     }
-        if([@"2" isEqualToString:passText.text]){
+    //演示帐号
+    BOOL testAccount=[phoneText.text isEqualToString:@"18210329111"]&&[@"2" isEqualToString:passText.text];
+    if(testAccount||[code isEqualToString:passText.text]){
             //activate
             Activate *act= [[Activate alloc]init];
             if([act Notactivated]){

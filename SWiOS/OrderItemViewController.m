@@ -10,13 +10,14 @@
 #import "OrderItemViewController.h"
 #import "ShoppingCartCell.h"
 @interface OrderItemViewController ()
-
+@property (nonatomic,strong) NSMutableArray *cartProducts;
 @end
 
 @implementation OrderItemViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+      self.cartProducts=[[NSMutableArray alloc] init];
     _cartModel=[ShoppingCartModel sharedInstance];
     // 创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
@@ -25,6 +26,23 @@
     _tableView.rowHeight = SCREEN_HEIGHT/7;
     //        _tableView.contentInset = UIEdgeInsetsMake(0, 0.f, 0.f, 0.f);
     _tableView.separatorStyle=UITableViewCellSelectionStyleNone;
+
+    if (self.errCartProduct) {
+        NSMutableDictionary *map=[[NSMutableDictionary alloc] init];
+        
+        for (NSDictionary *od in self.errCartProduct) {
+            [map setObject:od[@"code"] forKey:od[@"productCode"]];
+        }
+//        NSLog(@" product code is %@ status is %@",od[@"productCode"],od[@"code"]);
+        for (ActivityProduct* ap in _cartModel.arOfWatchesOfCart) {
+            ap.code= map[ap.productCode];
+        }
+        
+      
+    }
+    
+    self.cartProducts=_cartModel.arOfWatchesOfCart;
+    
     [self.view addSubview:_tableView];
 
     
@@ -50,8 +68,9 @@
     ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell=[[ShoppingCartCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.activityProduct=_cartModel.arOfWatchesOfCart[indexPath.row];
-         cell.isEdit=NO;
+        
+        cell.activityProduct=self.cartProducts[indexPath.row];
+        cell.isEdit=NO;
         [cell initEdite];
         [cell settingFrame];
        

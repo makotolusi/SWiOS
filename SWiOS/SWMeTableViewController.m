@@ -284,7 +284,7 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
 
     SWMe* s = [groups[[indexPath section]] objectAtIndex:[indexPath row]];
     if ([s.describe isEqual:kME]) {
-        return SCREEN_HEIGHT*0.11;
+        return HEAD_RES_SMALL+20;
     }
     return SCREEN_HEIGHT*0.07;
 }

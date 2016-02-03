@@ -44,7 +44,7 @@
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:nil];
     
-    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    NSLog(@"友盟设备ID %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     
     

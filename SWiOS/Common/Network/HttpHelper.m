@@ -14,12 +14,14 @@
 
 bool const isDev=NO;
 
-bool const isLocal=NO;
+bool const isLocal=YES;
 
 NSString * const kBaseURL = @"http://115.28.47.164:9889/mgserver/ApCommonServices/";
 
-NSString * const kLocalURL = @"http://10.6.110.4:8080/mgserver/ApCommonServices/";//http://115.28.47.164:9889
+NSString * const kLocalURL = @"http://115.28.47.164:9889/mgserver/ApCommonServices/";//http://115.28.47.164:9889 http://10.6.110.4:8080
 
+//10.6.110.4:8080 ali
+//
 +(NSString*)getUrl{
     return (isLocal==YES?kLocalURL:kBaseURL);
 }

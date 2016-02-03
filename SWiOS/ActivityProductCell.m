@@ -27,6 +27,7 @@
     float imgViewSize=SCREEN_WIDTH/3;
     //initWithFrame:CGRectMake(8, 8, imgViewSize, imgViewSize)];
     [self.imgView setImageWithURL:[NSURL URLWithString:_activityProduct.picUrl1] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
     self.imgView.tag=1;
     _productName.text=_activityProduct.productName;
     _productName.textAlignment=NSTextAlignmentLeft;

@@ -59,7 +59,7 @@ static NSString* const s5 = @"5";
 }
 
 -(void) configurePage:(GHWalkThroughPageCell*) cell atIndex:(NSInteger) index{
-    cell.title = [NSString stringWithFormat:@"this is page %ld",index+1];
+    cell.title = [NSString stringWithFormat:@"买洋货上柠檬鲨海淘，买放心货 %ld",index+1];
     cell.titleImage = [UIImage imageNamed:[NSString stringWithFormat:@"title%ld",index +1]];
     cell.desc = [self.descStrings objectAtIndex:index];
 }
