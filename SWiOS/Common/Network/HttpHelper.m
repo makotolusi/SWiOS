@@ -10,6 +10,7 @@
 #import "TokenEncrypt.h"
 #import "LoadingView.h"
 #import "UIAlertView+Extension.h"
+#import "ZipArchive.h"
 @implementation HttpHelper
 
 bool const isDev=NO;
@@ -146,4 +147,89 @@ NSString * const kLocalURL = @"http://115.28.47.164:9889/mgserver/ApCommonServic
         [LoadingView stopAnimating:nil];
     }];
 }
+
+/*
+*  @author Jakey
+*
+*  @brief  下载文件
+*
+*  @param paramDic   附加post参数
+*  @param requestURL 请求地址
+*  @param savedPath  保存 在磁盘的位置
+*  @param success    下载成功回调
+*  @param failure    下载失败回调
+*  @param progress   实时下载进度回调
+*/
++ (void)downloadFileWithOption:(NSDictionary *)paramDic
+                 withInferface:(NSString*)requestURL
+                     savedPath:(NSString*)savedPath
+               downloadSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+               downloadFailure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+                      progress:(void (^)(float progress))progress
+
+{
+    AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
+    NSMutableURLRequest *request =[serializer requestWithMethod:@"GET" URLString:requestURL parameters:paramDic error:nil];
+    
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]initWithRequest:request];
+    [operation setOutputStream:[NSOutputStream outputStreamToFileAtPath:savedPath append:NO]];
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        float p = (float)totalBytesRead / totalBytesExpectedToRead;
+        progress(p);
+        NSLog(@"download：%f", (float)totalBytesRead / totalBytesExpectedToRead);
+        
+    }];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(operation,responseObject);
+        NSLog(@"下载成功");
+//        NSString *zipPath = @"/Users/lusi/Library/Developer/CoreSimulator/Devices/180BD695-FF92-4B55-AA47-EBF95A9076D7/data/Containers/Data/Application/1E5FF16D-A9D4-4B74-93A4-E75CEC767806/Documents/nirvana.zip";
+
+        
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+//        NSString *path = [paths objectAtIndex:0];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDir = [paths objectAtIndex:0];
+        NSLog(@"path %@",docDir);
+         NSString *destination =[docDir stringByAppendingString:@"/zipresult"] ;
+        NSString *zipPath = savedPath;
+        
+        
+        [self extractZipFileWithUnzipFileAtPath:zipPath toDestination:destination];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        success(operation,error);
+        
+        NSLog(@"下载失败");
+        
+    }];
+    
+    [operation start];
+    
+}
+
+
+/*
+ *  ExtractZipFile : 解压指定文件
+ * lpszZipFile: 要解压的文件
+ * lpszDestPath: 指定解压到的目录
+ * 返回压缩成功与否
+ */
++(void)extractZipFileWithUnzipFileAtPath:(NSString *)zipPath toDestination:(NSString *)destination
+{
+    ZipArchive *za = [[ZipArchive alloc] init];
+    // 1
+    if ([za UnzipOpenFile: zipPath]) {
+        
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *docDir = [paths objectAtIndex:0];
+//        NSLog(@"path %@",docDir);
+        // 2
+        BOOL ret = [za UnzipFileTo: destination overWrite: YES];
+        if (NO == ret){} [za UnzipCloseFile];
+    
+    }
+}
+
 @end

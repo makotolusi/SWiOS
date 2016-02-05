@@ -27,7 +27,11 @@
 @implementation AppDelegate
 
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    
     //打开调试模式
     [MobClick setLogEnabled:YES];
     //key

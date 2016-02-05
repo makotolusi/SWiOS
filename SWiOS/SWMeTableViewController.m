@@ -24,6 +24,7 @@
 #import "ShoppingCartLocalDataManager.h"
 #import "MobClick.h"
 #import "EmptyCell.h"
+
 //NSString * const killShark = @"柠檬鲨别捣乱";
 NSString * const kME = @"头像";
 NSString * const kMoney = @"钱包";
@@ -386,30 +387,48 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         [self.navigationController pushViewController:av animated:YES];
     }
     if ([s.describe isEqual:clearCache]) {
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDir = [paths objectAtIndex:0];
+           NSLog(@"path %@",docDir);
+        NSString *savedPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/nirvana.zip"];
+        [HttpHelper downloadFileWithOption:nil
+                             withInferface:@"http://web-pic.qingniancaijun.com.cn/update/data/app/web/release/v2.0.20160203.1454485908.zip"
+                                 savedPath:savedPath
+                           downloadSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                               
+                           } downloadFailure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                               
+                           } progress:^(float progress) {
+                               
+                           }];
+        
+    
+        
         [LoadingView initWithFrame:CGRectMake(SCREEN_WIDTH/2,SCREEN_HEIGHT/2 , 50, 50) parentView:self.view];
         [YCAsyncImageView removeCache];
         //彻底清除缓存第一种方法
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-        NSString *path = [paths lastObject];
-        
-        NSString *str = [NSString stringWithFormat:@"缓存已清除%.1fM", [self folderSizeAtPath:path]];
-        NSLog(@"%@",str);
-        NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:path];
-        for (NSString *p in files) {
-            NSError *error;
-//            NSLog(@"%@",p);
-            NSString *Path = [path stringByAppendingPathComponent:p];
-            NSRange queMarkIdx = [p rangeOfString:@"Preferences"];
-            if (queMarkIdx.location != NSNotFound) {
-                continue;
-            }
-            
-                if ([[NSFileManager defaultManager] fileExistsAtPath:Path]) {
-                    [[NSFileManager defaultManager] removeItemAtPath:Path error:&error];
-                }
-        }
-        [LoadingView stopAnimating:self.view];
-        [UIAlertView showMessage:str];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+//        NSString *path = [paths lastObject];
+     
+//        NSString *str = [NSString stringWithFormat:@"缓存已清除%.1fM", [self folderSizeAtPath:path]];
+//        NSLog(@"%@",str);
+//        NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:path];
+//        for (NSString *p in files) {
+//            NSError *error;
+////            NSLog(@"%@",p);
+//            NSString *Path = [path stringByAppendingPathComponent:p];
+//            NSRange queMarkIdx = [p rangeOfString:@"Preferences"];
+//            if (queMarkIdx.location != NSNotFound) {
+//                continue;
+//            }
+//            
+//                if ([[NSFileManager defaultManager] fileExistsAtPath:Path]) {
+//                    [[NSFileManager defaultManager] removeItemAtPath:Path error:&error];
+//                }
+//        }
+//        [LoadingView stopAnimating:self.view];
+//        [UIAlertView showMessage:str];
     }
     
     if ([s.describe isEqual:kLogOut]) {

@@ -295,6 +295,11 @@
 		C59A66B71C2A9655002128C8 /* SVRootScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59A66B61C2A9655002128C8 /* SVRootScrollView.m */; };
 		C59A66BC1C2A9681002128C8 /* SVGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = C59A66B91C2A9681002128C8 /* SVGloble.m */; };
 		C59A66BD1C2A9681002128C8 /* SVTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59A66BB1C2A9681002128C8 /* SVTopScrollView.m */; };
+		C59E9F9E1C644DE0009A827B /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = C59E9F941C644DE0009A827B /* ioapi.c */; };
+		C59E9F9F1C644DE0009A827B /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = C59E9F961C644DE0009A827B /* mztools.c */; };
+		C59E9FA01C644DE0009A827B /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = C59E9F981C644DE0009A827B /* unzip.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C59E9FA11C644DE0009A827B /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = C59E9F9A1C644DE0009A827B /* zip.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C59E9FA21C644DE0009A827B /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = C59E9F9D1C644DE0009A827B /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C5A4E4411BF57FD800C0E761 /* MPview.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4E4401BF57FD800C0E761 /* MPview.m */; };
 		C5A725B41BCB4A3100DF040D /* BalanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B31BCB4A3100DF040D /* BalanceController.m */; };
 		C5A725B71BCB549900DF040D /* BalanceFieldModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A725B61BCB549900DF040D /* BalanceFieldModel.m */; };
@@ -846,6 +851,18 @@
 		C59A66B91C2A9681002128C8 /* SVGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGloble.m; sourceTree = "<group>"; };
 		C59A66BA1C2A9681002128C8 /* SVTopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTopScrollView.h; sourceTree = "<group>"; };
 		C59A66BB1C2A9681002128C8 /* SVTopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTopScrollView.m; sourceTree = "<group>"; };
+		C59E9F7E1C644B26009A827B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		C59E9F931C644DE0009A827B /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		C59E9F941C644DE0009A827B /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		C59E9F951C644DE0009A827B /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		C59E9F961C644DE0009A827B /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		C59E9F971C644DE0009A827B /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		C59E9F981C644DE0009A827B /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		C59E9F991C644DE0009A827B /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		C59E9F9A1C644DE0009A827B /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		C59E9F9B1C644DE0009A827B /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		C59E9F9C1C644DE0009A827B /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		C59E9F9D1C644DE0009A827B /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
 		C5A4E43F1BF57FD800C0E761 /* MPview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPview.h; sourceTree = "<group>"; };
 		C5A4E4401BF57FD800C0E761 /* MPview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPview.m; sourceTree = "<group>"; };
 		C5A725B21BCB4A3100DF040D /* BalanceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceController.h; sourceTree = "<group>"; };
@@ -959,6 +976,7 @@
 		248578BF1B5A036700379927 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C59E9F801C644CFE009A827B /* ZipArchive */,
 				C5CFF1C21C2296CE005B3310 /* UMAnalytics */,
 				C5149AF21C1526D500D74F6A /* MJRefresh */,
 				C564F6181C0358A7008D3B5D /* SDWebImage */,
@@ -1190,6 +1208,7 @@
 		6ADE9F5F5E3C4BE4C42C0A00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C59E9F7E1C644B26009A827B /* libz.1.dylib */,
 				C5CFF1C71C2297D4005B3310 /* libz.tbd */,
 				C571E85B1BFACEB000126993 /* libHappyDNS.a */,
 				C571E85C1BFACEB000126993 /* libPods.a */,
@@ -1858,6 +1877,32 @@
 			name = KeychainHelper;
 			sourceTree = "<group>";
 		};
+		C59E9F801C644CFE009A827B /* ZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				C59E9F921C644DE0009A827B /* minizip */,
+				C59E9F9C1C644DE0009A827B /* ZipArchive.h */,
+				C59E9F9D1C644DE0009A827B /* ZipArchive.mm */,
+			);
+			name = ZipArchive;
+			sourceTree = "<group>";
+		};
+		C59E9F921C644DE0009A827B /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				C59E9F931C644DE0009A827B /* crypt.h */,
+				C59E9F941C644DE0009A827B /* ioapi.c */,
+				C59E9F951C644DE0009A827B /* ioapi.h */,
+				C59E9F961C644DE0009A827B /* mztools.c */,
+				C59E9F971C644DE0009A827B /* mztools.h */,
+				C59E9F981C644DE0009A827B /* unzip.c */,
+				C59E9F991C644DE0009A827B /* unzip.h */,
+				C59E9F9A1C644DE0009A827B /* zip.c */,
+				C59E9F9B1C644DE0009A827B /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
 		C5A725B11BCB49DD00DF040D /* balance */ = {
 			isa = PBXGroup;
 			children = (
@@ -2233,18 +2278,22 @@
 				C5A725BB1BCB5ACF00DF040D /* OrderPriceCell.m in Sources */,
 				C50F02001BBE96FA0026D16C /* HttpHelper.m in Sources */,
 				C564F63E1C0358A7008D3B5D /* SDWebImageDecoder.m in Sources */,
+				C59E9F9E1C644DE0009A827B /* ioapi.c in Sources */,
 				C55D5FFB1BD0F162004970C4 /* DatabaseManager.m in Sources */,
+				C59E9FA01C644DE0009A827B /* unzip.c in Sources */,
 				C5F474E61C0C4536003A28EE /* FavorViewController.m in Sources */,
 				C56AB5051BC5003D0061750B /* JSBadgeView.m in Sources */,
 				C59A66BC1C2A9681002128C8 /* SVGloble.m in Sources */,
 				C564F63A1C0358A7008D3B5D /* MKAnnotationView+WebCache.m in Sources */,
 				C59A66B71C2A9655002128C8 /* SVRootScrollView.m in Sources */,
 				C564F63D1C0358A7008D3B5D /* SDWebImageCompat.m in Sources */,
+				C59E9FA11C644DE0009A827B /* zip.c in Sources */,
 				89CD42961B59F92E00997C18 /* main.m in Sources */,
 				C54D9B861BDA1455009BB7D0 /* DataVerifier.m in Sources */,
 				C55C3D071BE744D700CB7517 /* UIWindow+Extension.m in Sources */,
 				C5D37BCF1BFECAF400E5A851 /* CommentViewController.m in Sources */,
 				C5E77CEB1C02EB15005370AB /* CommentRequest.m in Sources */,
+				C59E9FA21C644DE0009A827B /* ZipArchive.mm in Sources */,
 				C564F6151C035028008D3B5D /* SMMessageXSend.m in Sources */,
 				249727281BB0E4F6007D9704 /* SWMoneyNavigationController.m in Sources */,
 				895FAF361B9E7E92009CFA6D /* ZYCExplodeStyleLoadView.m in Sources */,
@@ -2324,6 +2373,7 @@
 				C58246331BB594B000031581 /* KeychainItemWrapper.m in Sources */,
 				C58246361BB5963D00031581 /* Activate.m in Sources */,
 				249727181BB0E40B007D9704 /* SWMe.m in Sources */,
+				C59E9F9F1C644DE0009A827B /* mztools.c in Sources */,
 				C5149B071C1526D500D74F6A /* MJRefreshHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
