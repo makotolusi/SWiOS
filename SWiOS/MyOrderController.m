@@ -54,6 +54,7 @@
                                    OrderModel *order=[[OrderModel alloc] init];
                                    order.orderCode=content[@"orderCode"];
                                    order.status=content[@"status"];
+                                   
                                    order.orderDetails=[NSMutableArray arrayWithArray:content[@"orderDetails"]];
                                    [_orders addObject:order];
                                }
@@ -86,7 +87,6 @@
 //    [_tableView registerNib:[UINib nibWithNibName:@"ShoppingCartCell" bundle:nil] forCellReuseIdentifier:@"shoppingCartCell"];
     if ([@"TradeFinishViewController" isEqualToString:_prePage]) {
          [ShoppingCartModel clearCart];
-        
         DatabaseManager *databaseManager=[DatabaseManager sharedDatabaseManager];
         [databaseManager dropTablesWithName:@"shoppingcart"];
            [databaseManager dropTablesWithName:@"ordermodel"];
@@ -103,7 +103,7 @@
     ap.productName=apd[@"productName"];
     ap.picUrl1=apd[@"picUrl1"];
     ap.rushPrice=apd[@"rushPrice"];
-    
+    ap.buyCount=ods[@"count"];
     static NSString *CellIdentifier = @"shoppingCartCell1";
     ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
@@ -116,12 +116,7 @@
         cell.indexPath=indexPath;
         cell.delegate=self;
         cell.tableView=_tableView;
-        
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
         if (indexPath.row==0) {
-            // cell.status
-            //            cell.isOrder=YES;
-            
             [cell initOrderViewWithOrderModel];
              [cell settingDataOrderModel:order];
         }

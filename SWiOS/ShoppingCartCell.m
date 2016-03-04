@@ -28,7 +28,7 @@ static CGFloat kSWCellCountTag = 1;
         _err=[[UILabel alloc] init];
          [_err smallLabel];
         _err.textColor=[UIColor redColor];
-[self addSubview:_err];
+        [self addSubview:_err];
        
         
         _title=[[UILabel alloc] init];
@@ -42,17 +42,10 @@ static CGFloat kSWCellCountTag = 1;
         [self labelStyle:_price text:[@"¥ " stringByAppendingFormat:@"%@",_activityProduct.rushPrice] size:13];
         [self addSubview:_price];
         
-//        UILabel *status=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
-//        [status smallLabel];
-//        status.text=@"订单已取消";
-//        status.textColor=[UIColor lightGrayColor];
-//        [self addSubview:status];
-//        UILabel *orderNum=[[UILabel alloc] initWithFrame:CGRectMake(110, 10, 200, 20)];
-//        [orderNum smallLabel];
-//        orderNum.text=@"订单号:%@";
-//        //        orderNum.textColor=[UIColor lightGrayColor];
-//        self.backgroundColor=[UIColor redColor];
-//        [self addSubview:orderNum];
+        //count
+        _count=[[UILabel alloc] init];
+        _count.tag=kSWCellCountTag;
+        [self addSubview:_count];
     }
     return self;
 }
@@ -64,14 +57,12 @@ static CGFloat kSWCellCountTag = 1;
     //+
      _plus=[[UIButton alloc] init];
     [self minusPlus:_plus withSign:@"jiahao"];
-    //count
-    _count=[[UILabel alloc] init];
-    _count.tag=kSWCellCountTag;
+    
     [_plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
     [_minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:_minus];
-    [self addSubview:_count];
+    
     [self addSubview:_plus];
      }
 }
@@ -136,9 +127,9 @@ static CGFloat kSWCellCountTag = 1;
     if (_isEdit) {
         [views setValue:_plus forKey:@"_plus"];
         [views setValue:_minus forKey:@"_minus"];
-        [views setValue:_count forKey:@"_count"];
+        
     }
-    
+    [views setValue:_count forKey:@"_count"];
     NSDictionary *metrics = @{@"imageEdge":[NSString stringWithFormat:@"%f",w-10.0],@"padding":@5.0,@"toImg":@10.0,@"titleWidth":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.7],@"titleHeight":@40,@"editViewWidth":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.3],@"plusminusW":[NSString stringWithFormat:@"%f",SCREEN_WIDTH*0.06]};//设置一些常量
     //    NSLog(@"%f",size.height);
     //设置bgView与superview左右对齐
@@ -158,7 +149,10 @@ static CGFloat kSWCellCountTag = 1;
      [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_minus(plusminusW)]-toImg-|" options:0 metrics:metrics views:views]];
      [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_plus(==_minus)]-toImg-|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_count(20)]-toImg-|" options:0 metrics:metrics views:views]];
-          }
+    }else{
+         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_count(40)]-20-|" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_count(20)]-toImg-|" options:0 metrics:metrics views:views]];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

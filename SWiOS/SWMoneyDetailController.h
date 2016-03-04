@@ -11,5 +11,6 @@
 @interface SWMoneyDetailController : UIViewController
 
 @property (nonatomic,weak) id money;
+
 @property (weak, nonatomic) IBOutlet UILabel *moneyLable;
 @end

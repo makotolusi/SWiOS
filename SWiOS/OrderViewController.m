@@ -219,9 +219,9 @@
 
 -(void)alipay{
     
-    [LUAliPay alipay:^(NSDictionary *resultDic){
-       int statusCode=((NSString*)resultDic[@"resultStatus"]).intValue;
-        if (statusCode==9000) {
+//    [LUAliPay alipay:^(NSDictionary *resultDic){
+//       int statusCode=((NSString*)resultDic[@"resultStatus"]).intValue;
+//        if (statusCode==9000) {
             TradeFinishViewController *vc =[[TradeFinishViewController alloc]init];
             vc.navigationItem.titleView = [UILabel navTitleLabel:@"订单详情"];
             UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
@@ -231,9 +231,9 @@
                                              action:nil];
             self.navigationItem.backBarButtonItem = cancelButton;
             [self.navigationController pushViewController:vc animated:YES];
-        }
-        
-    }];
+//        }
+//        
+//    }];
 }
 
 @end
