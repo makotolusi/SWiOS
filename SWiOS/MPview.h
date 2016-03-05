@@ -15,5 +15,6 @@
 @property(strong,nonatomic)ShoppingCartModel *cartModel;
 @property(assign,nonatomic)int count;
 @property (nonatomic,strong)ActivityProduct *product;
+@property (nonatomic,strong)UITextField *countText;
 -(instancetype)initWithFrame:(CGRect)frame gap:(float)gap;
 @end

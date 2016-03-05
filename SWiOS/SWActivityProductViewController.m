@@ -75,8 +75,7 @@ static NSString *activityProductCellIdentifier = @"activityProductCellIdentifier
                        } fail:^{
                            NSLog(@"网络异常，取数据异常");
                        } parentView:self.view];
-//    // 如果数据从网络中来，那么就需要刷新表视图
-//    [_tableView reloadData];
+
 }
 
 - (void)_loadContentView {

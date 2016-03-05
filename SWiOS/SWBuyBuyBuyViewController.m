@@ -17,6 +17,7 @@
 #import "RegisterModel.h"
 #import "UIWindow+Extension.h"
 #import "LoadingView.h"
+#import "MJRefresh.h"
 @interface SWBuyBuyBuyViewController ()
 
 @end
@@ -32,7 +33,19 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+     [self _loadContentView];
+    [_tableView addHeaderWithCallback:^(){
+        [self loadData];
+    }];
+    [_tableView headerBeginRefreshing];
     self.navigationItem.title=self.title;
+//    [self loadData];
+    
+    
+
+    
+}
+-(void)loadData{
     [HttpHelper sendGetRequest:@"getActivity"
                     parameters: @{}
                        success:^(id response) {
@@ -53,16 +66,14 @@
                                [model setValue: content[@"imgUrl"] forKey:@"imageUrl"];
                                [_data addObject:model];
                            }
-                               [self _loadContentView];
-                           
+                          
+                           // 如果数据从网络中来，那么就需要刷新表视图
+                           [_tableView reloadData];
+                            [_tableView headerEndRefreshing];
                        } fail:^{
-                              NSLog(@"网络异常，取数据异常");
+                           NSLog(@"网络异常，取数据异常");
                        } parentView:self.view];
-    // 如果数据从网络中来，那么就需要刷新表视图
-    [_tableView reloadData];
-    
 
-    
 }
 
 - (void)didReceiveMemoryWarning {

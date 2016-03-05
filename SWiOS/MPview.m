@@ -13,11 +13,19 @@ static CGFloat kSWCellCountTag = 1;
 
 @implementation MPview
 
-
-
 -(instancetype)initWithFrame:(CGRect)frame gap:(float)gap{
     self=[super initWithFrame:frame];
     if(self){
+//         self.userInteractionEnabled=YES;
+//        self.multipleTouchEnabled=YES;
+//        self.exclusiveTouch=YES;
+//        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(kbHide:)];
+//        //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+//        tapGestureRecognizer.cancelsTouchesInView = NO;
+       
+        //将触摸事件添加到当前view
+//        [self addGestureRecognizer:tapGestureRecognizer];
+        
         _count=1;
         _cartModel=[ShoppingCartModel sharedInstance];
         self.backgroundColor=[UIColor whiteColor];
@@ -29,17 +37,29 @@ static CGFloat kSWCellCountTag = 1;
         UIButton *plus=[[UIButton alloc] initWithFrame:CGRectMake(minus.frame.origin.x+gap, minus.frame.origin.y, 30, 30)];
         [self minusPlus:plus withSign:@"jiahao"];
         
+        
         //count
-        UILabel *count=[[UILabel alloc] initWithFrame:CGRectMake(minus.frame.origin.x+(plus.frame.origin.x-minus.frame.origin.x)/2,minus.frame.origin.y, 50, 20)];
-        count.tag=kSWCellCountTag;
+        _countText=[[UITextField alloc] initWithFrame:CGRectMake(minus.frame.origin.x+(plus.frame.origin.x-minus.frame.origin.x)/2,minus.frame.origin.y, 100, 20)];
+
+        _countText.tag=kSWCellCountTag;
         [plus addTarget:self action:@selector(plusAction:) forControlEvents:UIControlEventTouchUpInside];
         [minus addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self labelStyle:count text:[@"X " stringByAppendingFormat:@"%d",_count] size:12];//_activityProduct.buyCount
-        [self addSubview:count];
+//        count.borderStyle = UITextBorderStyleRoundedRect;
+        _countText.keyboardType = UIKeyboardTypeNumberPad;
+        _countText.returnKeyType =UIReturnKeyGo;
+        _countText.textColor=UIColorFromRGB(labelTextColor);
+        _countText.text=[@"" stringByAppendingFormat:@"%d",_count];
+        [self addSubview:_countText];
 
     }
     return self;
 }
+
+//-(void)kbHide:(UITapGestureRecognizer*)tap{
+//    [count resignFirstResponder];
+//}
+
+
 
 -(void)minusPlus:(UIButton*)button withSign:(NSString *) sign{
       float inset=10;
@@ -65,7 +85,7 @@ static CGFloat kSWCellCountTag = 1;
 //    }
 //    if (_product.buyCount.intValue+1<_product.rushQuantity) {
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
-        countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) ++_count];
+        countLable.text=[@"" stringByAppendingFormat:@"%ld",(long) ++_count];
 //        _product.buyCount=_product.buyCount+1;
 //    }else{
 //        [UIAlertView showMessage:@"库存不足"];
@@ -78,7 +98,7 @@ static CGFloat kSWCellCountTag = 1;
 - (void)minusAction:(UIButton*)sender{
     if (_count>1) {
         UILabel *countLable= (UILabel *)[self viewWithTag:kSWCellCountTag];
-        countLable.text=[@"X " stringByAppendingFormat:@"%ld",(long) --_count];
+        countLable.text=[@"" stringByAppendingFormat:@"%ld",(long) --_count];
 //        _product.buyCount=[[NSNumber alloc] initWithInt:_count];
     }
 //        if ([_delegate respondsToSelector:@selector(totalPrice:type:)]) { // 如果协议响应了sendValue:方法

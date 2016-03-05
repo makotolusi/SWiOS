@@ -30,6 +30,10 @@
 }
 
 - (void)viewDidLoad {
+    self.view.userInteractionEnabled=YES;
+    self.view.multipleTouchEnabled=YES;
+    self.view.exclusiveTouch=YES;
+    
     [super viewDidLoad];
 //    [UIWindow showTabBar:NO];
     _cartModel=[ShoppingCartModel sharedInstance];
@@ -48,6 +52,11 @@
     [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [buy addTarget:self action:@selector(shoppingCart:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buy];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_mp.countText resignFirstResponder];
 }
 
 -(void)shoppingCart:(id)sender{
@@ -162,14 +171,5 @@
 }
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
