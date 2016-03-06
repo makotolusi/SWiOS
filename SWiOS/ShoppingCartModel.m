@@ -81,6 +81,10 @@
 
 +(BOOL)add2CartWithProduct:(ActivityProduct*)product buyCount:(int)buyCount{
     
+    if (buyCount==0) {
+        [UIAlertView showMessage:@"购买数量不能为0"];
+        return NO;
+    }
     if (product.rushQuantity<1) {
         [UIAlertView showMessage:@"库存不足"];
         return NO;
