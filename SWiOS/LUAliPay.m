@@ -63,8 +63,7 @@
     order.seller = seller;
     order.tradeNO =orderModel.orderCode;//[self generateTradeNO];//orderModel.orderCode; //订单ID（由商家自行制定）
     order.productName = @"北京扶融信科技有限公司的商品"; //商品标题
-    order.productDescription = @"北京扶融信科技有限公司的商品"; //商品描述
-    
+    order.productDescription = @"北京扶融信科技有限公司的商品"; //商品描述1
 //    orderModel.totalPrice=[NSNumber numberWithFloat:0.01];
     order.amount =[NSString stringWithFormat:@"%.2f",orderModel.totalPrice.floatValue]; //商品价格
     order.notifyURL = [[HttpHelper getUrl] stringByAppendingString:[NSString stringWithFormat:@"/addAlipayInfo"]]; //回调URL
