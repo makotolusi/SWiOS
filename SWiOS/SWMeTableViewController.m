@@ -260,7 +260,15 @@ NSString * const kSelfPhoto = @"selfPhoto.jpg";
         meGenderLabel=[[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-100, cell.frame.size.height/2-10, 60, 20)];
         [meGenderLabel smallLabel];
         [meGenderLabel setUserInteractionEnabled:YES];
-        meGenderLabel.text=_gender==0?@"男":@"女";
+        if (_gender==0) {
+            meGenderLabel.text=@"男";
+        }
+        if (_gender==1) {
+            meGenderLabel.text=@"女";
+        }
+        if (_gender==2) {
+            meGenderLabel.text=@"请选择";
+        }
         [cell addSubview:meGenderLabel];
     }
 

@@ -103,7 +103,7 @@
     ap.productName=apd[@"productName"];
     ap.picUrl1=apd[@"picUrl1"];
     ap.rushPrice=apd[@"rushPrice"];
-    ap.buyCount=apd[@"count"];
+    ap.buyCount=ods[@"count"];
     static NSString *CellIdentifier = @"shoppingCartCell1";
     ShoppingCartCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {

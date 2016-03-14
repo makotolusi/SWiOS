@@ -37,7 +37,7 @@
     [super viewDidLoad];
 //    [UIWindow showTabBar:NO];
     _cartModel=[ShoppingCartModel sharedInstance];
-    _webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, kSWTabBarViewHeight, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
+    _webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-kSWTabBarViewHeight)];
     NSString *url=[@"http://115.28.47.164:88/index.html#/Product/" stringByAppendingString:_product.productCode];
 //    _webView.delegate=self;
     NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString: url]];//@"http://www.baidu.com"
