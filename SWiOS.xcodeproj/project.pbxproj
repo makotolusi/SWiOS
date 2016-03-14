@@ -63,9 +63,7 @@
 		C5073B601C60A62100464BEA /* bg_05.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5073B5B1C60A62100464BEA /* bg_05.jpg */; };
 		C5073B611C60A62100464BEA /* bg_04.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5073B5C1C60A62100464BEA /* bg_04.jpg */; };
 		C5073B6F1C60AE1F00464BEA /* title1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5073B6A1C60AE1F00464BEA /* title1@2x.png */; };
-		C5073B701C60AE1F00464BEA /* title2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5073B6B1C60AE1F00464BEA /* title2@2x.png */; };
 		C5073B711C60AE1F00464BEA /* title3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5073B6C1C60AE1F00464BEA /* title3@2x.png */; };
-		C5073B721C60AE1F00464BEA /* title4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5073B6D1C60AE1F00464BEA /* title4@2x.png */; };
 		C5073B731C60AE1F00464BEA /* title5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5073B6E1C60AE1F00464BEA /* title5@2x.png */; };
 		C507B0341C2CEF9300372ABC /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C507B0331C2CEF9300372ABC /* UIImageView+UIActivityIndicatorForSDWebImage.m */; };
 		C507B03C1C30E10200372ABC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C507B03B1C30E10200372ABC /* Images.xcassets */; };
@@ -310,6 +308,8 @@
 		C5D37BCF1BFECAF400E5A851 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D37BCE1BFECAF400E5A851 /* CommentViewController.m */; };
 		C5D37BD21BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D37BD11BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.m */; };
 		C5E77CEB1C02EB15005370AB /* CommentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E77CEA1C02EB15005370AB /* CommentRequest.m */; };
+		C5EF554F1C96F50600D5D0C0 /* title2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5EF554E1C96F50600D5D0C0 /* title2@2x.png */; };
+		C5EF55511C96F57F00D5D0C0 /* title4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5EF55501C96F57F00D5D0C0 /* title4@2x.png */; };
 		C5F474DA1C06EBE1003A28EE /* PWLoadMoreTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F474D91C06EBE1003A28EE /* PWLoadMoreTableFooterView.m */; };
 		C5F474DE1C083383003A28EE /* ZanRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F474DD1C083383003A28EE /* ZanRequest.m */; };
 		C5F474E21C0C33C3003A28EE /* yishoucang64.png in Resources */ = {isa = PBXBuildFile; fileRef = C5F474E11C0C33C3003A28EE /* yishoucang64.png */; };
@@ -424,9 +424,7 @@
 		C5073B5B1C60A62100464BEA /* bg_05.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_05.jpg; sourceTree = "<group>"; };
 		C5073B5C1C60A62100464BEA /* bg_04.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_04.jpg; sourceTree = "<group>"; };
 		C5073B6A1C60AE1F00464BEA /* title1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title1@2x.png"; sourceTree = "<group>"; };
-		C5073B6B1C60AE1F00464BEA /* title2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title2@2x.png"; sourceTree = "<group>"; };
 		C5073B6C1C60AE1F00464BEA /* title3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title3@2x.png"; sourceTree = "<group>"; };
-		C5073B6D1C60AE1F00464BEA /* title4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title4@2x.png"; sourceTree = "<group>"; };
 		C5073B6E1C60AE1F00464BEA /* title5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title5@2x.png"; sourceTree = "<group>"; };
 		C507B0321C2CEF9300372ABC /* UIImageView+UIActivityIndicatorForSDWebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+UIActivityIndicatorForSDWebImage.h"; sourceTree = "<group>"; };
 		C507B0331C2CEF9300372ABC /* UIImageView+UIActivityIndicatorForSDWebImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+UIActivityIndicatorForSDWebImage.m"; sourceTree = "<group>"; };
@@ -882,6 +880,8 @@
 		C5D37BD11BFF20CA00E5A851 /* SWExploreFlatCell2ValueObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWExploreFlatCell2ValueObject.m; sourceTree = "<group>"; };
 		C5E77CE91C02EB15005370AB /* CommentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentRequest.h; sourceTree = "<group>"; };
 		C5E77CEA1C02EB15005370AB /* CommentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentRequest.m; sourceTree = "<group>"; };
+		C5EF554E1C96F50600D5D0C0 /* title2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title2@2x.png"; sourceTree = "<group>"; };
+		C5EF55501C96F57F00D5D0C0 /* title4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title4@2x.png"; sourceTree = "<group>"; };
 		C5F474D81C06EBE1003A28EE /* PWLoadMoreTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWLoadMoreTableFooterView.h; sourceTree = "<group>"; };
 		C5F474D91C06EBE1003A28EE /* PWLoadMoreTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWLoadMoreTableFooterView.m; sourceTree = "<group>"; };
 		C5F474DC1C083383003A28EE /* ZanRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZanRequest.h; sourceTree = "<group>"; };
@@ -933,10 +933,10 @@
 		2452FF8F1B94601E006C7E09 /* introduce */ = {
 			isa = PBXGroup;
 			children = (
+				C5EF554E1C96F50600D5D0C0 /* title2@2x.png */,
 				C5073B6A1C60AE1F00464BEA /* title1@2x.png */,
-				C5073B6B1C60AE1F00464BEA /* title2@2x.png */,
 				C5073B6C1C60AE1F00464BEA /* title3@2x.png */,
-				C5073B6D1C60AE1F00464BEA /* title4@2x.png */,
+				C5EF55501C96F57F00D5D0C0 /* title4@2x.png */,
 				C5073B6E1C60AE1F00464BEA /* title5@2x.png */,
 				C5073B581C60A62100464BEA /* bg_01.jpg */,
 				C5073B591C60A62100464BEA /* bg_02.jpg */,
@@ -2004,6 +2004,7 @@
 					};
 					89CD42A81B59F92E00997C18 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = JBE83BE297;
 						TestTargetID = 89CD428F1B59F92E00997C18;
 					};
 				};
@@ -2036,7 +2037,6 @@
 				C51C44EB1C4D215800CAFC63 /* yonghu@3x.png in Resources */,
 				C5F474E21C0C33C3003A28EE /* yishoucang64.png in Resources */,
 				C51C45551C4F37D900CAFC63 /* trash@3x.png in Resources */,
-				C5073B701C60AE1F00464BEA /* title2@2x.png in Resources */,
 				C5073B731C60AE1F00464BEA /* title5@2x.png in Resources */,
 				C51C45CD1C4F8EC700CAFC63 /* dingdan.png in Resources */,
 				249727151BB0E312007D9704 /* YALSunnyRefreshControl.xib in Resources */,
@@ -2069,6 +2069,7 @@
 				249727411BB0E573007D9704 /* setting.png in Resources */,
 				C51C455D1C4F38D800CAFC63 /* gift.png in Resources */,
 				C51C452D1C4E66FD00CAFC63 /* qianggou@3x.png in Resources */,
+				C5EF55511C96F57F00D5D0C0 /* title4@2x.png in Resources */,
 				C51C44E31C4D1E5E00CAFC63 /* gouwuche.png in Resources */,
 				C51C45AA1C4F8AE600CAFC63 /* sc@2x.png in Resources */,
 				249727431BB0E573007D9704 /* setting@3x.png in Resources */,
@@ -2115,6 +2116,7 @@
 				2497273E1BB0E573007D9704 /* money@3x.png in Resources */,
 				2497273C1BB0E573007D9704 /* money.png in Resources */,
 				C51C45DA1C4F913700CAFC63 /* gender@2x.png in Resources */,
+				C5EF554F1C96F50600D5D0C0 /* title2@2x.png in Resources */,
 				C5073B5E1C60A62100464BEA /* bg_02.jpg in Resources */,
 				C51C455B1C4F38D800CAFC63 /* gift@3x.png in Resources */,
 				C51C44D71C4D1D4E00CAFC63 /* sousou.png in Resources */,
@@ -2139,7 +2141,6 @@
 				C51C451B1C4E2BC200CAFC63 /* like@3x.png in Resources */,
 				2497273F1BB0E573007D9704 /* moneyDetial@3x.png in Resources */,
 				C51C45801C4F79DD00CAFC63 /* cache@2x.png in Resources */,
-				C5073B721C60AE1F00464BEA /* title4@2x.png in Resources */,
 				C51C451A1C4E2BC200CAFC63 /* like@2x.png in Resources */,
 				C51C45A91C4F8AE600CAFC63 /* sc.png in Resources */,
 				C51C45011C4E201800CAFC63 /* gouwuche-light.png in Resources */,
@@ -2433,7 +2434,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Si Lu (8QPU54R6TF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Si Lu (8QPU54R6TF)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2455,6 +2457,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "a1b4f7ea-7a3e-4b06-8cf3-3f1fd2d59ab3";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2476,7 +2479,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Si Lu (8QPU54R6TF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Si Lu (8QPU54R6TF)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2491,6 +2495,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "a1b4f7ea-7a3e-4b06-8cf3-3f1fd2d59ab3";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2576,6 +2581,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2587,6 +2594,7 @@
 				INFOPLIST_FILE = SWiOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SWiOS.app/SWiOS";
 			};
 			name = Debug;
@@ -2595,6 +2603,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2602,6 +2612,7 @@
 				INFOPLIST_FILE = SWiOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SWiOS.app/SWiOS";
 			};
 			name = Release;
