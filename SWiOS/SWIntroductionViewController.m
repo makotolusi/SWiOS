@@ -59,9 +59,9 @@ static NSString* const s5 = @"5";
 }
 
 -(void) configurePage:(GHWalkThroughPageCell*) cell atIndex:(NSInteger) index{
-    cell.title = [NSString stringWithFormat:@"买洋货上柠檬鲨海淘，买放心货 %ld",index+1];
+    cell.title = @"买洋货上柠檬鲨海淘，买放心货";//[NSString stringWithFormat:@"买洋货上柠檬鲨海淘，买放心货 %ld",index+1];
     cell.titleImage = [UIImage imageNamed:[NSString stringWithFormat:@"title%ld",index +1]];
-    cell.desc = [self.descStrings objectAtIndex:index];
+    cell.desc = @"";//[self.descStrings objectAtIndex:index];
 }
 
 - (UIImage*) bgImageforPage:(NSInteger) index{

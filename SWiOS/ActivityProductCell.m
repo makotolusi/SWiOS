@@ -34,16 +34,6 @@
     [_productName midLabel];
     _price.text=[NSString stringWithFormat:@"￥ %@", _activityProduct.rushPrice];
     _totalCount.text=[NSString stringWithFormat:@"剩余 %d 件",_activityProduct.rushQuantity];
-//    [self addSubview:self.imgView];
-//    self.imgView.translatesAutoresizingMaskIntoConstraints=NO;
-//    _productName.translatesAutoresizingMaskIntoConstraints=NO;
-//    
-//    NSDictionary *views = NSDictionaryOfVariableBindings(self.imgView,_productName);
-//    
-//    NSDictionary *metrics = @{@"imageEdge":[NSString stringWithFormat:@"%f",imgViewSize],@"padding":@5.0,@"toImg":@10.0};//设置一些常量
-//    //设置bgView与superview左右对齐
-//    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-padding-[imgView(imageEdge)]-toImg-[_productName]" options:0 metrics:metrics views:views]];        // 设置bgView与superview 上边界对齐
-//    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-padding-[imgView(imageEdge)]" options:0 metrics:metrics views:views]];        // labelOne与imageview 的水平约束
     
 }
 

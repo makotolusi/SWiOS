@@ -18,6 +18,8 @@
 #import "TradeFinishViewController.h"
 #import "UILabel+Extension.h"
 #import "MobClick.h"
+#import "UIImageView+WebCache.h"
+#import "ATAppUpdater.h"
 #define LAST_RUN_VERSION_KEY        @"last_run_version_of_application"
 
 @interface AppDelegate ()
@@ -30,7 +32,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    ATAppUpdater *updater = [ATAppUpdater sharedUpdater];
+    [updater setAlertTitle:NSLocalizedString(@"新版本提示", @"Alert Title")];
+    [updater setAlertMessage:NSLocalizedString(@"版本 %@ 已经可用，请前往AppStore更新.", @"Alert Message")];
+    [updater setAlertUpdateButtonTitle:@"下载更新"];
+    [updater setAlertCancelButtonTitle:@"暂时忽略"];
+    [updater showUpdateWithConfirmation];
     
+    SDWebImageManager.sharedManager.cacheKeyFilter = ^(NSURL *url) {
+//        NSString *host=url.host;
+//        NSString *path=url.path;
+//        url = [[NSURL alloc] initWithScheme:url.scheme host:url.host path:url.path];
+        return url.path;
+    };
     
     //打开调试模式
     [MobClick setLogEnabled:YES];
@@ -117,11 +131,11 @@
         return YES;
         // App is being run for first time
     }
-    else if (![lastRunVersion isEqualToString:currentVersion]) {
-        [defaults setObject:currentVersion forKey:LAST_RUN_VERSION_KEY];
-        return YES;
-        // App has been updated since last run
-    }
+//    else if (![lastRunVersion isEqualToString:currentVersion]) {
+//        [defaults setObject:currentVersion forKey:LAST_RUN_VERSION_KEY];
+//        return YES;
+//        // App has been updated since last run
+//    }
     return NO;
 }
 

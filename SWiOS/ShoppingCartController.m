@@ -14,12 +14,18 @@
 #import "UILabel+Extension.h"
 #import "UIAlertView+Extension.h"
 #import "ShoppingCartLocalDataManager.h"
-@interface ShoppingCartController () <ShoppingCartCellDelegate>
 
+@interface ShoppingCartController () <ShoppingCartCellDelegate>
+{
+
+}
 @end
 @implementation ShoppingCartController 
 
+
 -(void)viewWillAppear:(BOOL)animated{
+
+    
     self.pageName=@"ShoppingCartController";
         [super viewDidAppear:animated];
         if (_tableView) {
@@ -39,7 +45,10 @@
     [super viewDidLoad];
 
     [self _loadTableView];
+    
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -48,6 +57,12 @@
 }
 
 
+//- (void) tapGesturedDetected:(UITapGestureRecognizer *)recognizer
+//
+//{
+//      [markView removeFromSuperview];
+//    // do something
+//}
 - (void)_loadTableView {
     self.view.backgroundColor=[UIColor whiteColor];
     _cartModel=[ShoppingCartModel sharedInstance];
@@ -139,12 +154,8 @@
         [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [buy addTarget:self action:@selector(goBalace) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:buy];
-//    if (_cartModel.arOfWatchesOfCart.count==0) {
-//        UIImageView *kongImg=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"kong"]];
-//        kongImg.frame=CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-100, 200, 200);
-//        kongImg.tag=111;
-//        [self.view addSubview:kongImg];
-//    }
+
+
 
 }
 #pragma mark - TableView Datasource

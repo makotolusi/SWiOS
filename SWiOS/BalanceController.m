@@ -54,7 +54,7 @@ static NSString *orderListCell = @"orderListCell";
     [groups addObject:[[BalanceFieldModel alloc] init]];
      [groups addObject:[[BalanceFieldModel alloc] init]];
      [groups addObject:[[BalanceFieldModel alloc] init]];
-      paymentArray=[NSArray arrayWithObjects:@"EMS",@"中通", @"顺丰",nil];
+      paymentArray=[NSArray arrayWithObjects:@"平台指定物流",nil];
      _cartModel=[ShoppingCartModel sharedInstance];
     
 //    if (!StringIsNullOrEmpty(_cartModel.registerModel.addr)) {
@@ -182,7 +182,7 @@ static NSString *orderListCell = @"orderListCell";
         }
     }else if(indexPath.section==3)
     {
-        return [self editCell:@"快递公司" tag:11];
+        return [self editCell:@"平台指定物流" tag:11];
     }else
         return [[EmptyCell alloc] init];
 }
@@ -193,7 +193,7 @@ static NSString *orderListCell = @"orderListCell";
     UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(6, 10, 200, 20)];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //显示最右边的箭头
-    label.textColor=[UIColor lightGrayColor];
+//    label.textColor=[UIColor lightGrayColor];
     label.text=text;
     label.tag=tag;
     label.font=[UIFont systemFontOfSize:13];
@@ -249,7 +249,7 @@ static NSString *orderListCell = @"orderListCell";
         }
     }else if(indexPath.section==3)
     {
-        [self.view  addSubview:_paymentPicker];
+//        [self.view  addSubview:_paymentPicker];
     }
 }
 
