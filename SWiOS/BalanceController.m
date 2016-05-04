@@ -22,6 +22,7 @@
 #import "OrderItemViewController.h"
 #import "SWMainViewController.h"
 #import "NSString+Extension.h"
+#import "HttpHelper.h"
 static NSString *orderPriceCell = @"orderPriceCell";
 static NSString *orderListCell = @"orderListCell";
 @interface BalanceController ()
@@ -54,7 +55,21 @@ static NSString *orderListCell = @"orderListCell";
     [groups addObject:[[BalanceFieldModel alloc] init]];
      [groups addObject:[[BalanceFieldModel alloc] init]];
      [groups addObject:[[BalanceFieldModel alloc] init]];
-      paymentArray=[NSArray arrayWithObjects:@"平台指定物流",nil];
+    
+    [HttpHelper sendPostRequest:@"getExpress"
+                     parameters: @{}
+                        success:^(id response) {
+                             NSArray* result=[response jsonString2Dictionary];
+                            paymentArray=[[NSMutableArray alloc] init];
+                            for(NSDictionary *obj in result){
+                                [paymentArray addObject:obj[@"name"]];
+                            }
+//                            paymentArray=[NSArray arrayWithObjects:@"平台指定物流",nil];
+                        }fail:^{
+                            NSLog(@"网络异常，取数据异常");
+                        } parentView:nil];
+    
+    
      _cartModel=[ShoppingCartModel sharedInstance];
     
 //    if (!StringIsNullOrEmpty(_cartModel.registerModel.addr)) {

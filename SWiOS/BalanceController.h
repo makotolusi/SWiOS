@@ -15,7 +15,7 @@
     @private
         NSMutableArray* groups;
         UITableView    *_tableView;
-        NSArray *paymentArray;
+        NSMutableArray *paymentArray;
 }
 
 @property (strong, nonatomic) UIPickerView *paymentPicker;
